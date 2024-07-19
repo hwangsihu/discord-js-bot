@@ -34,7 +34,8 @@
       "function" !== ltype &&
       !isWindow(obj) &&
       (!(1 !== obj.nodeType || !length) ||
-        "array" === ltype || 0 === length ||
+        "array" === ltype ||
+        0 === length ||
         ("number" == typeof length && length > 0 && length - 1 in obj))
     );
   }
