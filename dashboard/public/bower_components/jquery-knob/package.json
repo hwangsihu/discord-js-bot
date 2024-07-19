@@ -10,11 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/aterrien/jQuery-Knob.git"
   },
-  "keywords": [
-    "jquery",
-    "knob",
-    "dial"
-  ],
+  "keywords": ["jquery", "knob", "dial"],
   "author": "Anthony Terrien",
   "license": "MIT",
   "bugs": {

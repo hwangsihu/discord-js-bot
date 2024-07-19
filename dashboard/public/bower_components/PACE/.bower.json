@@ -3,10 +3,7 @@
   "main": "pace.js",
   "version": "1.0.2",
   "homepage": "http://github.hubspot.com/pace/docs/welcome",
-  "authors": [
-    "Zack Bloom <zackbloom@gmail.com>",
-    "Adam Schwartz <adam.flynn.schwartz@gmail.com>"
-  ],
+  "authors": ["Zack Bloom <zackbloom@gmail.com>", "Adam Schwartz <adam.flynn.schwartz@gmail.com>"],
   "description": "Automatic page load progress bar",
   "keywords": [
     "loading",

@@ -11,10 +11,7 @@
   "bugs": {
     "url": "https://github.com/itsjavi/bootstrap-colorpicker/issues"
   },
-  "keywords": [
-    "bootstrap",
-    "colorpicker"
-  ],
+  "keywords": ["bootstrap", "colorpicker"],
   "author": "Javier Aguilar",
   "license": "Apache-2.0",
   "licenses": [

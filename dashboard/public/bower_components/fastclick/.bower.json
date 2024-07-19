@@ -1,14 +1,7 @@
 {
   "name": "fastclick",
   "main": "lib/fastclick.js",
-  "ignore": [
-    "**/.*",
-    "component.json",
-    "package.json",
-    "Makefile",
-    "tests",
-    "examples"
-  ],
+  "ignore": ["**/.*", "component.json", "package.json", "Makefile", "tests", "examples"],
   "homepage": "https://github.com/ftlabs/fastclick",
   "version": "1.0.6",
   "_release": "1.0.6",

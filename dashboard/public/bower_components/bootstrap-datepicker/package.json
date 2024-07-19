@@ -3,18 +3,9 @@
   "description": "A datepicker for Bootstrap",
   "version": "1.8.0",
   "license": "Apache-2.0",
-  "keywords": [
-    "datepicker",
-    "bootstrap"
-  ],
+  "keywords": ["datepicker", "bootstrap"],
   "main": "./dist/js/bootstrap-datepicker.js",
-  "files": [
-    "build",
-    "dist",
-    "js/**/*.js",
-    "less/*.less",
-    "LICENSE"
-  ],
+  "files": ["build", "dist", "js/**/*.js", "less/*.less", "LICENSE"],
   "homepage": "https://github.com/uxsolutions/bootstrap-datepicker",
   "author": "Andrew Rowls <eternicode@gmail.com>",
   "scripts": {

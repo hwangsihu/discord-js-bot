@@ -2,12 +2,7 @@
   "name": "fullcalendar",
   "title": "FullCalendar",
   "description": "Full-sized drag & drop event calendar",
-  "keywords": [
-    "calendar",
-    "event",
-    "full-sized",
-    "jquery-plugin"
-  ],
+  "keywords": ["calendar", "event", "full-sized", "jquery-plugin"],
   "homepage": "https://fullcalendar.io/",
   "bugs": "https://fullcalendar.io/wiki/Reporting-Bugs/",
   "repository": {
@@ -25,19 +20,8 @@
     "jquery": "2 - 3",
     "moment": "^2.20.1"
   },
-  "main": [
-    "dist/fullcalendar.js",
-    "dist/fullcalendar.css"
-  ],
-  "ignore": [
-    "*",
-    "**/.*",
-    "!/dist/**",
-    "!/README.*",
-    "!/LICENSE.*",
-    "!/CHANGELOG.*",
-    "!/CONTRIBUTING.*"
-  ],
+  "main": ["dist/fullcalendar.js", "dist/fullcalendar.css"],
+  "ignore": ["*", "**/.*", "!/dist/**", "!/README.*", "!/LICENSE.*", "!/CHANGELOG.*", "!/CONTRIBUTING.*"],
   "version": "3.10.0",
   "_release": "3.10.0",
   "_resolution": {

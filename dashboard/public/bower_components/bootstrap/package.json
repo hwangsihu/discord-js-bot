@@ -2,15 +2,7 @@
   "name": "bootstrap",
   "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
   "version": "3.4.1",
-  "keywords": [
-    "css",
-    "less",
-    "mobile-first",
-    "responsive",
-    "front-end",
-    "framework",
-    "web"
-  ],
+  "keywords": ["css", "less", "mobile-first", "responsive", "front-end", "framework", "web"],
   "homepage": "https://getbootstrap.com/",
   "author": "Twitter, Inc.",
   "scripts": {
@@ -75,15 +67,7 @@
   "engines": {
     "node": ">=6"
   },
-  "files": [
-    "dist",
-    "fonts",
-    "grunt",
-    "js/*.js",
-    "less/**/*.less",
-    "Gruntfile.js",
-    "LICENSE"
-  ],
+  "files": ["dist", "fonts", "grunt", "js/*.js", "less/**/*.less", "Gruntfile.js", "LICENSE"],
   "jspm": {
     "main": "js/bootstrap",
     "shim": {
@@ -92,10 +76,6 @@
         "exports": "$"
       }
     },
-    "files": [
-      "css",
-      "fonts",
-      "js"
-    ]
+    "files": ["css", "fonts", "js"]
   }
 }

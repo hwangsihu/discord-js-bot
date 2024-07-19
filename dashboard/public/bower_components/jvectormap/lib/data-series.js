@@ -9,11 +9,11 @@
  * @param {Number} params.min Minimum value of the data set. Could be calculated automatically if not provided.
  * @param {Number} params.min Maximum value of the data set. Could be calculated automatically if not provided.
  */
-jvm.DataSeries = function(params, elements) {
+jvm.DataSeries = function (params, elements) {
   var scaleConstructor;
 
   params = params || {};
-  params.attribute = params.attribute || 'fill';
+  params.attribute = params.attribute || "fill";
 
   this.elements = elements;
   this.params = params;
@@ -23,7 +23,7 @@ jvm.DataSeries = function(params, elements) {
   }
 
   if (jvm.$.isArray(params.scale)) {
-    scaleConstructor = (params.attribute === 'fill' || params.attribute === 'stroke') ? jvm.ColorScale : jvm.NumericScale;
+    scaleConstructor = params.attribute === "fill" || params.attribute === "stroke" ? jvm.ColorScale : jvm.NumericScale;
     this.scale = new scaleConstructor(params.scale, params.normalizeFunction, params.min, params.max);
   } else if (params.scale) {
     this.scale = new jvm.OrdinalScale(params.scale);
@@ -36,11 +36,11 @@ jvm.DataSeries = function(params, elements) {
 };
 
 jvm.DataSeries.prototype = {
-  setAttributes: function(key, attr){
+  setAttributes: function (key, attr) {
     var attrs = key,
-        code;
+      code;
 
-    if (typeof key == 'string') {
+    if (typeof key == "string") {
       if (this.elements[key]) {
         this.elements[key].setStyle(this.params.attribute, attr);
       }
@@ -57,12 +57,12 @@ jvm.DataSeries.prototype = {
    * Set values for the data set.
    * @param {Object} values Object which maps codes of regions or markers to values.
    */
-  setValues: function(values) {
+  setValues: function (values) {
     var max = Number.MIN_VALUE,
-        min = Number.MAX_VALUE,
-        val,
-        cc,
-        attrs = {};
+      min = Number.MAX_VALUE,
+      val,
+      cc,
+      attrs = {};
 
     if (!(this.scale instanceof jvm.OrdinalScale) && !(this.scale instanceof jvm.SimpleScale)) {
       if (!this.params.min || !this.params.max) {
@@ -102,9 +102,9 @@ jvm.DataSeries.prototype = {
     jvm.$.extend(this.values, values);
   },
 
-  clear: function(){
+  clear: function () {
     var key,
-        attrs = {};
+      attrs = {};
 
     for (key in this.values) {
       if (this.elements[key]) {
@@ -119,7 +119,7 @@ jvm.DataSeries.prototype = {
    * Set scale of the data series.
    * @param {Array} scale Values representing scale.
    */
-  setScale: function(scale) {
+  setScale: function (scale) {
     this.scale.setScale(scale);
     if (this.values) {
       this.setValues(this.values);
@@ -130,10 +130,10 @@ jvm.DataSeries.prototype = {
    * Set normalize function of the data series.
    * @param {Function|String} normilizeFunction.
    */
-  setNormalizeFunction: function(f) {
+  setNormalizeFunction: function (f) {
     this.scale.setNormalizeFunction(f);
     if (this.values) {
       this.setValues(this.values);
     }
-  }
+  },
 };

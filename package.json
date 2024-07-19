@@ -71,15 +71,7 @@
     "node": "^20.15.1",
     "nodemon": "^3.1.4"
   },
-  "keywords": [
-    "discord",
-    "discord.js",
-    "discord-bot",
-    "open-source",
-    "bot",
-    "multipurpose",
-    "multi-purpose-bot"
-  ],
+  "keywords": ["discord", "discord.js", "discord-bot", "open-source", "bot", "multipurpose", "multi-purpose-bot"],
   "_moduleAliases": {
     "@root": ".",
     "@handlers": "src/handlers/",

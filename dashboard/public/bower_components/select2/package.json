@@ -23,22 +23,11 @@
   "bugs": {
     "url": "https://github.com/select2/select2/issues"
   },
-  "keywords": [
-    "select",
-    "autocomplete",
-    "typeahead",
-    "dropdown",
-    "multiselect",
-    "tag",
-    "tagging"
-  ],
+  "keywords": ["select", "autocomplete", "typeahead", "dropdown", "multiselect", "tag", "tagging"],
   "license": "MIT",
   "main": "dist/js/select2.js",
   "style": "dist/css/select2.css",
-  "files": [
-    "src",
-    "dist"
-  ],
+  "files": ["src", "dist"],
   "version": "4.0.7",
   "jspm": {
     "main": "js/select2",
@@ -61,6 +50,5 @@
     "jquery-mousewheel": "~3.1.13",
     "node-sass": "^4.5.3"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
