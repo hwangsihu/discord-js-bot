@@ -28,7 +28,6 @@ module.exports = {
   },
 
   // PLUGINS
-
   AUTOMOD: {
     ENABLED: false,
     LOG_EMBED: "#36393F",
@@ -36,7 +35,7 @@ module.exports = {
   },
 
   DASHBOARD: {
-    enabled: false, // enable or disable dashboard
+    enabled: false,
     baseURL: "http://localhost:8080", // base url
     failureURL: "http://localhost:8080", // failure redirect url
     port: "8080", // port to run the bot on
