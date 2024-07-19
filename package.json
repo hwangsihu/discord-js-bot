@@ -11,7 +11,8 @@
   "scripts": {
     "dev": "nodemon .",
     "start": "node .",
-    "format": "prettier --write src",
+    "lint": "biome lint --fix src/ bot.js",
+    "format": "biome format --fix src/ bot.js",
     "docker:package": "tar -cf discord-js-bot.tar dashboard logs src bot.js config.js dockerfile package.json package-lock.json",
     "docker:build": "docker build -t saitejamadha/discord-js-bot:5.5.0 ."
   },
@@ -66,14 +67,9 @@
     "zlib-sync": "^0.1.9"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.1.0",
-    "@eslint/js": "^9.7.0",
-    "eslint": "^9.7.0",
-    "eslint-plugin-jsdoc": "^48.7.0",
-    "globals": "^15.8.0",
-    "node": "^22.5.0",
-    "nodemon": "^3.1.4",
-    "prettier": "3.3.3"
+    "@biomejs/biome": "^1.8.3",
+    "node": "^20.15.1",
+    "nodemon": "^3.1.4"
   },
   "keywords": [
     "discord",
