@@ -8,7 +8,7 @@
  *
  * http://api.jqueryui.com/selectable/
  */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["jquery", "./core", "./mouse", "./widget"], factory);
@@ -16,8 +16,8 @@
     // Browser globals
     factory(jQuery);
   }
-})(function ($) {
-  return $.widget("ui.selectable", $.ui.mouse, {
+})(($) =>
+  $.widget("ui.selectable", $.ui.mouse, {
     version: "1.11.4",
     options: {
       appendTo: "body",
@@ -35,16 +35,15 @@
       unselecting: null,
     },
     _create: function () {
-      var selectees,
-        that = this;
+      var selectees;
 
       this.element.addClass("ui-selectable");
 
       this.dragged = false;
 
       // cache selectee children based on filter
-      this.refresh = function () {
-        selectees = $(that.options.filter, that.element[0]);
+      this.refresh = () => {
+        selectees = $(this.options.filter, this.element[0]);
         selectees.addClass("ui-selectee");
         selectees.each(function () {
           var $this = $(this),
@@ -127,7 +126,8 @@
           var doSelect,
             selectee = $.data(this, "selectable-item");
           if (selectee) {
-            doSelect = (!event.metaKey && !event.ctrlKey) || !selectee.$element.hasClass("ui-selected");
+            doSelect =
+              (!event.metaKey && !event.ctrlKey) || !selectee.$element.hasClass("ui-selected");
             selectee.$element
               .removeClass(doSelect ? "ui-unselecting" : "ui-selected")
               .addClass(doSelect ? "ui-selecting" : "ui-unselecting");
@@ -186,9 +186,15 @@
         }
 
         if (options.tolerance === "touch") {
-          hit = !(selectee.left > x2 || selectee.right < x1 || selectee.top > y2 || selectee.bottom < y1);
+          hit = !(
+            selectee.left > x2 ||
+            selectee.right < x1 ||
+            selectee.top > y2 ||
+            selectee.bottom < y1
+          );
         } else if (options.tolerance === "fit") {
-          hit = selectee.left > x1 && selectee.right < x2 && selectee.top > y1 && selectee.bottom < y2;
+          hit =
+            selectee.left > x1 && selectee.right < x2 && selectee.top > y1 && selectee.bottom < y2;
         }
 
         if (hit) {
@@ -279,5 +285,5 @@
 
       return false;
     },
-  });
-});
+  })
+);

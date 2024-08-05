@@ -2,9 +2,13 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-CKEDITOR.dialog.add("anchor", function (c) {
+CKEDITOR.dialog.add("anchor", (c) => {
   function e(b, a) {
-    return b.createFakeElement(b.document.createElement("a", { attributes: a }), "cke_anchor", "anchor");
+    return b.createFakeElement(
+      b.document.createElement("a", { attributes: a }),
+      "cke_anchor",
+      "anchor"
+    );
   }
   return {
     title: c.lang.link.anchor.title,
@@ -15,7 +19,9 @@ CKEDITOR.dialog.add("anchor", function (c) {
         a = { id: b, name: b, "data-cke-saved-name": b };
       this._.selectedElement
         ? this._.selectedElement.data("cke-realelement")
-          ? ((b = e(c, a)), b.replace(this._.selectedElement), CKEDITOR.env.ie && c.getSelection().selectElement(b))
+          ? ((b = e(c, a)),
+            b.replace(this._.selectedElement),
+            CKEDITOR.env.ie && c.getSelection().selectElement(b))
           : this._.selectedElement.setAttributes(a)
         : ((b = (b = c.getSelection()) && b.getRanges()[0]),
           b.collapsed

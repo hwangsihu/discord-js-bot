@@ -14,4 +14,15 @@ function createInZone() {
   return createLocal.apply(null, arguments).parseZone();
 }
 
-export { now, min, max, isMoment, createUTC, createUnix, createLocal, createInZone, createInvalid, momentPrototype };
+export {
+  now,
+  min,
+  max,
+  isMoment,
+  createUTC,
+  createUnix,
+  createLocal,
+  createInZone,
+  createInvalid,
+  momentPrototype,
+};

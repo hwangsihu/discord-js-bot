@@ -5,8 +5,14 @@
 import moment from "../moment";
 
 export default moment.defineLocale("ug-cn", {
-  months: "يانۋار_فېۋرال_مارت_ئاپرېل_ماي_ئىيۇن_ئىيۇل_ئاۋغۇست_سېنتەبىر_ئۆكتەبىر_نويابىر_دېكابىر".split("_"),
-  monthsShort: "يانۋار_فېۋرال_مارت_ئاپرېل_ماي_ئىيۇن_ئىيۇل_ئاۋغۇست_سېنتەبىر_ئۆكتەبىر_نويابىر_دېكابىر".split("_"),
+  months:
+    "يانۋار_فېۋرال_مارت_ئاپرېل_ماي_ئىيۇن_ئىيۇل_ئاۋغۇست_سېنتەبىر_ئۆكتەبىر_نويابىر_دېكابىر".split(
+      "_"
+    ),
+  monthsShort:
+    "يانۋار_فېۋرال_مارت_ئاپرېل_ماي_ئىيۇن_ئىيۇل_ئاۋغۇست_سېنتەبىر_ئۆكتەبىر_نويابىر_دېكابىر".split(
+      "_"
+    ),
   weekdays: "يەكشەنبە_دۈشەنبە_سەيشەنبە_چارشەنبە_پەيشەنبە_جۈمە_شەنبە".split("_"),
   weekdaysShort: "يە_دۈ_سە_چا_پە_جۈ_شە".split("_"),
   weekdaysMin: "يە_دۈ_سە_چا_پە_جۈ_شە".split("_"),
@@ -19,7 +25,7 @@ export default moment.defineLocale("ug-cn", {
     LLLL: "dddd، YYYY-يىلىM-ئاينىڭD-كۈنى، HH:mm",
   },
   meridiemParse: /يېرىم كېچە|سەھەر|چۈشتىن بۇرۇن|چۈش|چۈشتىن كېيىن|كەچ/,
-  meridiemHour: function (hour, meridiem) {
+  meridiemHour: (hour, meridiem) => {
     if (hour === 12) {
       hour = 0;
     }
@@ -31,7 +37,7 @@ export default moment.defineLocale("ug-cn", {
       return hour >= 11 ? hour : hour + 12;
     }
   },
-  meridiem: function (hour, minute, isLower) {
+  meridiem: (hour, minute, isLower) => {
     var hm = hour * 100 + minute;
     if (hm < 600) {
       return "يېرىم كېچە";
@@ -73,7 +79,7 @@ export default moment.defineLocale("ug-cn", {
   },
 
   dayOfMonthOrdinalParse: /\d{1,2}(-كۈنى|-ئاي|-ھەپتە)/,
-  ordinal: function (number, period) {
+  ordinal: (number, period) => {
     switch (period) {
       case "d":
       case "D":
@@ -86,12 +92,8 @@ export default moment.defineLocale("ug-cn", {
         return number;
     }
   },
-  preparse: function (string) {
-    return string.replace(/،/g, ",");
-  },
-  postformat: function (string) {
-    return string.replace(/,/g, "،");
-  },
+  preparse: (string) => string.replace(/،/g, ","),
+  postformat: (string) => string.replace(/,/g, "،"),
   week: {
     // GB/T 7408-1994《数据元和交换格式·信息交换·日期和时间表示法》与ISO 8601:1988等效
     dow: 1, // Monday is the first day of the week.

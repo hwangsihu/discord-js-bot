@@ -1,15 +1,13 @@
-define(["jquery"], function ($) {
+define(["jquery"], ($) => {
   function ClickMask() {}
 
   ClickMask.prototype.bind = function (decorate, $container, container) {
-    var self = this;
-
     decorate.call(this, $container, container);
 
     this.$mask = $('<div class="select2-close-mask"></div>');
 
-    this.$mask.on("mousedown touchstart click", function () {
-      self.trigger("close", {});
+    this.$mask.on("mousedown touchstart click", () => {
+      this.trigger("close", {});
     });
   };
 

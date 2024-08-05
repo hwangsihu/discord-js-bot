@@ -1,4 +1,4 @@
-define(function () {
+define(() => {
   // Russian
   function ending(count, one, couple, more) {
     if ((count % 10 < 5 && count % 10 > 0 && count % 100 < 5) || count % 100 > 20) {
@@ -13,10 +13,8 @@ define(function () {
   }
 
   return {
-    errorLoading: function () {
-      return "Невозможно загрузить результаты";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "Невозможно загрузить результаты",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "Пожалуйста, введите на " + overChars + " символ";
@@ -27,7 +25,7 @@ define(function () {
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "Пожалуйста, введите ещё хотя бы " + remainingChars + " символ";
@@ -36,24 +34,16 @@ define(function () {
 
       return message;
     },
-    loadingMore: function () {
-      return "Загрузка данных…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Загрузка данных…",
+    maximumSelected: (args) => {
       var message = "Вы можете выбрать не более " + args.maximum + " элемент";
 
       message += ending(args.maximum, "", "a", "ов");
 
       return message;
     },
-    noResults: function () {
-      return "Совпадений не найдено";
-    },
-    searching: function () {
-      return "Поиск…";
-    },
-    removeAllItems: function () {
-      return "Удалить все элементы";
-    },
+    noResults: () => "Совпадений не найдено",
+    searching: () => "Поиск…",
+    removeAllItems: () => "Удалить все элементы",
   };
 });

@@ -8,12 +8,10 @@
  *
  */
 
-(function (root, factory) {
+((root, factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module unless amdModuleId is set
-    define(["jquery"], function (jq) {
-      return factory(jq);
-    });
+    define(["jquery"], (jq) => factory(jq));
   } else if (typeof exports === "object") {
     // Node. Does not work with strict CommonJS, but
     // only CommonJS-like environments that support module.exports,
@@ -22,8 +20,7 @@
   } else if (jQuery && !jQuery.fn.colorpicker) {
     factory(jQuery);
   }
-})(this, function ($) {
-  "use strict";
+})(this, ($) => {
   /**
    * Color manipulation helper class
    *
@@ -234,7 +231,7 @@
     setValue: function (val) {
       this.value = val;
     },
-    _sanitizeNumber: function (val) {
+    _sanitizeNumber: (val) => {
       if (typeof val === "number") {
         return val;
       }
@@ -248,20 +245,22 @@
         if (val.match(/^\./)) {
           val = "0" + val;
         }
-        return Math.ceil(parseFloat(val) * 100) / 100;
+        return Math.ceil(Number.parseFloat(val) * 100) / 100;
       }
       return 1;
     },
-    isTransparent: function (strVal) {
+    isTransparent: (strVal) => {
       if (!strVal || !(typeof strVal === "string" || strVal instanceof String)) {
         return false;
       }
       strVal = strVal.toLowerCase().trim();
-      return strVal === "transparent" || strVal.match(/#?00000000/) || strVal.match(/(rgba|hsla)\(0,0,0,0?\.?0\)/);
+      return (
+        strVal === "transparent" ||
+        strVal.match(/#?00000000/) ||
+        strVal.match(/(rgba|hsla)\(0,0,0,0?\.?0\)/)
+      );
     },
-    rgbaIsTransparent: function (rgba) {
-      return rgba.r === 0 && rgba.g === 0 && rgba.b === 0 && rgba.a === 0;
-    },
+    rgbaIsTransparent: (rgba) => rgba.r === 0 && rgba.g === 0 && rgba.b === 0 && rgba.a === 0,
     // parse a string to HSB
     /**
      * @protected
@@ -309,7 +308,7 @@
       this.value.b = 1 - b;
     },
     setAlpha: function (a) {
-      this.value.a = Math.round((parseInt((1 - a) * 100, 10) / 100) * 100) / 100;
+      this.value.a = Math.round((Number.parseInt((1 - a) * 100, 10) / 100) * 100) / 100;
     },
     toRGB: function (h, s, b, a) {
       if (arguments.length === 0) {
@@ -358,7 +357,15 @@
       }
 
       var hexStr =
-        prefix + ((1 << 24) + (parseInt(rgb.r) << 16) + (parseInt(rgb.g) << 8) + parseInt(rgb.b)).toString(16).slice(1);
+        prefix +
+        (
+          (1 << 24) +
+          (Number.parseInt(rgb.r) << 16) +
+          (Number.parseInt(rgb.g) << 8) +
+          Number.parseInt(rgb.b)
+        )
+          .toString(16)
+          .slice(1);
 
       return hexStr;
     },
@@ -422,7 +429,7 @@
         a: this._sanitizeNumber(a),
       };
     },
-    HueToRGB: function (p, q, h) {
+    HueToRGB: (p, q, h) => {
       if (h < 0) {
         h += 1;
       } else if (h > 1) {
@@ -472,8 +479,7 @@
         return false;
       }
 
-      var that = this,
-        result = false,
+      var result = false,
         isAlias = typeof this.colors[strVal] !== "undefined",
         values,
         format;
@@ -482,16 +488,20 @@
         strVal = this.colors[strVal].toLowerCase().trim();
       }
 
-      $.each(this.stringParsers, function (i, parser) {
+      $.each(this.stringParsers, (i, parser) => {
         var match = parser.re.exec(strVal);
-        values = match && parser.parse.apply(that, [match]);
+        values = match && parser.parse.apply(this, [match]);
         if (values) {
           result = {};
-          format = isAlias ? "alias" : parser.format ? parser.format : that.getValidFallbackFormat();
+          format = isAlias
+            ? "alias"
+            : parser.format
+              ? parser.format
+              : this.getValidFallbackFormat();
           if (format.match(/hsla?/)) {
-            result = that.RGBtoHSB.apply(that, that.HSLtoRGB.apply(that, values));
+            result = this.RGBtoHSB.apply(this, this.HSLtoRGB.apply(this, values));
           } else {
-            result = that.RGBtoHSB.apply(that, values);
+            result = this.RGBtoHSB.apply(this, values);
           }
           if (result instanceof Object) {
             result.format = format;
@@ -545,7 +555,15 @@
         case "hsl":
           {
             c = this.toHSL();
-            return "hsl(" + Math.round(c.h * 360) + "," + Math.round(c.s * 100) + "%," + Math.round(c.l * 100) + "%)";
+            return (
+              "hsl(" +
+              Math.round(c.h * 360) +
+              "," +
+              Math.round(c.s * 100) +
+              "%," +
+              Math.round(c.l * 100) +
+              "%)"
+            );
           }
           break;
         case "hsla":
@@ -596,63 +614,72 @@
       {
         re: /rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*?\)/,
         format: "rgb",
-        parse: function (execResult) {
-          return [execResult[1], execResult[2], execResult[3], 1];
-        },
+        parse: (execResult) => [execResult[1], execResult[2], execResult[3], 1],
       },
       {
         re: /rgb\(\s*(\d*(?:\.\d+)?)\%\s*,\s*(\d*(?:\.\d+)?)\%\s*,\s*(\d*(?:\.\d+)?)\%\s*?\)/,
         format: "rgb",
-        parse: function (execResult) {
-          return [2.55 * execResult[1], 2.55 * execResult[2], 2.55 * execResult[3], 1];
-        },
+        parse: (execResult) => [
+          2.55 * execResult[1],
+          2.55 * execResult[2],
+          2.55 * execResult[3],
+          1,
+        ],
       },
       {
         re: /rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(?:,\s*(\d*(?:\.\d+)?)\s*)?\)/,
         format: "rgba",
-        parse: function (execResult) {
-          return [execResult[1], execResult[2], execResult[3], execResult[4]];
-        },
+        parse: (execResult) => [execResult[1], execResult[2], execResult[3], execResult[4]],
       },
       {
         re: /rgba\(\s*(\d*(?:\.\d+)?)\%\s*,\s*(\d*(?:\.\d+)?)\%\s*,\s*(\d*(?:\.\d+)?)\%\s*(?:,\s*(\d*(?:\.\d+)?)\s*)?\)/,
         format: "rgba",
-        parse: function (execResult) {
-          return [2.55 * execResult[1], 2.55 * execResult[2], 2.55 * execResult[3], execResult[4]];
-        },
+        parse: (execResult) => [
+          2.55 * execResult[1],
+          2.55 * execResult[2],
+          2.55 * execResult[3],
+          execResult[4],
+        ],
       },
       {
         re: /hsl\(\s*(\d*(?:\.\d+)?)\s*,\s*(\d*(?:\.\d+)?)\%\s*,\s*(\d*(?:\.\d+)?)\%\s*?\)/,
         format: "hsl",
-        parse: function (execResult) {
-          return [execResult[1] / 360, execResult[2] / 100, execResult[3] / 100, execResult[4]];
-        },
+        parse: (execResult) => [
+          execResult[1] / 360,
+          execResult[2] / 100,
+          execResult[3] / 100,
+          execResult[4],
+        ],
       },
       {
         re: /hsla\(\s*(\d*(?:\.\d+)?)\s*,\s*(\d*(?:\.\d+)?)\%\s*,\s*(\d*(?:\.\d+)?)\%\s*(?:,\s*(\d*(?:\.\d+)?)\s*)?\)/,
         format: "hsla",
-        parse: function (execResult) {
-          return [execResult[1] / 360, execResult[2] / 100, execResult[3] / 100, execResult[4]];
-        },
+        parse: (execResult) => [
+          execResult[1] / 360,
+          execResult[2] / 100,
+          execResult[3] / 100,
+          execResult[4],
+        ],
       },
       {
         re: /#?([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})/,
         format: "hex",
-        parse: function (execResult) {
-          return [parseInt(execResult[1], 16), parseInt(execResult[2], 16), parseInt(execResult[3], 16), 1];
-        },
+        parse: (execResult) => [
+          Number.parseInt(execResult[1], 16),
+          Number.parseInt(execResult[2], 16),
+          Number.parseInt(execResult[3], 16),
+          1,
+        ],
       },
       {
         re: /#?([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])/,
         format: "hex",
-        parse: function (execResult) {
-          return [
-            parseInt(execResult[1] + execResult[1], 16),
-            parseInt(execResult[2] + execResult[2], 16),
-            parseInt(execResult[3] + execResult[3], 16),
-            1,
-          ];
-        },
+        parse: (execResult) => [
+          Number.parseInt(execResult[1] + execResult[1], 16),
+          Number.parseInt(execResult[2] + execResult[2], 16),
+          Number.parseInt(execResult[3] + execResult[3], 16),
+          1,
+        ],
       },
     ],
     colorNameToHex: function (name) {
@@ -758,7 +785,9 @@
       this.input = false;
     }
     // Set HSB color
-    this.color = this.createColor(this.options.color !== false ? this.options.color : this.getValue());
+    this.color = this.createColor(
+      this.options.color !== false ? this.options.color : this.getValue()
+    );
 
     this.format = this.options.format !== false ? this.options.format : this.color.origFormat;
 
@@ -800,7 +829,7 @@
         selectorsContainer = colorpicker.picker.find(".colorpicker-selectors");
 
       if (selectorsContainer.length > 0) {
-        $.each(this.options.colorSelectors, function (name, color) {
+        $.each(this.options.colorSelectors, (name, color) => {
           var $btn = $("<i />")
             .addClass("colorpicker-selectors-color")
             .css("background-color", color)
@@ -810,7 +839,9 @@
           $btn.on("mousedown.colorpicker touchstart.colorpicker", function (event) {
             event.preventDefault();
             colorpicker.setValue(
-              colorpicker.format === "alias" ? $(this).data("alias") : $(this).css("background-color")
+              colorpicker.format === "alias"
+                ? $(this).data("alias")
+                : $(this).css("background-color")
             );
           });
           selectorsContainer.append($btn);
@@ -822,7 +853,7 @@
     // Prevent closing the colorpicker when clicking on itself
     $picker.on(
       "mousedown.colorpicker touchstart.colorpicker",
-      $.proxy(function (e) {
+      $.proxy((e) => {
         if (e.target === e.currentTarget) {
           e.preventDefault();
         }
@@ -906,7 +937,8 @@
       if (this.options.inline !== false || this.options.container) {
         return false;
       }
-      var type = this.container && this.container[0] !== window.document.body ? "position" : "offset";
+      var type =
+        this.container && this.container[0] !== window.document.body ? "position" : "offset";
       var element = this.component || this.element;
       var offset = element[type]();
       if (this.options.align === "right") {
@@ -944,7 +976,10 @@
     hide: function (e) {
       if (typeof e !== "undefined" && e.target) {
         // Prevent hide if triggered by an event and an element inside the colorpicker has been clicked/touched
-        if ($(e.currentTarget).parents(".colorpicker").length > 0 || $(e.target).parents(".colorpicker").length > 0) {
+        if (
+          $(e.currentTarget).parents(".colorpicker").length > 0 ||
+          $(e.target).parents(".colorpicker").length > 0
+        ) {
           return false;
         }
       }
@@ -1076,7 +1111,8 @@
       );
     },
     getValue: function (defaultValue) {
-      defaultValue = typeof defaultValue === "undefined" ? this.options.fallbackColor : defaultValue;
+      defaultValue =
+        typeof defaultValue === "undefined" ? this.options.fallbackColor : defaultValue;
       var val;
       if (this.hasInput()) {
         val = this.input.val();

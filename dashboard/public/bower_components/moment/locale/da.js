@@ -1,16 +1,17 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var da = moment.defineLocale("da", {
-    months: "januar_februar_marts_april_maj_juni_juli_august_september_oktober_november_december".split("_"),
+    months:
+      "januar_februar_marts_april_maj_juni_juli_august_september_oktober_november_december".split(
+        "_"
+      ),
     monthsShort: "jan_feb_mar_apr_maj_jun_jul_aug_sep_okt_nov_dec".split("_"),
     weekdays: "søndag_mandag_tirsdag_onsdag_torsdag_fredag_lørdag".split("_"),
     weekdaysShort: "søn_man_tir_ons_tor_fre_lør".split("_"),

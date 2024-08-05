@@ -1,4 +1,4 @@
-define([], function () {
+define([], () => {
   function countResults(data) {
     var count = 0;
 
@@ -19,7 +19,7 @@ define([], function () {
     this.minimumResultsForSearch = options.get("minimumResultsForSearch");
 
     if (this.minimumResultsForSearch < 0) {
-      this.minimumResultsForSearch = Infinity;
+      this.minimumResultsForSearch = Number.POSITIVE_INFINITY;
     }
 
     decorated.call(this, $element, options, dataAdapter);

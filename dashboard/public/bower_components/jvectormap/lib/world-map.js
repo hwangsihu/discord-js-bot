@@ -73,8 +73,7 @@
  * @param {Function} params.onViewportChange <code>(Event e, Number scale)</code> Triggered when the map's viewport is changed (map was panned or zoomed).
  */
 jvm.WorldMap = function (params) {
-  var map = this,
-    e;
+  var e;
 
   this.params = jvm.$.extend(true, {}, jvm.WorldMap.defaultParams, params);
 
@@ -88,7 +87,10 @@ jvm.WorldMap = function (params) {
   this.regionsColors = {};
   this.regionsData = {};
 
-  this.container = jvm.$("<div>").css({ width: "100%", height: "100%" }).addClass("jvectormap-container");
+  this.container = jvm
+    .$("<div>")
+    .css({ width: "100%", height: "100%" })
+    .addClass("jvectormap-container");
   this.params.container.append(this.container);
   this.container.data("mapObject", this);
   this.container.css({
@@ -101,8 +103,8 @@ jvm.WorldMap = function (params) {
 
   this.setBackgroundColor(this.params.backgroundColor);
 
-  this.onResize = function () {
-    map.setSize();
+  this.onResize = () => {
+    this.setSize();
   };
   jvm.$(window).resize(this.onResize);
 
@@ -133,7 +135,12 @@ jvm.WorldMap = function (params) {
 
   if (this.params.focusOn) {
     if (typeof this.params.focusOn === "object") {
-      this.setFocus.call(this, this.params.focusOn.scale, this.params.focusOn.x, this.params.focusOn.y);
+      this.setFocus.call(
+        this,
+        this.params.focusOn.scale,
+        this.params.focusOn.x,
+        this.params.focusOn.y
+      );
     } else {
       this.setFocus.call(this, this.params.focusOn);
     }
@@ -174,10 +181,12 @@ jvm.WorldMap.prototype = {
     var curBaseScale = this.baseScale;
     if (this.width / this.height > this.defaultWidth / this.defaultHeight) {
       this.baseScale = this.height / this.defaultHeight;
-      this.baseTransX = Math.abs(this.width - this.defaultWidth * this.baseScale) / (2 * this.baseScale);
+      this.baseTransX =
+        Math.abs(this.width - this.defaultWidth * this.baseScale) / (2 * this.baseScale);
     } else {
       this.baseScale = this.width / this.defaultWidth;
-      this.baseTransY = Math.abs(this.height - this.defaultHeight * this.baseScale) / (2 * this.baseScale);
+      this.baseTransY =
+        Math.abs(this.height - this.defaultHeight * this.baseScale) / (2 * this.baseScale);
     }
     this.scale *= this.baseScale / curBaseScale;
     this.transX *= this.baseScale / curBaseScale;
@@ -248,49 +257,52 @@ jvm.WorldMap.prototype = {
       this.repositionMarkers();
     }
 
-    this.container.trigger("viewportChange", [this.scale / this.baseScale, this.transX, this.transY]);
+    this.container.trigger("viewportChange", [
+      this.scale / this.baseScale,
+      this.transX,
+      this.transY,
+    ]);
   },
 
   bindContainerEvents: function () {
     var mouseDown = false,
       oldPageX,
-      oldPageY,
-      map = this;
+      oldPageY;
 
     this.container
-      .mousemove(function (e) {
+      .mousemove((e) => {
         if (mouseDown) {
-          map.transX -= (oldPageX - e.pageX) / map.scale;
-          map.transY -= (oldPageY - e.pageY) / map.scale;
+          this.transX -= (oldPageX - e.pageX) / this.scale;
+          this.transY -= (oldPageY - e.pageY) / this.scale;
 
-          map.applyTransform();
+          this.applyTransform();
 
           oldPageX = e.pageX;
           oldPageY = e.pageY;
         }
         return false;
       })
-      .mousedown(function (e) {
+      .mousedown((e) => {
         mouseDown = true;
         oldPageX = e.pageX;
         oldPageY = e.pageY;
         return false;
       });
 
-    jvm.$("body").mouseup(function () {
+    jvm.$("body").mouseup(() => {
       mouseDown = false;
     });
 
     if (this.params.zoomOnScroll) {
-      this.container.mousewheel(function (event, delta, deltaX, deltaY) {
-        var offset = jvm.$(map.container).offset(),
+      this.container.mousewheel((event, delta, deltaX, deltaY) => {
+        var offset = jvm.$(this.container).offset(),
           centerX = event.pageX - offset.left,
           centerY = event.pageY - offset.top,
           zoomStep = Math.pow(1.3, deltaY);
 
-        map.label.hide();
+        this.label.hide();
 
-        map.setScale(map.scale * zoomStep, centerX, centerY);
+        this.setScale(this.scale * zoomStep, centerX, centerY);
         event.preventDefault();
       });
     }
@@ -299,13 +311,12 @@ jvm.WorldMap.prototype = {
   bindContainerTouchEvents: function () {
     var touchStartScale,
       touchStartDistance,
-      map = this,
       touchX,
       touchY,
       centerTouchX,
       centerTouchY,
       lastTouchesLength,
-      handleTouchEvent = function (e) {
+      handleTouchEvent = (e) => {
         var touches = e.originalEvent.touches,
           offset,
           scale,
@@ -318,13 +329,13 @@ jvm.WorldMap.prototype = {
 
         if (touches.length == 1) {
           if (lastTouchesLength == 1) {
-            transXOld = map.transX;
-            transYOld = map.transY;
-            map.transX -= (touchX - touches[0].pageX) / map.scale;
-            map.transY -= (touchY - touches[0].pageY) / map.scale;
-            map.applyTransform();
-            map.label.hide();
-            if (transXOld != map.transX || transYOld != map.transY) {
+            transXOld = this.transX;
+            transYOld = this.transY;
+            this.transX -= (touchX - touches[0].pageX) / this.scale;
+            this.transY -= (touchY - touches[0].pageY) / this.scale;
+            this.applyTransform();
+            this.label.hide();
+            if (transXOld != this.transX || transYOld != this.transY) {
               e.preventDefault();
             }
           }
@@ -334,13 +345,14 @@ jvm.WorldMap.prototype = {
           if (lastTouchesLength == 2) {
             scale =
               Math.sqrt(
-                Math.pow(touches[0].pageX - touches[1].pageX, 2) + Math.pow(touches[0].pageY - touches[1].pageY, 2)
+                Math.pow(touches[0].pageX - touches[1].pageX, 2) +
+                  Math.pow(touches[0].pageY - touches[1].pageY, 2)
               ) / touchStartDistance;
-            map.setScale(touchStartScale * scale, centerTouchX, centerTouchY);
-            map.label.hide();
+            this.setScale(touchStartScale * scale, centerTouchX, centerTouchY);
+            this.label.hide();
             e.preventDefault();
           } else {
-            offset = jvm.$(map.container).offset();
+            offset = jvm.$(this.container).offset();
             if (touches[0].pageX > touches[1].pageX) {
               centerTouchX = touches[1].pageX + (touches[0].pageX - touches[1].pageX) / 2;
             } else {
@@ -353,9 +365,10 @@ jvm.WorldMap.prototype = {
             }
             centerTouchX -= offset.left;
             centerTouchY -= offset.top;
-            touchStartScale = map.scale;
+            touchStartScale = this.scale;
             touchStartDistance = Math.sqrt(
-              Math.pow(touches[0].pageX - touches[1].pageX, 2) + Math.pow(touches[0].pageY - touches[1].pageY, 2)
+              Math.pow(touches[0].pageX - touches[1].pageX, 2) +
+                Math.pow(touches[0].pageY - touches[1].pageY, 2)
             );
           }
         }
@@ -371,19 +384,21 @@ jvm.WorldMap.prototype = {
     var map = this,
       mouseMoved;
 
-    this.container.mousemove(function () {
+    this.container.mousemove(() => {
       mouseMoved = true;
     });
 
     /* Can not use common class selectors here because of the bug in jQuery
        SVG handling, use with caution. */
     this.container.delegate("[class~='jvectormap-element']", "mouseover mouseout", function (e) {
-      var path = this,
-        baseVal = jvm.$(this).attr("class").baseVal ? jvm.$(this).attr("class").baseVal : jvm.$(this).attr("class"),
+      var baseVal = jvm.$(this).attr("class").baseVal
+          ? jvm.$(this).attr("class").baseVal
+          : jvm.$(this).attr("class"),
         type = baseVal.indexOf("jvectormap-region") === -1 ? "marker" : "region",
         code = type == "region" ? jvm.$(this).attr("data-code") : jvm.$(this).attr("data-index"),
         element = type == "region" ? map.regions[code].element : map.markers[code].element,
-        labelText = type == "region" ? map.mapData.paths[code].name : map.markers[code].config.name || "",
+        labelText =
+          type == "region" ? map.mapData.paths[code].name : map.markers[code].config.name || "",
         labelShowEvent = jvm.$.Event(type + "LabelShow.jvectormap"),
         overEvent = jvm.$.Event(type + "Over.jvectormap");
 
@@ -409,15 +424,16 @@ jvm.WorldMap.prototype = {
 
     /* Can not use common class selectors here because of the bug in jQuery
        SVG handling, use with caution. */
-    this.container.delegate("[class~='jvectormap-element']", "mousedown", function (e) {
+    this.container.delegate("[class~='jvectormap-element']", "mousedown", (e) => {
       mouseMoved = false;
     });
 
     /* Can not use common class selectors here because of the bug in jQuery
        SVG handling, use with caution. */
     this.container.delegate("[class~='jvectormap-element']", "mouseup", function (e) {
-      var path = this,
-        baseVal = jvm.$(this).attr("class").baseVal ? jvm.$(this).attr("class").baseVal : jvm.$(this).attr("class"),
+      var baseVal = jvm.$(this).attr("class").baseVal
+          ? jvm.$(this).attr("class").baseVal
+          : jvm.$(this).attr("class"),
         type = baseVal.indexOf("jvectormap-region") === -1 ? "marker" : "region",
         code = type == "region" ? jvm.$(this).attr("data-code") : jvm.$(this).attr("data-index"),
         clickEvent = jvm.$.Event(type + "Click.jvectormap"),
@@ -441,27 +457,23 @@ jvm.WorldMap.prototype = {
   },
 
   bindZoomButtons: function () {
-    var map = this;
-
     jvm.$("<div/>").addClass("jvectormap-zoomin").text("+").appendTo(this.container);
     jvm.$("<div/>").addClass("jvectormap-zoomout").html("&#x2212;").appendTo(this.container);
 
-    this.container.find(".jvectormap-zoomin").click(function () {
-      map.setScale(map.scale * map.params.zoomStep, map.width / 2, map.height / 2);
+    this.container.find(".jvectormap-zoomin").click(() => {
+      this.setScale(this.scale * this.params.zoomStep, this.width / 2, this.height / 2);
     });
-    this.container.find(".jvectormap-zoomout").click(function () {
-      map.setScale(map.scale / map.params.zoomStep, map.width / 2, map.height / 2);
+    this.container.find(".jvectormap-zoomout").click(() => {
+      this.setScale(this.scale / this.params.zoomStep, this.width / 2, this.height / 2);
     });
   },
 
   createLabel: function () {
-    var map = this;
-
     this.label = jvm.$("<div/>").addClass("jvectormap-label").appendTo(jvm.$("body"));
 
-    this.container.mousemove(function (e) {
-      var left = e.pageX - 15 - map.labelWidth,
-        top = e.pageY - 15 - map.labelHeight;
+    this.container.mousemove((e) => {
+      var left = e.pageX - 15 - this.labelWidth,
+        top = e.pageY - 15 - this.labelHeight;
 
       if (left < 5) {
         left = e.pageX + 15;
@@ -470,8 +482,8 @@ jvm.WorldMap.prototype = {
         top = e.pageY + 15;
       }
 
-      if (map.label.is(":visible")) {
-        map.label.css({
+      if (this.label.is(":visible")) {
+        this.label.css({
           left: left,
           top: top,
         });
@@ -492,8 +504,10 @@ jvm.WorldMap.prototype = {
     if (typeof anchorX != "undefined" && typeof anchorY != "undefined") {
       zoomStep = scale / this.scale;
       if (isCentered) {
-        this.transX = anchorX + (this.defaultWidth * (this.width / (this.defaultWidth * scale))) / 2;
-        this.transY = anchorY + (this.defaultHeight * (this.height / (this.defaultHeight * scale))) / 2;
+        this.transX =
+          anchorX + (this.defaultWidth * (this.width / (this.defaultWidth * scale))) / 2;
+        this.transY =
+          anchorY + (this.defaultHeight * (this.height / (this.defaultHeight * scale))) / 2;
       } else {
         this.transX -= ((zoomStep - 1) / scale) * anchorX;
         this.transY -= ((zoomStep - 1) / scale) * anchorY;
@@ -530,8 +544,12 @@ jvm.WorldMap.prototype = {
               newBbox = {
                 x: Math.min(bbox.x, itemBbox.x),
                 y: Math.min(bbox.y, itemBbox.y),
-                width: Math.max(bbox.x + bbox.width, itemBbox.x + itemBbox.width) - Math.min(bbox.x, itemBbox.x),
-                height: Math.max(bbox.y + bbox.height, itemBbox.y + itemBbox.height) - Math.min(bbox.y, itemBbox.y),
+                width:
+                  Math.max(bbox.x + bbox.width, itemBbox.x + itemBbox.width) -
+                  Math.min(bbox.x, itemBbox.x),
+                height:
+                  Math.max(bbox.y + bbox.height, itemBbox.y + itemBbox.height) -
+                  Math.min(bbox.y, itemBbox.y),
               };
               bbox = newBbox;
             }

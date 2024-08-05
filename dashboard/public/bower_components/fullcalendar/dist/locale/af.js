@@ -1,4 +1,4 @@
-!(function (e, n) {
+!((e, n) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = n(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? n(require("moment"), require("fullcalendar"))
         : n(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, n) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, n) =>
+  ((e) => {
     function n(t) {
       if (a[t]) return a[t].exports;
       var r = (a[t] = { i: t, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (n.m = e),
       (n.c = a),
-      (n.d = function (e, a, t) {
+      (n.d = (e, a, t) => {
         n.o(e, a) || Object.defineProperty(e, a, { configurable: !1, enumerable: !0, get: t });
       }),
-      (n.n = function (e) {
-        var a =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (n.n = (e) => {
+        var a = e && e.__esModule ? () => e.default : () => e;
         return n.d(a, "a", a), a;
       }),
-      (n.o = function (e, n) {
-        return Object.prototype.hasOwnProperty.call(e, n);
-      }),
+      (n.o = (e, n) => Object.prototype.hasOwnProperty.call(e, n)),
       (n.p = ""),
       n((n.s = 71))
     );
   })({
-    0: function (n, a) {
+    0: (n, a) => {
       n.exports = e;
     },
-    1: function (e, a) {
+    1: (e, a) => {
       e.exports = n;
     },
-    71: function (e, n, a) {
+    71: (e, n, a) => {
       Object.defineProperty(n, "__esModule", { value: !0 }), a(72);
       var t = a(1);
       t.datepickerLocale("af", "af", {
@@ -66,7 +57,20 @@
           "November",
           "Desember",
         ],
-        monthNamesShort: ["Jan", "Feb", "Mrt", "Apr", "Mei", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Des"],
+        monthNamesShort: [
+          "Jan",
+          "Feb",
+          "Mrt",
+          "Apr",
+          "Mei",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Okt",
+          "Nov",
+          "Des",
+        ],
         dayNames: ["Sondag", "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrydag", "Saterdag"],
         dayNamesShort: ["Son", "Maa", "Din", "Woe", "Don", "Vry", "Sat"],
         dayNamesMin: ["So", "Ma", "Di", "Wo", "Do", "Vr", "Sa"],
@@ -84,25 +88,22 @@
           noEventsMessage: "Daar is geen gebeurtenisse nie",
         });
     },
-    72: function (e, n, a) {
-      !(function (e, n) {
+    72: (e, n, a) => {
+      !((e, n) => {
         n(a(0));
-      })(0, function (e) {
-        return e.defineLocale("af", {
-          months: "Januarie_Februarie_Maart_April_Mei_Junie_Julie_Augustus_September_Oktober_November_Desember".split(
-            "_"
-          ),
+      })(0, (e) =>
+        e.defineLocale("af", {
+          months:
+            "Januarie_Februarie_Maart_April_Mei_Junie_Julie_Augustus_September_Oktober_November_Desember".split(
+              "_"
+            ),
           monthsShort: "Jan_Feb_Mrt_Apr_Mei_Jun_Jul_Aug_Sep_Okt_Nov_Des".split("_"),
           weekdays: "Sondag_Maandag_Dinsdag_Woensdag_Donderdag_Vrydag_Saterdag".split("_"),
           weekdaysShort: "Son_Maa_Din_Woe_Don_Vry_Sat".split("_"),
           weekdaysMin: "So_Ma_Di_Wo_Do_Vr_Sa".split("_"),
           meridiemParse: /vm|nm/i,
-          isPM: function (e) {
-            return /^nm$/i.test(e);
-          },
-          meridiem: function (e, n, a) {
-            return e < 12 ? (a ? "vm" : "VM") : a ? "nm" : "NM";
-          },
+          isPM: (e) => /^nm$/i.test(e),
+          meridiem: (e, n, a) => (e < 12 ? (a ? "vm" : "VM") : a ? "nm" : "NM"),
           longDateFormat: {
             LT: "HH:mm",
             LTS: "HH:mm:ss",
@@ -136,12 +137,10 @@
             yy: "%d jaar",
           },
           dayOfMonthOrdinalParse: /\d{1,2}(ste|de)/,
-          ordinal: function (e) {
-            return e + (1 === e || 8 === e || e >= 20 ? "ste" : "de");
-          },
+          ordinal: (e) => e + (1 === e || 8 === e || e >= 20 ? "ste" : "de"),
           week: { dow: 1, doy: 4 },
-        });
-      });
+        })
+      );
     },
-  });
-});
+  })
+);

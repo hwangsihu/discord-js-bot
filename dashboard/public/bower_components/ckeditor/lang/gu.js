@@ -31,7 +31,10 @@ CKEDITOR.lang["gu"] = {
     uploadOne: "Uploading file ({percentage}%)...",
     uploadMany: "Uploading files, {current} of {max} done ({percentage}%)...",
   },
-  undo: { redo: "રિડૂ; પછી હતી એવી સ્થિતિ પાછી લાવવી", undo: "રદ કરવું; પહેલાં હતી એવી સ્થિતિ પાછી લાવવી" },
+  undo: {
+    redo: "રિડૂ; પછી હતી એવી સ્થિતિ પાછી લાવવી",
+    undo: "રદ કરવું; પહેલાં હતી એવી સ્થિતિ પાછી લાવવી",
+  },
   toolbar: {
     toolbarCollapse: "ટૂલબાર નાનું કરવું",
     toolbarExpand: "ટૂલબાર મોટું કરવું",
@@ -271,12 +274,19 @@ CKEDITOR.lang["gu"] = {
     noUrlError: "Upload URL is not defined.",
     responseError: "Incorrect server response.",
   },
-  fakeobjects: { anchor: "અનકર", flash: "ફ્લેશ ", hiddenfield: "હિડન ", iframe: "IFrame", unknown: "અનનોન ઓબ્જેક્ટ" },
+  fakeobjects: {
+    anchor: "અનકર",
+    flash: "ફ્લેશ ",
+    hiddenfield: "હિડન ",
+    iframe: "IFrame",
+    unknown: "અનનોન ઓબ્જેક્ટ",
+  },
   elementspath: { eleLabel: "એલીમેન્ટ્સ નો ", eleTitle: "એલીમેન્ટ %1" },
   contextmenu: { options: "કોન્તેક્ષ્ત્ મેનુના વિકલ્પો" },
   clipboard: {
     copy: "નકલ",
-    copyError: "તમારા બ્રાઉઝર ની સુરક્ષિત સેટિંગસ કોપી કરવાની પરવાનગી નથી આપતી.  (Ctrl/Cmd+C) का प्रयोग करें।",
+    copyError:
+      "તમારા બ્રાઉઝર ની સુરક્ષિત સેટિંગસ કોપી કરવાની પરવાનગી નથી આપતી.  (Ctrl/Cmd+C) का प्रयोग करें।",
     cut: "કાપવું",
     cutError: "તમારા બ્રાઉઝર ની સુરક્ષિત સેટિંગસ કટ કરવાની પરવાનગી નથી આપતી. (Ctrl/Cmd+X) નો ઉપયોગ કરો.",
     paste: "પેસ્ટ",
@@ -371,8 +381,10 @@ CKEDITOR.lang["gu"] = {
       'Value specified for the "%1" field must be a positive number with or without a valid measurement unit (%2).',
     invalidCssLength:
       '"%1" ની વેલ્યુ એક પોસીટીવ આંકડો હોવો જોઈએ અથવા CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc) વગર.',
-    invalidHtmlLength: '"%1" ની વેલ્યુ એક પોસીટીવ આંકડો હોવો જોઈએ અથવા HTML measurement unit (px or %) વગર.',
-    invalidInlineStyle: 'ઈનલાઈન  સ્ટાઈલ ની વેલ્યુ  "name : value" ના ફોર્મેટ માં હોવી જોઈએ, વચ્ચે સેમી-કોલોન જોઈએ.',
+    invalidHtmlLength:
+      '"%1" ની વેલ્યુ એક પોસીટીવ આંકડો હોવો જોઈએ અથવા HTML measurement unit (px or %) વગર.',
+    invalidInlineStyle:
+      'ઈનલાઈન  સ્ટાઈલ ની વેલ્યુ  "name : value" ના ફોર્મેટ માં હોવી જોઈએ, વચ્ચે સેમી-કોલોન જોઈએ.',
     cssLengthTooltip: "પિક્ષ્લ્ નો આંકડો CSS unit (px, %, in, cm, mm, em, ex, pt, or pc) માં નાખો.",
     unavailable: '%1<span class="cke_accessibility">, નથી મળતું</span>',
     keyboard: {

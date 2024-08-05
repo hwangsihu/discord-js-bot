@@ -27,7 +27,8 @@ export function calendar(time, formats) {
     sod = cloneWithOffset(now, this).startOf("day"),
     format = hooks.calendarFormat(this, sod) || "sameElse";
 
-  var output = formats && (isFunction(formats[format]) ? formats[format].call(this, now) : formats[format]);
+  var output =
+    formats && (isFunction(formats[format]) ? formats[format].call(this, now) : formats[format]);
 
   return this.format(output || this.localeData().calendar(format, this, createLocal(now)));
 }

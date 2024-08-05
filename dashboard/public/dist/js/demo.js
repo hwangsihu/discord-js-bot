@@ -4,9 +4,7 @@
  * You should not use this file in production.
  * This file is for demo purposes only.
  */
-$(function () {
-  "use strict";
-
+$(() => {
   /**
    * Get access to plugins
    */
@@ -16,7 +14,7 @@ $(function () {
   var $pushMenu = $('[data-toggle="push-menu"]').data("lte.pushmenu");
   var $controlSidebar = $('[data-toggle="control-sidebar"]').data("lte.controlsidebar");
   var $layout = $("body").data("lte.layout");
-  $(window).on("load", function () {
+  $(window).on("load", () => {
     // Reinitialize variables on load
     $pushMenu = $('[data-toggle="push-menu"]').data("lte.pushmenu");
     $controlSidebar = $('[data-toggle="control-sidebar"]').data("lte.controlsidebar");
@@ -94,7 +92,7 @@ $(function () {
    * @returns Boolean false to prevent link's default action
    */
   function changeSkin(cls) {
-    $.each(mySkins, function (i) {
+    $.each(mySkins, (i) => {
       $("body").removeClass(mySkins[i]);
     });
 
@@ -132,7 +130,7 @@ $(function () {
       if (!slide) $(".control-sidebar").removeClass("control-sidebar-open");
     });
 
-    $('[data-sidebarskin="toggle"]').on("click", function () {
+    $('[data-sidebarskin="toggle"]').on("click", () => {
       var $sidebar = $(".control-sidebar");
       if ($sidebar.hasClass("control-sidebar-dark")) {
         $sidebar.removeClass("control-sidebar-dark");
@@ -169,7 +167,9 @@ $(function () {
 
   // Create the tab button
   var $tabButton = $("<li />", { class: "active" }).html(
-    "<a href='#control-sidebar-theme-demo-options-tab' data-toggle='tab'>" + '<i class="fa fa-wrench"></i>' + "</a>"
+    "<a href='#control-sidebar-theme-demo-options-tab' data-toggle='tab'>" +
+      '<i class="fa fa-wrench"></i>' +
+      "</a>"
   );
 
   // Add the tab button to the right sidebar tabs
@@ -293,7 +293,9 @@ $(function () {
       '<p class="text-center no-margin" style="font-size: 12px">Blue Light</p>'
   );
   $skinsList.append($skinBlueLight);
-  var $skinBlackLight = $("<li />", { style: "float:left; width: 33.33333%; padding: 5px;" }).append(
+  var $skinBlackLight = $("<li />", {
+    style: "float:left; width: 33.33333%; padding: 5px;",
+  }).append(
     '<a href="javascript:void(0)" data-skin="skin-black-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">' +
       '<div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>' +
       '<div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>' +
@@ -301,7 +303,9 @@ $(function () {
       '<p class="text-center no-margin" style="font-size: 12px">Black Light</p>'
   );
   $skinsList.append($skinBlackLight);
-  var $skinPurpleLight = $("<li />", { style: "float:left; width: 33.33333%; padding: 5px;" }).append(
+  var $skinPurpleLight = $("<li />", {
+    style: "float:left; width: 33.33333%; padding: 5px;",
+  }).append(
     '<a href="javascript:void(0)" data-skin="skin-purple-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">' +
       '<div><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-purple-active"></span><span class="bg-purple" style="display:block; width: 80%; float: left; height: 7px;"></span></div>' +
       '<div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>' +
@@ -309,7 +313,9 @@ $(function () {
       '<p class="text-center no-margin" style="font-size: 12px">Purple Light</p>'
   );
   $skinsList.append($skinPurpleLight);
-  var $skinGreenLight = $("<li />", { style: "float:left; width: 33.33333%; padding: 5px;" }).append(
+  var $skinGreenLight = $("<li />", {
+    style: "float:left; width: 33.33333%; padding: 5px;",
+  }).append(
     '<a href="javascript:void(0)" data-skin="skin-green-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">' +
       '<div><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-green-active"></span><span class="bg-green" style="display:block; width: 80%; float: left; height: 7px;"></span></div>' +
       '<div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>' +
@@ -325,7 +331,9 @@ $(function () {
       '<p class="text-center no-margin" style="font-size: 12px">Red Light</p>'
   );
   $skinsList.append($skinRedLight);
-  var $skinYellowLight = $("<li />", { style: "float:left; width: 33.33333%; padding: 5px;" }).append(
+  var $skinYellowLight = $("<li />", {
+    style: "float:left; width: 33.33333%; padding: 5px;",
+  }).append(
     '<a href="javascript:void(0)" data-skin="skin-yellow-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">' +
       '<div><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-yellow-active"></span><span class="bg-yellow" style="display:block; width: 80%; float: left; height: 7px;"></span></div>' +
       '<div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>' +

@@ -11,7 +11,7 @@ export function addParseToken(token, callback) {
     token = [token];
   }
   if (isNumber(callback)) {
-    func = function (input, array) {
+    func = (input, array) => {
       array[callback] = toInt(input);
     };
   }
@@ -21,7 +21,7 @@ export function addParseToken(token, callback) {
 }
 
 export function addWeekParseToken(token, callback) {
-  addParseToken(token, function (input, array, config, token) {
+  addParseToken(token, (input, array, config, token) => {
     config._w = config._w || {};
     callback(input, config._w, config, token);
   });

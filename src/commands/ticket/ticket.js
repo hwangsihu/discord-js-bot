@@ -156,7 +156,8 @@ module.exports = {
 
     // log ticket
     else if (input === "log") {
-      if (args.length < 2) return message.safeReply("Please provide a channel where ticket logs must be sent");
+      if (args.length < 2)
+        return message.safeReply("Please provide a channel where ticket logs must be sent");
       const target = message.guild.findMatchingChannels(args[1]);
       if (target.length === 0) return message.safeReply("Could not find any matching channel");
       response = await setupLogChannel(target[0], data.settings);
@@ -178,14 +179,15 @@ module.exports = {
 
     // Close all tickets
     else if (input === "closeall") {
-      let sent = await message.safeReply("Closing tickets ...");
+      const sent = await message.safeReply("Closing tickets ...");
       response = await closeAll(message, message.author);
       return sent.editable ? sent.edit(response) : message.channel.send(response);
     }
 
     // Add user to ticket
     else if (input === "add") {
-      if (args.length < 2) return message.safeReply("Please provide a user or role to add to the ticket");
+      if (args.length < 2)
+        return message.safeReply("Please provide a user or role to add to the ticket");
       let inputId;
       if (message.mentions.users.size > 0) inputId = message.mentions.users.first().id;
       else if (message.mentions.roles.size > 0) inputId = message.mentions.roles.first().id;
@@ -272,7 +274,10 @@ module.exports = {
  */
 async function ticketModalSetup({ guild, channel, member }, targetChannel, settings) {
   const buttonRow = new ActionRowBuilder().addComponents(
-    new ButtonBuilder().setCustomId("ticket_btnSetup").setLabel("Setup Message").setStyle(ButtonStyle.Primary)
+    new ButtonBuilder()
+      .setCustomId("ticket_btnSetup")
+      .setLabel("Setup Message")
+      .setStyle(ButtonStyle.Primary)
   );
 
   const sentMsg = await channel.safeSend({
@@ -285,12 +290,16 @@ async function ticketModalSetup({ guild, channel, member }, targetChannel, setti
   const btnInteraction = await channel
     .awaitMessageComponent({
       componentType: ComponentType.Button,
-      filter: (i) => i.customId === "ticket_btnSetup" && i.member.id === member.id && i.message.id === sentMsg.id,
+      filter: (i) =>
+        i.customId === "ticket_btnSetup" &&
+        i.member.id === member.id &&
+        i.message.id === sentMsg.id,
       time: 20000,
     })
     .catch((ex) => {});
 
-  if (!btnInteraction) return sentMsg.edit({ content: "No response received, cancelling setup", components: [] });
+  if (!btnInteraction)
+    return sentMsg.edit({ content: "No response received, cancelling setup", components: [] });
 
   // display modal
   await btnInteraction.showModal(
@@ -327,11 +336,15 @@ async function ticketModalSetup({ guild, channel, member }, targetChannel, setti
   const modal = await btnInteraction
     .awaitModalSubmit({
       time: 1 * 60 * 1000,
-      filter: (m) => m.customId === "ticket-modalSetup" && m.member.id === member.id && m.message.id === sentMsg.id,
+      filter: (m) =>
+        m.customId === "ticket-modalSetup" &&
+        m.member.id === member.id &&
+        m.message.id === sentMsg.id,
     })
     .catch((ex) => {});
 
-  if (!modal) return sentMsg.edit({ content: "No response received, cancelling setup", components: [] });
+  if (!modal)
+    return sentMsg.edit({ content: "No response received, cancelling setup", components: [] });
 
   await modal.reply("Setting up ticket message ...");
   const title = modal.fields.getTextInputValue("title");
@@ -346,7 +359,10 @@ async function ticketModalSetup({ guild, channel, member }, targetChannel, setti
     .setFooter({ text: footer || "You can only have 1 open ticket at a time!" });
 
   const tktBtnRow = new ActionRowBuilder().addComponents(
-    new ButtonBuilder().setLabel("Open a ticket").setCustomId("TICKET_CREATE").setStyle(ButtonStyle.Success)
+    new ButtonBuilder()
+      .setLabel("Open a ticket")
+      .setCustomId("TICKET_CREATE")
+      .setStyle(ButtonStyle.Success)
   );
 
   await targetChannel.send({ embeds: [embed], components: [tktBtnRow] });

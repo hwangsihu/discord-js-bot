@@ -1,6 +1,6 @@
 module("Dropdown - attachBody - positioning");
 
-test("appends to the dropdown parent", function (assert) {
+test("appends to the dropdown parent", (assert) => {
   assert.expect(4);
 
   var $ = require("jquery");
@@ -37,16 +37,23 @@ test("appends to the dropdown parent", function (assert) {
 
   dropdown.position($dropdown, $container);
 
-  assert.equal($parent.children().length, 1, "The dropdown should not be placed until after it is opened");
+  assert.equal(
+    $parent.children().length,
+    1,
+    "The dropdown should not be placed until after it is opened"
+  );
 
   dropdown._showDropdown();
 
   assert.equal($parent.children().length, 2, "The dropdown should now be in the container as well");
 
-  assert.ok($.contains($parent[0], $dropdown[0]), "The dropdown should be contained within the parent container");
+  assert.ok(
+    $.contains($parent[0], $dropdown[0]),
+    "The dropdown should be contained within the parent container"
+  );
 });
 
-test("dropdown is positioned down with static margins", function (assert) {
+test("dropdown is positioned down with static margins", (assert) => {
   var $ = require("jquery");
   var $select = $("<select></select>");
   var $parent = $("<div></div>");
@@ -81,13 +88,20 @@ test("dropdown is positioned down with static margins", function (assert) {
 
   var $dropdown = dropdown.render();
 
-  assert.equal($dropdown[0].style.top, 0, "The drodpown should not have any offset before it is displayed");
+  assert.equal(
+    $dropdown[0].style.top,
+    0,
+    "The drodpown should not have any offset before it is displayed"
+  );
 
   dropdown.bind(container, $container);
   dropdown.position($dropdown, $container);
   dropdown._showDropdown();
 
-  assert.ok(dropdown.$dropdown.hasClass("select2-dropdown--below"), "The dropdown should be forced down");
+  assert.ok(
+    dropdown.$dropdown.hasClass("select2-dropdown--below"),
+    "The dropdown should be forced down"
+  );
 
   assert.equal(
     $dropdown.css("top").substring(0, 2),
@@ -98,7 +112,7 @@ test("dropdown is positioned down with static margins", function (assert) {
   assert.equal($dropdown.css("left"), "10px", "The offset should be 10px on the left");
 });
 
-test("dropdown is positioned down with absolute offsets", function (assert) {
+test("dropdown is positioned down with absolute offsets", (assert) => {
   var $ = require("jquery");
   var $select = $("<select></select>");
   var $parent = $("<div></div>");
@@ -131,13 +145,20 @@ test("dropdown is positioned down with absolute offsets", function (assert) {
 
   var $dropdown = dropdown.render();
 
-  assert.equal($dropdown[0].style.top, 0, "The drodpown should not have any offset before it is displayed");
+  assert.equal(
+    $dropdown[0].style.top,
+    0,
+    "The drodpown should not have any offset before it is displayed"
+  );
 
   dropdown.bind(container, $container);
   dropdown.position($dropdown, $container);
   dropdown._showDropdown();
 
-  assert.ok(dropdown.$dropdown.hasClass("select2-dropdown--below"), "The dropdown should be forced down");
+  assert.ok(
+    dropdown.$dropdown.hasClass("select2-dropdown--below"),
+    "The dropdown should be forced down"
+  );
 
   assert.equal(
     $dropdown.css("top").substring(0, 2),

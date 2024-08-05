@@ -1,4 +1,4 @@
-define(["jquery", "../utils"], function ($, Utils) {
+define(["jquery", "../utils"], ($, Utils) => {
   function AttachBody(decorated, $element, options) {
     this.$dropdownParent = options.get("dropdownParent") || $(document.body);
 
@@ -6,37 +6,35 @@ define(["jquery", "../utils"], function ($, Utils) {
   }
 
   AttachBody.prototype.bind = function (decorated, container, $container) {
-    var self = this;
-
     var setupResultsEvents = false;
 
     decorated.call(this, container, $container);
 
-    container.on("open", function () {
-      self._showDropdown();
-      self._attachPositioningHandler(container);
+    container.on("open", () => {
+      this._showDropdown();
+      this._attachPositioningHandler(container);
 
       if (!setupResultsEvents) {
         setupResultsEvents = true;
 
-        container.on("results:all", function () {
-          self._positionDropdown();
-          self._resizeDropdown();
+        container.on("results:all", () => {
+          this._positionDropdown();
+          this._resizeDropdown();
         });
 
-        container.on("results:append", function () {
-          self._positionDropdown();
-          self._resizeDropdown();
+        container.on("results:append", () => {
+          this._positionDropdown();
+          this._resizeDropdown();
         });
       }
     });
 
-    container.on("close", function () {
-      self._hideDropdown();
-      self._detachPositioningHandler(container);
+    container.on("close", () => {
+      this._hideDropdown();
+      this._detachPositioningHandler(container);
     });
 
-    this.$dropdownContainer.on("mousedown", function (evt) {
+    this.$dropdownContainer.on("mousedown", (evt) => {
       evt.stopPropagation();
     });
   };
@@ -78,8 +76,6 @@ define(["jquery", "../utils"], function ($, Utils) {
   };
 
   AttachBody.prototype._attachPositioningHandler = function (decorated, container) {
-    var self = this;
-
     var scrollEvent = "scroll.select2." + container.id;
     var resizeEvent = "resize.select2." + container.id;
     var orientationEvent = "orientationchange.select2." + container.id;
@@ -97,9 +93,9 @@ define(["jquery", "../utils"], function ($, Utils) {
       $(this).scrollTop(position.y);
     });
 
-    $(window).on(scrollEvent + " " + resizeEvent + " " + orientationEvent, function (e) {
-      self._positionDropdown();
-      self._resizeDropdown();
+    $(window).on(scrollEvent + " " + resizeEvent + " " + orientationEvent, (e) => {
+      this._positionDropdown();
+      this._resizeDropdown();
     });
   };
 

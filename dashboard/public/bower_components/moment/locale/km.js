@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var symbolMap = {
       1: "១",
       2: "២",
@@ -50,10 +48,8 @@
       LLLL: "dddd, D MMMM YYYY HH:mm",
     },
     meridiemParse: /ព្រឹក|ល្ងាច/,
-    isPM: function (input) {
-      return input === "ល្ងាច";
-    },
-    meridiem: function (hour, minute, isLower) {
+    isPM: (input) => input === "ល្ងាច",
+    meridiem: (hour, minute, isLower) => {
       if (hour < 12) {
         return "ព្រឹក";
       } else {
@@ -86,16 +82,8 @@
     },
     dayOfMonthOrdinalParse: /ទី\d{1,2}/,
     ordinal: "ទី%d",
-    preparse: function (string) {
-      return string.replace(/[១២៣៤៥៦៧៨៩០]/g, function (match) {
-        return numberMap[match];
-      });
-    },
-    postformat: function (string) {
-      return string.replace(/\d/g, function (match) {
-        return symbolMap[match];
-      });
-    },
+    preparse: (string) => string.replace(/[១២៣៤៥៦៧៨៩០]/g, (match) => numberMap[match]),
+    postformat: (string) => string.replace(/\d/g, (match) => symbolMap[match]),
     week: {
       dow: 1, // Monday is the first day of the week.
       doy: 4, // The week that contains Jan 4th is the first week of the year.

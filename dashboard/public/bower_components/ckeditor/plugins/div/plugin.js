@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   CKEDITOR.plugins.add("div", {
     requires: "dialog",
     lang: "af,ar,az,bg,bn,bs,ca,cs,cy,da,de,de-ch,el,en,en-au,en-ca,en-gb,eo,es,es-mx,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,oc,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn",
@@ -12,7 +12,8 @@
       if (!a.blockless) {
         var c = a.lang.div,
           b = "div(*)";
-        CKEDITOR.dialog.isTabEnabled(a, "editdiv", "advanced") && (b += ";div[dir,id,lang,title]{*}");
+        CKEDITOR.dialog.isTabEnabled(a, "editdiv", "advanced") &&
+          (b += ";div[dir,id,lang,title]{*}");
         a.addCommand(
           "creatediv",
           new CKEDITOR.dialogCommand("creatediv", {
@@ -32,14 +33,19 @@
         a.addCommand("editdiv", new CKEDITOR.dialogCommand("editdiv", { requiredContent: "div" }));
         a.addCommand("removediv", {
           requiredContent: "div",
-          exec: function (a) {
+          exec: (a) => {
             function c(b) {
               (b = CKEDITOR.plugins.div.getSurroundDiv(a, b)) &&
                 !b.data("cke-div-added") &&
                 (f.push(b), b.data("cke-div-added"));
             }
             for (
-              var b = a.getSelection(), g = b && b.getRanges(), e, h = b.createBookmarks(), f = [], d = 0;
+              var b = a.getSelection(),
+                g = b && b.getRanges(),
+                e,
+                h = b.createBookmarks(),
+                f = [],
+                d = 0;
               d < g.length;
               d++
             )
@@ -51,31 +57,34 @@
             b.selectBookmarks(h);
           },
         });
-        a.ui.addButton && a.ui.addButton("CreateDiv", { label: c.toolbar, command: "creatediv", toolbar: "blocks,50" });
+        a.ui.addButton &&
+          a.ui.addButton("CreateDiv", {
+            label: c.toolbar,
+            command: "creatediv",
+            toolbar: "blocks,50",
+          });
         a.addMenuItems &&
           (a.addMenuItems({
             editdiv: { label: c.edit, command: "editdiv", group: "div", order: 1 },
             removediv: { label: c.remove, command: "removediv", group: "div", order: 5 },
           }),
           a.contextMenu &&
-            a.contextMenu.addListener(function (b) {
-              return !b || b.isReadOnly()
+            a.contextMenu.addListener((b) =>
+              !b || b.isReadOnly()
                 ? null
                 : CKEDITOR.plugins.div.getSurroundDiv(a)
                   ? { editdiv: CKEDITOR.TRISTATE_OFF, removediv: CKEDITOR.TRISTATE_OFF }
-                  : null;
-            }));
+                  : null
+            ));
         CKEDITOR.dialog.add("creatediv", this.path + "dialogs/div.js");
         CKEDITOR.dialog.add("editdiv", this.path + "dialogs/div.js");
       }
     },
   });
   CKEDITOR.plugins.div = {
-    getSurroundDiv: function (a, c) {
+    getSurroundDiv: (a, c) => {
       var b = a.elementPath(c);
-      return a.elementPath(b.blockLimit).contains(function (a) {
-        return a.is("div") && !a.isReadOnly();
-      }, 1);
+      return a.elementPath(b.blockLimit).contains((a) => a.is("div") && !a.isReadOnly(), 1);
     },
   };
 })();

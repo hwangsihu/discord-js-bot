@@ -48,7 +48,7 @@ export default moment.defineLocale("ko", {
     yy: "%d년",
   },
   dayOfMonthOrdinalParse: /\d{1,2}(일|월|주)/,
-  ordinal: function (number, period) {
+  ordinal: (number, period) => {
     switch (period) {
       case "d":
       case "D":
@@ -64,10 +64,6 @@ export default moment.defineLocale("ko", {
     }
   },
   meridiemParse: /오전|오후/,
-  isPM: function (token) {
-    return token === "오후";
-  },
-  meridiem: function (hour, minute, isUpper) {
-    return hour < 12 ? "오전" : "오후";
-  },
+  isPM: (token) => token === "오후",
+  meridiem: (hour, minute, isUpper) => (hour < 12 ? "오전" : "오후"),
 });

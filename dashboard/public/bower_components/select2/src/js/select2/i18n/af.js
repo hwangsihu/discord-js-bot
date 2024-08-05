@@ -1,10 +1,8 @@
-define(function () {
+define(() => {
   // English
   return {
-    errorLoading: function () {
-      return "Die resultate kon nie gelaai word nie.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "Die resultate kon nie gelaai word nie.",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "Verwyders asseblief " + overChars + " character";
@@ -15,17 +13,15 @@ define(function () {
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "Voer asseblief " + remainingChars + " of meer karakters";
 
       return message;
     },
-    loadingMore: function () {
-      return "Meer resultate word gelaai…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Meer resultate word gelaai…",
+    maximumSelected: (args) => {
       var message = "Kies asseblief net " + args.maximum + " item";
 
       if (args.maximum != 1) {
@@ -34,14 +30,8 @@ define(function () {
 
       return message;
     },
-    noResults: function () {
-      return "Geen resultate gevind";
-    },
-    searching: function () {
-      return "Besig…";
-    },
-    removeAllItems: function () {
-      return "Verwyder alle items";
-    },
+    noResults: () => "Geen resultate gevind",
+    searching: () => "Besig…",
+    removeAllItems: () => "Verwyder alle items",
   };
 });

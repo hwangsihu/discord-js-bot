@@ -17,7 +17,11 @@ CKEDITOR.plugins.add("smiley", {
       })
     );
     a.ui.addButton &&
-      a.ui.addButton("Smiley", { label: a.lang.smiley.toolbar, command: "smiley", toolbar: "insert,50" });
+      a.ui.addButton("Smiley", {
+        label: a.lang.smiley.toolbar,
+        command: "smiley",
+        toolbar: "insert,50",
+      });
     CKEDITOR.dialog.add("smiley", this.path + "dialogs/smiley.js");
   },
 });

@@ -67,7 +67,7 @@ export default moment.defineLocale("tg", {
     yy: "%d сол",
   },
   meridiemParse: /шаб|субҳ|рӯз|бегоҳ/,
-  meridiemHour: function (hour, meridiem) {
+  meridiemHour: (hour, meridiem) => {
     if (hour === 12) {
       hour = 0;
     }
@@ -81,7 +81,7 @@ export default moment.defineLocale("tg", {
       return hour + 12;
     }
   },
-  meridiem: function (hour, minute, isLower) {
+  meridiem: (hour, minute, isLower) => {
     if (hour < 4) {
       return "шаб";
     } else if (hour < 11) {
@@ -95,7 +95,7 @@ export default moment.defineLocale("tg", {
     }
   },
   dayOfMonthOrdinalParse: /\d{1,2}-(ум|юм)/,
-  ordinal: function (number) {
+  ordinal: (number) => {
     var a = number % 10,
       b = number >= 100 ? 100 : null;
     return number + (suffixes[number] || suffixes[a] || suffixes[b]);

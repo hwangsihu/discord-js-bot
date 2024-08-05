@@ -1,16 +1,17 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var eu = moment.defineLocale("eu", {
-    months: "urtarrila_otsaila_martxoa_apirila_maiatza_ekaina_uztaila_abuztua_iraila_urria_azaroa_abendua".split("_"),
+    months:
+      "urtarrila_otsaila_martxoa_apirila_maiatza_ekaina_uztaila_abuztua_iraila_urria_azaroa_abendua".split(
+        "_"
+      ),
     monthsShort: "urt._ots._mar._api._mai._eka._uzt._abu._ira._urr._aza._abe.".split("_"),
     monthsParseExact: true,
     weekdays: "igandea_astelehena_asteartea_asteazkena_osteguna_ostirala_larunbata".split("_"),

@@ -3,7 +3,7 @@
  * Šarūnas Gliebus <ssharunas@yahoo.co.uk>
  */
 
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["lt"] = {
     days: [
       "Sekmadienis",
@@ -30,7 +30,20 @@
       "Lapkritis",
       "Gruodis",
     ],
-    monthsShort: ["Sau", "Vas", "Kov", "Bal", "Geg", "Bir", "Lie", "Rugp", "Rugs", "Spa", "Lap", "Gru"],
+    monthsShort: [
+      "Sau",
+      "Vas",
+      "Kov",
+      "Bal",
+      "Geg",
+      "Bir",
+      "Lie",
+      "Rugp",
+      "Rugs",
+      "Spa",
+      "Lap",
+      "Gru",
+    ],
     today: "Šiandien",
     monthsTitle: "Mėnesiai",
     clear: "Išvalyti",

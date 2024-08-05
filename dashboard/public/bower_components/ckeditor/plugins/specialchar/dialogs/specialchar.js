@@ -2,10 +2,10 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-CKEDITOR.dialog.add("specialchar", function (k) {
+CKEDITOR.dialog.add("specialchar", (k) => {
   var e,
     n = k.lang.specialchar,
-    m = function (c) {
+    m = (c) => {
       var b;
       c = c.data ? c.data.getTarget() : new CKEDITOR.dom.element(c);
       "a" == c.getName() &&
@@ -18,7 +18,7 @@ CKEDITOR.dialog.add("specialchar", function (k) {
     },
     p = CKEDITOR.tools.addFunction(m),
     l,
-    g = function (c, b) {
+    g = (c, b) => {
       var a;
       b = b || c.data.getTarget();
       "span" == b.getName() && (b = b.getParent());
@@ -31,7 +31,7 @@ CKEDITOR.dialog.add("specialchar", function (k) {
         l = b;
       }
     },
-    d = function (c, b) {
+    d = (c, b) => {
       b = b || c.data.getTarget();
       "span" == b.getName() && (b = b.getParent());
       "a" == b.getName() &&
@@ -40,7 +40,7 @@ CKEDITOR.dialog.add("specialchar", function (k) {
         b.getParent().removeClass("cke_light_background"),
         (l = void 0));
     },
-    q = CKEDITOR.tools.addFunction(function (c) {
+    q = CKEDITOR.tools.addFunction((c) => {
       c = new CKEDITOR.dom.event(c);
       var b = c.getTarget(),
         a;
@@ -65,7 +65,8 @@ CKEDITOR.dialog.add("specialchar", function (k) {
           break;
         case f ? 37 : 39:
           if ((a = b.getParent().getNext()))
-            (a = a.getChild(0)), 1 == a.type ? (a.focus(), d(null, b), g(null, a), c.preventDefault(!0)) : d(null, b);
+            (a = a.getChild(0)),
+              1 == a.type ? (a.focus(), d(null, b), g(null, a), c.preventDefault(!0)) : d(null, b);
           else if ((a = b.getParent().getParent().getNext()))
             (a = a.getChild([0, 0])) && 1 == a.type
               ? (a.focus(), d(null, b), g(null, a), c.preventDefault(!0))
@@ -75,7 +76,11 @@ CKEDITOR.dialog.add("specialchar", function (k) {
           (a = b.getParent().getPrevious())
             ? ((a = a.getChild(0)), a.focus(), d(null, b), g(null, a), c.preventDefault(!0))
             : (a = b.getParent().getParent().getPrevious())
-              ? ((a = a.getLast().getChild(0)), a.focus(), d(null, b), g(null, a), c.preventDefault(!0))
+              ? ((a = a.getLast().getChild(0)),
+                a.focus(),
+                d(null, b),
+                g(null, a),
+                c.preventDefault(!0))
               : d(null, b);
       }
     });
@@ -160,19 +165,19 @@ CKEDITOR.dialog.add("specialchar", function (k) {
                 onMouseout: d,
                 focus: function () {
                   var c = this.getElement().getElementsByTag("a").getItem(0);
-                  setTimeout(function () {
+                  setTimeout(() => {
                     c.focus();
                     g(null, c);
                   }, 0);
                 },
                 onShow: function () {
                   var c = this.getElement().getChild([0, 0, 0, 0, 0]);
-                  setTimeout(function () {
+                  setTimeout(() => {
                     c.focus();
                     g(null, c);
                   }, 0);
                 },
-                onLoad: function (c) {
+                onLoad: (c) => {
                   e = c.sender;
                 },
               },

@@ -2,7 +2,13 @@ const { removeReactionRole } = require("@schemas/ReactionRoles");
 const { parsePermissions } = require("@helpers/Utils");
 const { ApplicationCommandOptionType, ChannelType } = require("discord.js");
 
-const channelPerms = ["EmbedLinks", "ReadMessageHistory", "AddReactions", "UseExternalEmojis", "ManageMessages"];
+const channelPerms = [
+  "EmbedLinks",
+  "ReadMessageHistory",
+  "AddReactions",
+  "UseExternalEmojis",
+  "ManageMessages",
+];
 
 /**
  * @type {import("@structures/Command")}
@@ -39,10 +45,11 @@ module.exports = {
 
   async messageRun(message, args) {
     const targetChannel = message.guild.findMatchingChannels(args[0]);
-    if (targetChannel.length === 0) return message.safeReply(`No channels found matching ${args[0]}`);
+    if (targetChannel.length === 0)
+      return message.safeReply(`No channels found matching ${args[0]}`);
 
     const targetMessage = args[1];
-    const response = await removeRR(message.guild, targetChannel[0], targetMessage);
+    const response = await removeRr(message.guild, targetChannel[0], targetMessage);
 
     await message.safeReply(response);
   },
@@ -51,12 +58,12 @@ module.exports = {
     const targetChannel = interaction.options.getChannel("channel");
     const messageId = interaction.options.getString("message_id");
 
-    const response = await removeRR(interaction.guild, targetChannel, messageId);
+    const response = await removeRr(interaction.guild, targetChannel, messageId);
     await interaction.followUp(response);
   },
 };
 
-async function removeRR(guild, channel, messageId) {
+async function removeRr(guild, channel, messageId) {
   if (!channel.permissionsFor(guild.members.me).has(channelPerms)) {
     return `You need the following permissions in ${channel.toString()}\n${parsePermissions(channelPerms)}`;
   }

@@ -4,19 +4,15 @@ Copyright 2014 Olly Smith All rights reserved.
 Licensed under the BSD-2-Clause License.
 */
 
-(function () {
+(() => {
   var $,
     Morris,
     minutesSpecHelper,
     secondsSpecHelper,
     __slice = [].slice,
-    __bind = function (fn, me) {
-      return function () {
-        return fn.apply(me, arguments);
-      };
-    },
+    __bind = (fn, me) => () => fn.apply(me, arguments),
     __hasProp = {}.hasOwnProperty,
-    __extends = function (child, parent) {
+    __extends = (child, parent) => {
       for (var key in parent) {
         if (__hasProp.call(parent, key)) child[key] = parent[key];
       }
@@ -41,7 +37,7 @@ Licensed under the BSD-2-Clause License.
 
   $ = jQuery;
 
-  Morris.EventEmitter = (function () {
+  Morris.EventEmitter = (() => {
     function EventEmitter() {}
 
     EventEmitter.prototype.on = function (name, handler) {
@@ -72,7 +68,7 @@ Licensed under the BSD-2-Clause License.
     return EventEmitter;
   })();
 
-  Morris.commas = function (num) {
+  Morris.commas = (num) => {
     var absnum, intnum, ret, strabsnum;
     if (num != null) {
       ret = num < 0 ? "-" : "";
@@ -89,16 +85,13 @@ Licensed under the BSD-2-Clause License.
     }
   };
 
-  Morris.pad2 = function (number) {
-    return (number < 10 ? "0" : "") + number;
-  };
+  Morris.pad2 = (number) => (number < 10 ? "0" : "") + number;
 
-  Morris.Grid = (function (_super) {
+  Morris.Grid = ((_super) => {
     __extends(Grid, _super);
 
     function Grid(options) {
       this.resizeHandler = __bind(this.resizeHandler, this);
-      var _this = this;
       if (typeof options.element === "string") {
         this.el = $(document.getElementById(options.element));
       } else {
@@ -123,39 +116,39 @@ Licensed under the BSD-2-Clause License.
         this.init();
       }
       this.setData(this.options.data);
-      this.el.bind("mousemove", function (evt) {
+      this.el.bind("mousemove", (evt) => {
         var left, offset, right, width, x;
-        offset = _this.el.offset();
+        offset = this.el.offset();
         x = evt.pageX - offset.left;
-        if (_this.selectFrom) {
-          left = _this.data[_this.hitTest(Math.min(x, _this.selectFrom))]._x;
-          right = _this.data[_this.hitTest(Math.max(x, _this.selectFrom))]._x;
+        if (this.selectFrom) {
+          left = this.data[this.hitTest(Math.min(x, this.selectFrom))]._x;
+          right = this.data[this.hitTest(Math.max(x, this.selectFrom))]._x;
           width = right - left;
-          return _this.selectionRect.attr({
+          return this.selectionRect.attr({
             x: left,
             width: width,
           });
         } else {
-          return _this.fire("hovermove", x, evt.pageY - offset.top);
+          return this.fire("hovermove", x, evt.pageY - offset.top);
         }
       });
-      this.el.bind("mouseleave", function (evt) {
-        if (_this.selectFrom) {
-          _this.selectionRect.hide();
-          _this.selectFrom = null;
+      this.el.bind("mouseleave", (evt) => {
+        if (this.selectFrom) {
+          this.selectionRect.hide();
+          this.selectFrom = null;
         }
-        return _this.fire("hoverout");
+        return this.fire("hoverout");
       });
-      this.el.bind("touchstart touchmove touchend", function (evt) {
+      this.el.bind("touchstart touchmove touchend", (evt) => {
         var offset, touch;
         touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
-        offset = _this.el.offset();
-        return _this.fire("hovermove", touch.pageX - offset.left, touch.pageY - offset.top);
+        offset = this.el.offset();
+        return this.fire("hovermove", touch.pageX - offset.left, touch.pageY - offset.top);
       });
-      this.el.bind("click", function (evt) {
+      this.el.bind("click", (evt) => {
         var offset;
-        offset = _this.el.offset();
-        return _this.fire("gridclick", evt.pageX - offset.left, evt.pageY - offset.top);
+        offset = this.el.offset();
+        return this.fire("gridclick", evt.pageX - offset.left, evt.pageY - offset.top);
       });
       if (this.options.rangeSelect) {
         this.selectionRect = this.raphael
@@ -166,24 +159,24 @@ Licensed under the BSD-2-Clause License.
           })
           .toBack()
           .hide();
-        this.el.bind("mousedown", function (evt) {
+        this.el.bind("mousedown", (evt) => {
           var offset;
-          offset = _this.el.offset();
-          return _this.startRange(evt.pageX - offset.left);
+          offset = this.el.offset();
+          return this.startRange(evt.pageX - offset.left);
         });
-        this.el.bind("mouseup", function (evt) {
+        this.el.bind("mouseup", (evt) => {
           var offset;
-          offset = _this.el.offset();
-          _this.endRange(evt.pageX - offset.left);
-          return _this.fire("hovermove", evt.pageX - offset.left, evt.pageY - offset.top);
+          offset = this.el.offset();
+          this.endRange(evt.pageX - offset.left);
+          return this.fire("hovermove", evt.pageX - offset.left, evt.pageY - offset.top);
         });
       }
       if (this.options.resize) {
-        $(window).bind("resize", function (evt) {
-          if (_this.timeoutId != null) {
-            window.clearTimeout(_this.timeoutId);
+        $(window).bind("resize", (evt) => {
+          if (this.timeoutId != null) {
+            window.clearTimeout(this.timeoutId);
           }
-          return (_this.timeoutId = window.setTimeout(_this.resizeHandler, 100));
+          return (this.timeoutId = window.setTimeout(this.resizeHandler, 100));
         });
       }
       this.el.css("-webkit-tap-highlight-color", "rgba(0,0,0,0)");
@@ -276,7 +269,7 @@ Licensed under the BSD-2-Clause License.
               ykey = _ref[idx];
               yval = row[ykey];
               if (typeof yval === "string") {
-                yval = parseFloat(yval);
+                yval = Number.parseFloat(yval);
               }
               if (yval != null && typeof yval !== "number") {
                 yval = null;
@@ -284,13 +277,11 @@ Licensed under the BSD-2-Clause License.
               if (yval != null) {
                 if (this.cumulative) {
                   total += yval;
+                } else if (ymax != null) {
+                  ymax = Math.max(yval, ymax);
+                  ymin = Math.min(yval, ymin);
                 } else {
-                  if (ymax != null) {
-                    ymax = Math.max(yval, ymax);
-                    ymin = Math.min(yval, ymin);
-                  } else {
-                    ymax = ymin = yval;
-                  }
+                  ymax = ymin = yval;
                 }
               }
               if (this.cumulative && total != null) {
@@ -306,9 +297,7 @@ Licensed under the BSD-2-Clause License.
         return _results;
       }.call(this);
       if (this.options.parseTime) {
-        this.data = this.data.sort(function (a, b) {
-          return (a.x > b.x) - (b.x > a.x);
-        });
+        this.data = this.data.sort((a, b) => (a.x > b.x) - (b.x > a.x));
       }
       this.xmin = this.data[0].x;
       this.xmax = this.data[this.data.length - 1].x;
@@ -343,8 +332,16 @@ Licensed under the BSD-2-Clause License.
         }
         this.ymax += 1;
       }
-      if ((_ref = this.options.axes) === true || _ref === "both" || _ref === "y" || this.options.grid === true) {
-        if (this.options.ymax === this.gridDefaults.ymax && this.options.ymin === this.gridDefaults.ymin) {
+      if (
+        (_ref = this.options.axes) === true ||
+        _ref === "both" ||
+        _ref === "y" ||
+        this.options.grid === true
+      ) {
+        if (
+          this.options.ymax === this.gridDefaults.ymax &&
+          this.options.ymin === this.gridDefaults.ymin
+        ) {
           this.grid = this.autoGridLines(this.ymin, this.ymax, this.options.numLines);
           this.ymin = Math.min(this.ymin, this.grid[0]);
           this.ymax = Math.max(this.ymax, this.grid[this.grid.length - 1]);
@@ -353,7 +350,11 @@ Licensed under the BSD-2-Clause License.
           this.grid = function () {
             var _i, _ref1, _ref2, _results;
             _results = [];
-            for (y = _i = _ref1 = this.ymin, _ref2 = this.ymax; step > 0 ? _i <= _ref2 : _i >= _ref2; y = _i += step) {
+            for (
+              y = _i = _ref1 = this.ymin, _ref2 = this.ymax;
+              step > 0 ? _i <= _ref2 : _i >= _ref2;
+              y = _i += step
+            ) {
               _results.push(y);
             }
             return _results;
@@ -372,27 +373,25 @@ Licensed under the BSD-2-Clause License.
       if (typeof boundaryOption === "string") {
         if (boundaryOption.slice(0, 4) === "auto") {
           if (boundaryOption.length > 5) {
-            suggestedValue = parseInt(boundaryOption.slice(5), 10);
+            suggestedValue = Number.parseInt(boundaryOption.slice(5), 10);
             if (currentValue == null) {
               return suggestedValue;
             }
             return Math[boundaryType](currentValue, suggestedValue);
+          } else if (currentValue != null) {
+            return currentValue;
           } else {
-            if (currentValue != null) {
-              return currentValue;
-            } else {
-              return 0;
-            }
+            return 0;
           }
         } else {
-          return parseInt(boundaryOption, 10);
+          return Number.parseInt(boundaryOption, 10);
         }
       } else {
         return boundaryOption;
       }
     };
 
-    Grid.prototype.autoGridLines = function (ymin, ymax, nlines) {
+    Grid.prototype.autoGridLines = (ymin, ymax, nlines) => {
       var gmax, gmin, grid, smag, span, step, unit, y, ymag;
       span = ymax - ymin;
       ymag = Math.floor(Math.log(span) / Math.log(10));
@@ -410,16 +409,16 @@ Licensed under the BSD-2-Clause License.
       }
       if (step < 1) {
         smag = Math.floor(Math.log(step) / Math.log(10));
-        grid = (function () {
+        grid = (() => {
           var _i, _results;
           _results = [];
           for (y = _i = gmin; step > 0 ? _i <= gmax : _i >= gmax; y = _i += step) {
-            _results.push(parseFloat(y.toFixed(1 - smag)));
+            _results.push(Number.parseFloat(y.toFixed(1 - smag)));
           }
           return _results;
         })();
       } else {
-        grid = (function () {
+        grid = (() => {
           var _i, _results;
           _results = [];
           for (y = _i = gmin; step > 0 ? _i <= gmax : _i >= gmax; y = _i += step) {
@@ -534,7 +533,12 @@ Licensed under the BSD-2-Clause License.
 
     Grid.prototype.drawGrid = function () {
       var lineY, y, _i, _len, _ref, _ref1, _ref2, _results;
-      if (this.options.grid === false && (_ref = this.options.axes) !== true && _ref !== "both" && _ref !== "y") {
+      if (
+        this.options.grid === false &&
+        (_ref = this.options.axes) !== true &&
+        _ref !== "both" &&
+        _ref !== "y"
+      ) {
         return;
       }
       _ref1 = this.grid;
@@ -546,7 +550,9 @@ Licensed under the BSD-2-Clause License.
           this.drawYAxisLabel(this.left - this.options.padding / 2, y, this.yAxisFormat(lineY));
         }
         if (this.options.grid) {
-          _results.push(this.drawGridLine("M" + this.left + "," + y + "H" + (this.left + this.width)));
+          _results.push(
+            this.drawGridLine("M" + this.left + "," + y + "H" + (this.left + this.width))
+          );
         } else {
           _results.push(void 0);
         }
@@ -642,7 +648,7 @@ Licensed under the BSD-2-Clause License.
     return Grid;
   })(Morris.EventEmitter);
 
-  Morris.parseDate = function (date) {
+  Morris.parseDate = (date) => {
     var isecs, m, msecs, n, o, offsetmins, p, q, r, ret, secs;
     if (typeof date === "number") {
       return date;
@@ -654,80 +660,84 @@ Licensed under the BSD-2-Clause License.
     q = date.match(/^(\d+)-(\d+)-(\d+)[ T](\d+):(\d+)(Z|([+-])(\d\d):?(\d\d))?$/);
     r = date.match(/^(\d+)-(\d+)-(\d+)[ T](\d+):(\d+):(\d+(\.\d+)?)(Z|([+-])(\d\d):?(\d\d))?$/);
     if (m) {
-      return new Date(parseInt(m[1], 10), parseInt(m[2], 10) * 3 - 1, 1).getTime();
+      return new Date(Number.parseInt(m[1], 10), Number.parseInt(m[2], 10) * 3 - 1, 1).getTime();
     } else if (n) {
-      return new Date(parseInt(n[1], 10), parseInt(n[2], 10) - 1, 1).getTime();
+      return new Date(Number.parseInt(n[1], 10), Number.parseInt(n[2], 10) - 1, 1).getTime();
     } else if (o) {
-      return new Date(parseInt(o[1], 10), parseInt(o[2], 10) - 1, parseInt(o[3], 10)).getTime();
+      return new Date(
+        Number.parseInt(o[1], 10),
+        Number.parseInt(o[2], 10) - 1,
+        Number.parseInt(o[3], 10)
+      ).getTime();
     } else if (p) {
-      ret = new Date(parseInt(p[1], 10), 0, 1);
+      ret = new Date(Number.parseInt(p[1], 10), 0, 1);
       if (ret.getDay() !== 4) {
         ret.setMonth(0, 1 + ((4 - ret.getDay() + 7) % 7));
       }
-      return ret.getTime() + parseInt(p[2], 10) * 604800000;
+      return ret.getTime() + Number.parseInt(p[2], 10) * 604800000;
     } else if (q) {
-      if (!q[6]) {
-        return new Date(
-          parseInt(q[1], 10),
-          parseInt(q[2], 10) - 1,
-          parseInt(q[3], 10),
-          parseInt(q[4], 10),
-          parseInt(q[5], 10)
-        ).getTime();
-      } else {
+      if (q[6]) {
         offsetmins = 0;
         if (q[6] !== "Z") {
-          offsetmins = parseInt(q[8], 10) * 60 + parseInt(q[9], 10);
+          offsetmins = Number.parseInt(q[8], 10) * 60 + Number.parseInt(q[9], 10);
           if (q[7] === "+") {
             offsetmins = 0 - offsetmins;
           }
         }
         return Date.UTC(
-          parseInt(q[1], 10),
-          parseInt(q[2], 10) - 1,
-          parseInt(q[3], 10),
-          parseInt(q[4], 10),
-          parseInt(q[5], 10) + offsetmins
+          Number.parseInt(q[1], 10),
+          Number.parseInt(q[2], 10) - 1,
+          Number.parseInt(q[3], 10),
+          Number.parseInt(q[4], 10),
+          Number.parseInt(q[5], 10) + offsetmins
         );
+      } else {
+        return new Date(
+          Number.parseInt(q[1], 10),
+          Number.parseInt(q[2], 10) - 1,
+          Number.parseInt(q[3], 10),
+          Number.parseInt(q[4], 10),
+          Number.parseInt(q[5], 10)
+        ).getTime();
       }
     } else if (r) {
-      secs = parseFloat(r[6]);
+      secs = Number.parseFloat(r[6]);
       isecs = Math.floor(secs);
       msecs = Math.round((secs - isecs) * 1000);
-      if (!r[8]) {
-        return new Date(
-          parseInt(r[1], 10),
-          parseInt(r[2], 10) - 1,
-          parseInt(r[3], 10),
-          parseInt(r[4], 10),
-          parseInt(r[5], 10),
-          isecs,
-          msecs
-        ).getTime();
-      } else {
+      if (r[8]) {
         offsetmins = 0;
         if (r[8] !== "Z") {
-          offsetmins = parseInt(r[10], 10) * 60 + parseInt(r[11], 10);
+          offsetmins = Number.parseInt(r[10], 10) * 60 + Number.parseInt(r[11], 10);
           if (r[9] === "+") {
             offsetmins = 0 - offsetmins;
           }
         }
         return Date.UTC(
-          parseInt(r[1], 10),
-          parseInt(r[2], 10) - 1,
-          parseInt(r[3], 10),
-          parseInt(r[4], 10),
-          parseInt(r[5], 10) + offsetmins,
+          Number.parseInt(r[1], 10),
+          Number.parseInt(r[2], 10) - 1,
+          Number.parseInt(r[3], 10),
+          Number.parseInt(r[4], 10),
+          Number.parseInt(r[5], 10) + offsetmins,
           isecs,
           msecs
         );
+      } else {
+        return new Date(
+          Number.parseInt(r[1], 10),
+          Number.parseInt(r[2], 10) - 1,
+          Number.parseInt(r[3], 10),
+          Number.parseInt(r[4], 10),
+          Number.parseInt(r[5], 10),
+          isecs,
+          msecs
+        ).getTime();
       }
     } else {
-      return new Date(parseInt(date, 10), 0, 1).getTime();
+      return new Date(Number.parseInt(date, 10), 0, 1).getTime();
     }
   };
 
-  Morris.Hover = (function () {
+  Morris.Hover = (() => {
     Hover.defaults = {
       class: "morris-hover morris-default-style",
     };
@@ -743,12 +753,12 @@ Licensed under the BSD-2-Clause License.
     }
 
     Hover.prototype.update = function (html, x, y) {
-      if (!html) {
-        return this.hide();
-      } else {
+      if (html) {
         this.html(html);
         this.show();
         return this.moveTo(x, y);
+      } else {
+        return this.hide();
       }
     };
 
@@ -776,7 +786,7 @@ Licensed under the BSD-2-Clause License.
       }
       return this.el.css({
         left: left + "px",
-        top: parseInt(top) + "px",
+        top: Number.parseInt(top) + "px",
       });
     };
 
@@ -791,7 +801,7 @@ Licensed under the BSD-2-Clause License.
     return Hover;
   })();
 
-  Morris.Line = (function (_super) {
+  Morris.Line = ((_super) => {
     __extends(Line, _super);
 
     function Line(options) {
@@ -860,7 +870,7 @@ Licensed under the BSD-2-Clause License.
           (row._ymax = Math.min.apply(
             Math,
             [this.bottom].concat(
-              (function () {
+              (() => {
                 var _j, _len1, _ref1, _results1;
                 _ref1 = row._y;
                 _results1 = [];
@@ -996,29 +1006,19 @@ Licensed under the BSD-2-Clause License.
     };
 
     Line.prototype.drawXAxis = function () {
-      var drawLabel,
-        l,
-        labels,
-        prevAngleMargin,
-        prevLabelMargin,
-        row,
-        ypos,
-        _i,
-        _len,
-        _results,
-        _this = this;
+      var drawLabel, l, labels, prevAngleMargin, prevLabelMargin, row, ypos, _i, _len, _results;
       ypos = this.bottom + this.options.padding / 2;
       prevLabelMargin = null;
       prevAngleMargin = null;
-      drawLabel = function (labelText, xpos) {
+      drawLabel = (labelText, xpos) => {
         var label, labelBox, margin, offset, textBox;
-        label = _this.drawXAxisLabel(_this.transX(xpos), ypos, labelText);
+        label = this.drawXAxisLabel(this.transX(xpos), ypos, labelText);
         textBox = label.getBBox();
-        label.transform("r" + -_this.options.xLabelAngle);
+        label.transform("r" + -this.options.xLabelAngle);
         labelBox = label.getBBox();
         label.transform("t0," + labelBox.height / 2 + "...");
-        if (_this.options.xLabelAngle !== 0) {
-          offset = -0.5 * textBox.width * Math.cos((_this.options.xLabelAngle * Math.PI) / 180.0);
+        if (this.options.xLabelAngle !== 0) {
+          offset = -0.5 * textBox.width * Math.cos((this.options.xLabelAngle * Math.PI) / 180.0);
           label.transform("t" + offset + ",0...");
         }
         labelBox = label.getBBox();
@@ -1027,13 +1027,15 @@ Licensed under the BSD-2-Clause License.
             prevLabelMargin >= labelBox.x + labelBox.width ||
             (prevAngleMargin != null && prevAngleMargin >= labelBox.x)) &&
           labelBox.x >= 0 &&
-          labelBox.x + labelBox.width < _this.el.width()
+          labelBox.x + labelBox.width < this.el.width()
         ) {
-          if (_this.options.xLabelAngle !== 0) {
-            margin = (1.25 * _this.options.gridTextSize) / Math.sin((_this.options.xLabelAngle * Math.PI) / 180.0);
+          if (this.options.xLabelAngle !== 0) {
+            margin =
+              (1.25 * this.options.gridTextSize) /
+              Math.sin((this.options.xLabelAngle * Math.PI) / 180.0);
             prevAngleMargin = labelBox.x - margin;
           }
-          return (prevLabelMargin = labelBox.x - _this.options.xLabelMargin);
+          return (prevLabelMargin = labelBox.x - this.options.xLabelMargin);
         } else {
           return label.remove();
         }
@@ -1074,7 +1076,11 @@ Licensed under the BSD-2-Clause License.
     Line.prototype.drawSeries = function () {
       var i, _i, _j, _ref, _ref1, _results;
       this.seriesPoints = [];
-      for (i = _i = _ref = this.options.ykeys.length - 1; _ref <= 0 ? _i <= 0 : _i >= 0; i = _ref <= 0 ? ++_i : --_i) {
+      for (
+        i = _i = _ref = this.options.ykeys.length - 1;
+        _ref <= 0 ? _i <= 0 : _i >= 0;
+        i = _ref <= 0 ? ++_i : --_i
+      ) {
         this._drawLineFor(i);
       }
       _results = [];
@@ -1097,7 +1103,12 @@ Licensed under the BSD-2-Clause License.
         row = _ref[_i];
         circle = null;
         if (row._y[index] != null) {
-          circle = this.drawLinePoint(row._x, row._y[index], this.colorFor(row, index, "point"), index);
+          circle = this.drawLinePoint(
+            row._x,
+            row._y[index],
+            this.colorFor(row, index, "point"),
+            index
+          );
         }
         _results.push(this.seriesPoints[index].push(circle));
       }
@@ -1112,7 +1123,7 @@ Licensed under the BSD-2-Clause License.
       }
     };
 
-    Line.createPath = function (coords, smooth, bottom) {
+    Line.createPath = (coords, smooth, bottom) => {
       var coord, g, grads, i, ix, lg, path, prevCoord, x1, x2, y1, y2, _i, _len;
       path = "";
       if (smooth) {
@@ -1137,10 +1148,8 @@ Licensed under the BSD-2-Clause License.
             } else {
               path += "L" + coord.x + "," + coord.y;
             }
-          } else {
-            if (!smooth || grads[i] != null) {
-              path += "M" + coord.x + "," + coord.y;
-            }
+          } else if (!smooth || grads[i] != null) {
+            path += "M" + coord.x + "," + coord.y;
           }
         }
         prevCoord = coord;
@@ -1148,11 +1157,9 @@ Licensed under the BSD-2-Clause License.
       return path;
     };
 
-    Line.gradients = function (coords) {
+    Line.gradients = (coords) => {
       var coord, grad, i, nextCoord, prevCoord, _i, _len, _results;
-      grad = function (a, b) {
-        return (a.y - b.y) / (a.x - b.x);
-      };
+      grad = (a, b) => (a.y - b.y) / (a.x - b.x);
       _results = [];
       for (i = _i = 0, _len = coords.length; _i < _len; i = ++_i) {
         coord = coords[i];
@@ -1229,7 +1236,10 @@ Licensed under the BSD-2-Clause License.
     };
 
     Line.prototype.drawLinePath = function (path, lineColor, lineIndex) {
-      return this.raphael.path(path).attr("stroke", lineColor).attr("stroke-width", this.lineWidthForSeries(lineIndex));
+      return this.raphael
+        .path(path)
+        .attr("stroke", lineColor)
+        .attr("stroke-width", this.lineWidthForSeries(lineIndex));
     };
 
     Line.prototype.drawLinePoint = function (xPos, yPos, pointColor, lineIndex) {
@@ -1287,7 +1297,7 @@ Licensed under the BSD-2-Clause License.
     return Line;
   })(Morris.Grid);
 
-  Morris.labelSeries = function (dmin, dmax, pxwidth, specName, xLabelFormat) {
+  Morris.labelSeries = (dmin, dmax, pxwidth, specName, xLabelFormat) => {
     var d, d0, ddensity, name, ret, s, spec, t, _i, _len, _ref;
     ddensity = (200 * (dmax - dmin)) / pxwidth;
     d0 = new Date(dmin);
@@ -1322,96 +1332,59 @@ Licensed under the BSD-2-Clause License.
     return ret;
   };
 
-  minutesSpecHelper = function (interval) {
-    return {
-      span: interval * 60 * 1000,
-      start: function (d) {
-        return new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours());
-      },
-      fmt: function (d) {
-        return "" + Morris.pad2(d.getHours()) + ":" + Morris.pad2(d.getMinutes());
-      },
-      incr: function (d) {
-        return d.setUTCMinutes(d.getUTCMinutes() + interval);
-      },
-    };
-  };
+  minutesSpecHelper = (interval) => ({
+    span: interval * 60 * 1000,
+    start: (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours()),
+    fmt: (d) => "" + Morris.pad2(d.getHours()) + ":" + Morris.pad2(d.getMinutes()),
+    incr: (d) => d.setUTCMinutes(d.getUTCMinutes() + interval),
+  });
 
-  secondsSpecHelper = function (interval) {
-    return {
-      span: interval * 1000,
-      start: function (d) {
-        return new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes());
-      },
-      fmt: function (d) {
-        return "" + Morris.pad2(d.getHours()) + ":" + Morris.pad2(d.getMinutes()) + ":" + Morris.pad2(d.getSeconds());
-      },
-      incr: function (d) {
-        return d.setUTCSeconds(d.getUTCSeconds() + interval);
-      },
-    };
-  };
+  secondsSpecHelper = (interval) => ({
+    span: interval * 1000,
+    start: (d) =>
+      new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes()),
+    fmt: (d) =>
+      "" +
+      Morris.pad2(d.getHours()) +
+      ":" +
+      Morris.pad2(d.getMinutes()) +
+      ":" +
+      Morris.pad2(d.getSeconds()),
+    incr: (d) => d.setUTCSeconds(d.getUTCSeconds() + interval),
+  });
 
   Morris.LABEL_SPECS = {
     decade: {
       span: 172800000000,
-      start: function (d) {
-        return new Date(d.getFullYear() - (d.getFullYear() % 10), 0, 1);
-      },
-      fmt: function (d) {
-        return "" + d.getFullYear();
-      },
-      incr: function (d) {
-        return d.setFullYear(d.getFullYear() + 10);
-      },
+      start: (d) => new Date(d.getFullYear() - (d.getFullYear() % 10), 0, 1),
+      fmt: (d) => "" + d.getFullYear(),
+      incr: (d) => d.setFullYear(d.getFullYear() + 10),
     },
     year: {
       span: 17280000000,
-      start: function (d) {
-        return new Date(d.getFullYear(), 0, 1);
-      },
-      fmt: function (d) {
-        return "" + d.getFullYear();
-      },
-      incr: function (d) {
-        return d.setFullYear(d.getFullYear() + 1);
-      },
+      start: (d) => new Date(d.getFullYear(), 0, 1),
+      fmt: (d) => "" + d.getFullYear(),
+      incr: (d) => d.setFullYear(d.getFullYear() + 1),
     },
     month: {
       span: 2419200000,
-      start: function (d) {
-        return new Date(d.getFullYear(), d.getMonth(), 1);
-      },
-      fmt: function (d) {
-        return "" + d.getFullYear() + "-" + Morris.pad2(d.getMonth() + 1);
-      },
-      incr: function (d) {
-        return d.setMonth(d.getMonth() + 1);
-      },
+      start: (d) => new Date(d.getFullYear(), d.getMonth(), 1),
+      fmt: (d) => "" + d.getFullYear() + "-" + Morris.pad2(d.getMonth() + 1),
+      incr: (d) => d.setMonth(d.getMonth() + 1),
     },
     week: {
       span: 604800000,
-      start: function (d) {
-        return new Date(d.getFullYear(), d.getMonth(), d.getDate());
-      },
-      fmt: function (d) {
-        return "" + d.getFullYear() + "-" + Morris.pad2(d.getMonth() + 1) + "-" + Morris.pad2(d.getDate());
-      },
-      incr: function (d) {
-        return d.setDate(d.getDate() + 7);
-      },
+      start: (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate()),
+      fmt: (d) =>
+        "" + d.getFullYear() + "-" + Morris.pad2(d.getMonth() + 1) + "-" + Morris.pad2(d.getDate()),
+      incr: (d) => d.setDate(d.getDate() + 7),
     },
     day: {
       span: 86400000,
-      start: function (d) {
-        return new Date(d.getFullYear(), d.getMonth(), d.getDate());
-      },
-      fmt: function (d) {
-        return "" + d.getFullYear() + "-" + Morris.pad2(d.getMonth() + 1) + "-" + Morris.pad2(d.getDate());
-      },
-      incr: function (d) {
-        return d.setDate(d.getDate() + 1);
-      },
+      start: (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate()),
+      fmt: (d) =>
+        "" + d.getFullYear() + "-" + Morris.pad2(d.getMonth() + 1) + "-" + Morris.pad2(d.getDate()),
+      incr: (d) => d.setDate(d.getDate() + 1),
     },
     hour: minutesSpecHelper(60),
     "30min": minutesSpecHelper(30),
@@ -1445,7 +1418,7 @@ Licensed under the BSD-2-Clause License.
     "second",
   ];
 
-  Morris.Area = (function (_super) {
+  Morris.Area = ((_super) => {
     var areaDefaults;
 
     __extends(Area, _super);
@@ -1540,7 +1513,15 @@ Licensed under the BSD-2-Clause License.
       if (path !== null) {
         path =
           path +
-          ("L" + this.transX(this.xmax) + "," + this.bottom + "L" + this.transX(this.xmin) + "," + this.bottom + "Z");
+          ("L" +
+            this.transX(this.xmax) +
+            "," +
+            this.bottom +
+            "L" +
+            this.transX(this.xmin) +
+            "," +
+            this.bottom +
+            "Z");
         return this.drawFilledPath(path, this.fillForSeries(index));
       }
     };
@@ -1566,7 +1547,7 @@ Licensed under the BSD-2-Clause License.
     return Area;
   })(Morris.Line);
 
-  Morris.Bar = (function (_super) {
+  Morris.Bar = ((_super) => {
     __extends(Bar, _super);
 
     function Bar(options) {
@@ -1609,7 +1590,10 @@ Licensed under the BSD-2-Clause License.
       var _ref;
       this.calcBars();
       if (this.options.hideHover === false) {
-        return (_ref = this.hover).update.apply(_ref, this.hoverContentForRow(this.data.length - 1));
+        return (_ref = this.hover).update.apply(
+          _ref,
+          this.hoverContentForRow(this.data.length - 1)
+        );
       }
     };
 
@@ -1649,12 +1633,28 @@ Licensed under the BSD-2-Clause License.
     };
 
     Bar.prototype.drawXAxis = function () {
-      var i, label, labelBox, margin, offset, prevAngleMargin, prevLabelMargin, row, textBox, ypos, _i, _ref, _results;
+      var i,
+        label,
+        labelBox,
+        margin,
+        offset,
+        prevAngleMargin,
+        prevLabelMargin,
+        row,
+        textBox,
+        ypos,
+        _i,
+        _ref,
+        _results;
       ypos = this.bottom + (this.options.xAxisLabelTopPadding || this.options.padding / 2);
       prevLabelMargin = null;
       prevAngleMargin = null;
       _results = [];
-      for (i = _i = 0, _ref = this.data.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+      for (
+        i = _i = 0, _ref = this.data.length;
+        0 <= _ref ? _i < _ref : _i > _ref;
+        i = 0 <= _ref ? ++_i : --_i
+      ) {
         row = this.data[this.data.length - 1 - i];
         label = this.drawXAxisLabel(row._x, ypos, row.label);
         textBox = label.getBBox();
@@ -1673,7 +1673,9 @@ Licensed under the BSD-2-Clause License.
           labelBox.x + labelBox.width < this.el.width()
         ) {
           if (this.options.xLabelAngle !== 0) {
-            margin = (1.25 * this.options.gridTextSize) / Math.sin((this.options.xLabelAngle * Math.PI) / 180.0);
+            margin =
+              (1.25 * this.options.gridTextSize) /
+              Math.sin((this.options.xLabelAngle * Math.PI) / 180.0);
             prevAngleMargin = labelBox.x - margin;
           }
           _results.push((prevLabelMargin = labelBox.x - this.options.xLabelMargin));
@@ -1702,7 +1704,8 @@ Licensed under the BSD-2-Clause License.
         zeroPos;
       groupWidth = this.width / this.options.data.length;
       numBars = this.options.stacked ? 1 : this.options.ykeys.length;
-      barWidth = (groupWidth * this.options.barSizeRatio - this.options.barGap * (numBars - 1)) / numBars;
+      barWidth =
+        (groupWidth * this.options.barSizeRatio - this.options.barGap * (numBars - 1)) / numBars;
       if (this.options.barSize) {
         barWidth = Math.min(barWidth, this.options.barSize);
       }
@@ -1736,7 +1739,10 @@ Licensed under the BSD-2-Clause License.
                     left += sidx * (barWidth + this.options.barGap);
                   }
                   size = bottom - top;
-                  if (this.options.verticalGridCondition && this.options.verticalGridCondition(row.x)) {
+                  if (
+                    this.options.verticalGridCondition &&
+                    this.options.verticalGridCondition(row.x)
+                  ) {
                     this.drawBar(
                       this.left + idx * groupWidth,
                       this.top,
@@ -1796,7 +1802,10 @@ Licensed under the BSD-2-Clause License.
         return null;
       }
       x = Math.max(Math.min(x, this.right), this.left);
-      return Math.min(this.data.length - 1, Math.floor((x - this.left) / (this.width / this.data.length)));
+      return Math.min(
+        this.data.length - 1,
+        Math.floor((x - this.left) / (this.width / this.data.length))
+      );
     };
 
     Bar.prototype.onGridClick = function (x, y) {
@@ -1861,7 +1870,7 @@ Licensed under the BSD-2-Clause License.
       return path.attr("fill", barColor).attr("fill-opacity", opacity).attr("stroke", "none");
     };
 
-    Bar.prototype.roundedRect = function (x, y, w, h, r) {
+    Bar.prototype.roundedRect = (x, y, w, h, r) => {
       if (r == null) {
         r = [0, 0, 0, 0];
       }
@@ -1905,7 +1914,7 @@ Licensed under the BSD-2-Clause License.
     return Bar;
   })(Morris.Grid);
 
-  Morris.Donut = (function (_super) {
+  Morris.Donut = ((_super) => {
     __extends(Donut, _super);
 
     Donut.prototype.defaults = {
@@ -1931,7 +1940,6 @@ Licensed under the BSD-2-Clause License.
       this.resizeHandler = __bind(this.resizeHandler, this);
       this.select = __bind(this.select, this);
       this.click = __bind(this.click, this);
-      var _this = this;
       if (!(this instanceof Morris.Donut)) {
         return new Morris.Donut(options);
       }
@@ -1949,11 +1957,11 @@ Licensed under the BSD-2-Clause License.
       }
       this.raphael = new Raphael(this.el[0]);
       if (this.options.resize) {
-        $(window).bind("resize", function (evt) {
-          if (_this.timeoutId != null) {
-            window.clearTimeout(_this.timeoutId);
+        $(window).bind("resize", (evt) => {
+          if (this.timeoutId != null) {
+            window.clearTimeout(this.timeoutId);
           }
-          return (_this.timeoutId = window.setTimeout(_this.resizeHandler, 100));
+          return (this.timeoutId = window.setTimeout(this.resizeHandler, 100));
         });
       }
       this.setData(options.data);
@@ -1966,7 +1974,7 @@ Licensed under the BSD-2-Clause License.
         i,
         idx,
         last,
-        max_value,
+        maxValue,
         min,
         next,
         seg,
@@ -2023,13 +2031,13 @@ Licensed under the BSD-2-Clause License.
       }
       this.text1 = this.drawEmptyDonutLabel(cx, cy - 10, this.options.labelColor, 15, 800);
       this.text2 = this.drawEmptyDonutLabel(cx, cy + 10, this.options.labelColor, 14);
-      max_value = Math.max.apply(Math, this.values);
+      maxValue = Math.max.apply(Math, this.values);
       idx = 0;
       _ref2 = this.values;
       _results = [];
       for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
         value = _ref2[_k];
-        if (value === max_value) {
+        if (value === maxValue) {
           this.select(idx);
           break;
         }
@@ -2047,7 +2055,7 @@ Licensed under the BSD-2-Clause License.
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           row = _ref[_i];
-          _results.push(parseFloat(row.value));
+          _results.push(Number.parseFloat(row.value));
         }
         return _results;
       }.call(this);
@@ -2072,7 +2080,14 @@ Licensed under the BSD-2-Clause License.
     };
 
     Donut.prototype.setLabels = function (label1, label2) {
-      var inner, maxHeightBottom, maxHeightTop, maxWidth, text1bbox, text1scale, text2bbox, text2scale;
+      var inner,
+        maxHeightBottom,
+        maxHeightTop,
+        maxWidth,
+        text1bbox,
+        text1scale,
+        text2bbox,
+        text2scale;
       inner = ((Math.min(this.el.width() / 2, this.el.height() / 2) - 10) * 2) / 3;
       maxWidth = 1.8 * inner;
       maxHeightTop = inner / 2;
@@ -2101,7 +2116,15 @@ Licensed under the BSD-2-Clause License.
       text2bbox = this.text2.getBBox();
       text2scale = Math.min(maxWidth / text2bbox.width, maxHeightBottom / text2bbox.height);
       return this.text2.attr({
-        transform: "S" + text2scale + "," + text2scale + "," + (text2bbox.x + text2bbox.width / 2) + "," + text2bbox.y,
+        transform:
+          "S" +
+          text2scale +
+          "," +
+          text2scale +
+          "," +
+          (text2bbox.x + text2bbox.width / 2) +
+          "," +
+          text2bbox.y,
       });
     };
 
@@ -2123,7 +2146,7 @@ Licensed under the BSD-2-Clause License.
     return Donut;
   })(Morris.EventEmitter);
 
-  Morris.DonutSegment = (function (_super) {
+  Morris.DonutSegment = ((_super) => {
     __extends(DonutSegment, _super);
 
     function DonutSegment(cx, cy, inner, outer, p0, p1, color, backgroundColor, index, raphael) {
@@ -2158,8 +2181,16 @@ Licensed under the BSD-2-Clause License.
 
     DonutSegment.prototype.calcSegment = function (r1, r2) {
       var ix0, ix1, iy0, iy1, ox0, ox1, oy0, oy1, _ref, _ref1;
-      (_ref = this.calcArcPoints(r1)), (ix0 = _ref[0]), (iy0 = _ref[1]), (ix1 = _ref[2]), (iy1 = _ref[3]);
-      (_ref1 = this.calcArcPoints(r2)), (ox0 = _ref1[0]), (oy0 = _ref1[1]), (ox1 = _ref1[2]), (oy1 = _ref1[3]);
+      (_ref = this.calcArcPoints(r1)),
+        (ix0 = _ref[0]),
+        (iy0 = _ref[1]),
+        (ix1 = _ref[2]),
+        (iy1 = _ref[3]);
+      (_ref1 = this.calcArcPoints(r2)),
+        (ox0 = _ref1[0]),
+        (oy0 = _ref1[1]),
+        (ox1 = _ref1[2]),
+        (oy1 = _ref1[3]);
       return (
         "M" +
         ix0 +
@@ -2174,23 +2205,24 @@ Licensed under the BSD-2-Clause License.
 
     DonutSegment.prototype.calcArc = function (r) {
       var ix0, ix1, iy0, iy1, _ref;
-      (_ref = this.calcArcPoints(r)), (ix0 = _ref[0]), (iy0 = _ref[1]), (ix1 = _ref[2]), (iy1 = _ref[3]);
-      return "M" + ix0 + "," + iy0 + ("A" + r + "," + r + ",0," + this.is_long + ",0," + ix1 + "," + iy1);
+      (_ref = this.calcArcPoints(r)),
+        (ix0 = _ref[0]),
+        (iy0 = _ref[1]),
+        (ix1 = _ref[2]),
+        (iy1 = _ref[3]);
+      return (
+        "M" + ix0 + "," + iy0 + ("A" + r + "," + r + ",0," + this.is_long + ",0," + ix1 + "," + iy1)
+      );
     };
 
     DonutSegment.prototype.render = function () {
-      var _this = this;
       this.arc = this.drawDonutArc(this.hilight, this.color);
       return (this.seg = this.drawDonutSegment(
         this.path,
         this.color,
         this.backgroundColor,
-        function () {
-          return _this.fire("hover", _this.index);
-        },
-        function () {
-          return _this.fire("click", _this.index);
-        }
+        () => this.fire("hover", this.index),
+        () => this.fire("click", this.index)
       ));
     };
 
@@ -2202,7 +2234,13 @@ Licensed under the BSD-2-Clause License.
       });
     };
 
-    DonutSegment.prototype.drawDonutSegment = function (path, fillColor, strokeColor, hoverFunction, clickFunction) {
+    DonutSegment.prototype.drawDonutSegment = function (
+      path,
+      fillColor,
+      strokeColor,
+      hoverFunction,
+      clickFunction
+    ) {
       return this.raphael
         .path(path)
         .attr({

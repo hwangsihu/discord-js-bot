@@ -1,10 +1,8 @@
-define(function () {
+define(() => {
   // English
   return {
-    errorLoading: function () {
-      return "The results could not be loaded.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "The results could not be loaded.",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "Please delete " + overChars + " character";
@@ -15,17 +13,15 @@ define(function () {
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "Please enter " + remainingChars + " or more characters";
 
       return message;
     },
-    loadingMore: function () {
-      return "Loading more results…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Loading more results…",
+    maximumSelected: (args) => {
       var message = "You can only select " + args.maximum + " item";
 
       if (args.maximum != 1) {
@@ -34,14 +30,8 @@ define(function () {
 
       return message;
     },
-    noResults: function () {
-      return "No results found";
-    },
-    searching: function () {
-      return "Searching…";
-    },
-    removeAllItems: function () {
-      return "Remove all items";
-    },
+    noResults: () => "No results found",
+    searching: () => "Searching…",
+    removeAllItems: () => "Remove all items",
   };
 });

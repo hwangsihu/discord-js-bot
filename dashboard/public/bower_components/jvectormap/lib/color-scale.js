@@ -16,7 +16,7 @@ jvm.ColorScale.prototype.getValue = function (value) {
   return jvm.ColorScale.numToRgb(jvm.ColorScale.parentClass.prototype.getValue.call(this, value));
 };
 
-jvm.ColorScale.arrayToRgb = function (ar) {
+jvm.ColorScale.arrayToRgb = (ar) => {
   var rgb = "#",
     d,
     i;
@@ -28,7 +28,7 @@ jvm.ColorScale.arrayToRgb = function (ar) {
   return rgb;
 };
 
-jvm.ColorScale.numToRgb = function (num) {
+jvm.ColorScale.numToRgb = (num) => {
   num = num.toString(16);
 
   while (num.length < 6) {
@@ -38,7 +38,11 @@ jvm.ColorScale.numToRgb = function (num) {
   return "#" + num;
 };
 
-jvm.ColorScale.rgbToArray = function (rgb) {
+jvm.ColorScale.rgbToArray = (rgb) => {
   rgb = rgb.substr(1);
-  return [parseInt(rgb.substr(0, 2), 16), parseInt(rgb.substr(2, 2), 16), parseInt(rgb.substr(4, 2), 16)];
+  return [
+    Number.parseInt(rgb.substr(0, 2), 16),
+    Number.parseInt(rgb.substr(2, 2), 16),
+    Number.parseInt(rgb.substr(4, 2), 16),
+  ];
 };

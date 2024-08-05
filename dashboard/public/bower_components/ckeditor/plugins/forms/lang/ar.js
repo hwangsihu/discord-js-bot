@@ -14,7 +14,13 @@
     selected: "محدد",
     required: "Required",
   },
-  form: { title: "خصائص النموذج", menu: "خصائص النموذج", action: "اسم الملف", method: "الأسلوب", encoding: "تشفير" },
+  form: {
+    title: "خصائص النموذج",
+    menu: "خصائص النموذج",
+    action: "اسم الملف",
+    method: "الأسلوب",
+    encoding: "تشفير",
+  },
   hidden: { title: "خصائص الحقل المخفي", name: "الاسم", value: "القيمة" },
   select: {
     title: "خصائص اختيار الحقل",

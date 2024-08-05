@@ -2,7 +2,13 @@ const { addReactionRole, getReactionRoles } = require("@schemas/ReactionRoles");
 const { parseEmoji, ApplicationCommandOptionType, ChannelType } = require("discord.js");
 const { parsePermissions } = require("@helpers/Utils");
 
-const channelPerms = ["EmbedLinks", "ReadMessageHistory", "AddReactions", "UseExternalEmojis", "ManageMessages"];
+const channelPerms = [
+  "EmbedLinks",
+  "ReadMessageHistory",
+  "AddReactions",
+  "UseExternalEmojis",
+  "ManageMessages",
+];
 
 /**
  * @type {import("@structures/Command")}
@@ -51,7 +57,8 @@ module.exports = {
 
   async messageRun(message, args) {
     const targetChannel = message.guild.findMatchingChannels(args[0]);
-    if (targetChannel.length === 0) return message.safeReply(`No channels found matching ${args[0]}`);
+    if (targetChannel.length === 0)
+      return message.safeReply(`No channels found matching ${args[0]}`);
 
     const targetMessage = args[1];
 
@@ -60,7 +67,7 @@ module.exports = {
 
     const reaction = args[2];
 
-    const response = await addRR(message.guild, targetChannel[0], targetMessage, reaction, role);
+    const response = await addRr(message.guild, targetChannel[0], targetMessage, reaction, role);
     await message.safeReply(response);
   },
 
@@ -70,12 +77,12 @@ module.exports = {
     const reaction = interaction.options.getString("emoji");
     const role = interaction.options.getRole("role");
 
-    const response = await addRR(interaction.guild, targetChannel, messageId, reaction, role);
+    const response = await addRr(interaction.guild, targetChannel, messageId, reaction, role);
     await interaction.followUp(response);
   },
 };
 
-async function addRR(guild, channel, messageId, reaction, role) {
+async function addRr(guild, channel, messageId, reaction, role) {
   if (!channel.permissionsFor(guild.members.me).has(channelPerms)) {
     return `You need the following permissions in ${channel.toString()}\n${parsePermissions(channelPerms)}`;
   }
@@ -100,7 +107,8 @@ async function addRR(guild, channel, messageId, reaction, role) {
   }
 
   const custom = parseEmoji(reaction);
-  if (custom.id && !guild.emojis.cache.has(custom.id)) return "This emoji does not belong to this server";
+  if (custom.id && !guild.emojis.cache.has(custom.id))
+    return "This emoji does not belong to this server";
   const emoji = custom.id ? custom.id : custom.name;
 
   try {

@@ -39,14 +39,18 @@ module.exports = {
 
   async messageRun(message, args, data) {
     const status = args[0].toLowerCase();
-    if (!["on", "off"].includes(status)) return message.safeReply("Invalid status. Value must be `on/off`");
+    if (!["on", "off"].includes(status))
+      return message.safeReply("Invalid status. Value must be `on/off`");
 
     const response = await setFlagTranslation(status, data.settings);
     await message.safeReply(response);
   },
 
   async interactionRun(interaction, data) {
-    const response = await setFlagTranslation(interaction.options.getString("status"), data.settings);
+    const response = await setFlagTranslation(
+      interaction.options.getString("status"),
+      data.settings
+    );
     await interaction.followUp(response);
   },
 };

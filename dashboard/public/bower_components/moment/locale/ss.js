@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var ss = moment.defineLocale("ss", {
     months:
       "Bhimbidvwane_Indlovana_Indlov'lenkhulu_Mabasa_Inkhwekhweti_Inhlaba_Kholwane_Ingci_Inyoni_Imphala_Lweti_Ingongoni".split(
@@ -52,7 +50,7 @@
       yy: "%d iminyaka",
     },
     meridiemParse: /ekuseni|emini|entsambama|ebusuku/,
-    meridiem: function (hours, minutes, isLower) {
+    meridiem: (hours, minutes, isLower) => {
       if (hours < 11) {
         return "ekuseni";
       } else if (hours < 15) {
@@ -63,7 +61,7 @@
         return "ebusuku";
       }
     },
-    meridiemHour: function (hour, meridiem) {
+    meridiemHour: (hour, meridiem) => {
       if (hour === 12) {
         hour = 0;
       }

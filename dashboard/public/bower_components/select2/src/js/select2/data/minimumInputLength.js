@@ -1,4 +1,4 @@
-define([], function () {
+define([], () => {
   function MinimumInputLength(decorated, $e, options) {
     this.minimumInputLength = options.get("minimumInputLength");
 

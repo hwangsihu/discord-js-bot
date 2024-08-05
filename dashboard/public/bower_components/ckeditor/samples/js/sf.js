@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-var SF = (function () {
+var SF = (() => {
   function d(a) {
     return (a = a.attributes ? a.attributes.getNamedItem("class") : null) ? a.value.split(" ") : [];
   }
@@ -12,72 +12,68 @@ var SF = (function () {
     return e;
   }
   var b = {
-    attachListener: function (a, e, b) {
+    attachListener: (a, e, b) => {
       if (a.addEventListener) a.addEventListener(e, b, !1);
       else if (a.attachEvent)
-        a.attachEvent("on" + e, function () {
+        a.attachEvent("on" + e, () => {
           b.apply(a, arguments);
         });
       else throw Error("Could not attach event.");
     },
   };
-  b.indexOf = (function () {
+  b.indexOf = (() => {
     var a = Array.prototype.indexOf;
     return "function" === a
-      ? function (e, b) {
-          return a.call(e, b);
-        }
-      : function (a, b) {
+      ? (e, b) => a.call(e, b)
+      : (a, b) => {
           for (var c = a.length, d = 0; d < c; d++) if (a[d] === b) return d;
           return -1;
         };
   })();
-  b.accept = function (a, e) {
+  b.accept = (a, e) => {
     var c;
     a.children ? ((c = a.children), e(a)) : "number" === typeof a.length && (c = a);
     for (var d = c ? c.length || 0 : 0; d--; ) b.accept(c[d], e);
   };
-  b.getByClass = (function () {
+  b.getByClass = (() => {
     var a = document.getElementsByClassName;
     return "function" === typeof a
-      ? function (e, b) {
+      ? (e, b) => {
           "string" === typeof e && ((b = e), (e = document));
           return a.call(e, b);
         }
-      : function (a, c) {
+      : (a, c) => {
           "string" === typeof a && ((c = a), (a = document.getElementsByTagName("html")[0]));
           var d = [];
-          b.accept(a, function (a) {
+          b.accept(a, (a) => {
             b.classList.contains(a, c) && d.push(a);
           });
           return d;
         };
   })();
   b.classList = {};
-  b.classList.add = function (a, b) {
+  b.classList.add = (a, b) => {
     var f = d(a);
     f.push(b);
     a.attributes.setNamedItem(c(f));
   };
-  b.classList.remove = function (a, e) {
+  b.classList.remove = (a, e) => {
     var f = d(a, e),
       n = b.indexOf(f, e);
     -1 !== n && (f.splice(n, 1), a.attributes.setNamedItem(c(f)));
   };
-  b.classList.contains = function (a, c) {
-    return -1 !== b.indexOf(d(a), c);
-  };
+  b.classList.contains = (a, c) => -1 !== b.indexOf(d(a), c);
   b.classList.toggle = function (a, b) {
     this.contains(a, b) ? this.remove(a, b) : this.add(a, b);
   };
   return b;
 })();
 ("use strict");
-(function () {
+(() => {
   function d(c) {
     for (var b in c) delete c[b];
   }
-  SF.modal = function (c) {
+  SF.modal = (c) => {
     function b(a) {
       27 == a.keyCode && f.close();
     }
@@ -87,11 +83,11 @@ var SF = (function () {
     c.closeStyles = d;
     var a = c.afterCreate,
       e = c.afterClose;
-    c.afterCreate = function (c) {
+    c.afterCreate = (c) => {
       a && a(c);
       window.addEventListener("keydown", b);
     };
-    c.afterClose = function (a) {
+    c.afterClose = (a) => {
       e && e(a);
       window.removeEventListener("keydown", b);
     };
@@ -100,41 +96,50 @@ var SF = (function () {
   };
 })();
 ("use strict");
-(function () {
+(() => {
   for (var d = SF.getByClass("toggler"), c = d.length; c--; )
     SF.attachListener(d[c], "click", function () {
       var b =
-          SF.classList.contains(this, "icon-toggler-expanded") || SF.classList.contains(this, "icon-toggler-collapsed"),
+          SF.classList.contains(this, "icon-toggler-expanded") ||
+          SF.classList.contains(this, "icon-toggler-collapsed"),
         a = document.getElementById(this.getAttribute("data-for"));
       SF.classList.toggle(this, "collapsed");
       SF.classList.contains(this, "collapsed")
         ? (SF.classList.add(a, "collapsed"),
-          b && (SF.classList.remove(this, "icon-toggler-expanded"), SF.classList.add(this, "icon-toggler-collapsed")))
+          b &&
+            (SF.classList.remove(this, "icon-toggler-expanded"),
+            SF.classList.add(this, "icon-toggler-collapsed")))
         : (SF.classList.remove(a, "collapsed"),
-          b && (SF.classList.remove(this, "icon-toggler-collapsed"), SF.classList.add(this, "icon-toggler-expanded")));
+          b &&
+            (SF.classList.remove(this, "icon-toggler-collapsed"),
+            SF.classList.add(this, "icon-toggler-expanded")));
     });
 })();
 ("use strict");
-(function () {
+(() => {
   for (var d = SF.getByClass("tree-a"), c = d.length; c--; )
-    SF.attachListener(d[c], "click", function (b) {
+    SF.attachListener(d[c], "click", (b) => {
       b = b.target || b.srcElement;
-      "H2" !== b.nodeName || SF.classList.contains(b, "tree-a-no-sub") || SF.classList.toggle(b, "tree-a-active");
+      "H2" !== b.nodeName ||
+        SF.classList.contains(b, "tree-a-no-sub") ||
+        SF.classList.toggle(b, "tree-a-active");
     });
 })();
-(function (d, c) {
+((d, c) => {
   function b(a) {
-    return "object" === typeof Node ? a instanceof Node : a && "object" === typeof a && "number" === typeof a.nodeType;
+    return "object" === typeof Node
+      ? a instanceof Node
+      : a && "object" === typeof a && "number" === typeof a.nodeType;
   }
   function a() {
     var a = [];
     return {
       watch: a.push.bind(a),
-      trigger: function (b) {
+      trigger: (b) => {
         for (
           var c = !0,
             d = {
-              preventDefault: function () {
+              preventDefault: () => {
                 c = !1;
               },
             },
@@ -165,7 +170,7 @@ var SF = (function () {
         zIndex: 1e4,
       })
       .stylize(a("overlayStyles", { opacity: 0.5, background: "#000" }))
-      .onClick(function () {
+      .onClick(() => {
         a("overlayClose", !0) && b();
       });
   }
@@ -192,16 +197,12 @@ var SF = (function () {
       .stylize(a("modalStyles", { backgroundColor: "white", padding: "20px", borderRadius: "5px" }))
       .html(a("content"))
       .attr("role", "dialog")
-      .onClick(function (a) {
-        new e(a.target).anyAncestor(function (a) {
-          return /\bpico-close\b/.test(a.elem.className);
-        }) && b();
+      .onClick((a) => {
+        new e(a.target).anyAncestor((a) => /\bpico-close\b/.test(a.elem.className)) && b();
       });
   }
   function p(a) {
-    return function () {
-      return a().elem;
-    };
+    return () => a().elem;
   }
   function k(c) {
     function e(a, b) {
@@ -275,12 +276,12 @@ var SF = (function () {
         },
         close: g(q),
         forceClose: g(k),
-        destroy: function () {
+        destroy: () => {
           m = m().destroy();
           l = l().destroy();
           u = void 0;
         },
-        options: function (a) {
+        options: (a) => {
           c = a;
         },
         afterCreate: g(x.watch),
@@ -291,7 +292,7 @@ var SF = (function () {
       };
     return h;
   }
-  e.div = function (a) {
+  e.div = (a) => {
     var b = c.createElement("div");
     (a || c.body).appendChild(b);
     return new e(b);
@@ -339,9 +340,5 @@ var SF = (function () {
       return !1;
     },
   };
-  "function" === typeof d.define && d.define.amd
-    ? d.define(function () {
-        return k;
-      })
-    : (d.picoModal = k);
+  "function" === typeof d.define && d.define.amd ? d.define(() => k) : (d.picoModal = k);
 })(window, document);

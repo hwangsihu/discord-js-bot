@@ -1,8 +1,5 @@
 (function () {
-  "use strict";
-
-  var root = this,
-    Chart = root.Chart,
+  var Chart = this.Chart,
     //Cache a local reference to Chart.helpers
     helpers = Chart.helpers;
 
@@ -109,10 +106,10 @@
       if (this.options.showTooltips) {
         helpers.bindEvents(this, this.options.tooltipEvents, function (evt) {
           var activeSegments = evt.type !== "mouseout" ? this.getSegmentsAtEvent(evt) : [];
-          helpers.each(this.segments, function (segment) {
+          helpers.each(this.segments, (segment) => {
             segment.restore(["fillColor"]);
           });
-          helpers.each(activeSegments, function (activeSegment) {
+          helpers.each(activeSegments, (activeSegment) => {
             activeSegment.fillColor = activeSegment.highlightColor;
           });
           this.showTooltip(activeSegments);
@@ -128,7 +125,7 @@
 
       helpers.each(
         this.segments,
-        function (segment) {
+        (segment) => {
           if (segment.inRange(location.x, location.y)) segmentsArray.push(segment);
         },
         this
@@ -146,7 +143,9 @@
           highlightColor: segment.highlight || segment.color,
           label: segment.label,
           value: segment.value,
-          outerRadius: this.options.animateScale ? 0 : this.scale.calculateCenterOffset(segment.value),
+          outerRadius: this.options.animateScale
+            ? 0
+            : this.scale.calculateCenterOffset(segment.value),
           circumference: this.options.animateRotate ? 0 : this.scale.getCircumference(),
           startAngle: Math.PI * 1.5,
         })
@@ -175,7 +174,7 @@
     },
     updateScaleRange: function (datapoints) {
       var valuesArray = [];
-      helpers.each(datapoints, function (segment) {
+      helpers.each(datapoints, (segment) => {
         valuesArray.push(segment.value);
       });
 
@@ -184,7 +183,8 @@
             steps: this.options.scaleSteps,
             stepValue: this.options.scaleStepWidth,
             min: this.options.scaleStartValue,
-            max: this.options.scaleStartValue + this.options.scaleSteps * this.options.scaleStepWidth,
+            max:
+              this.options.scaleStartValue + this.options.scaleSteps * this.options.scaleStepWidth,
           }
         : helpers.calculateScaleRange(
             valuesArray,
@@ -203,7 +203,7 @@
     update: function () {
       this.calculateTotal(this.segments);
 
-      helpers.each(this.segments, function (segment) {
+      helpers.each(this.segments, (segment) => {
         segment.save();
       });
 

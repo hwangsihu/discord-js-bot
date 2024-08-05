@@ -6,11 +6,9 @@ define([
   "./core/init",
   "./traversing", // filter
   "./attributes/prop",
-], function (jQuery, toType, rcheckableType, isFunction) {
-  "use strict";
-
+], (jQuery, toType, rcheckableType, isFunction) => {
   var rbracket = /\[\]$/,
-    rCRLF = /\r?\n/g,
+    rCrlf = /\r?\n/g,
     rsubmitterTypes = /^(?:submit|button|image|reset|file)$/i,
     rsubmittable = /^(?:input|select|textarea|keygen)/i;
 
@@ -19,13 +17,18 @@ define([
 
     if (Array.isArray(obj)) {
       // Serialize array item.
-      jQuery.each(obj, function (i, v) {
+      jQuery.each(obj, (i, v) => {
         if (traditional || rbracket.test(prefix)) {
           // Treat each array item as a scalar.
           add(prefix, v);
         } else {
           // Item is non-scalar (array or object), encode its numeric index.
-          buildParams(prefix + "[" + (typeof v === "object" && v != null ? i : "") + "]", v, traditional, add);
+          buildParams(
+            prefix + "[" + (typeof v === "object" && v != null ? i : "") + "]",
+            v,
+            traditional,
+            add
+          );
         }
       });
     } else if (!traditional && toType(obj) === "object") {
@@ -41,14 +44,15 @@ define([
 
   // Serialize an array of form elements or a set of
   // key/values into a query string
-  jQuery.param = function (a, traditional) {
+  jQuery.param = (a, traditional) => {
     var prefix,
       s = [],
-      add = function (key, valueOrFunction) {
+      add = (key, valueOrFunction) => {
         // If value is a function, invoke it and use its return value
         var value = isFunction(valueOrFunction) ? valueOrFunction() : valueOrFunction;
 
-        s[s.length] = encodeURIComponent(key) + "=" + encodeURIComponent(value == null ? "" : value);
+        s[s.length] =
+          encodeURIComponent(key) + "=" + encodeURIComponent(value == null ? "" : value);
       };
 
     // If an array was passed in, assume that it is an array of form elements.
@@ -99,12 +103,13 @@ define([
           }
 
           if (Array.isArray(val)) {
-            return jQuery.map(val, function (val) {
-              return { name: elem.name, value: val.replace(rCRLF, "\r\n") };
-            });
+            return jQuery.map(val, (val) => ({
+              name: elem.name,
+              value: val.replace(rCrlf, "\r\n"),
+            }));
           }
 
-          return { name: elem.name, value: val.replace(rCRLF, "\r\n") };
+          return { name: elem.name, value: val.replace(rCrlf, "\r\n") };
         })
         .get();
     },

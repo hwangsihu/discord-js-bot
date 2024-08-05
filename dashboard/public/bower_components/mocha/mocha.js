@@ -1,4 +1,4 @@
-(function () {
+(() => {
   // CommonJS require()
 
   function require(p) {
@@ -14,42 +14,38 @@
 
   require.modules = {};
 
-  require.resolve = function (path) {
+  require.resolve = (path) => {
     var orig = path,
       reg = path + ".js",
       index = path + "/index.js";
     return (require.modules[reg] && reg) || (require.modules[index] && index) || orig;
   };
 
-  require.register = function (path, fn) {
+  require.register = (path, fn) => {
     require.modules[path] = fn;
   };
 
-  require.relative = function (parent) {
-    return function (p) {
-      if ("." != p.charAt(0)) return require(p);
+  require.relative = (parent) => (p) => {
+    if ("." != p.charAt(0)) return require(p);
 
-      var path = parent.split("/"),
-        segs = p.split("/");
-      path.pop();
+    var path = parent.split("/"),
+      segs = p.split("/");
+    path.pop();
 
-      for (var i = 0; i < segs.length; i++) {
-        var seg = segs[i];
-        if (".." == seg) path.pop();
-        else if ("." != seg) path.push(seg);
-      }
+    for (var i = 0; i < segs.length; i++) {
+      var seg = segs[i];
+      if (".." == seg) path.pop();
+      else if ("." != seg) path.push(seg);
+    }
 
-      return require(path.join("/"));
-    };
+    return require(path.join("/"));
   };
 
-  require.register("browser/debug.js", function (module, exports, require) {
-    module.exports = function (type) {
-      return function () {};
-    };
+  require.register("browser/debug.js", (module, exports, require) => {
+    module.exports = (type) => () => {};
   }); // module: browser/debug.js
 
-  require.register("browser/diff.js", function (module, exports, require) {
+  require.register("browser/diff.js", (module, exports, require) => {
     /* See LICENSE file for terms of use */
 
     /*
@@ -66,7 +62,7 @@
      * "An O(ND) Difference Algorithm and its Variations" (Myers, 1986).
      * http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.4.6927
      */
-    var JsDiff = (function () {
+    var JsDiff = (() => {
       /*jshint maxparams: 5*/
       function clonePath(path) {
         return { newPos: path.newPos, components: path.components.slice(0) };
@@ -80,7 +76,7 @@
         }
         return ret;
       }
-      function escapeHTML(s) {
+      function escapeHtml(s) {
         var n = s;
         n = n.replace(/&/g, "&amp;");
         n = n.replace(/</g, "&lt;");
@@ -121,7 +117,11 @@
           }
 
           for (var editLength = 1; editLength <= maxEditLength; editLength++) {
-            for (var diagonalPath = -1 * editLength; diagonalPath <= editLength; diagonalPath += 2) {
+            for (
+              var diagonalPath = -1 * editLength;
+              diagonalPath <= editLength;
+              diagonalPath += 2
+            ) {
               var basePath;
               var addPath = bestPath[diagonalPath - 1],
                 removePath = bestPath[diagonalPath + 1];
@@ -147,7 +147,12 @@
               } else {
                 basePath = clonePath(addPath);
                 basePath.newPos++;
-                this.pushComponent(basePath.components, newString[basePath.newPos], true, undefined);
+                this.pushComponent(
+                  basePath.components,
+                  newString[basePath.newPos],
+                  true,
+                  undefined
+                );
               }
 
               var oldPos = this.extractCommon(basePath, newString, oldString, diagonalPath);
@@ -166,7 +171,11 @@
           if (last && last.added === added && last.removed === removed) {
             // We need to clone here as the component clone operation is just
             // as shallow array clone
-            components[components.length - 1] = { value: this.join(last.value, value), added: added, removed: removed };
+            components[components.length - 1] = {
+              value: this.join(last.value, value),
+              added: added,
+              removed: removed,
+            };
           } else {
             components.push({ value: value, added: added, removed: removed });
           }
@@ -198,53 +207,34 @@
             return left === right;
           }
         },
-        join: function (left, right) {
-          return left + right;
-        },
-        tokenize: function (value) {
-          return value;
-        },
+        join: (left, right) => left + right,
+        tokenize: (value) => value,
       };
 
       var CharDiff = new Diff();
 
       var WordDiff = new Diff(true);
       var WordWithSpaceDiff = new Diff();
-      WordDiff.tokenize = WordWithSpaceDiff.tokenize = function (value) {
-        return removeEmpty(value.split(/(\s+|\b)/));
-      };
+      WordDiff.tokenize = WordWithSpaceDiff.tokenize = (value) =>
+        removeEmpty(value.split(/(\s+|\b)/));
 
       var CssDiff = new Diff(true);
-      CssDiff.tokenize = function (value) {
-        return removeEmpty(value.split(/([{}:;,]|\s+)/));
-      };
+      CssDiff.tokenize = (value) => removeEmpty(value.split(/([{}:;,]|\s+)/));
 
       var LineDiff = new Diff();
-      LineDiff.tokenize = function (value) {
-        return value.split(/^/m);
-      };
+      LineDiff.tokenize = (value) => value.split(/^/m);
 
       return {
         Diff: Diff,
 
-        diffChars: function (oldStr, newStr) {
-          return CharDiff.diff(oldStr, newStr);
-        },
-        diffWords: function (oldStr, newStr) {
-          return WordDiff.diff(oldStr, newStr);
-        },
-        diffWordsWithSpace: function (oldStr, newStr) {
-          return WordWithSpaceDiff.diff(oldStr, newStr);
-        },
-        diffLines: function (oldStr, newStr) {
-          return LineDiff.diff(oldStr, newStr);
-        },
+        diffChars: (oldStr, newStr) => CharDiff.diff(oldStr, newStr),
+        diffWords: (oldStr, newStr) => WordDiff.diff(oldStr, newStr),
+        diffWordsWithSpace: (oldStr, newStr) => WordWithSpaceDiff.diff(oldStr, newStr),
+        diffLines: (oldStr, newStr) => LineDiff.diff(oldStr, newStr),
 
-        diffCss: function (oldStr, newStr) {
-          return CssDiff.diff(oldStr, newStr);
-        },
+        diffCss: (oldStr, newStr) => CssDiff.diff(oldStr, newStr),
 
-        createPatch: function (fileName, oldStr, newStr, oldHeader, newHeader) {
+        createPatch: (fileName, oldStr, newStr, oldHeader, newHeader) => {
           var ret = [];
 
           ret.push("Index: " + fileName);
@@ -259,15 +249,14 @@
           diff.push({ value: "", lines: [] }); // Append an empty value to make cleanup easier
 
           function contextLines(lines) {
-            return lines.map(function (entry) {
-              return " " + entry;
-            });
+            return lines.map((entry) => " " + entry);
           }
-          function eofNL(curRange, i, current) {
+          function eofNl(curRange, i, current) {
             var last = diff[diff.length - 2],
               isLast = i === diff.length - 2,
               isLastOfType =
-                i === diff.length - 3 && (current.added !== last.added || current.removed !== last.removed);
+                i === diff.length - 3 &&
+                (current.added !== last.added || current.removed !== last.removed);
 
             // Figure out if this is the last line for the given file and missing NL
             if (!/\n$/.test(current.value) && (isLast || isLastOfType)) {
@@ -299,11 +288,9 @@
               }
               curRange.push.apply(
                 curRange,
-                lines.map(function (entry) {
-                  return (current.added ? "+" : "-") + entry;
-                })
+                lines.map((entry) => (current.added ? "+" : "-") + entry)
               );
-              eofNL(curRange, i, current);
+              eofNl(curRange, i, current);
 
               if (current.added) {
                 newLine += lines.length;
@@ -333,7 +320,7 @@
                   ret.push.apply(ret, curRange);
                   ret.push.apply(ret, contextLines(lines.slice(0, contextSize)));
                   if (lines.length <= 4) {
-                    eofNL(ret, i, current);
+                    eofNl(ret, i, current);
                   }
 
                   oldRangeStart = 0;
@@ -349,11 +336,11 @@
           return ret.join("\n") + "\n";
         },
 
-        applyPatch: function (oldStr, uniDiff) {
+        applyPatch: (oldStr, uniDiff) => {
           var diffstr = uniDiff.split("\n");
           var diff = [];
-          var remEOFNL = false,
-            addEOFNL = false;
+          var remEofnl = false,
+            addEofnl = false;
 
           for (var i = diffstr[0][0] === "I" ? 4 : 0; i < diffstr.length; i++) {
             if (diffstr[i][0] === "@") {
@@ -374,9 +361,9 @@
               diff[0].oldlines.push(diffstr[i].substr(1));
             } else if (diffstr[i][0] === "\\") {
               if (diffstr[i - 1][0] === "+") {
-                remEOFNL = true;
+                remEofnl = true;
               } else if (diffstr[i - 1][0] === "-") {
-                addEOFNL = true;
+                addEofnl = true;
               }
             }
           }
@@ -392,17 +379,17 @@
             Array.prototype.splice.apply(str, [d.start - 1, +d.oldlength].concat(d.newlines));
           }
 
-          if (remEOFNL) {
+          if (remEofnl) {
             while (!str[str.length - 1]) {
               str.pop();
             }
-          } else if (addEOFNL) {
+          } else if (addEofnl) {
             str.push("");
           }
           return str.join("\n");
         },
 
-        convertChangesToXML: function (changes) {
+        convertChangesToXML: (changes) => {
           var ret = [];
           for (var i = 0; i < changes.length; i++) {
             var change = changes[i];
@@ -412,7 +399,7 @@
               ret.push("<del>");
             }
 
-            ret.push(escapeHTML(change.value));
+            ret.push(escapeHtml(change.value));
 
             if (change.added) {
               ret.push("</ins>");
@@ -424,7 +411,7 @@
         },
 
         // See: http://code.google.com/p/google-diff-match-patch/wiki/API
-        convertChangesToDMP: function (changes) {
+        convertChangesToDMP: (changes) => {
           var ret = [],
             change;
           for (var i = 0; i < changes.length; i++) {
@@ -441,7 +428,7 @@
     }
   }); // module: browser/diff.js
 
-  require.register("browser/events.js", function (module, exports, require) {
+  require.register("browser/events.js", (module, exports, require) => {
     /**
      * Module exports.
      */
@@ -621,11 +608,11 @@
     };
   }); // module: browser/events.js
 
-  require.register("browser/fs.js", function (module, exports, require) {}); // module: browser/fs.js
+  require.register("browser/fs.js", (module, exports, require) => {}); // module: browser/fs.js
 
-  require.register("browser/path.js", function (module, exports, require) {}); // module: browser/path.js
+  require.register("browser/path.js", (module, exports, require) => {}); // module: browser/path.js
 
-  require.register("browser/progress.js", function (module, exports, require) {
+  require.register("browser/progress.js", (module, exports, require) => {
     /**
      * Expose `Progress`.
      */
@@ -750,12 +737,10 @@
     };
   }); // module: browser/progress.js
 
-  require.register("browser/tty.js", function (module, exports, require) {
-    exports.isatty = function () {
-      return true;
-    };
+  require.register("browser/tty.js", (module, exports, require) => {
+    exports.isatty = () => true;
 
-    exports.getWindowSize = function () {
+    exports.getWindowSize = () => {
       if ("innerHeight" in global) {
         return [global.innerHeight, global.innerWidth];
       } else {
@@ -765,7 +750,7 @@
     };
   }); // module: browser/tty.js
 
-  require.register("context.js", function (module, exports, require) {
+  require.register("context.js", (module, exports, require) => {
     /**
      * Expose `Context`.
      */
@@ -830,7 +815,7 @@
     Context.prototype.inspect = function () {
       return JSON.stringify(
         this,
-        function (key, val) {
+        (key, val) => {
           if ("_runnable" == key) return;
           if ("test" == key) return;
           return val;
@@ -840,7 +825,7 @@
     };
   }); // module: context.js
 
-  require.register("hook.js", function (module, exports, require) {
+  require.register("hook.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -894,7 +879,7 @@
     };
   }); // module: hook.js
 
-  require.register("interfaces/bdd.js", function (module, exports, require) {
+  require.register("interfaces/bdd.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -920,15 +905,15 @@
      *
      */
 
-    module.exports = function (suite) {
+    module.exports = (suite) => {
       var suites = [suite];
 
-      suite.on("pre-require", function (context, file, mocha) {
+      suite.on("pre-require", (context, file, mocha) => {
         /**
          * Execute before running tests.
          */
 
-        context.before = function (fn) {
+        context.before = (fn) => {
           suites[0].beforeAll(fn);
         };
 
@@ -936,7 +921,7 @@
          * Execute after running tests.
          */
 
-        context.after = function (fn) {
+        context.after = (fn) => {
           suites[0].afterAll(fn);
         };
 
@@ -944,7 +929,7 @@
          * Execute before each test case.
          */
 
-        context.beforeEach = function (fn) {
+        context.beforeEach = (fn) => {
           suites[0].beforeEach(fn);
         };
 
@@ -952,7 +937,7 @@
          * Execute after each test case.
          */
 
-        context.afterEach = function (fn) {
+        context.afterEach = (fn) => {
           suites[0].afterEach(fn);
         };
 
@@ -962,7 +947,7 @@
          * and/or tests.
          */
 
-        context.describe = context.context = function (title, fn) {
+        context.describe = context.context = (title, fn) => {
           var suite = Suite.create(suites[0], title);
           suites.unshift(suite);
           fn.call(suite);
@@ -977,7 +962,7 @@
         context.xdescribe =
           context.xcontext =
           context.describe.skip =
-            function (title, fn) {
+            (title, fn) => {
               var suite = Suite.create(suites[0], title);
               suite.pending = true;
               suites.unshift(suite);
@@ -989,7 +974,7 @@
          * Exclusive suite.
          */
 
-        context.describe.only = function (title, fn) {
+        context.describe.only = (title, fn) => {
           var suite = context.describe(title, fn);
           mocha.grep(suite.fullTitle());
           return suite;
@@ -1001,7 +986,7 @@
          * acting as a thunk.
          */
 
-        context.it = context.specify = function (title, fn) {
+        context.it = context.specify = (title, fn) => {
           var suite = suites[0];
           if (suite.pending) var fn = null;
           var test = new Test(title, fn);
@@ -1013,7 +998,7 @@
          * Exclusive test-case.
          */
 
-        context.it.only = function (title, fn) {
+        context.it.only = (title, fn) => {
           var test = context.it(title, fn);
           var reString = "^" + utils.escapeRegexp(test.fullTitle()) + "$";
           mocha.grep(new RegExp(reString));
@@ -1027,14 +1012,14 @@
         context.xit =
           context.xspecify =
           context.it.skip =
-            function (title) {
+            (title) => {
               context.it(title);
             };
       });
     };
   }); // module: interfaces/bdd.js
 
-  require.register("interfaces/exports.js", function (module, exports, require) {
+  require.register("interfaces/exports.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -1059,7 +1044,7 @@
      *
      */
 
-    module.exports = function (suite) {
+    module.exports = (suite) => {
       var suites = [suite];
 
       suite.on("require", visit);
@@ -1096,14 +1081,14 @@
     };
   }); // module: interfaces/exports.js
 
-  require.register("interfaces/index.js", function (module, exports, require) {
+  require.register("interfaces/index.js", (module, exports, require) => {
     exports.bdd = require("./bdd");
     exports.tdd = require("./tdd");
     exports.qunit = require("./qunit");
     exports.exports = require("./exports");
   }); // module: interfaces/index.js
 
-  require.register("interfaces/qunit.js", function (module, exports, require) {
+  require.register("interfaces/qunit.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -1137,15 +1122,15 @@
      *
      */
 
-    module.exports = function (suite) {
+    module.exports = (suite) => {
       var suites = [suite];
 
-      suite.on("pre-require", function (context, file, mocha) {
+      suite.on("pre-require", (context, file, mocha) => {
         /**
          * Execute before running tests.
          */
 
-        context.before = function (fn) {
+        context.before = (fn) => {
           suites[0].beforeAll(fn);
         };
 
@@ -1153,7 +1138,7 @@
          * Execute after running tests.
          */
 
-        context.after = function (fn) {
+        context.after = (fn) => {
           suites[0].afterAll(fn);
         };
 
@@ -1161,7 +1146,7 @@
          * Execute before each test case.
          */
 
-        context.beforeEach = function (fn) {
+        context.beforeEach = (fn) => {
           suites[0].beforeEach(fn);
         };
 
@@ -1169,7 +1154,7 @@
          * Execute after each test case.
          */
 
-        context.afterEach = function (fn) {
+        context.afterEach = (fn) => {
           suites[0].afterEach(fn);
         };
 
@@ -1177,7 +1162,7 @@
          * Describe a "suite" with the given `title`.
          */
 
-        context.suite = function (title) {
+        context.suite = (title) => {
           if (suites.length > 1) suites.shift();
           var suite = Suite.create(suites[0], title);
           suites.unshift(suite);
@@ -1188,7 +1173,7 @@
          * Exclusive test-case.
          */
 
-        context.suite.only = function (title, fn) {
+        context.suite.only = (title, fn) => {
           var suite = context.suite(title, fn);
           mocha.grep(suite.fullTitle());
         };
@@ -1199,7 +1184,7 @@
          * acting as a thunk.
          */
 
-        context.test = function (title, fn) {
+        context.test = (title, fn) => {
           var test = new Test(title, fn);
           suites[0].addTest(test);
           return test;
@@ -1209,7 +1194,7 @@
          * Exclusive test-case.
          */
 
-        context.test.only = function (title, fn) {
+        context.test.only = (title, fn) => {
           var test = context.test(title, fn);
           var reString = "^" + utils.escapeRegexp(test.fullTitle()) + "$";
           mocha.grep(new RegExp(reString));
@@ -1219,14 +1204,14 @@
          * Pending test case.
          */
 
-        context.test.skip = function (title) {
+        context.test.skip = (title) => {
           context.test(title);
         };
       });
     };
   }); // module: interfaces/qunit.js
 
-  require.register("interfaces/tdd.js", function (module, exports, require) {
+  require.register("interfaces/tdd.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -1260,15 +1245,15 @@
      *
      */
 
-    module.exports = function (suite) {
+    module.exports = (suite) => {
       var suites = [suite];
 
-      suite.on("pre-require", function (context, file, mocha) {
+      suite.on("pre-require", (context, file, mocha) => {
         /**
          * Execute before each test case.
          */
 
-        context.setup = function (fn) {
+        context.setup = (fn) => {
           suites[0].beforeEach(fn);
         };
 
@@ -1276,7 +1261,7 @@
          * Execute after each test case.
          */
 
-        context.teardown = function (fn) {
+        context.teardown = (fn) => {
           suites[0].afterEach(fn);
         };
 
@@ -1284,7 +1269,7 @@
          * Execute before the suite.
          */
 
-        context.suiteSetup = function (fn) {
+        context.suiteSetup = (fn) => {
           suites[0].beforeAll(fn);
         };
 
@@ -1292,7 +1277,7 @@
          * Execute after the suite.
          */
 
-        context.suiteTeardown = function (fn) {
+        context.suiteTeardown = (fn) => {
           suites[0].afterAll(fn);
         };
 
@@ -1302,7 +1287,7 @@
          * and/or tests.
          */
 
-        context.suite = function (title, fn) {
+        context.suite = (title, fn) => {
           var suite = Suite.create(suites[0], title);
           suites.unshift(suite);
           fn.call(suite);
@@ -1313,7 +1298,7 @@
         /**
          * Pending suite.
          */
-        context.suite.skip = function (title, fn) {
+        context.suite.skip = (title, fn) => {
           var suite = Suite.create(suites[0], title);
           suite.pending = true;
           suites.unshift(suite);
@@ -1325,7 +1310,7 @@
          * Exclusive test-case.
          */
 
-        context.suite.only = function (title, fn) {
+        context.suite.only = (title, fn) => {
           var suite = context.suite(title, fn);
           mocha.grep(suite.fullTitle());
         };
@@ -1336,7 +1321,7 @@
          * acting as a thunk.
          */
 
-        context.test = function (title, fn) {
+        context.test = (title, fn) => {
           var suite = suites[0];
           if (suite.pending) var fn = null;
           var test = new Test(title, fn);
@@ -1348,7 +1333,7 @@
          * Exclusive test-case.
          */
 
-        context.test.only = function (title, fn) {
+        context.test.only = (title, fn) => {
           var test = context.test(title, fn);
           var reString = "^" + utils.escapeRegexp(test.fullTitle()) + "$";
           mocha.grep(new RegExp(reString));
@@ -1358,14 +1343,14 @@
          * Pending test case.
          */
 
-        context.test.skip = function (title) {
+        context.test.skip = (title) => {
           context.test(title);
         };
       });
     };
   }); // module: interfaces/tdd.js
 
-  require.register("mocha.js", function (module, exports, require) {
+  require.register("mocha.js", (module, exports, require) => {
     /*!
      * mocha
      * Copyright(c) 2011 TJ Holowaychuk <tj@vision-media.ca>
@@ -1442,7 +1427,7 @@
       this.useColors(options.useColors);
       if (options.slow) this.slow(options.slow);
 
-      this.suite.on("pre-require", function (context) {
+      this.suite.on("pre-require", (context) => {
         exports.afterEach = context.afterEach || context.teardown;
         exports.after = context.after || context.suiteTeardown;
         exports.beforeEach = context.beforeEach || context.setup;
@@ -1541,14 +1526,13 @@
      */
 
     Mocha.prototype.loadFiles = function (fn) {
-      var self = this;
       var suite = this.suite;
       var pending = this.files.length;
-      this.files.forEach(function (file) {
+      this.files.forEach((file) => {
         file = path.resolve(file);
-        suite.emit("pre-require", global, file, self);
-        suite.emit("require", require(file), file, self);
-        suite.emit("post-require", global, file, self);
+        suite.emit("pre-require", global, file, this);
+        suite.emit("require", require(file), file, this);
+        suite.emit("post-require", global, file, this);
         --pending || (fn && fn());
       });
     };
@@ -1559,10 +1543,10 @@
      * @api private
      */
 
-    Mocha.prototype._growl = function (runner, reporter) {
+    Mocha.prototype._growl = (runner, reporter) => {
       var notify = require("growl");
 
-      runner.on("end", function () {
+      runner.on("end", () => {
         var stats = reporter.stats;
         if (stats.failures) {
           var msg = stats.failures + " of " + runner.total + " tests failed";
@@ -1674,7 +1658,8 @@
      */
 
     Mocha.prototype.useInlineDiffs = function (inlineDiffs) {
-      this.options.useInlineDiffs = arguments.length && inlineDiffs != undefined ? inlineDiffs : false;
+      this.options.useInlineDiffs =
+        arguments.length && inlineDiffs != undefined ? inlineDiffs : false;
       return this;
     };
 
@@ -1741,7 +1726,7 @@
     };
   }); // module: mocha.js
 
-  require.register("ms.js", function (module, exports, require) {
+  require.register("ms.js", (module, exports, require) => {
     /**
      * Helpers.
      */
@@ -1765,7 +1750,7 @@
      * @api public
      */
 
-    module.exports = function (val, options) {
+    module.exports = (val, options) => {
       options = options || {};
       if ("string" == typeof val) return parse(val);
       return options.long ? longFormat(val) : shortFormat(val);
@@ -1780,9 +1765,11 @@
      */
 
     function parse(str) {
-      var match = /^((?:\d+)?\.?\d+) *(ms|seconds?|s|minutes?|m|hours?|h|days?|d|years?|y)?$/i.exec(str);
+      var match = /^((?:\d+)?\.?\d+) *(ms|seconds?|s|minutes?|m|hours?|h|days?|d|years?|y)?$/i.exec(
+        str
+      );
       if (!match) return;
-      var n = parseFloat(match[1]);
+      var n = Number.parseFloat(match[1]);
       var type = (match[2] || "ms").toLowerCase();
       switch (type) {
         case "years":
@@ -1855,7 +1842,7 @@
     }
   }); // module: ms.js
 
-  require.register("reporters/base.js", function (module, exports, require) {
+  require.register("reporters/base.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -1954,7 +1941,7 @@
      * @api private
      */
 
-    var color = (exports.color = function (type, str) {
+    var color = (exports.color = (type, str) => {
       if (!exports.useColors) return str;
       return "\u001b[" + exports.colors[type] + "m" + str + "\u001b[0m";
     });
@@ -1965,7 +1952,11 @@
      */
 
     exports.window = {
-      width: isatty ? (process.stdout.getWindowSize ? process.stdout.getWindowSize(1)[0] : tty.getWindowSize()[1]) : 75,
+      width: isatty
+        ? process.stdout.getWindowSize
+          ? process.stdout.getWindowSize(1)[0]
+          : tty.getWindowSize()[1]
+        : 75,
     };
 
     /**
@@ -1974,23 +1965,23 @@
      */
 
     exports.cursor = {
-      hide: function () {
+      hide: () => {
         isatty && process.stdout.write("\u001b[?25l");
       },
 
-      show: function () {
+      show: () => {
         isatty && process.stdout.write("\u001b[?25h");
       },
 
-      deleteLine: function () {
+      deleteLine: () => {
         isatty && process.stdout.write("\u001b[2K");
       },
 
-      beginningOfLine: function () {
+      beginningOfLine: () => {
         isatty && process.stdout.write("\u001b[0G");
       },
 
-      CR: function () {
+      CR: () => {
         if (isatty) {
           exports.cursor.deleteLine();
           exports.cursor.beginningOfLine();
@@ -2007,12 +1998,14 @@
      * @api public
      */
 
-    exports.list = function (failures) {
+    exports.list = (failures) => {
       console.error();
-      failures.forEach(function (test, i) {
+      failures.forEach((test, i) => {
         // format
         var fmt =
-          color("error title", "  %s) %s:\n") + color("error message", "     %s") + color("error stack", "\n%s\n");
+          color("error title", "  %s) %s:\n") +
+          color("error message", "     %s") +
+          color("error stack", "\n%s\n");
 
         // msg
         var err = test.err,
@@ -2069,8 +2062,7 @@
      */
 
     function Base(runner) {
-      var self = this,
-        stats = (this.stats = { suites: 0, tests: 0, passes: 0, pending: 0, failures: 0 }),
+      var stats = (this.stats = { suites: 0, tests: 0, passes: 0, pending: 0, failures: 0 }),
         failures = (this.failures = []);
 
       if (!runner) return;
@@ -2078,42 +2070,43 @@
 
       runner.stats = stats;
 
-      runner.on("start", function () {
+      runner.on("start", () => {
         stats.start = new Date();
       });
 
-      runner.on("suite", function (suite) {
+      runner.on("suite", (suite) => {
         stats.suites = stats.suites || 0;
         suite.root || stats.suites++;
       });
 
-      runner.on("test end", function (test) {
+      runner.on("test end", (test) => {
         stats.tests = stats.tests || 0;
         stats.tests++;
       });
 
-      runner.on("pass", function (test) {
+      runner.on("pass", (test) => {
         stats.passes = stats.passes || 0;
 
         var medium = test.slow() / 2;
-        test.speed = test.duration > test.slow() ? "slow" : test.duration > medium ? "medium" : "fast";
+        test.speed =
+          test.duration > test.slow() ? "slow" : test.duration > medium ? "medium" : "fast";
 
         stats.passes++;
       });
 
-      runner.on("fail", function (test, err) {
+      runner.on("fail", (test, err) => {
         stats.failures = stats.failures || 0;
         stats.failures++;
         test.err = err;
         failures.push(test);
       });
 
-      runner.on("end", function () {
+      runner.on("end", () => {
         stats.end = new Date();
         stats.duration = new Date() - stats.start;
       });
 
-      runner.on("pending", function () {
+      runner.on("pending", () => {
         stats.pending++;
       });
     }
@@ -2186,15 +2179,18 @@
       var lines = msg.split("\n");
       if (lines.length > 4) {
         var width = String(lines.length).length;
-        msg = lines
-          .map(function (str, i) {
-            return pad(++i, width) + " |" + " " + str;
-          })
-          .join("\n");
+        msg = lines.map((str, i) => pad(++i, width) + " |" + " " + str).join("\n");
       }
 
       // legend
-      msg = "\n" + color("diff removed", "actual") + " " + color("diff added", "expected") + "\n\n" + msg + "\n";
+      msg =
+        "\n" +
+        color("diff removed", "actual") +
+        " " +
+        color("diff added", "expected") +
+        "\n\n" +
+        msg +
+        "\n";
 
       // indent
       msg = msg.replace(/^/gm, "      ");
@@ -2248,7 +2244,7 @@
       var actual = escape ? escapeInvisibles(err.actual) : err.actual;
       var expected = escape ? escapeInvisibles(err.expected) : err.expected;
       return diff["diff" + type](actual, expected)
-        .map(function (str) {
+        .map((str) => {
           if (str.added) return colorLines("diff added", str.value);
           if (str.removed) return colorLines("diff removed", str.value);
           return str.value;
@@ -2279,9 +2275,7 @@
     function colorLines(name, str) {
       return str
         .split("\n")
-        .map(function (str) {
-          return color(name, str);
-        })
+        .map((str) => color(name, str))
         .join("\n");
     }
 
@@ -2314,14 +2308,12 @@
 
       if ("[object Array]" == {}.toString.call(obj)) {
         stack.push(obj);
-        canonicalizedObj = utils.map(obj, function (item) {
-          return canonicalize(item, stack);
-        });
+        canonicalizedObj = utils.map(obj, (item) => canonicalize(item, stack));
         stack.pop();
       } else if (typeof obj === "object" && obj !== null) {
         stack.push(obj);
         canonicalizedObj = {};
-        utils.forEach(utils.keys(obj).sort(), function (key) {
+        utils.forEach(utils.keys(obj).sort(), (key) => {
           canonicalizedObj[key] = canonicalize(obj[key], stack);
         });
         stack.pop();
@@ -2348,7 +2340,7 @@
     }
   }); // module: reporters/base.js
 
-  require.register("reporters/doc.js", function (module, exports, require) {
+  require.register("reporters/doc.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -2372,8 +2364,7 @@
     function Doc(runner) {
       Base.call(this, runner);
 
-      var self = this,
-        stats = this.stats,
+      var stats = this.stats,
         total = runner.total,
         indents = 2;
 
@@ -2381,7 +2372,7 @@
         return Array(indents).join("  ");
       }
 
-      runner.on("suite", function (suite) {
+      runner.on("suite", (suite) => {
         if (suite.root) return;
         ++indents;
         console.log('%s<section class="suite">', indent());
@@ -2390,7 +2381,7 @@
         console.log("%s<dl>", indent());
       });
 
-      runner.on("suite end", function (suite) {
+      runner.on("suite end", (suite) => {
         if (suite.root) return;
         console.log("%s</dl>", indent());
         --indents;
@@ -2398,7 +2389,7 @@
         --indents;
       });
 
-      runner.on("pass", function (test) {
+      runner.on("pass", (test) => {
         console.log("%s  <dt>%s</dt>", indent(), utils.escape(test.title));
         var code = utils.escape(utils.clean(test.fn.toString()));
         console.log("%s  <dd><pre><code>%s</code></pre></dd>", indent(), code);
@@ -2406,7 +2397,7 @@
     }
   }); // module: reporters/doc.js
 
-  require.register("reporters/dot.js", function (module, exports, require) {
+  require.register("reporters/dot.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -2430,20 +2421,19 @@
     function Dot(runner) {
       Base.call(this, runner);
 
-      var self = this,
-        stats = this.stats,
+      var stats = this.stats,
         width = (Base.window.width * 0.75) | 0,
         n = 0;
 
-      runner.on("start", function () {
+      runner.on("start", () => {
         process.stdout.write("\n  ");
       });
 
-      runner.on("pending", function (test) {
+      runner.on("pending", (test) => {
         process.stdout.write(color("pending", Base.symbols.dot));
       });
 
-      runner.on("pass", function (test) {
+      runner.on("pass", (test) => {
         if (++n % width == 0) process.stdout.write("\n  ");
         if ("slow" == test.speed) {
           process.stdout.write(color("bright yellow", Base.symbols.dot));
@@ -2452,14 +2442,14 @@
         }
       });
 
-      runner.on("fail", function (test, err) {
+      runner.on("fail", (test, err) => {
         if (++n % width == 0) process.stdout.write("\n  ");
         process.stdout.write(color("fail", Base.symbols.dot));
       });
 
-      runner.on("end", function () {
+      runner.on("end", () => {
         console.log();
-        self.epilogue();
+        this.epilogue();
       });
     }
 
@@ -2473,19 +2463,19 @@
     Dot.prototype.constructor = Dot;
   }); // module: reporters/dot.js
 
-  require.register("reporters/html-cov.js", function (module, exports, require) {
+  require.register("reporters/html-cov.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
 
-    var JSONCov = require("./json-cov"),
+    var jsonCov = require("./json-cov"),
       fs = require("browser/fs");
 
     /**
      * Expose `HTMLCov`.
      */
 
-    exports = module.exports = HTMLCov;
+    exports = module.exports = htmlCov;
 
     /**
      * Initialize a new `JsCoverage` reporter.
@@ -2494,19 +2484,18 @@
      * @api public
      */
 
-    function HTMLCov(runner) {
+    function htmlCov(runner) {
       var jade = require("jade"),
         file = __dirname + "/templates/coverage.jade",
         str = fs.readFileSync(file, "utf8"),
-        fn = jade.compile(str, { filename: file }),
-        self = this;
+        fn = jade.compile(str, { filename: file });
 
-      JSONCov.call(this, runner, false);
+      jsonCov.call(this, runner, false);
 
-      runner.on("end", function () {
+      runner.on("end", () => {
         process.stdout.write(
           fn({
-            cov: self.cov,
+            cov: this.cov,
             coverageClass: coverageClass,
           })
         );
@@ -2528,7 +2517,7 @@
     }
   }); // module: reporters/html-cov.js
 
-  require.register("reporters/html.js", function (module, exports, require) {
+  require.register("reporters/html.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -2552,7 +2541,7 @@
      * Expose `HTML`.
      */
 
-    exports = module.exports = HTML;
+    exports = module.exports = html;
 
     /**
      * Stats template.
@@ -2573,7 +2562,7 @@
      * @api public
      */
 
-    function HTML(runner, root) {
+    function html(runner, root) {
       Base.call(this, runner);
 
       var self = this,
@@ -2608,7 +2597,7 @@
       if (!root) return error("#mocha div missing, add it to your document");
 
       // pass toggle
-      on(passesLink, "click", function () {
+      on(passesLink, "click", () => {
         unhide();
         var name = /pass/.test(report.className) ? "" : " pass";
         report.className = report.className.replace(/fail|pass/g, "") + name;
@@ -2616,7 +2605,7 @@
       });
 
       // failure toggle
-      on(failuresLink, "click", function () {
+      on(failuresLink, "click", () => {
         unhide();
         var name = /fail/.test(report.className) ? "" : " fail";
         report.className = report.className.replace(/fail|pass/g, "") + name;
@@ -2628,12 +2617,16 @@
 
       if (progress) progress.size(40);
 
-      runner.on("suite", function (suite) {
+      runner.on("suite", (suite) => {
         if (suite.root) return;
 
         // suite
         var url = self.suiteURL(suite);
-        var el = fragment('<li class="suite"><h1><a href="%s">%s</a></h1></li>', url, escape(suite.title));
+        var el = fragment(
+          '<li class="suite"><h1><a href="%s">%s</a></h1></li>',
+          url,
+          escape(suite.title)
+        );
 
         // container
         stack[0].appendChild(el);
@@ -2641,12 +2634,12 @@
         el.appendChild(stack[0]);
       });
 
-      runner.on("suite end", function (suite) {
+      runner.on("suite end", (suite) => {
         if (suite.root) return;
         stack.shift();
       });
 
-      runner.on("fail", function (test, err) {
+      runner.on("fail", (test, err) => {
         if ("hook" == test.type) runner.emit("test end", test);
       });
 
@@ -2703,7 +2696,7 @@
         if (!test.pending) {
           var h2 = el.getElementsByTagName("h2")[0];
 
-          on(h2, "click", function () {
+          on(h2, "click", () => {
             pre.style.display = "none" == pre.style.display ? "block" : "none";
           });
 
@@ -2723,9 +2716,7 @@
      * @param {Object} [suite]
      */
 
-    HTML.prototype.suiteURL = function (suite) {
-      return "?grep=" + encodeURIComponent(suite.fullTitle());
-    };
+    html.prototype.suiteURL = (suite) => "?grep=" + encodeURIComponent(suite.fullTitle());
 
     /**
      * Provide test URL
@@ -2733,9 +2724,7 @@
      * @param {Object} [test]
      */
 
-    HTML.prototype.testURL = function (test) {
-      return "?grep=" + encodeURIComponent(test.fullTitle());
-    };
+    html.prototype.testURL = (test) => "?grep=" + encodeURIComponent(test.fullTitle());
 
     /**
      * Display error `msg`.
@@ -2754,7 +2743,7 @@
         div = document.createElement("div"),
         i = 1;
 
-      div.innerHTML = html.replace(/%([se])/g, function (_, type) {
+      div.innerHTML = html.replace(/%([se])/g, (_, type) => {
         switch (type) {
           case "s":
             return String(args[i++]);
@@ -2815,7 +2804,7 @@
     }
   }); // module: reporters/html.js
 
-  require.register("reporters/index.js", function (module, exports, require) {
+  require.register("reporters/index.js", (module, exports, require) => {
     exports.Base = require("./base");
     exports.Dot = require("./dot");
     exports.Doc = require("./doc");
@@ -2835,7 +2824,7 @@
     exports.JSONStream = require("./json-stream");
   }); // module: reporters/index.js
 
-  require.register("reporters/json-cov.js", function (module, exports, require) {
+  require.register("reporters/json-cov.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -2846,7 +2835,7 @@
      * Expose `JSONCov`.
      */
 
-    exports = module.exports = JSONCov;
+    exports = module.exports = jsonCov;
 
     /**
      * Initialize a new `JsCoverage` reporter.
@@ -2856,9 +2845,8 @@
      * @api public
      */
 
-    function JSONCov(runner, output) {
-      var self = this,
-        output = 1 == arguments.length ? true : output;
+    function jsonCov(runner, output) {
+      var output = 1 == arguments.length ? true : output;
 
       Base.call(this, runner);
 
@@ -2866,22 +2854,22 @@
         failures = [],
         passes = [];
 
-      runner.on("test end", function (test) {
+      runner.on("test end", (test) => {
         tests.push(test);
       });
 
-      runner.on("pass", function (test) {
+      runner.on("pass", (test) => {
         passes.push(test);
       });
 
-      runner.on("fail", function (test) {
+      runner.on("fail", (test) => {
         failures.push(test);
       });
 
-      runner.on("end", function () {
+      runner.on("end", () => {
         var cov = global._$jscoverage || {};
-        var result = (self.cov = map(cov));
-        result.stats = self.stats;
+        var result = (this.cov = map(cov));
+        result.stats = this.stats;
         result.tests = tests.map(clean);
         result.failures = failures.map(clean);
         result.passes = passes.map(clean);
@@ -2917,9 +2905,7 @@
         ret.sloc += data.sloc;
       }
 
-      ret.files.sort(function (a, b) {
-        return a.filename.localeCompare(b.filename);
-      });
+      ret.files.sort((a, b) => a.filename.localeCompare(b.filename));
 
       if (ret.sloc > 0) {
         ret.coverage = (ret.hits / ret.sloc) * 100;
@@ -2948,7 +2934,7 @@
         source: {},
       };
 
-      data.source.forEach(function (line, num) {
+      data.source.forEach((line, num) => {
         num++;
 
         if (data[num] === 0) {
@@ -2988,7 +2974,7 @@
     }
   }); // module: reporters/json-cov.js
 
-  require.register("reporters/json-stream.js", function (module, exports, require) {
+  require.register("reporters/json-stream.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -3012,24 +2998,23 @@
     function List(runner) {
       Base.call(this, runner);
 
-      var self = this,
-        stats = this.stats,
+      var stats = this.stats,
         total = runner.total;
 
-      runner.on("start", function () {
+      runner.on("start", () => {
         console.log(JSON.stringify(["start", { total: total }]));
       });
 
-      runner.on("pass", function (test) {
+      runner.on("pass", (test) => {
         console.log(JSON.stringify(["pass", clean(test)]));
       });
 
-      runner.on("fail", function (test, err) {
+      runner.on("fail", (test, err) => {
         console.log(JSON.stringify(["fail", clean(test)]));
       });
 
-      runner.on("end", function () {
-        process.stdout.write(JSON.stringify(["end", self.stats]));
+      runner.on("end", () => {
+        process.stdout.write(JSON.stringify(["end", this.stats]));
       });
     }
 
@@ -3051,7 +3036,7 @@
     }
   }); // module: reporters/json-stream.js
 
-  require.register("reporters/json.js", function (module, exports, require) {
+  require.register("reporters/json.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -3064,7 +3049,7 @@
      * Expose `JSON`.
      */
 
-    exports = module.exports = JSONReporter;
+    exports = module.exports = jsonReporter;
 
     /**
      * Initialize a new `JSON` reporter.
@@ -3073,29 +3058,28 @@
      * @api public
      */
 
-    function JSONReporter(runner) {
-      var self = this;
+    function jsonReporter(runner) {
       Base.call(this, runner);
 
       var tests = [],
         failures = [],
         passes = [];
 
-      runner.on("test end", function (test) {
+      runner.on("test end", (test) => {
         tests.push(test);
       });
 
-      runner.on("pass", function (test) {
+      runner.on("pass", (test) => {
         passes.push(test);
       });
 
-      runner.on("fail", function (test) {
+      runner.on("fail", (test) => {
         failures.push(test);
       });
 
-      runner.on("end", function () {
+      runner.on("end", () => {
         var obj = {
-          stats: self.stats,
+          stats: this.stats,
           tests: tests.map(clean),
           failures: failures.map(clean),
           passes: passes.map(clean),
@@ -3123,7 +3107,7 @@
     }
   }); // module: reporters/json.js
 
-  require.register("reporters/landing.js", function (module, exports, require) {
+  require.register("reporters/landing.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -3166,8 +3150,7 @@
     function Landing(runner) {
       Base.call(this, runner);
 
-      var self = this,
-        stats = this.stats,
+      var stats = this.stats,
         width = (Base.window.width * 0.75) | 0,
         total = runner.total,
         stream = process.stdout,
@@ -3180,12 +3163,12 @@
         return "  " + color("runway", buf);
       }
 
-      runner.on("start", function () {
+      runner.on("start", () => {
         stream.write("\n  ");
         cursor.hide();
       });
 
-      runner.on("test end", function (test) {
+      runner.on("test end", (test) => {
         // check if the plane crashed
         var col = -1 == crashed ? ((width * ++n) / total) | 0 : crashed;
 
@@ -3206,10 +3189,10 @@
         stream.write("\u001b[0m");
       });
 
-      runner.on("end", function () {
+      runner.on("end", () => {
         cursor.show();
         console.log();
-        self.epilogue();
+        this.epilogue();
       });
     }
 
@@ -3223,7 +3206,7 @@
     Landing.prototype.constructor = Landing;
   }); // module: reporters/landing.js
 
-  require.register("reporters/list.js", function (module, exports, require) {
+  require.register("reporters/list.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -3248,35 +3231,37 @@
     function List(runner) {
       Base.call(this, runner);
 
-      var self = this,
-        stats = this.stats,
+      var stats = this.stats,
         n = 0;
 
-      runner.on("start", function () {
+      runner.on("start", () => {
         console.log();
       });
 
-      runner.on("test", function (test) {
+      runner.on("test", (test) => {
         process.stdout.write(color("pass", "    " + test.fullTitle() + ": "));
       });
 
-      runner.on("pending", function (test) {
+      runner.on("pending", (test) => {
         var fmt = color("checkmark", "  -") + color("pending", " %s");
         console.log(fmt, test.fullTitle());
       });
 
-      runner.on("pass", function (test) {
-        var fmt = color("checkmark", "  " + Base.symbols.dot) + color("pass", " %s: ") + color(test.speed, "%dms");
+      runner.on("pass", (test) => {
+        var fmt =
+          color("checkmark", "  " + Base.symbols.dot) +
+          color("pass", " %s: ") +
+          color(test.speed, "%dms");
         cursor.CR();
         console.log(fmt, test.fullTitle(), test.duration);
       });
 
-      runner.on("fail", function (test, err) {
+      runner.on("fail", (test, err) => {
         cursor.CR();
         console.log(color("fail", "  %d) %s"), ++n, test.fullTitle());
       });
 
-      runner.on("end", self.epilogue.bind(self));
+      runner.on("end", this.epilogue.bind(this));
     }
 
     /**
@@ -3289,7 +3274,7 @@
     List.prototype.constructor = List;
   }); // module: reporters/list.js
 
-  require.register("reporters/markdown.js", function (module, exports, require) {
+  require.register("reporters/markdown.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -3313,8 +3298,7 @@
     function Markdown(runner) {
       Base.call(this, runner);
 
-      var self = this,
-        stats = this.stats,
+      var stats = this.stats,
         level = 0,
         buf = "";
 
@@ -3326,16 +3310,16 @@
         return Array(level).join("  ");
       }
 
-      function mapTOC(suite, obj) {
+      function mapToc(suite, obj) {
         var ret = obj;
         obj = obj[suite.title] = obj[suite.title] || { suite: suite };
-        suite.suites.forEach(function (suite) {
-          mapTOC(suite, obj);
+        suite.suites.forEach((suite) => {
+          mapToc(suite, obj);
         });
         return ret;
       }
 
-      function stringifyTOC(obj, level) {
+      function stringifyToc(obj, level) {
         ++level;
         var buf = "";
         var link;
@@ -3343,31 +3327,31 @@
           if ("suite" == key) continue;
           if (key) link = " - [" + key + "](#" + utils.slug(obj[key].suite.fullTitle()) + ")\n";
           if (key) buf += Array(level).join("  ") + link;
-          buf += stringifyTOC(obj[key], level);
+          buf += stringifyToc(obj[key], level);
         }
         --level;
         return buf;
       }
 
-      function generateTOC(suite) {
-        var obj = mapTOC(suite, {});
-        return stringifyTOC(obj, 0);
+      function generateToc(suite) {
+        var obj = mapToc(suite, {});
+        return stringifyToc(obj, 0);
       }
 
-      generateTOC(runner.suite);
+      generateToc(runner.suite);
 
-      runner.on("suite", function (suite) {
+      runner.on("suite", (suite) => {
         ++level;
         var slug = utils.slug(suite.fullTitle());
         buf += '<a name="' + slug + '"></a>' + "\n";
         buf += title(suite.title) + "\n";
       });
 
-      runner.on("suite end", function (suite) {
+      runner.on("suite end", (suite) => {
         --level;
       });
 
-      runner.on("pass", function (test) {
+      runner.on("pass", (test) => {
         var code = utils.clean(test.fn.toString());
         buf += test.title + ".\n";
         buf += "\n```js\n";
@@ -3375,15 +3359,15 @@
         buf += "```\n\n";
       });
 
-      runner.on("end", function () {
+      runner.on("end", () => {
         process.stdout.write("# TOC\n");
-        process.stdout.write(generateTOC(runner.suite));
+        process.stdout.write(generateToc(runner.suite));
         process.stdout.write(buf);
       });
     }
   }); // module: reporters/markdown.js
 
-  require.register("reporters/min.js", function (module, exports, require) {
+  require.register("reporters/min.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -3406,7 +3390,7 @@
     function Min(runner) {
       Base.call(this, runner);
 
-      runner.on("start", function () {
+      runner.on("start", () => {
         // clear screen
         process.stdout.write("\u001b[2J");
         // set cursor position
@@ -3426,7 +3410,7 @@
     Min.prototype.constructor = Min;
   }); // module: reporters/min.js
 
-  require.register("reporters/nyan.js", function (module, exports, require) {
+  require.register("reporters/nyan.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -3449,10 +3433,9 @@
 
     function NyanCat(runner) {
       Base.call(this, runner);
-      var self = this,
-        stats = this.stats,
+      var stats = this.stats,
         width = (Base.window.width * 0.75) | 0,
-        rainbowColors = (this.rainbowColors = self.generateColors()),
+        rainbowColors = (this.rainbowColors = this.generateColors()),
         colorIndex = (this.colorIndex = 0),
         numerOfLines = (this.numberOfLines = 4),
         trajectories = (this.trajectories = [[], [], [], []]),
@@ -3462,27 +3445,27 @@
         tick = (this.tick = 0),
         n = 0;
 
-      runner.on("start", function () {
+      runner.on("start", () => {
         Base.cursor.hide();
-        self.draw();
+        this.draw();
       });
 
-      runner.on("pending", function (test) {
-        self.draw();
+      runner.on("pending", (test) => {
+        this.draw();
       });
 
-      runner.on("pass", function (test) {
-        self.draw();
+      runner.on("pass", (test) => {
+        this.draw();
       });
 
-      runner.on("fail", function (test, err) {
-        self.draw();
+      runner.on("fail", (test, err) => {
+        this.draw();
       });
 
-      runner.on("end", function () {
+      runner.on("end", () => {
         Base.cursor.show();
-        for (var i = 0; i < self.numberOfLines; i++) write("\n");
-        self.epilogue();
+        for (var i = 0; i < this.numberOfLines; i++) write("\n");
+        this.epilogue();
       });
     }
 
@@ -3549,10 +3532,8 @@
      */
 
     NyanCat.prototype.drawRainbow = function () {
-      var self = this;
-
-      this.trajectories.forEach(function (line, index) {
-        write("\u001b[" + self.scoreboardWidth + "C");
+      this.trajectories.forEach((line, index) => {
+        write("\u001b[" + this.scoreboardWidth + "C");
         write(line.join(""));
         write("\n");
       });
@@ -3567,7 +3548,6 @@
      */
 
     NyanCat.prototype.drawNyanCat = function () {
-      var self = this;
       var startWidth = this.scoreboardWidth + this.trajectories[0].length;
       var color = "\u001b[" + startWidth + "C";
       var padding = "";
@@ -3577,19 +3557,19 @@
       write("\n");
 
       write(color);
-      padding = self.tick ? "  " : "   ";
+      padding = this.tick ? "  " : "   ";
       write("_|" + padding + "/\\_/\\ ");
       write("\n");
 
       write(color);
-      padding = self.tick ? "_" : "__";
-      var tail = self.tick ? "~" : "^";
+      padding = this.tick ? "_" : "__";
+      var tail = this.tick ? "~" : "^";
       var face;
       write(tail + "|" + padding + this.face() + " ");
       write("\n");
 
       write(color);
-      padding = self.tick ? " " : "  ";
+      padding = this.tick ? " " : "  ";
       write(padding + '""  "" ');
       write("\n");
 
@@ -3623,7 +3603,7 @@
      * @api private
      */
 
-    NyanCat.prototype.cursorUp = function (n) {
+    NyanCat.prototype.cursorUp = (n) => {
       write("\u001b[" + n + "A");
     };
 
@@ -3634,7 +3614,7 @@
      * @api private
      */
 
-    NyanCat.prototype.cursorDown = function (n) {
+    NyanCat.prototype.cursorDown = (n) => {
       write("\u001b[" + n + "B");
     };
 
@@ -3645,7 +3625,7 @@
      * @api private
      */
 
-    NyanCat.prototype.generateColors = function () {
+    NyanCat.prototype.generateColors = () => {
       var colors = [];
 
       for (var i = 0; i < 6 * 7; i++) {
@@ -3692,7 +3672,7 @@
     NyanCat.prototype.constructor = NyanCat;
   }); // module: reporters/nyan.js
 
-  require.register("reporters/progress.js", function (module, exports, require) {
+  require.register("reporters/progress.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -3724,8 +3704,7 @@
     function Progress(runner, options) {
       Base.call(this, runner);
 
-      var self = this,
-        options = options || {},
+      var options = options || {},
         stats = this.stats,
         width = (Base.window.width * 0.5) | 0,
         total = runner.total,
@@ -3740,13 +3719,13 @@
       options.verbose = false;
 
       // tests started
-      runner.on("start", function () {
+      runner.on("start", () => {
         console.log();
         cursor.hide();
       });
 
       // tests complete
-      runner.on("test end", function () {
+      runner.on("test end", () => {
         complete++;
         var incomplete = total - complete,
           percent = complete / total,
@@ -3766,10 +3745,10 @@
 
       // tests are complete, output some stats
       // and the failures if any
-      runner.on("end", function () {
+      runner.on("end", () => {
         cursor.show();
         console.log();
-        self.epilogue();
+        this.epilogue();
       });
     }
 
@@ -3783,7 +3762,7 @@
     Progress.prototype.constructor = Progress;
   }); // module: reporters/progress.js
 
-  require.register("reporters/spec.js", function (module, exports, require) {
+  require.register("reporters/spec.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -3808,8 +3787,7 @@
     function Spec(runner) {
       Base.call(this, runner);
 
-      var self = this,
-        stats = this.stats,
+      var stats = this.stats,
         indents = 0,
         n = 0;
 
@@ -3817,44 +3795,47 @@
         return Array(indents).join("  ");
       }
 
-      runner.on("start", function () {
+      runner.on("start", () => {
         console.log();
       });
 
-      runner.on("suite", function (suite) {
+      runner.on("suite", (suite) => {
         ++indents;
         console.log(color("suite", "%s%s"), indent(), suite.title);
       });
 
-      runner.on("suite end", function (suite) {
+      runner.on("suite end", (suite) => {
         --indents;
         if (1 == indents) console.log();
       });
 
-      runner.on("pending", function (test) {
+      runner.on("pending", (test) => {
         var fmt = indent() + color("pending", "  - %s");
         console.log(fmt, test.title);
       });
 
-      runner.on("pass", function (test) {
+      runner.on("pass", (test) => {
         if ("fast" == test.speed) {
           var fmt = indent() + color("checkmark", "  " + Base.symbols.ok) + color("pass", " %s ");
           cursor.CR();
           console.log(fmt, test.title);
         } else {
           var fmt =
-            indent() + color("checkmark", "  " + Base.symbols.ok) + color("pass", " %s ") + color(test.speed, "(%dms)");
+            indent() +
+            color("checkmark", "  " + Base.symbols.ok) +
+            color("pass", " %s ") +
+            color(test.speed, "(%dms)");
           cursor.CR();
           console.log(fmt, test.title, test.duration);
         }
       });
 
-      runner.on("fail", function (test, err) {
+      runner.on("fail", (test, err) => {
         cursor.CR();
         console.log(indent() + color("fail", "  %d) %s"), ++n, test.title);
       });
 
-      runner.on("end", self.epilogue.bind(self));
+      runner.on("end", this.epilogue.bind(this));
     }
 
     /**
@@ -3867,7 +3848,7 @@
     Spec.prototype.constructor = Spec;
   }); // module: reporters/spec.js
 
-  require.register("reporters/tap.js", function (module, exports, require) {
+  require.register("reporters/tap.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -3880,7 +3861,7 @@
      * Expose `TAP`.
      */
 
-    exports = module.exports = TAP;
+    exports = module.exports = tap;
 
     /**
      * Initialize a new `TAP` reporter.
@@ -3889,40 +3870,39 @@
      * @api public
      */
 
-    function TAP(runner) {
+    function tap(runner) {
       Base.call(this, runner);
 
-      var self = this,
-        stats = this.stats,
+      var stats = this.stats,
         n = 1,
         passes = 0,
         failures = 0;
 
-      runner.on("start", function () {
+      runner.on("start", () => {
         var total = runner.grepTotal(runner.suite);
         console.log("%d..%d", 1, total);
       });
 
-      runner.on("test end", function () {
+      runner.on("test end", () => {
         ++n;
       });
 
-      runner.on("pending", function (test) {
+      runner.on("pending", (test) => {
         console.log("ok %d %s # SKIP -", n, title(test));
       });
 
-      runner.on("pass", function (test) {
+      runner.on("pass", (test) => {
         passes++;
         console.log("ok %d %s", n, title(test));
       });
 
-      runner.on("fail", function (test, err) {
+      runner.on("fail", (test, err) => {
         failures++;
         console.log("not ok %d %s", n, title(test));
         if (err.stack) console.log(err.stack.replace(/^/gm, "  "));
       });
 
-      runner.on("end", function () {
+      runner.on("end", () => {
         console.log("# tests " + (passes + failures));
         console.log("# pass " + passes);
         console.log("# fail " + failures);
@@ -3942,7 +3922,7 @@
     }
   }); // module: reporters/tap.js
 
-  require.register("reporters/xunit.js", function (module, exports, require) {
+  require.register("reporters/xunit.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -3965,7 +3945,7 @@
      * Expose `XUnit`.
      */
 
-    exports = module.exports = XUnit;
+    exports = module.exports = xUnit;
 
     /**
      * Initialize a new `XUnit` reporter.
@@ -3974,25 +3954,24 @@
      * @api public
      */
 
-    function XUnit(runner) {
+    function xUnit(runner) {
       Base.call(this, runner);
       var stats = this.stats,
-        tests = [],
-        self = this;
+        tests = [];
 
-      runner.on("pending", function (test) {
+      runner.on("pending", (test) => {
         tests.push(test);
       });
 
-      runner.on("pass", function (test) {
+      runner.on("pass", (test) => {
         tests.push(test);
       });
 
-      runner.on("fail", function (test) {
+      runner.on("fail", (test) => {
         tests.push(test);
       });
 
-      runner.on("end", function () {
+      runner.on("end", () => {
         console.log(
           tag(
             "testsuite",
@@ -4020,8 +3999,8 @@
 
     function F() {}
     F.prototype = Base.prototype;
-    XUnit.prototype = new F();
-    XUnit.prototype.constructor = XUnit;
+    xUnit.prototype = new F();
+    xUnit.prototype.constructor = xUnit;
 
     /**
      * Output tag for the given `test.`
@@ -4072,7 +4051,7 @@
     }
   }); // module: reporters/xunit.js
 
-  require.register("runnable.js", function (module, exports, require) {
+  require.register("runnable.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -4195,7 +4174,7 @@
     Runnable.prototype.inspect = function () {
       return JSON.stringify(
         this,
-        function (key, val) {
+        (key, val) => {
           if ("_" == key[0]) return;
           if ("parent" == key) return "#<Suite>";
           if ("ctx" == key) return "#<Context>";
@@ -4212,13 +4191,12 @@
      */
 
     Runnable.prototype.resetTimeout = function () {
-      var self = this;
       var ms = this.timeout() || 1e9;
 
       this.clearTimeout();
-      this.timer = setTimeout(function () {
-        self.callback(new Error("timeout of " + ms + "ms exceeded"));
-        self.timedOut = true;
+      this.timer = setTimeout(() => {
+        this.callback(new Error("timeout of " + ms + "ms exceeded"));
+        this.timedOut = true;
       }, ms);
     };
 
@@ -4228,7 +4206,6 @@
      * @api private
      */
     Runnable.prototype.globals = function (arr) {
-      var self = this;
       this._allowedGlobals = arr;
     };
 
@@ -4252,7 +4229,7 @@
       // timeout
       if (this.async) {
         if (ms) {
-          this.timer = setTimeout(function () {
+          this.timer = setTimeout(() => {
             done(new Error("timeout of " + ms + "ms exceeded"));
             self.timedOut = true;
           }, ms);
@@ -4282,7 +4259,7 @@
       // async
       if (this.async) {
         try {
-          this.fn.call(ctx, function (err) {
+          this.fn.call(ctx, (err) => {
             if (err instanceof Error || toString.call(err) === "[object Error]") return done(err);
             if (null != err) return done(new Error("done() invoked with non-Error: " + err));
             done();
@@ -4308,7 +4285,7 @@
     };
   }); // module: runnable.js
 
-  require.register("runner.js", function (module, exports, require) {
+  require.register("runner.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -4324,7 +4301,14 @@
      * Non-enumerable globals.
      */
 
-    var globals = ["setTimeout", "clearTimeout", "setInterval", "clearInterval", "XMLHttpRequest", "Date"];
+    var globals = [
+      "setTimeout",
+      "clearTimeout",
+      "setInterval",
+      "clearInterval",
+      "XMLHttpRequest",
+      "Date",
+    ];
 
     /**
      * Expose `Runner`.
@@ -4353,17 +4337,16 @@
      */
 
     function Runner(suite) {
-      var self = this;
       this._globals = [];
       this._abort = false;
       this.suite = suite;
       this.total = suite.total();
       this.failures = 0;
-      this.on("test end", function (test) {
-        self.checkGlobals(test);
+      this.on("test end", (test) => {
+        this.checkGlobals(test);
       });
-      this.on("hook end", function (hook) {
-        self.checkGlobals(hook);
+      this.on("hook end", (hook) => {
+        this.checkGlobals(hook);
       });
       this.grep(/.*/);
       this.globals(this.globalProps().concat(extraGlobals()));
@@ -4415,12 +4398,11 @@
      */
 
     Runner.prototype.grepTotal = function (suite) {
-      var self = this;
       var total = 0;
 
-      suite.eachTest(function (test) {
-        var match = self._grep.test(test.fullTitle());
-        if (self._invert) match = !match;
+      suite.eachTest((test) => {
+        var match = this._grep.test(test.fullTitle());
+        if (this._invert) match = !match;
         if (match) total++;
       });
 
@@ -4434,7 +4416,7 @@
      * @api private
      */
 
-    Runner.prototype.globalProps = function () {
+    Runner.prototype.globalProps = () => {
       var props = utils.keys(global);
 
       // non-enumerables
@@ -4563,11 +4545,11 @@
 
         self.emit("hook", hook);
 
-        hook.on("error", function (err) {
+        hook.on("error", (err) => {
           self.failHook(hook, err);
         });
 
-        hook.run(function (err) {
+        hook.run((err) => {
           hook.removeAllListeners("error");
           var testError = hook.error();
           if (testError) self.fail(self.test, testError);
@@ -4583,7 +4565,7 @@
         });
       }
 
-      Runner.immediately(function () {
+      Runner.immediately(() => {
         next(0);
       });
     };
@@ -4610,7 +4592,7 @@
           return fn();
         }
 
-        self.hook(name, function (err) {
+        self.hook(name, (err) => {
           if (err) {
             var errSuite = self.suite;
             self.suite = orig;
@@ -4673,14 +4655,13 @@
      */
 
     Runner.prototype.runTest = function (fn) {
-      var test = this.test,
-        self = this;
+      var test = this.test;
 
       if (this.asyncOnly) test.asyncOnly = true;
 
       try {
-        test.on("error", function (err) {
-          self.fail(test, err);
+        test.on("error", (err) => {
+          this.fail(test, err);
         });
         test.run(fn);
       } catch (err) {
@@ -4712,7 +4693,7 @@
 
         if (self.suite) {
           // call hookUp afterEach
-          self.hookUp("afterEach", function (err2, errSuite2) {
+          self.hookUp("afterEach", (err2, errSuite2) => {
             self.suite = orig;
             // some hooks may fail even now
             if (err2) return hookErr(err2, errSuite2, true);
@@ -4754,11 +4735,11 @@
 
         // execute test and hook(s)
         self.emit("test", (self.test = test));
-        self.hookDown("beforeEach", function (err, errSuite) {
+        self.hookDown("beforeEach", (err, errSuite) => {
           if (err) return hookErr(err, errSuite, false);
 
           self.currentRunnable = self.test;
-          self.runTest(function (err) {
+          self.runTest((err) => {
             test = self.test;
 
             if (err) {
@@ -4822,13 +4803,13 @@
 
       function done(errSuite) {
         self.suite = suite;
-        self.hook("afterAll", function () {
+        self.hook("afterAll", () => {
           self.emit("suite end", suite);
           fn(errSuite);
         });
       }
 
-      this.hook("beforeAll", function (err) {
+      this.hook("beforeAll", (err) => {
         if (err) return done();
         self.runTests(suite, next);
       });
@@ -4871,7 +4852,7 @@
 
     Runner.prototype.run = function (fn) {
       var self = this,
-        fn = fn || function () {};
+        fn = fn || (() => {});
 
       function uncaught(err) {
         self.uncaught(err);
@@ -4880,7 +4861,7 @@
       debug("start");
 
       // callback
-      this.on("end", function () {
+      this.on("end", () => {
         debug("end");
         process.removeListener("uncaughtException", uncaught);
         fn(self.failures);
@@ -4888,7 +4869,7 @@
 
       // run suites
       this.emit("start");
-      this.runSuite(this.suite, function () {
+      this.runSuite(this.suite, () => {
         debug("finished running");
         self.emit("end");
       });
@@ -4920,7 +4901,7 @@
      */
 
     function filterLeaks(ok, globals) {
-      return filter(globals, function (key) {
+      return filter(globals, (key) => {
         // Firefox and Chrome exposes iframes as index inside the window object
         if (/^d+/.test(key)) return false;
 
@@ -4936,7 +4917,7 @@
         // Opera and IE expose global variables for HTML element IDs (issue #243)
         if (/^mocha-/.test(key)) return false;
 
-        var matched = filter(ok, function (ok) {
+        var matched = filter(ok, (ok) => {
           if (~ok.indexOf("*")) return 0 == key.indexOf(ok.split("*")[0]);
           return key == ok;
         });
@@ -4953,9 +4934,7 @@
 
     function extraGlobals() {
       if (typeof process === "object" && typeof process.version === "string") {
-        var nodeVersion = process.version.split(".").reduce(function (a, v) {
-          return (a << 8) | v;
-        });
+        var nodeVersion = process.version.split(".").reduce((a, v) => (a << 8) | v);
 
         // 'errno' was renamed to process._errno in v0.9.11.
 
@@ -4968,7 +4947,7 @@
     }
   }); // module: runner.js
 
-  require.register("suite.js", function (module, exports, require) {
+  require.register("suite.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -4998,7 +4977,7 @@
      * @api public
      */
 
-    exports.create = function (parent, title) {
+    exports.create = (parent, title) => {
       var suite = new Suite(title, parent.ctx);
       suite.parent = parent;
       if (parent.pending) suite.pending = true;
@@ -5070,7 +5049,7 @@
       if (0 == arguments.length) return this._timeout;
       if ("string" == typeof ms) ms = milliseconds(ms);
       debug("timeout %d", ms);
-      this._timeout = parseInt(ms, 10);
+      this._timeout = Number.parseInt(ms, 10);
       return this;
     };
 
@@ -5245,15 +5224,7 @@
      */
 
     Suite.prototype.total = function () {
-      return (
-        utils.reduce(
-          this.suites,
-          function (sum, suite) {
-            return sum + suite.total();
-          },
-          0
-        ) + this.tests.length
-      );
+      return utils.reduce(this.suites, (sum, suite) => sum + suite.total(), 0) + this.tests.length;
     };
 
     /**
@@ -5268,14 +5239,14 @@
 
     Suite.prototype.eachTest = function (fn) {
       utils.forEach(this.tests, fn);
-      utils.forEach(this.suites, function (suite) {
+      utils.forEach(this.suites, (suite) => {
         suite.eachTest(fn);
       });
       return this;
     };
   }); // module: suite.js
 
-  require.register("test.js", function (module, exports, require) {
+  require.register("test.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -5312,7 +5283,7 @@
     Test.prototype.constructor = Test;
   }); // module: test.js
 
-  require.register("utils.js", function (module, exports, require) {
+  require.register("utils.js", (module, exports, require) => {
     /**
      * Module dependencies.
      */
@@ -5336,9 +5307,12 @@
      * @api private
      */
 
-    exports.escape = function (html) {
-      return String(html).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    };
+    exports.escape = (html) =>
+      String(html)
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
 
     /**
      * Array#forEach (<=IE8)
@@ -5349,7 +5323,7 @@
      * @api private
      */
 
-    exports.forEach = function (arr, fn, scope) {
+    exports.forEach = (arr, fn, scope) => {
       for (var i = 0, l = arr.length; i < l; i++) fn.call(scope, arr[i], i);
     };
 
@@ -5362,7 +5336,7 @@
      * @api private
      */
 
-    exports.map = function (arr, fn, scope) {
+    exports.map = (arr, fn, scope) => {
       var result = [];
       for (var i = 0, l = arr.length; i < l; i++) result.push(fn.call(scope, arr[i], i));
       return result;
@@ -5377,7 +5351,7 @@
      * @api private
      */
 
-    exports.indexOf = function (arr, obj, start) {
+    exports.indexOf = (arr, obj, start) => {
       for (var i = start || 0, l = arr.length; i < l; i++) {
         if (arr[i] === obj) return i;
       }
@@ -5393,7 +5367,7 @@
      * @api private
      */
 
-    exports.reduce = function (arr, fn, val) {
+    exports.reduce = (arr, fn, val) => {
       var rval = val;
 
       for (var i = 0, l = arr.length; i < l; i++) {
@@ -5411,7 +5385,7 @@
      * @api private
      */
 
-    exports.filter = function (arr, fn) {
+    exports.filter = (arr, fn) => {
       var ret = [];
 
       for (var i = 0, l = arr.length; i < l; i++) {
@@ -5432,7 +5406,7 @@
 
     exports.keys =
       Object.keys ||
-      function (obj) {
+      ((obj) => {
         var keys = [],
           has = Object.prototype.hasOwnProperty; // for `window` on <=IE8
 
@@ -5443,7 +5417,7 @@
         }
 
         return keys;
-      };
+      });
 
     /**
      * Watch the given `files` for changes
@@ -5454,11 +5428,11 @@
      * @api private
      */
 
-    exports.watch = function (files, fn) {
+    exports.watch = (files, fn) => {
       var options = { interval: 100 };
-      files.forEach(function (file) {
+      files.forEach((file) => {
         debug("file %s", file);
-        fs.watchFile(file, options, function (curr, prev) {
+        fs.watchFile(file, options, (curr, prev) => {
           if (prev.mtime < curr.mtime) fn(file);
         });
       });
@@ -5479,12 +5453,12 @@
      * @api private
      */
 
-    exports.files = function (dir, ret) {
+    exports.files = (dir, ret) => {
       ret = ret || [];
 
       fs.readdirSync(dir)
         .filter(ignored)
-        .forEach(function (path) {
+        .forEach((path) => {
           path = join(dir, path);
           if (fs.statSync(path).isDirectory()) {
             exports.files(path, ret);
@@ -5504,19 +5478,18 @@
      * @api private
      */
 
-    exports.slug = function (str) {
-      return str
+    exports.slug = (str) =>
+      str
         .toLowerCase()
         .replace(/ +/g, "-")
         .replace(/[^-\w]/g, "");
-    };
 
     /**
      * Strip the function definition from `str`,
      * and re-indent for pre whitespace.
      */
 
-    exports.clean = function (str) {
+    exports.clean = (str) => {
       str = str
         .replace(/\r\n?|[\n\u2028\u2029]/g, "\n")
         .replace(/^\uFEFF/, "")
@@ -5540,9 +5513,7 @@
      * @api private
      */
 
-    exports.escapeRegexp = function (str) {
-      return str.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");
-    };
+    exports.escapeRegexp = (str) => str.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");
 
     /**
      * Trim the given `str`.
@@ -5552,9 +5523,7 @@
      * @api private
      */
 
-    exports.trim = function (str) {
-      return str.replace(/^\s+|\s+$/g, "");
-    };
+    exports.trim = (str) => str.replace(/^\s+|\s+$/g, "");
 
     /**
      * Parse the given `qs`.
@@ -5564,10 +5533,10 @@
      * @api private
      */
 
-    exports.parseQuery = function (qs) {
-      return exports.reduce(
+    exports.parseQuery = (qs) =>
+      exports.reduce(
         qs.replace("?", "").split("&"),
-        function (obj, pair) {
+        (obj, pair) => {
           var i = pair.indexOf("="),
             key = pair.slice(0, i),
             val = pair.slice(++i);
@@ -5577,7 +5546,6 @@
         },
         {}
       );
-    };
 
     /**
      * Highlight the given string of `js`.
@@ -5596,7 +5564,10 @@
         .replace(/(\d+\.\d+)/gm, '<span class="number">$1</span>')
         .replace(/(\d+)/gm, '<span class="number">$1</span>')
         .replace(/\bnew *(\w+)/gm, '<span class="keyword">new</span> <span class="init">$1</span>')
-        .replace(/\b(function|new|throw|return|var|if|else)\b/gm, '<span class="keyword">$1</span>');
+        .replace(
+          /\b(function|new|throw|return|var|if|else)\b/gm,
+          '<span class="keyword">$1</span>'
+        );
     }
 
     /**
@@ -5606,7 +5577,7 @@
      * @api private
      */
 
-    exports.highlightTags = function (name) {
+    exports.highlightTags = (name) => {
       var code = document.getElementsByTagName(name);
       for (var i = 0, len = code.length; i < len; ++i) {
         code[i].innerHTML = highlight(code[i].innerHTML);
@@ -5638,7 +5609,7 @@
    */
 
   var process = {};
-  process.exit = function (status) {};
+  process.exit = (status) => {};
   process.stdout = {};
 
   var uncaughtExceptionHandlers = [];
@@ -5647,9 +5618,9 @@
    * Remove uncaughtException listener.
    */
 
-  process.removeListener = function (e, fn) {
+  process.removeListener = (e, fn) => {
     if ("uncaughtException" == e) {
-      global.onerror = function () {};
+      global.onerror = () => {};
       var i = Mocha.utils.indexOf(uncaughtExceptionHandlers, fn);
       if (i != -1) {
         uncaughtExceptionHandlers.splice(i, 1);
@@ -5661,9 +5632,9 @@
    * Implements uncaughtException listener.
    */
 
-  process.on = function (e, fn) {
+  process.on = (e, fn) => {
     if ("uncaughtException" == e) {
-      global.onerror = function (err, url, line) {
+      global.onerror = (err, url, line) => {
         fn(new Error(err + " (" + url + ":" + line + ")"));
         return true;
       };
@@ -5702,7 +5673,7 @@
    * High-performance override of Runner.immediately.
    */
 
-  Mocha.Runner.immediately = function (callback) {
+  Mocha.Runner.immediately = (callback) => {
     immediateQueue.push(callback);
     if (!immediateTimeout) {
       immediateTimeout = setTimeout(timeslice, 0);
@@ -5714,8 +5685,8 @@
    * This is useful when running tests in a browser because window.onerror will
    * only receive the 'message' attribute of the Error.
    */
-  mocha.throwError = function (err) {
-    Mocha.utils.forEach(uncaughtExceptionHandlers, function (fn) {
+  mocha.throwError = (err) => {
+    Mocha.utils.forEach(uncaughtExceptionHandlers, (fn) => {
       fn(err);
     });
     throw err;
@@ -5746,7 +5717,7 @@
    * Run mocha, returning the Runner.
    */
 
-  mocha.run = function (fn) {
+  mocha.run = (fn) => {
     var options = mocha.options;
     mocha.globals("location");
 
@@ -5754,7 +5725,7 @@
     if (query.grep) mocha.grep(query.grep);
     if (query.invert) mocha.invert();
 
-    return Mocha.prototype.run.call(mocha, function () {
+    return Mocha.prototype.run.call(mocha, () => {
       // The DOM Document is not available in Web Workers.
       if (global.document) {
         Mocha.utils.highlightTags("code");

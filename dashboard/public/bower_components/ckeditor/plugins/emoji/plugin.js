@@ -2,14 +2,13 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   var g = !1,
     f = CKEDITOR.tools.array,
     e = CKEDITOR.tools.htmlEncode,
     h = CKEDITOR.tools.createClass({
       $: function (a, d) {
-        var b = (this.lang = a.lang.emoji),
-          c = this;
+        var b = (this.lang = a.lang.emoji);
         this.listeners = [];
         this.plugin = d;
         this.editor = a;
@@ -84,7 +83,7 @@
             attributes: { role: "listbox", "aria-label": b.title },
             markFirst: !1,
           },
-          onBlock: function (d, b) {
+          onBlock: (d, b) => {
             var e = b.keys,
               f = "rtl" === a.lang.dir;
             e[f ? 37 : 39] = "next";
@@ -94,30 +93,32 @@
             e[38] = "prev";
             e[CKEDITOR.SHIFT + 9] = "prev";
             e[32] = "click";
-            c.blockElement = b.element;
-            c.emojiList = c.editor._.emoji.list;
-            c.addEmojiToGroups();
+            this.blockElement = b.element;
+            this.emojiList = this.editor._.emoji.list;
+            this.addEmojiToGroups();
             b.element.getAscendant("html").addClass("cke_emoji");
-            b.element.getDocument().appendStyleSheet(CKEDITOR.getUrl(CKEDITOR.basePath + "contents.css"));
+            b.element
+              .getDocument()
+              .appendStyleSheet(CKEDITOR.getUrl(CKEDITOR.basePath + "contents.css"));
             b.element.addClass("cke_emoji-panel_block");
-            b.element.setHtml(c.createEmojiBlock());
+            b.element.setHtml(this.createEmojiBlock());
             b.element.removeAttribute("title");
             d.element.addClass("cke_emoji-panel");
-            c.items = b._.getItems();
-            c.blockObject = b;
-            c.elements.emojiItems = b.element.find(".cke_emoji-outer_emoji_block li \x3e a");
-            c.elements.sectionHeaders = b.element.find(".cke_emoji-outer_emoji_block h2");
-            c.elements.input = b.element.findOne("input");
-            c.inputIndex = c.getItemIndex(c.items, c.elements.input);
-            c.elements.emojiBlock = b.element.findOne(".cke_emoji-outer_emoji_block");
-            c.elements.navigationItems = b.element.find("nav li");
-            c.elements.statusIcon = b.element.findOne(".cke_emoji-status_icon");
-            c.elements.statusDescription = b.element.findOne("p.cke_emoji-status_description");
-            c.elements.statusName = b.element.findOne("p.cke_emoji-status_full_name");
-            c.elements.sections = b.element.find("section");
-            c.registerListeners();
+            this.items = b._.getItems();
+            this.blockObject = b;
+            this.elements.emojiItems = b.element.find(".cke_emoji-outer_emoji_block li \x3e a");
+            this.elements.sectionHeaders = b.element.find(".cke_emoji-outer_emoji_block h2");
+            this.elements.input = b.element.findOne("input");
+            this.inputIndex = this.getItemIndex(this.items, this.elements.input);
+            this.elements.emojiBlock = b.element.findOne(".cke_emoji-outer_emoji_block");
+            this.elements.navigationItems = b.element.find("nav li");
+            this.elements.statusIcon = b.element.findOne(".cke_emoji-status_icon");
+            this.elements.statusDescription = b.element.findOne("p.cke_emoji-status_description");
+            this.elements.statusName = b.element.findOne("p.cke_emoji-status_full_name");
+            this.elements.sections = b.element.find("section");
+            this.registerListeners();
           },
-          onOpen: c.openReset(),
+          onOpen: this.openReset(),
         });
       },
       proto: {
@@ -128,7 +129,7 @@
               var d = a.listener,
                 b = a.event,
                 c = a.ctx || this;
-              f.forEach(this.blockElement.find(a.selector).toArray(), function (a) {
+              f.forEach(this.blockElement.find(a.selector).toArray(), (a) => {
                 a.on(b, d, c);
               });
             },
@@ -154,21 +155,22 @@
               )),
               (d = f.reduce(
                 this.groups,
-                function (b, c) {
-                  return c.items.length
+                (b, c) =>
+                  c.items.length
                     ? b +
-                        a.output({
-                          group: e(c.name),
-                          name: e(c.sectionName),
-                          positionX: c.position.x,
-                          positionY: c.position.y,
-                        })
-                    : b;
-                },
+                      a.output({
+                        group: e(c.name),
+                        name: e(c.sectionName),
+                        positionX: c.position.x,
+                        positionY: c.position.y,
+                      })
+                    : b,
                 ""
               )))
             : ((d = CKEDITOR.getUrl(this.plugin.path + "assets/iconsall.svg")),
-              (d = CKEDITOR.env.safari ? 'xlink:href\x3d"' + d + '#{svgId}"' : 'href\x3d"' + d + '#{svgId}"'),
+              (d = CKEDITOR.env.safari
+                ? 'xlink:href\x3d"' + d + '#{svgId}"'
+                : 'href\x3d"' + d + '#{svgId}"'),
               (a = new CKEDITOR.template(
                 '\x3cli class\x3d"cke_emoji-navigation_item" data-cke-emoji-group\x3d"{group}"\x3e\x3ca href\x3d"#" title\x3d"{name}" draggable\x3d"false" _cke_focus\x3d"1"\x3e\x3csvg viewBox\x3d"0 0 34 34" aria-labelledby\x3d"{svgId}-title"\x3e\x3ctitle id\x3d"{svgId}-title"\x3e{name}\x3c/title\x3e\x3cuse ' +
                   d +
@@ -176,11 +178,10 @@
               )),
               (d = f.reduce(
                 this.groups,
-                function (b, c) {
-                  return c.items.length
+                (b, c) =>
+                  c.items.length
                     ? b + a.output({ group: e(c.name), name: e(c.sectionName), svgId: e(c.svgId) })
-                    : b;
-                },
+                    : b,
                 ""
               )));
           this.listeners.push({
@@ -189,7 +190,7 @@
             listener: function (a) {
               var c = a.data.getTarget().getAscendant("li", !0);
               c &&
-                (f.forEach(this.elements.navigationItems.toArray(), function (a) {
+                (f.forEach(this.elements.navigationItems.toArray(), (a) => {
                   a.equals(c) ? a.addClass("active") : a.removeClass("active");
                 }),
                 this.clearSearchAndMoveFocus(a),
@@ -197,7 +198,11 @@
             },
           });
           return (
-            '\x3cnav aria-label\x3d"' + e(this.lang.navigationLabel) + '"\x3e\x3cul\x3e' + d + "\x3c/ul\x3e\x3c/nav\x3e"
+            '\x3cnav aria-label\x3d"' +
+            e(this.lang.navigationLabel) +
+            '"\x3e\x3cul\x3e' +
+            d +
+            "\x3c/ul\x3e\x3c/nav\x3e"
           );
         },
         createSearchSection: function () {
@@ -234,7 +239,9 @@
             event: "click",
             listener: function (a) {
               a.data.getTarget().data("cke-emoji-name") &&
-                this.editor.execCommand("insertEmoji", { emojiText: a.data.getTarget().data("cke-emoji-symbol") });
+                this.editor.execCommand("insertEmoji", {
+                  emojiText: a.data.getTarget().data("cke-emoji-symbol"),
+                });
             },
           });
           this.listeners.push({
@@ -251,11 +258,14 @@
               this.updateStatusbar(this.items.getItem(this.blockObject._.focusIndex));
             },
           });
-          return '\x3cdiv class\x3d"cke_emoji-outer_emoji_block"\x3e' + this.getEmojiSections() + "\x3c/div\x3e";
+          return (
+            '\x3cdiv class\x3d"cke_emoji-outer_emoji_block"\x3e' +
+            this.getEmojiSections() +
+            "\x3c/div\x3e"
+          );
         },
-        createStatusBar: function () {
-          return '\x3cdiv class\x3d"cke_emoji-status_bar"\x3e\x3cdiv class\x3d"cke_emoji-status_icon"\x3e\x3c/div\x3e\x3cp class\x3d"cke_emoji-status_description"\x3e\x3c/p\x3e\x3cp class\x3d"cke_emoji-status_full_name"\x3e\x3c/p\x3e\x3c/div\x3e';
-        },
+        createStatusBar: () =>
+          '\x3cdiv class\x3d"cke_emoji-status_bar"\x3e\x3cdiv class\x3d"cke_emoji-status_icon"\x3e\x3c/div\x3e\x3cp class\x3d"cke_emoji-status_description"\x3e\x3c/p\x3e\x3cp class\x3d"cke_emoji-status_full_name"\x3e\x3c/p\x3e\x3c/div\x3e',
         getLoupeIcon: function () {
           var a = CKEDITOR.getUrl(this.plugin.path + "assets/iconsall.svg"),
             d = CKEDITOR.getUrl(this.plugin.path + "assets/iconsall.png");
@@ -301,18 +311,15 @@
           );
           return f.reduce(
             a,
-            function (a, c) {
-              return (
-                a +
-                d.output({
-                  symbol: e(c.symbol),
-                  id: e(c.id),
-                  name: e(c.id.replace(/::.*$/, ":").replace(/^:|:$/g, "").replace(/_/g, " ")),
-                  group: e(c.group),
-                  keywords: e((c.keywords || []).join(",")),
-                })
-              );
-            },
+            (a, c) =>
+              a +
+              d.output({
+                symbol: e(c.symbol),
+                id: e(c.id),
+                name: e(c.id.replace(/::.*$/, ":").replace(/^:|:$/g, "").replace(/_/g, " ")),
+                group: e(c.group),
+                keywords: e((c.keywords || []).join(",")),
+              }),
             "",
             this
           );
@@ -320,7 +327,7 @@
         filter: function (a) {
           var d = {},
             b = "string" === typeof a ? a : a.sender.getValue();
-          f.forEach(this.elements.emojiItems.toArray(), function (a) {
+          f.forEach(this.elements.emojiItems.toArray(), (a) => {
             var e;
             a: {
               e = a.data("cke-emoji-name");
@@ -337,10 +344,12 @@
               }
             }
             e || "" === b
-              ? (a.removeClass("hidden"), a.getParent().removeClass("hidden"), (d[a.data("cke-emoji-group")] = !0))
+              ? (a.removeClass("hidden"),
+                a.getParent().removeClass("hidden"),
+                (d[a.data("cke-emoji-group")] = !0))
               : (a.addClass("hidden"), a.getParent().addClass("hidden"));
           });
-          f.forEach(this.elements.sectionHeaders.toArray(), function (a) {
+          f.forEach(this.elements.sectionHeaders.toArray(), (a) => {
             d[a.getId()]
               ? (a.getParent().removeClass("hidden"), a.removeClass("hidden"))
               : (a.addClass("hidden"), a.getParent().addClass("hidden"));
@@ -352,34 +361,33 @@
           this.filter("");
         },
         openReset: function () {
-          var a = this,
-            d;
-          return function () {
-            d || (a.filter(""), (d = !0));
-            a.elements.emojiBlock.$.scrollTop = 0;
-            a.refreshNavigationStatus();
-            a.clearSearchInput();
+          var d;
+          return () => {
+            d || (this.filter(""), (d = !0));
+            this.elements.emojiBlock.$.scrollTop = 0;
+            this.refreshNavigationStatus();
+            this.clearSearchInput();
             CKEDITOR.tools.setTimeout(
-              function () {
-                a.elements.input.focus(!0);
-                a.blockObject._.markItem(a.inputIndex);
+              () => {
+                this.elements.input.focus(!0);
+                this.blockObject._.markItem(this.inputIndex);
               },
               0,
-              a
+              this
             );
-            a.clearStatusbar();
+            this.clearStatusbar();
           };
         },
         refreshNavigationStatus: function () {
           var a = this.elements.emojiBlock.getClientRect().top,
             d,
             b;
-          d = f.filter(this.elements.sections.toArray(), function (c) {
+          d = f.filter(this.elements.sections.toArray(), (c) => {
             var b = c.getClientRect();
             return !b.height || c.findOne("h2").hasClass("hidden") ? !1 : b.height + b.top > a;
           });
           b = d.length ? d[0].data("cke-emoji-group") : !1;
-          f.forEach(this.elements.navigationItems.toArray(), function (a) {
+          f.forEach(this.elements.navigationItems.toArray(), (a) => {
             a.data("cke-emoji-group") === b ? a.addClass("active") : a.removeClass("active");
           });
         },
@@ -408,23 +416,19 @@
             a.getAscendant("section").getFirst().scrollIntoView(!0),
             this.blockObject._.markItem(d));
         },
-        getItemIndex: function (a, d) {
-          return f.indexOf(a.toArray(), function (a) {
-            return a.equals(d);
-          });
-        },
+        getItemIndex: (a, d) => f.indexOf(a.toArray(), (a) => a.equals(d)),
         addEmojiToGroups: function () {
           var a = {};
           f.forEach(
             this.groups,
-            function (d) {
+            (d) => {
               a[d.name] = d.items;
             },
             this
           );
           f.forEach(
             this.emojiList,
-            function (d) {
+            (d) => {
               a[d.group].push(d);
             },
             this
@@ -445,43 +449,43 @@
     init: function (a) {
       if (!(CKEDITOR.env.ie && 11 > CKEDITOR.env.version)) {
         var d = CKEDITOR.tools.array;
-        CKEDITOR.ajax.load(CKEDITOR.getUrl(a.config.emoji_emojiListUrl || "plugins/emoji/emoji.json"), function (b) {
-          function c() {
-            a._.emoji.autocomplete = new CKEDITOR.plugins.autocomplete(a, {
-              textTestCallback: e(),
-              dataCallback: g,
-              itemTemplate: '\x3cli data-id\x3d"{id}" class\x3d"cke_emoji-suggestion_item"\x3e{symbol} {id}\x3c/li\x3e',
-              outputTemplate: "{symbol}",
-            });
-          }
-          function e() {
-            return function (a) {
-              return a.collapsed ? CKEDITOR.plugins.textMatch.match(a, f) : null;
-            };
-          }
-          function f(a, b) {
-            var c = a.slice(0, b),
-              d = c.match(new RegExp("(?:\\s|^)(:\\S{" + k + "}\\S*)$"));
-            return d ? { start: c.lastIndexOf(d[1]), end: b } : null;
-          }
-          function g(a, b) {
-            var c = a.query.substr(1).toLowerCase(),
-              e = d.filter(h, function (a) {
-                return -1 !== a.id.toLowerCase().indexOf(c);
+        CKEDITOR.ajax.load(
+          CKEDITOR.getUrl(a.config.emoji_emojiListUrl || "plugins/emoji/emoji.json"),
+          (b) => {
+            function c() {
+              a._.emoji.autocomplete = new CKEDITOR.plugins.autocomplete(a, {
+                textTestCallback: e(),
+                dataCallback: g,
+                itemTemplate:
+                  '\x3cli data-id\x3d"{id}" class\x3d"cke_emoji-suggestion_item"\x3e{symbol} {id}\x3c/li\x3e',
+                outputTemplate: "{symbol}",
               });
-            b(e);
+            }
+            function e() {
+              return (a) => (a.collapsed ? CKEDITOR.plugins.textMatch.match(a, f) : null);
+            }
+            function f(a, b) {
+              var c = a.slice(0, b),
+                d = c.match(new RegExp("(?:\\s|^)(:\\S{" + k + "}\\S*)$"));
+              return d ? { start: c.lastIndexOf(d[1]), end: b } : null;
+            }
+            function g(a, b) {
+              var c = a.query.substr(1).toLowerCase(),
+                e = d.filter(h, (a) => -1 !== a.id.toLowerCase().indexOf(c));
+              b(e);
+            }
+            if (null !== b) {
+              void 0 === a._.emoji && (a._.emoji = {});
+              void 0 === a._.emoji.list && (a._.emoji.list = JSON.parse(b));
+              var h = a._.emoji.list,
+                k = void 0 === a.config.emoji_minChars ? 2 : a.config.emoji_minChars;
+              if ("ready" !== a.status) a.once("instanceReady", c);
+              else c();
+            }
           }
-          if (null !== b) {
-            void 0 === a._.emoji && (a._.emoji = {});
-            void 0 === a._.emoji.list && (a._.emoji.list = JSON.parse(b));
-            var h = a._.emoji.list,
-              k = void 0 === a.config.emoji_minChars ? 2 : a.config.emoji_minChars;
-            if ("ready" !== a.status) a.once("instanceReady", c);
-            else c();
-          }
-        });
+        );
         a.addCommand("insertEmoji", {
-          exec: function (a, c) {
+          exec: (a, c) => {
             a.insertHtml(c.emojiText);
           },
         });

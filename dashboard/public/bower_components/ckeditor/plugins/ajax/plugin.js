@@ -2,9 +2,9 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   CKEDITOR.plugins.add("ajax", { requires: "xml" });
-  CKEDITOR.ajax = (function () {
+  CKEDITOR.ajax = (() => {
     function g() {
       if (!CKEDITOR.env.ie || "file:" != location.protocol)
         try {
@@ -21,7 +21,10 @@
     function h(a) {
       return (
         4 == a.readyState &&
-        ((200 <= a.status && 300 > a.status) || 304 == a.status || 0 === a.status || 1223 == a.status)
+        ((200 <= a.status && 300 > a.status) ||
+          304 == a.status ||
+          0 === a.status ||
+          1223 == a.status)
       );
     }
     function k(a) {
@@ -40,7 +43,7 @@
       if (!c) return null;
       c.open("GET", a, d);
       d &&
-        (c.onreadystatechange = function () {
+        (c.onreadystatechange = () => {
           4 == c.readyState && (b(f(c)), (c = null));
         });
       c.send(null);
@@ -50,22 +53,19 @@
       var e = g();
       if (!e) return null;
       e.open("POST", a, !0);
-      e.onreadystatechange = function () {
+      e.onreadystatechange = () => {
         4 == e.readyState && (d && d(c(e)), (e = null));
       };
-      e.setRequestHeader("Content-type", f || "application/x-www-form-urlencoded; charset\x3dUTF-8");
+      e.setRequestHeader(
+        "Content-type",
+        f || "application/x-www-form-urlencoded; charset\x3dUTF-8"
+      );
       e.send(b);
     }
     return {
-      load: function (a, b) {
-        return l(a, b, k);
-      },
-      post: function (a, b, f, d) {
-        return n(a, b, f, d, k);
-      },
-      loadXml: function (a, b) {
-        return l(a, b, m);
-      },
+      load: (a, b) => l(a, b, k),
+      post: (a, b, f, d) => n(a, b, f, d, k),
+      loadXml: (a, b) => l(a, b, m),
     };
   })();
 })();

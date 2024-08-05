@@ -1,7 +1,7 @@
-define(function () {
+define(() => {
   // Estonian
   return {
-    inputTooLong: function (args) {
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "Sisesta " + overChars + " täht";
@@ -14,7 +14,7 @@ define(function () {
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "Sisesta " + remainingChars + " täht";
@@ -27,10 +27,8 @@ define(function () {
 
       return message;
     },
-    loadingMore: function () {
-      return "Laen tulemusi…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Laen tulemusi…",
+    maximumSelected: (args) => {
       var message = "Saad vaid " + args.maximum + " tulemus";
 
       if (args.maximum == 1) {
@@ -43,14 +41,8 @@ define(function () {
 
       return message;
     },
-    noResults: function () {
-      return "Tulemused puuduvad";
-    },
-    searching: function () {
-      return "Otsin…";
-    },
-    removeAllItems: function () {
-      return "Eemalda kõik esemed";
-    },
+    noResults: () => "Tulemused puuduvad",
+    searching: () => "Otsin…",
+    removeAllItems: () => "Eemalda kõik esemed",
   };
 });

@@ -1,10 +1,8 @@
-define(function () {
+define(() => {
   // European Portuguese
   return {
-    errorLoading: function () {
-      return "Os resultados não puderam ser carregados.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "Os resultados não puderam ser carregados.",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "Por favor apague " + overChars + " ";
@@ -13,31 +11,23 @@ define(function () {
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "Introduza " + remainingChars + " ou mais caracteres";
 
       return message;
     },
-    loadingMore: function () {
-      return "A carregar mais resultados…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "A carregar mais resultados…",
+    maximumSelected: (args) => {
       var message = "Apenas pode seleccionar " + args.maximum + " ";
 
       message += args.maximum != 1 ? "itens" : "item";
 
       return message;
     },
-    noResults: function () {
-      return "Sem resultados";
-    },
-    searching: function () {
-      return "A procurar…";
-    },
-    removeAllItems: function () {
-      return "Remover todos os itens";
-    },
+    noResults: () => "Sem resultados",
+    searching: () => "A procurar…",
+    removeAllItems: () => "Remover todos os itens",
   };
 });

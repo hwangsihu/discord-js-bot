@@ -19,9 +19,30 @@ var months = [
   "An Dùbhlachd",
 ];
 
-var monthsShort = ["Faoi", "Gear", "Màrt", "Gibl", "Cèit", "Ògmh", "Iuch", "Lùn", "Sult", "Dàmh", "Samh", "Dùbh"];
+var monthsShort = [
+  "Faoi",
+  "Gear",
+  "Màrt",
+  "Gibl",
+  "Cèit",
+  "Ògmh",
+  "Iuch",
+  "Lùn",
+  "Sult",
+  "Dàmh",
+  "Samh",
+  "Dùbh",
+];
 
-var weekdays = ["Didòmhnaich", "Diluain", "Dimàirt", "Diciadain", "Diardaoin", "Dihaoine", "Disathairne"];
+var weekdays = [
+  "Didòmhnaich",
+  "Diluain",
+  "Dimàirt",
+  "Diciadain",
+  "Diardaoin",
+  "Dihaoine",
+  "Disathairne",
+];
 
 var weekdaysShort = ["Did", "Dil", "Dim", "Dic", "Dia", "Dih", "Dis"];
 
@@ -67,7 +88,7 @@ export default moment.defineLocale("gd", {
     yy: "%d bliadhna",
   },
   dayOfMonthOrdinalParse: /\d{1,2}(d|na|mh)/,
-  ordinal: function (number) {
+  ordinal: (number) => {
     var output = number === 1 ? "d" : number % 10 === 2 ? "na" : "mh";
     return number + output;
   },

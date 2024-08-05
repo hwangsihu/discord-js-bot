@@ -106,7 +106,12 @@ CKEDITOR.lang["fa"] = {
     invalidRows: "تعداد ردیفها باید یک عدد بزرگتر از 0 باشد.",
     invalidWidth: "مقدار پهنای جدول باید یک عدد باشد.",
     menu: "ویژگیهای جدول",
-    row: { menu: "سطر", insertBefore: "افزودن سطر قبل از", insertAfter: "افزودن سطر بعد از", deleteRow: "حذف سطرها" },
+    row: {
+      menu: "سطر",
+      insertBefore: "افزودن سطر قبل از",
+      insertAfter: "افزودن سطر بعد از",
+      deleteRow: "حذف سطرها",
+    },
     rows: "سطرها",
     summary: "خلاصه",
     title: "ویژگیهای جدول",
@@ -122,7 +127,11 @@ CKEDITOR.lang["fa"] = {
     panelTitle2: "سبکهای درونخطی",
     panelTitle3: "سبکهای شیء",
   },
-  specialchar: { options: "گزینه‌های نویسه‌های ویژه", title: "گزینش نویسه‌ی ویژه", toolbar: "گنجاندن نویسه‌ی ویژه" },
+  specialchar: {
+    options: "گزینه‌های نویسه‌های ویژه",
+    title: "گزینش نویسه‌ی ویژه",
+    toolbar: "گنجاندن نویسه‌ی ویژه",
+  },
   sourcearea: { toolbar: "منبع" },
   scayt: {
     btn_about: "درباره SCAYT",
@@ -368,7 +377,8 @@ CKEDITOR.lang["fa"] = {
     invalidValue: "مقدار نامعتبر.",
     invalidHeight: "ارتفاع باید یک عدد باشد.",
     invalidWidth: "عرض باید یک عدد باشد.",
-    invalidLength: 'عدد تعیین شده برای فیلد "%1" باید یک عدد مثبت با یا بدون یک واحد اندازه گیری معتبر ("%2") باشد.',
+    invalidLength:
+      'عدد تعیین شده برای فیلد "%1" باید یک عدد مثبت با یا بدون یک واحد اندازه گیری معتبر ("%2") باشد.',
     invalidCssLength:
       'عدد تعیین شده برای فیلد "%1" باید یک عدد مثبت با یا بدون یک واحد اندازه گیری CSS معتبر باشد (px, %, in, cm, mm, em, ex, pt, or pc).',
     invalidHtmlLength:

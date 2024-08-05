@@ -68,18 +68,10 @@ export default moment.defineLocale("kn", {
     y: "ಒಂದು ವರ್ಷ",
     yy: "%d ವರ್ಷ",
   },
-  preparse: function (string) {
-    return string.replace(/[೧೨೩೪೫೬೭೮೯೦]/g, function (match) {
-      return numberMap[match];
-    });
-  },
-  postformat: function (string) {
-    return string.replace(/\d/g, function (match) {
-      return symbolMap[match];
-    });
-  },
+  preparse: (string) => string.replace(/[೧೨೩೪೫೬೭೮೯೦]/g, (match) => numberMap[match]),
+  postformat: (string) => string.replace(/\d/g, (match) => symbolMap[match]),
   meridiemParse: /ರಾತ್ರಿ|ಬೆಳಿಗ್ಗೆ|ಮಧ್ಯಾಹ್ನ|ಸಂಜೆ/,
-  meridiemHour: function (hour, meridiem) {
+  meridiemHour: (hour, meridiem) => {
     if (hour === 12) {
       hour = 0;
     }
@@ -93,7 +85,7 @@ export default moment.defineLocale("kn", {
       return hour + 12;
     }
   },
-  meridiem: function (hour, minute, isLower) {
+  meridiem: (hour, minute, isLower) => {
     if (hour < 4) {
       return "ರಾತ್ರಿ";
     } else if (hour < 10) {
@@ -107,9 +99,7 @@ export default moment.defineLocale("kn", {
     }
   },
   dayOfMonthOrdinalParse: /\d{1,2}(ನೇ)/,
-  ordinal: function (number) {
-    return number + "ನೇ";
-  },
+  ordinal: (number) => number + "ನೇ",
   week: {
     dow: 0, // Sunday is the first day of the week.
     doy: 6, // The week that contains Jan 6th is the first week of the year.

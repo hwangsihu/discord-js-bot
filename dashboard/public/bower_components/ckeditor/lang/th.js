@@ -106,7 +106,12 @@ CKEDITOR.lang["th"] = {
     invalidRows: "จำนวนของแถวต้องเป็นจำนวนมากกว่า 0",
     invalidWidth: "ความกว้างตารางต้องเป็นตัวเลข",
     menu: "คุณสมบัติของ ตาราง",
-    row: { menu: "แถว", insertBefore: "Insert Row Before", insertAfter: "Insert Row After", deleteRow: "ลบแถว" },
+    row: {
+      menu: "แถว",
+      insertBefore: "Insert Row Before",
+      insertAfter: "Insert Row After",
+      deleteRow: "ลบแถว",
+    },
     rows: "แถว",
     summary: "สรุปความ",
     title: "คุณสมบัติของ ตาราง",
@@ -122,7 +127,11 @@ CKEDITOR.lang["th"] = {
     panelTitle2: "Inline Styles",
     panelTitle3: "Object Styles",
   },
-  specialchar: { options: "Special Character Options", title: "แทรกตัวอักษรพิเศษ", toolbar: "แทรกตัวอักษรพิเศษ" },
+  specialchar: {
+    options: "Special Character Options",
+    title: "แทรกตัวอักษรพิเศษ",
+    toolbar: "แทรกตัวอักษรพิเศษ",
+  },
   sourcearea: { toolbar: "ดูรหัส HTML" },
   scayt: {
     btn_about: "About SCAYT",

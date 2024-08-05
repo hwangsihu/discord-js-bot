@@ -8,7 +8,7 @@
  *
  * http://api.jqueryui.com/draggable/
  */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["jquery", "./core", "./mouse", "./widget"], factory);
@@ -16,7 +16,7 @@
     // Browser globals
     factory(jQuery);
   }
-})(function ($) {
+})(($) => {
   $.widget("ui.draggable", $.ui.mouse, {
     version: "1.11.4",
     widgetEventPrefix: "drag",
@@ -268,8 +268,7 @@
 
     _mouseStop: function (event) {
       //If we are using droppables, inform the manager about the drop
-      var that = this,
-        dropped = false;
+      var dropped = false;
       if ($.ui.ddmanager && !this.options.dropBehaviour) {
         dropped = $.ui.ddmanager.drop(this, event);
       }
@@ -286,15 +285,17 @@
         this.options.revert === true ||
         ($.isFunction(this.options.revert) && this.options.revert.call(this.element, dropped))
       ) {
-        $(this.helper).animate(this.originalPosition, parseInt(this.options.revertDuration, 10), function () {
-          if (that._trigger("stop", event) !== false) {
-            that._clear();
+        $(this.helper).animate(
+          this.originalPosition,
+          Number.parseInt(this.options.revertDuration, 10),
+          () => {
+            if (this._trigger("stop", event) !== false) {
+              this._clear();
+            }
           }
-        });
-      } else {
-        if (this._trigger("stop", event) !== false) {
-          this._clear();
-        }
+        );
+      } else if (this._trigger("stop", event) !== false) {
+        this._clear();
       }
 
       return false;
@@ -328,11 +329,15 @@
     },
 
     _getHandle: function (event) {
-      return this.options.handle ? !!$(event.target).closest(this.element.find(this.options.handle)).length : true;
+      return this.options.handle
+        ? !!$(event.target).closest(this.element.find(this.options.handle)).length
+        : true;
     },
 
     _setHandleClassName: function () {
-      this.handleElement = this.options.handle ? this.element.find(this.options.handle) : this.element;
+      this.handleElement = this.options.handle
+        ? this.element.find(this.options.handle)
+        : this.element;
       this.handleElement.addClass("ui-draggable-handle");
     },
 
@@ -421,8 +426,8 @@
       }
 
       return {
-        top: po.top + (parseInt(this.offsetParent.css("borderTopWidth"), 10) || 0),
-        left: po.left + (parseInt(this.offsetParent.css("borderLeftWidth"), 10) || 0),
+        top: po.top + (Number.parseInt(this.offsetParent.css("borderTopWidth"), 10) || 0),
+        left: po.left + (Number.parseInt(this.offsetParent.css("borderLeftWidth"), 10) || 0),
       };
     },
 
@@ -436,20 +441,22 @@
 
       return {
         top:
-          p.top - (parseInt(this.helper.css("top"), 10) || 0) + (!scrollIsRootNode ? this.scrollParent.scrollTop() : 0),
+          p.top -
+          (Number.parseInt(this.helper.css("top"), 10) || 0) +
+          (scrollIsRootNode ? 0 : this.scrollParent.scrollTop()),
         left:
           p.left -
-          (parseInt(this.helper.css("left"), 10) || 0) +
-          (!scrollIsRootNode ? this.scrollParent.scrollLeft() : 0),
+          (Number.parseInt(this.helper.css("left"), 10) || 0) +
+          (scrollIsRootNode ? 0 : this.scrollParent.scrollLeft()),
       };
     },
 
     _cacheMargins: function () {
       this.margins = {
-        left: parseInt(this.element.css("marginLeft"), 10) || 0,
-        top: parseInt(this.element.css("marginTop"), 10) || 0,
-        right: parseInt(this.element.css("marginRight"), 10) || 0,
-        bottom: parseInt(this.element.css("marginBottom"), 10) || 0,
+        left: Number.parseInt(this.element.css("marginLeft"), 10) || 0,
+        top: Number.parseInt(this.element.css("marginTop"), 10) || 0,
+        right: Number.parseInt(this.element.css("marginRight"), 10) || 0,
+        bottom: Number.parseInt(this.element.css("marginBottom"), 10) || 0,
       };
     },
 
@@ -478,7 +485,10 @@
         this.containment = [
           $(window).scrollLeft() - this.offset.relative.left - this.offset.parent.left,
           $(window).scrollTop() - this.offset.relative.top - this.offset.parent.top,
-          $(window).scrollLeft() + $(window).width() - this.helperProportions.width - this.margins.left,
+          $(window).scrollLeft() +
+            $(window).width() -
+            this.helperProportions.width -
+            this.margins.left,
           $(window).scrollTop() +
             ($(window).height() || document.body.parentNode.scrollHeight) -
             this.helperProportions.height -
@@ -518,17 +528,19 @@
       isUserScrollable = /(scroll|auto)/.test(c.css("overflow"));
 
       this.containment = [
-        (parseInt(c.css("borderLeftWidth"), 10) || 0) + (parseInt(c.css("paddingLeft"), 10) || 0),
-        (parseInt(c.css("borderTopWidth"), 10) || 0) + (parseInt(c.css("paddingTop"), 10) || 0),
+        (Number.parseInt(c.css("borderLeftWidth"), 10) || 0) +
+          (Number.parseInt(c.css("paddingLeft"), 10) || 0),
+        (Number.parseInt(c.css("borderTopWidth"), 10) || 0) +
+          (Number.parseInt(c.css("paddingTop"), 10) || 0),
         (isUserScrollable ? Math.max(ce.scrollWidth, ce.offsetWidth) : ce.offsetWidth) -
-          (parseInt(c.css("borderRightWidth"), 10) || 0) -
-          (parseInt(c.css("paddingRight"), 10) || 0) -
+          (Number.parseInt(c.css("borderRightWidth"), 10) || 0) -
+          (Number.parseInt(c.css("paddingRight"), 10) || 0) -
           this.helperProportions.width -
           this.margins.left -
           this.margins.right,
         (isUserScrollable ? Math.max(ce.scrollHeight, ce.offsetHeight) : ce.offsetHeight) -
-          (parseInt(c.css("borderBottomWidth"), 10) || 0) -
-          (parseInt(c.css("paddingBottom"), 10) || 0) -
+          (Number.parseInt(c.css("borderBottomWidth"), 10) || 0) -
+          (Number.parseInt(c.css("paddingBottom"), 10) || 0) -
           this.helperProportions.height -
           this.margins.top -
           this.margins.bottom,
@@ -549,13 +561,21 @@
           pos.top + // The absolute mouse position
           this.offset.relative.top * mod + // Only for relative positioned nodes: Relative offset from element to offset parent
           this.offset.parent.top * mod - // The offsetParent's offset without borders (offset + border)
-          (this.cssPosition === "fixed" ? -this.offset.scroll.top : scrollIsRootNode ? 0 : this.offset.scroll.top) *
+          (this.cssPosition === "fixed"
+            ? -this.offset.scroll.top
+            : scrollIsRootNode
+              ? 0
+              : this.offset.scroll.top) *
             mod,
         left:
           pos.left + // The absolute mouse position
           this.offset.relative.left * mod + // Only for relative positioned nodes: Relative offset from element to offset parent
           this.offset.parent.left * mod - // The offsetParent's offset without borders (offset + border)
-          (this.cssPosition === "fixed" ? -this.offset.scroll.left : scrollIsRootNode ? 0 : this.offset.scroll.left) *
+          (this.cssPosition === "fixed"
+            ? -this.offset.scroll.left
+            : scrollIsRootNode
+              ? 0
+              : this.offset.scroll.left) *
             mod,
       };
     },
@@ -618,7 +638,8 @@
             ? this.originalPageY + Math.round((pageY - this.originalPageY) / o.grid[1]) * o.grid[1]
             : this.originalPageY;
           pageY = containment
-            ? top - this.offset.click.top >= containment[1] || top - this.offset.click.top > containment[3]
+            ? top - this.offset.click.top >= containment[1] ||
+              top - this.offset.click.top > containment[3]
               ? top
               : top - this.offset.click.top >= containment[1]
                 ? top - o.grid[1]
@@ -629,7 +650,8 @@
             ? this.originalPageX + Math.round((pageX - this.originalPageX) / o.grid[0]) * o.grid[0]
             : this.originalPageX;
           pageX = containment
-            ? left - this.offset.click.left >= containment[0] || left - this.offset.click.left > containment[2]
+            ? left - this.offset.click.left >= containment[0] ||
+              left - this.offset.click.left > containment[2]
               ? left
               : left - this.offset.click.left >= containment[0]
                 ? left - o.grid[0]
@@ -652,13 +674,21 @@
           this.offset.click.top - // Click offset (relative to the element)
           this.offset.relative.top - // Only for relative positioned nodes: Relative offset from element to offset parent
           this.offset.parent.top + // The offsetParent's offset without borders (offset + border)
-          (this.cssPosition === "fixed" ? -this.offset.scroll.top : scrollIsRootNode ? 0 : this.offset.scroll.top),
+          (this.cssPosition === "fixed"
+            ? -this.offset.scroll.top
+            : scrollIsRootNode
+              ? 0
+              : this.offset.scroll.top),
         left:
           pageX - // The absolute mouse position
           this.offset.click.left - // Click offset (relative to the element)
           this.offset.relative.left - // Only for relative positioned nodes: Relative offset from element to offset parent
           this.offset.parent.left + // The offsetParent's offset without borders (offset + border)
-          (this.cssPosition === "fixed" ? -this.offset.scroll.left : scrollIsRootNode ? 0 : this.offset.scroll.left),
+          (this.cssPosition === "fixed"
+            ? -this.offset.scroll.left
+            : scrollIsRootNode
+              ? 0
+              : this.offset.scroll.left),
       };
     },
 
@@ -712,7 +742,7 @@
   });
 
   $.ui.plugin.add("draggable", "connectToSortable", {
-    start: function (event, ui, draggable) {
+    start: (event, ui, draggable) => {
       var uiSortable = $.extend({}, ui, {
         item: draggable.element,
       });
@@ -732,7 +762,7 @@
         }
       });
     },
-    stop: function (event, ui, draggable) {
+    stop: (event, ui, draggable) => {
       var uiSortable = $.extend({}, ui, {
         item: draggable.element,
       });
@@ -740,40 +770,38 @@
       draggable.cancelHelperRemoval = false;
 
       $.each(draggable.sortables, function () {
-        var sortable = this;
-
-        if (sortable.isOver) {
-          sortable.isOver = 0;
+        if (this.isOver) {
+          this.isOver = 0;
 
           // Allow this sortable to handle removing the helper
           draggable.cancelHelperRemoval = true;
-          sortable.cancelHelperRemoval = false;
+          this.cancelHelperRemoval = false;
 
           // Use _storedCSS To restore properties in the sortable,
           // as this also handles revert (#9675) since the draggable
           // may have modified them in unexpected ways (#8809)
-          sortable._storedCSS = {
-            position: sortable.placeholder.css("position"),
-            top: sortable.placeholder.css("top"),
-            left: sortable.placeholder.css("left"),
+          this._storedCSS = {
+            position: this.placeholder.css("position"),
+            top: this.placeholder.css("top"),
+            left: this.placeholder.css("left"),
           };
 
-          sortable._mouseStop(event);
+          this._mouseStop(event);
 
           // Once drag has ended, the sortable should return to using
           // its original helper, not the shared helper from draggable
-          sortable.options.helper = sortable.options._helper;
+          this.options.helper = this.options._helper;
         } else {
           // Prevent this Sortable from removing the helper.
           // However, don't set the draggable to remove the helper
           // either as another connected Sortable may yet handle the removal.
-          sortable.cancelHelperRemoval = true;
+          this.cancelHelperRemoval = true;
 
-          sortable._trigger("deactivate", event, uiSortable);
+          this._trigger("deactivate", event, uiSortable);
         }
       });
     },
-    drag: function (event, ui, draggable) {
+    drag: (event, ui, draggable) => {
       $.each(draggable.sortables, function () {
         var innermostIntersecting = false,
           sortable = this;
@@ -813,14 +841,14 @@
             // Store draggable's parent in case we need to reappend to it later.
             draggable._parent = ui.helper.parent();
 
-            sortable.currentItem = ui.helper.appendTo(sortable.element).data("ui-sortable-item", true);
+            sortable.currentItem = ui.helper
+              .appendTo(sortable.element)
+              .data("ui-sortable-item", true);
 
             // Store helper option to later restore it
             sortable.options._helper = sortable.options.helper;
 
-            sortable.options.helper = function () {
-              return ui.helper[0];
-            };
+            sortable.options.helper = () => ui.helper[0];
 
             // Fire the start events of the sortable with our passed browser event,
             // and our own helper (so it doesn't create a new one)
@@ -832,7 +860,8 @@
             // modify necessary variables to reflect the changes
             sortable.offset.click.top = draggable.offset.click.top;
             sortable.offset.click.left = draggable.offset.click.left;
-            sortable.offset.parent.left -= draggable.offset.parent.left - sortable.offset.parent.left;
+            sortable.offset.parent.left -=
+              draggable.offset.parent.left - sortable.offset.parent.left;
             sortable.offset.parent.top -= draggable.offset.parent.top - sortable.offset.parent.top;
 
             draggable._trigger("toSortable", event);
@@ -907,7 +936,7 @@
   });
 
   $.ui.plugin.add("draggable", "cursor", {
-    start: function (event, ui, instance) {
+    start: (event, ui, instance) => {
       var t = $("body"),
         o = instance.options;
 
@@ -916,7 +945,7 @@
       }
       t.css("cursor", o.cursor);
     },
-    stop: function (event, ui, instance) {
+    stop: (event, ui, instance) => {
       var o = instance.options;
       if (o._cursor) {
         $("body").css("cursor", o._cursor);
@@ -925,7 +954,7 @@
   });
 
   $.ui.plugin.add("draggable", "opacity", {
-    start: function (event, ui, instance) {
+    start: (event, ui, instance) => {
       var t = $(ui.helper),
         o = instance.options;
       if (t.css("opacity")) {
@@ -933,7 +962,7 @@
       }
       t.css("opacity", o.opacity);
     },
-    stop: function (event, ui, instance) {
+    stop: (event, ui, instance) => {
       var o = instance.options;
       if (o._opacity) {
         $(ui.helper).css("opacity", o._opacity);
@@ -942,16 +971,19 @@
   });
 
   $.ui.plugin.add("draggable", "scroll", {
-    start: function (event, ui, i) {
+    start: (event, ui, i) => {
       if (!i.scrollParentNotHidden) {
         i.scrollParentNotHidden = i.helper.scrollParent(false);
       }
 
-      if (i.scrollParentNotHidden[0] !== i.document[0] && i.scrollParentNotHidden[0].tagName !== "HTML") {
+      if (
+        i.scrollParentNotHidden[0] !== i.document[0] &&
+        i.scrollParentNotHidden[0].tagName !== "HTML"
+      ) {
         i.overflowOffset = i.scrollParentNotHidden.offset();
       }
     },
-    drag: function (event, ui, i) {
+    drag: (event, ui, i) => {
       var o = i.options,
         scrolled = false,
         scrollParent = i.scrollParentNotHidden[0],
@@ -959,7 +991,10 @@
 
       if (scrollParent !== document && scrollParent.tagName !== "HTML") {
         if (!o.axis || o.axis !== "x") {
-          if (i.overflowOffset.top + scrollParent.offsetHeight - event.pageY < o.scrollSensitivity) {
+          if (
+            i.overflowOffset.top + scrollParent.offsetHeight - event.pageY <
+            o.scrollSensitivity
+          ) {
             scrollParent.scrollTop = scrolled = scrollParent.scrollTop + o.scrollSpeed;
           } else if (event.pageY - i.overflowOffset.top < o.scrollSensitivity) {
             scrollParent.scrollTop = scrolled = scrollParent.scrollTop - o.scrollSpeed;
@@ -967,7 +1002,10 @@
         }
 
         if (!o.axis || o.axis !== "y") {
-          if (i.overflowOffset.left + scrollParent.offsetWidth - event.pageX < o.scrollSensitivity) {
+          if (
+            i.overflowOffset.left + scrollParent.offsetWidth - event.pageX <
+            o.scrollSensitivity
+          ) {
             scrollParent.scrollLeft = scrolled = scrollParent.scrollLeft + o.scrollSpeed;
           } else if (event.pageX - i.overflowOffset.left < o.scrollSensitivity) {
             scrollParent.scrollLeft = scrolled = scrollParent.scrollLeft - o.scrollSpeed;
@@ -977,7 +1015,10 @@
         if (!o.axis || o.axis !== "x") {
           if (event.pageY - $(document).scrollTop() < o.scrollSensitivity) {
             scrolled = $(document).scrollTop($(document).scrollTop() - o.scrollSpeed);
-          } else if ($(window).height() - (event.pageY - $(document).scrollTop()) < o.scrollSensitivity) {
+          } else if (
+            $(window).height() - (event.pageY - $(document).scrollTop()) <
+            o.scrollSensitivity
+          ) {
             scrolled = $(document).scrollTop($(document).scrollTop() + o.scrollSpeed);
           }
         }
@@ -985,7 +1026,10 @@
         if (!o.axis || o.axis !== "y") {
           if (event.pageX - $(document).scrollLeft() < o.scrollSensitivity) {
             scrolled = $(document).scrollLeft($(document).scrollLeft() - o.scrollSpeed);
-          } else if ($(window).width() - (event.pageX - $(document).scrollLeft()) < o.scrollSensitivity) {
+          } else if (
+            $(window).width() - (event.pageX - $(document).scrollLeft()) <
+            o.scrollSensitivity
+          ) {
             scrolled = $(document).scrollLeft($(document).scrollLeft() + o.scrollSpeed);
           }
         }
@@ -998,26 +1042,28 @@
   });
 
   $.ui.plugin.add("draggable", "snap", {
-    start: function (event, ui, i) {
+    start: (event, ui, i) => {
       var o = i.options;
 
       i.snapElements = [];
 
-      $(o.snap.constructor !== String ? o.snap.items || ":data(ui-draggable)" : o.snap).each(function () {
-        var $t = $(this),
-          $o = $t.offset();
-        if (this !== i.element[0]) {
-          i.snapElements.push({
-            item: this,
-            width: $t.outerWidth(),
-            height: $t.outerHeight(),
-            top: $o.top,
-            left: $o.left,
-          });
+      $(o.snap.constructor !== String ? o.snap.items || ":data(ui-draggable)" : o.snap).each(
+        function () {
+          var $t = $(this),
+            $o = $t.offset();
+          if (this !== i.element[0]) {
+            i.snapElements.push({
+              item: this,
+              width: $t.outerWidth(),
+              height: $t.outerHeight(),
+              top: $o.top,
+              left: $o.left,
+            });
+          }
         }
-      });
+      );
     },
-    drag: function (event, ui, inst) {
+    drag: (event, ui, inst) => {
       var ts,
         bs,
         ls,
@@ -1129,15 +1175,17 @@
     start: function (event, ui, instance) {
       var min,
         o = instance.options,
-        group = $.makeArray($(o.stack)).sort(function (a, b) {
-          return (parseInt($(a).css("zIndex"), 10) || 0) - (parseInt($(b).css("zIndex"), 10) || 0);
-        });
+        group = $.makeArray($(o.stack)).sort(
+          (a, b) =>
+            (Number.parseInt($(a).css("zIndex"), 10) || 0) -
+            (Number.parseInt($(b).css("zIndex"), 10) || 0)
+        );
 
       if (!group.length) {
         return;
       }
 
-      min = parseInt($(group[0]).css("zIndex"), 10) || 0;
+      min = Number.parseInt($(group[0]).css("zIndex"), 10) || 0;
       $(group).each(function (i) {
         $(this).css("zIndex", min + i);
       });
@@ -1146,7 +1194,7 @@
   });
 
   $.ui.plugin.add("draggable", "zIndex", {
-    start: function (event, ui, instance) {
+    start: (event, ui, instance) => {
       var t = $(ui.helper),
         o = instance.options;
 
@@ -1155,7 +1203,7 @@
       }
       t.css("zIndex", o.zIndex);
     },
-    stop: function (event, ui, instance) {
+    stop: (event, ui, instance) => {
       var o = instance.options;
 
       if (o._zIndex) {

@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(r) {
       if (n[r]) return n[r].exports;
       var o = (n[r] = { i: r, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = n),
-      (t.d = function (e, n, r) {
+      (t.d = (e, n, r) => {
         t.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: r });
       }),
-      (t.n = function (e) {
-        var n =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var n = e && e.__esModule ? () => e.default : () => e;
         return t.d(n, "a", n), n;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 155))
     );
   })({
-    0: function (t, n) {
+    0: (t, n) => {
       t.exports = e;
     },
-    1: function (e, n) {
+    1: (e, n) => {
       e.exports = t;
     },
-    155: function (e, t, n) {
+    155: (e, t, n) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), n(156);
       var r = n(1);
       r.datepickerLocale("ka", "ka", {
@@ -66,8 +57,29 @@
           "ნოემბერი",
           "დეკემბერი",
         ],
-        monthNamesShort: ["იან", "თებ", "მარ", "აპრ", "მაი", "ივნ", "ივლ", "აგვ", "სექ", "ოქტ", "ნოე", "დეკ"],
-        dayNames: ["კვირა", "ორშაბათი", "სამშაბათი", "ოთხშაბათი", "ხუთშაბათი", "პარასკევი", "შაბათი"],
+        monthNamesShort: [
+          "იან",
+          "თებ",
+          "მარ",
+          "აპრ",
+          "მაი",
+          "ივნ",
+          "ივლ",
+          "აგვ",
+          "სექ",
+          "ოქტ",
+          "ნოე",
+          "დეკ",
+        ],
+        dayNames: [
+          "კვირა",
+          "ორშაბათი",
+          "სამშაბათი",
+          "ოთხშაბათი",
+          "ხუთშაბათი",
+          "პარასკევი",
+          "შაბათი",
+        ],
         dayNamesShort: ["კვი", "ორშ", "სამ", "ოთხ", "ხუთ", "პარ", "შაბ"],
         dayNamesMin: ["კვ", "ორ", "სა", "ოთ", "ხუ", "პა", "შა"],
         weekHeader: "კვ",
@@ -80,17 +92,15 @@
         r.locale("ka", {
           buttonText: { month: "თვე", week: "კვირა", day: "დღე", list: "დღის წესრიგი" },
           allDayText: "მთელი დღე",
-          eventLimitText: function (e) {
-            return "+ კიდევ " + e;
-          },
+          eventLimitText: (e) => "+ კიდევ " + e,
           noEventsMessage: "ღონისძიებები არ არის",
         });
     },
-    156: function (e, t, n) {
-      !(function (e, t) {
+    156: (e, t, n) => {
+      !((e, t) => {
         t(n(0));
-      })(0, function (e) {
-        return e.defineLocale("ka", {
+      })(0, (e) =>
+        e.defineLocale("ka", {
           months: {
             standalone:
               "იანვარი_თებერვალი_მარტი_აპრილი_მაისი_ივნისი_ივლისი_აგვისტო_სექტემბერი_ოქტომბერი_ნოემბერი_დეკემბერი".split(
@@ -126,16 +136,13 @@
             sameElse: "L",
           },
           relativeTime: {
-            future: function (e) {
-              return /(წამი|წუთი|საათი|წელი)/.test(e) ? e.replace(/ი$/, "ში") : e + "ში";
-            },
-            past: function (e) {
-              return /(წამი|წუთი|საათი|დღე|თვე)/.test(e)
+            future: (e) => (/(წამი|წუთი|საათი|წელი)/.test(e) ? e.replace(/ი$/, "ში") : e + "ში"),
+            past: (e) =>
+              /(წამი|წუთი|საათი|დღე|თვე)/.test(e)
                 ? e.replace(/(ი|ე)$/, "ის წინ")
                 : /წელი/.test(e)
                   ? e.replace(/წელი$/, "წლის წინ")
-                  : void 0;
-            },
+                  : void 0,
             s: "რამდენიმე წამი",
             ss: "%d წამი",
             m: "წუთი",
@@ -150,18 +157,17 @@
             yy: "%d წელი",
           },
           dayOfMonthOrdinalParse: /0|1-ლი|მე-\d{1,2}|\d{1,2}-ე/,
-          ordinal: function (e) {
-            return 0 === e
+          ordinal: (e) =>
+            0 === e
               ? e
               : 1 === e
                 ? e + "-ლი"
                 : e < 20 || (e <= 100 && e % 20 == 0) || e % 100 == 0
                   ? "მე-" + e
-                  : e + "-ე";
-          },
+                  : e + "-ე",
           week: { dow: 1, doy: 7 },
-        });
-      });
+        })
+      );
     },
-  });
-});
+  })
+);

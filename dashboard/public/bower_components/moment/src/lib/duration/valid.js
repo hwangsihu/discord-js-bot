@@ -1,9 +1,18 @@
 import indexOf from "../utils/index-of";
 import toInt from "../utils/to-int";
-import { Duration } from "./constructor";
 import { createDuration } from "./create";
 
-var ordering = ["year", "quarter", "month", "week", "day", "hour", "minute", "second", "millisecond"];
+var ordering = [
+  "year",
+  "quarter",
+  "month",
+  "week",
+  "day",
+  "hour",
+  "minute",
+  "second",
+  "millisecond",
+];
 
 export default function isDurationValid(m) {
   for (var key in m) {
@@ -18,7 +27,7 @@ export default function isDurationValid(m) {
       if (unitHasDecimal) {
         return false; // only allow non-integers for smallest unit
       }
-      if (parseFloat(m[ordering[i]]) !== toInt(m[ordering[i]])) {
+      if (Number.parseFloat(m[ordering[i]]) !== toInt(m[ordering[i]])) {
         unitHasDecimal = true;
       }
     }
@@ -32,5 +41,5 @@ export function isValid() {
 }
 
 export function createInvalid() {
-  return createDuration(NaN);
+  return createDuration(Number.NaN);
 }

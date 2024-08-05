@@ -1,15 +1,16 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
-  var months = "leden_únor_březen_duben_květen_červen_červenec_srpen_září_říjen_listopad_prosinec".split("_"),
+})(this, (moment) => {
+  var months =
+      "leden_únor_březen_duben_květen_červen_červenec_srpen_září_říjen_listopad_prosinec".split(
+        "_"
+      ),
     monthsShort = "led_úno_bře_dub_kvě_čvn_čvc_srp_zář_říj_lis_pro".split("_");
 
   var monthsParse = [

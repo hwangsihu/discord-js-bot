@@ -1,15 +1,13 @@
-define(["./core", "./core/toType", "./var/isFunction", "./var/rnothtmlwhite"], function (
+define(["./core", "./core/toType", "./var/isFunction", "./var/rnothtmlwhite"], (
   jQuery,
   toType,
   isFunction,
   rnothtmlwhite
-) {
-  "use strict";
-
+) => {
   // Convert String-formatted options into Object-formatted ones
   function createOptions(options) {
     var object = {};
-    jQuery.each(options.match(rnothtmlwhite) || [], function (_, flag) {
+    jQuery.each(options.match(rnothtmlwhite) || [], (_, flag) => {
       object[flag] = true;
     });
     return object;
@@ -37,7 +35,7 @@ define(["./core", "./core/toType", "./var/isFunction", "./var/rnothtmlwhite"], f
    *	stopOnFalse:	interrupt callings when a callback returns false
    *
    */
-  jQuery.Callbacks = function (options) {
+  jQuery.Callbacks = (options) => {
     // Convert options from String-formatted to Object-formatted if needed
     // (we check in cache first)
     options = typeof options === "string" ? createOptions(options) : jQuery.extend({}, options);
@@ -57,7 +55,7 @@ define(["./core", "./core/toType", "./var/isFunction", "./var/rnothtmlwhite"], f
       // Index of currently firing callback (modified by add/remove as needed)
       firingIndex = -1,
       // Fire callbacks
-      fire = function () {
+      fire = () => {
         // Enforce single-firing
         locked = locked || options.once;
 
@@ -107,7 +105,7 @@ define(["./core", "./core/toType", "./var/isFunction", "./var/rnothtmlwhite"], f
             }
 
             (function add(args) {
-              jQuery.each(args, function (_, arg) {
+              jQuery.each(args, (_, arg) => {
                 if (isFunction(arg)) {
                   if (!options.unique || !self.has(arg)) {
                     list.push(arg);
@@ -128,7 +126,7 @@ define(["./core", "./core/toType", "./var/isFunction", "./var/rnothtmlwhite"], f
 
         // Remove a callback from the list
         remove: function () {
-          jQuery.each(arguments, function (_, arg) {
+          jQuery.each(arguments, (_, arg) => {
             var index;
             while ((index = jQuery.inArray(arg, list, index)) > -1) {
               list.splice(index, 1);
@@ -144,9 +142,7 @@ define(["./core", "./core/toType", "./var/isFunction", "./var/rnothtmlwhite"], f
 
         // Check if a given callback is in the list.
         // If no argument is given, return whether or not list has callbacks attached.
-        has: function (fn) {
-          return fn ? jQuery.inArray(fn, list) > -1 : list.length > 0;
-        },
+        has: (fn) => (fn ? jQuery.inArray(fn, list) > -1 : list.length > 0),
 
         // Remove all callbacks from the list
         empty: function () {
@@ -164,9 +160,7 @@ define(["./core", "./core/toType", "./var/isFunction", "./var/rnothtmlwhite"], f
           list = memory = "";
           return this;
         },
-        disabled: function () {
-          return !list;
-        },
+        disabled: () => !list,
 
         // Disable .fire
         // Also disable .add unless we have memory (since it would have no effect)
@@ -178,9 +172,7 @@ define(["./core", "./core/toType", "./var/isFunction", "./var/rnothtmlwhite"], f
           }
           return this;
         },
-        locked: function () {
-          return !!locked;
-        },
+        locked: () => !!locked,
 
         // Call all callbacks with the given context and arguments
         fireWith: function (context, args) {
@@ -202,9 +194,7 @@ define(["./core", "./core/toType", "./var/isFunction", "./var/rnothtmlwhite"], f
         },
 
         // To know if the callbacks have already been called at least once
-        fired: function () {
-          return !!fired;
-        },
+        fired: () => !!fired,
       };
 
     return self;

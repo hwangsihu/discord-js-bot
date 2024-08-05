@@ -20,7 +20,8 @@ module.exports = {
   ECONOMY: {
     name: "Economy",
     enabled: config.ECONOMY.ENABLED,
-    image: "https://icons.iconarchive.com/icons/custom-icon-design/pretty-office-11/128/coins-icon.png",
+    image:
+      "https://icons.iconarchive.com/icons/custom-icon-design/pretty-office-11/128/coins-icon.png",
     emoji: "🪙",
   },
   FUN: {
@@ -65,7 +66,8 @@ module.exports = {
   },
   OWNER: {
     name: "Owner",
-    image: "https://www.pinclipart.com/picdir/middle/531-5318253_web-designing-icon-png-clipart.png",
+    image:
+      "https://www.pinclipart.com/picdir/middle/531-5318253_web-designing-icon-png-clipart.png",
     emoji: "🤴",
   },
   SOCIAL: {
@@ -76,7 +78,8 @@ module.exports = {
   STATS: {
     name: "Statistics",
     enabled: config.STATS.ENABLED,
-    image: "https://icons.iconarchive.com/icons/graphicloads/flat-finance/256/dollar-stats-icon.png",
+    image:
+      "https://icons.iconarchive.com/icons/graphicloads/flat-finance/256/dollar-stats-icon.png",
     emoji: "📈",
   },
   SUGGESTION: {
@@ -93,7 +96,8 @@ module.exports = {
   },
   UTILITY: {
     name: "Utility",
-    image: "https://icons.iconarchive.com/icons/blackvariant/button-ui-system-folders-alt/128/Utilities-icon.png",
+    image:
+      "https://icons.iconarchive.com/icons/blackvariant/button-ui-system-folders-alt/128/Utilities-icon.png",
     emoji: "🛠",
   },
 };

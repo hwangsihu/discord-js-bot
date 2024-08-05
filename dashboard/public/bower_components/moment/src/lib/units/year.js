@@ -1,6 +1,15 @@
 import { addFormatToken } from "../format/format";
 import { makeGetSet } from "../moment/get-set";
-import { addRegexToken, match1to2, match1to4, match1to6, match2, match4, match6, matchSigned } from "../parse/regex";
+import {
+  addRegexToken,
+  match1to2,
+  match1to4,
+  match1to6,
+  match2,
+  match4,
+  match6,
+  matchSigned,
+} from "../parse/regex";
 import { addParseToken } from "../parse/token";
 import { hooks } from "../utils/hooks";
 import toInt from "../utils/to-int";
@@ -40,14 +49,14 @@ addRegexToken("YYYYY", match1to6, match6);
 addRegexToken("YYYYYY", match1to6, match6);
 
 addParseToken(["YYYYY", "YYYYYY"], YEAR);
-addParseToken("YYYY", function (input, array) {
+addParseToken("YYYY", (input, array) => {
   array[YEAR] = input.length === 2 ? hooks.parseTwoDigitYear(input) : toInt(input);
 });
-addParseToken("YY", function (input, array) {
+addParseToken("YY", (input, array) => {
   array[YEAR] = hooks.parseTwoDigitYear(input);
 });
-addParseToken("Y", function (input, array) {
-  array[YEAR] = parseInt(input, 10);
+addParseToken("Y", (input, array) => {
+  array[YEAR] = Number.parseInt(input, 10);
 });
 
 // HELPERS
@@ -62,9 +71,7 @@ export function isLeapYear(year) {
 
 // HOOKS
 
-hooks.parseTwoDigitYear = function (input) {
-  return toInt(input) + (toInt(input) > 68 ? 1900 : 2000);
-};
+hooks.parseTwoDigitYear = (input) => toInt(input) + (toInt(input) > 68 ? 1900 : 2000);
 
 // MOMENTS
 

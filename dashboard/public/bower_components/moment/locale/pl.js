@@ -1,18 +1,20 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var monthsNominative =
-      "styczeń_luty_marzec_kwiecień_maj_czerwiec_lipiec_sierpień_wrzesień_październik_listopad_grudzień".split("_"),
+      "styczeń_luty_marzec_kwiecień_maj_czerwiec_lipiec_sierpień_wrzesień_październik_listopad_grudzień".split(
+        "_"
+      ),
     monthsSubjective =
-      "stycznia_lutego_marca_kwietnia_maja_czerwca_lipca_sierpnia_września_października_listopada_grudnia".split("_");
+      "stycznia_lutego_marca_kwietnia_maja_czerwca_lipca_sierpnia_września_października_listopada_grudnia".split(
+        "_"
+      );
   function plural(n) {
     return n % 10 < 5 && n % 10 > 1 && ~~(n / 10) % 10 !== 1;
   }
@@ -37,14 +39,20 @@
   }
 
   var pl = moment.defineLocale("pl", {
-    months: function (momentToFormat, format) {
+    months: (momentToFormat, format) => {
       if (!momentToFormat) {
         return monthsNominative;
       } else if (format === "") {
         // Hack: if format empty we know this is used to generate
         // RegExp by moment. Give then back both valid forms of months
         // in RegExp ready format.
-        return "(" + monthsSubjective[momentToFormat.month()] + "|" + monthsNominative[momentToFormat.month()] + ")";
+        return (
+          "(" +
+          monthsSubjective[momentToFormat.month()] +
+          "|" +
+          monthsNominative[momentToFormat.month()] +
+          ")"
+        );
       } else if (/D MMMM/.test(format)) {
         return monthsSubjective[momentToFormat.month()];
       } else {

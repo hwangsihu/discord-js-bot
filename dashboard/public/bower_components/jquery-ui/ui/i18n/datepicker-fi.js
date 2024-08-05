@@ -1,6 +1,6 @@
 /* Finnish initialisation for the jQuery UI date picker plugin. */
 /* Written by Harri Kilpiö (harrikilpio@gmail.com). */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["fi"] = {
     closeText: "Sulje",
     prevText: "&#xAB;Edellinen",
@@ -43,7 +43,15 @@
       "Joulu",
     ],
     dayNamesShort: ["Su", "Ma", "Ti", "Ke", "To", "Pe", "La"],
-    dayNames: ["Sunnuntai", "Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai", "Lauantai"],
+    dayNames: [
+      "Sunnuntai",
+      "Maanantai",
+      "Tiistai",
+      "Keskiviikko",
+      "Torstai",
+      "Perjantai",
+      "Lauantai",
+    ],
     dayNamesMin: ["Su", "Ma", "Ti", "Ke", "To", "Pe", "La"],
     weekHeader: "Vk",
     dateFormat: "d.m.yy",

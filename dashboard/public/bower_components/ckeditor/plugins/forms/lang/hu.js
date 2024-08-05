@@ -40,7 +40,11 @@
     btnSetValue: "Legyen az alapértelmezett érték",
     btnDelete: "Töröl",
   },
-  textarea: { title: "Szövegterület tulajdonságai", cols: "Karakterek száma egy sorban", rows: "Sorok száma" },
+  textarea: {
+    title: "Szövegterület tulajdonságai",
+    cols: "Karakterek száma egy sorban",
+    rows: "Sorok száma",
+  },
   textfield: {
     title: "Szövegmező tulajdonságai",
     name: "Név",

@@ -1,38 +1,25 @@
 /*! Select2 4.0.7 | https://github.com/select2/select2/blob/master/LICENSE.md */
 
-(function () {
-  if (jQuery && jQuery.fn && jQuery.fn.select2 && jQuery.fn.select2.amd) var e = jQuery.fn.select2.amd;
+(() => {
+  if (jQuery && jQuery.fn && jQuery.fn.select2 && jQuery.fn.select2.amd)
+    var e = jQuery.fn.select2.amd;
   return (
-    e.define("select2/i18n/fi", [], function () {
-      return {
-        errorLoading: function () {
-          return "Tuloksia ei saatu ladattua.";
-        },
-        inputTooLong: function (e) {
-          var t = e.input.length - e.maximum;
-          return "Ole hyvä ja anna " + t + " merkkiä vähemmän";
-        },
-        inputTooShort: function (e) {
-          var t = e.minimum - e.input.length;
-          return "Ole hyvä ja anna " + t + " merkkiä lisää";
-        },
-        loadingMore: function () {
-          return "Ladataan lisää tuloksia…";
-        },
-        maximumSelected: function (e) {
-          return "Voit valita ainoastaan " + e.maximum + " kpl";
-        },
-        noResults: function () {
-          return "Ei tuloksia";
-        },
-        searching: function () {
-          return "Haetaan…";
-        },
-        removeAllItems: function () {
-          return "Poista kaikki kohteet";
-        },
-      };
-    }),
+    e.define("select2/i18n/fi", [], () => ({
+      errorLoading: () => "Tuloksia ei saatu ladattua.",
+      inputTooLong: (e) => {
+        var t = e.input.length - e.maximum;
+        return "Ole hyvä ja anna " + t + " merkkiä vähemmän";
+      },
+      inputTooShort: (e) => {
+        var t = e.minimum - e.input.length;
+        return "Ole hyvä ja anna " + t + " merkkiä lisää";
+      },
+      loadingMore: () => "Ladataan lisää tuloksia…",
+      maximumSelected: (e) => "Voit valita ainoastaan " + e.maximum + " kpl",
+      noResults: () => "Ei tuloksia",
+      searching: () => "Haetaan…",
+      removeAllItems: () => "Poista kaikki kohteet",
+    })),
     { define: e.define, require: e.require }
   );
 })();

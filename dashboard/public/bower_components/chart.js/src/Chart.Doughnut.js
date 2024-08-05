@@ -1,8 +1,5 @@
 (function () {
-  "use strict";
-
-  var root = this,
-    Chart = root.Chart,
+  var Chart = this.Chart,
     //Cache a local reference to Chart.helpers
     helpers = Chart.helpers;
 
@@ -46,7 +43,9 @@
     initialize: function (data) {
       //Declare segments as a static property to prevent inheriting across the Chart type prototype
       this.segments = [];
-      this.outerRadius = (helpers.min([this.chart.width, this.chart.height]) - this.options.segmentStrokeWidth / 2) / 2;
+      this.outerRadius =
+        (helpers.min([this.chart.width, this.chart.height]) - this.options.segmentStrokeWidth / 2) /
+        2;
 
       this.SegmentArc = Chart.Arc.extend({
         ctx: this.chart.ctx,
@@ -59,10 +58,10 @@
         helpers.bindEvents(this, this.options.tooltipEvents, function (evt) {
           var activeSegments = evt.type !== "mouseout" ? this.getSegmentsAtEvent(evt) : [];
 
-          helpers.each(this.segments, function (segment) {
+          helpers.each(this.segments, (segment) => {
             segment.restore(["fillColor"]);
           });
-          helpers.each(activeSegments, function (activeSegment) {
+          helpers.each(activeSegments, (activeSegment) => {
             activeSegment.fillColor = activeSegment.highlightColor;
           });
           this.showTooltip(activeSegments);
@@ -87,7 +86,7 @@
 
       helpers.each(
         this.segments,
-        function (segment) {
+        (segment) => {
           if (segment.inRange(location.x, location.y)) segmentsArray.push(segment);
         },
         this
@@ -102,14 +101,18 @@
         new this.SegmentArc({
           value: segment.value,
           outerRadius: this.options.animateScale ? 0 : this.outerRadius,
-          innerRadius: this.options.animateScale ? 0 : (this.outerRadius / 100) * this.options.percentageInnerCutout,
+          innerRadius: this.options.animateScale
+            ? 0
+            : (this.outerRadius / 100) * this.options.percentageInnerCutout,
           fillColor: segment.color,
           highlightColor: segment.highlight || segment.color,
           showStroke: this.options.segmentShowStroke,
           strokeWidth: this.options.segmentStrokeWidth,
           strokeColor: this.options.segmentStrokeColor,
           startAngle: Math.PI * 1.5,
-          circumference: this.options.animateRotate ? 0 : this.calculateCircumference(segment.value),
+          circumference: this.options.animateRotate
+            ? 0
+            : this.calculateCircumference(segment.value),
           label: segment.label,
         })
       );
@@ -135,11 +138,11 @@
       this.calculateTotal(this.segments);
 
       // Reset any highlight colours before updating.
-      helpers.each(this.activeElements, function (activeElement) {
+      helpers.each(this.activeElements, (activeElement) => {
         activeElement.restore(["fillColor"]);
       });
 
-      helpers.each(this.segments, function (segment) {
+      helpers.each(this.segments, (segment) => {
         segment.save();
       });
       this.render();
@@ -157,7 +160,9 @@
         x: this.chart.width / 2,
         y: this.chart.height / 2,
       });
-      this.outerRadius = (helpers.min([this.chart.width, this.chart.height]) - this.options.segmentStrokeWidth / 2) / 2;
+      this.outerRadius =
+        (helpers.min([this.chart.width, this.chart.height]) - this.options.segmentStrokeWidth / 2) /
+        2;
       helpers.each(
         this.segments,
         function (segment) {

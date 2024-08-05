@@ -1,33 +1,21 @@
-define(function () {
+define(() => {
   // Norwegian (Bokmål)
   return {
-    errorLoading: function () {
-      return "Kunne ikke hente resultater.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "Kunne ikke hente resultater.",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       return "Vennligst fjern " + overChars + " tegn";
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       return "Vennligst skriv inn " + remainingChars + " tegn til";
     },
-    loadingMore: function () {
-      return "Laster flere resultater…";
-    },
-    maximumSelected: function (args) {
-      return "Du kan velge maks " + args.maximum + " elementer";
-    },
-    noResults: function () {
-      return "Ingen treff";
-    },
-    searching: function () {
-      return "Søker…";
-    },
-    removeAllItems: function () {
-      return "Fjern alle elementer";
-    },
+    loadingMore: () => "Laster flere resultater…",
+    maximumSelected: (args) => "Du kan velge maks " + args.maximum + " elementer",
+    noResults: () => "Ingen treff",
+    searching: () => "Søker…",
+    removeAllItems: () => "Fjern alle elementer",
   };
 });

@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var he = moment.defineLocale("he", {
     months: "ינואר_פברואר_מרץ_אפריל_מאי_יוני_יולי_אוגוסט_ספטמבר_אוקטובר_נובמבר_דצמבר".split("_"),
     monthsShort: "ינו׳_פבר׳_מרץ_אפר׳_מאי_יוני_יולי_אוג׳_ספט׳_אוק׳_נוב׳_דצמ׳".split("_"),
@@ -43,28 +41,28 @@
       m: "דקה",
       mm: "%d דקות",
       h: "שעה",
-      hh: function (number) {
+      hh: (number) => {
         if (number === 2) {
           return "שעתיים";
         }
         return number + " שעות";
       },
       d: "יום",
-      dd: function (number) {
+      dd: (number) => {
         if (number === 2) {
           return "יומיים";
         }
         return number + " ימים";
       },
       M: "חודש",
-      MM: function (number) {
+      MM: (number) => {
         if (number === 2) {
           return "חודשיים";
         }
         return number + " חודשים";
       },
       y: "שנה",
-      yy: function (number) {
+      yy: (number) => {
         if (number === 2) {
           return "שנתיים";
         } else if (number % 10 === 0 && number !== 10) {
@@ -74,10 +72,8 @@
       },
     },
     meridiemParse: /אחה"צ|לפנה"צ|אחרי הצהריים|לפני הצהריים|לפנות בוקר|בבוקר|בערב/i,
-    isPM: function (input) {
-      return /^(אחה"צ|אחרי הצהריים|בערב)$/.test(input);
-    },
-    meridiem: function (hour, minute, isLower) {
+    isPM: (input) => /^(אחה"צ|אחרי הצהריים|בערב)$/.test(input),
+    meridiem: (hour, minute, isLower) => {
       if (hour < 5) {
         return "לפנות בוקר";
       } else if (hour < 10) {

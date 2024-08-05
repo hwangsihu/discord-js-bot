@@ -1,25 +1,24 @@
-define(["jquery", "../keys", "../utils"], function ($, KEYS, Utils) {
+define(["jquery", "../keys", "../utils"], ($, keys, Utils) => {
   function AllowClear() {}
 
   AllowClear.prototype.bind = function (decorated, container, $container) {
-    var self = this;
-
     decorated.call(this, container, $container);
 
     if (this.placeholder == null) {
       if (this.options.get("debug") && window.console && console.error) {
         console.error(
-          "Select2: The `allowClear` option should be used in combination " + "with the `placeholder` option."
+          "Select2: The `allowClear` option should be used in combination " +
+            "with the `placeholder` option."
         );
       }
     }
 
-    this.$selection.on("mousedown", ".select2-selection__clear", function (evt) {
-      self._handleClear(evt);
+    this.$selection.on("mousedown", ".select2-selection__clear", (evt) => {
+      this._handleClear(evt);
     });
 
-    container.on("keypress", function (evt) {
-      self._handleKeyboardClear(evt, container);
+    container.on("keypress", (evt) => {
+      this._handleKeyboardClear(evt, container);
     });
   };
 
@@ -78,7 +77,7 @@ define(["jquery", "../keys", "../utils"], function ($, KEYS, Utils) {
       return;
     }
 
-    if (evt.which == KEYS.DELETE || evt.which == KEYS.BACKSPACE) {
+    if (evt.which == keys.DELETE || evt.which == keys.BACKSPACE) {
       this._handleClear(evt);
     }
   };
@@ -92,7 +91,9 @@ define(["jquery", "../keys", "../utils"], function ($, KEYS, Utils) {
 
     var removeAll = this.options.get("translations").get("removeAllItems");
 
-    var $remove = $('<span class="select2-selection__clear" title="' + removeAll() + '">' + "&times;" + "</span>");
+    var $remove = $(
+      '<span class="select2-selection__clear" title="' + removeAll() + '">' + "&times;" + "</span>"
+    );
     Utils.StoreData($remove[0], "data", data);
 
     this.$selection.find(".select2-selection__rendered").prepend($remove);

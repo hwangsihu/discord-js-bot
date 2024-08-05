@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function p(b, f, e, d, r, p, t, x) {
     var y = b.config,
       u = new CKEDITOR.style(t),
@@ -33,15 +33,16 @@
                 {
                   element: "font",
                   check: "span",
-                  left: function (a) {
-                    return !!a.attributes.size || !!a.attributes.align || !!a.attributes.face;
-                  },
-                  right: function (a) {
+                  left: (a) => !!a.attributes.size || !!a.attributes.align || !!a.attributes.face,
+                  right: (a) => {
                     var b = " x-small small medium large x-large xx-large 48px".split(" ");
                     a.name = "span";
-                    a.attributes.size && ((a.styles["font-size"] = b[a.attributes.size]), delete a.attributes.size);
-                    a.attributes.align && ((a.styles["text-align"] = a.attributes.align), delete a.attributes.align);
-                    a.attributes.face && ((a.styles["font-family"] = a.attributes.face), delete a.attributes.face);
+                    a.attributes.size &&
+                      ((a.styles["font-size"] = b[a.attributes.size]), delete a.attributes.size);
+                    a.attributes.align &&
+                      ((a.styles["text-align"] = a.attributes.align), delete a.attributes.align);
+                    a.attributes.face &&
+                      ((a.styles["font-family"] = a.attributes.face), delete a.attributes.face);
                   },
                 },
               ],
@@ -71,12 +72,7 @@
           g;
         if (c && a != c)
           if (((e = k[c]), (c = b.getSelection().getRanges()[0]), c.collapsed)) {
-            if (
-              ((n = b.elementPath()),
-              (h = n.contains(function (a) {
-                return e.checkElementRemovable(a);
-              })))
-            ) {
+            if (((n = b.elementPath()), (h = n.contains((a) => e.checkElementRemovable(a))))) {
               d = c.checkBoundaryOfElement(h, CKEDITOR.START);
               g = c.checkBoundaryOfElement(h, CKEDITOR.END);
               if (d && g) {
@@ -85,7 +81,10 @@
                 c.moveToBookmark(d);
               } else
                 d || g
-                  ? c.moveToPosition(h, d ? CKEDITOR.POSITION_BEFORE_START : CKEDITOR.POSITION_AFTER_END)
+                  ? c.moveToPosition(
+                      h,
+                      d ? CKEDITOR.POSITION_BEFORE_START : CKEDITOR.POSITION_AFTER_END
+                    )
                   : (c.splitElement(h), c.moveToPosition(h, CKEDITOR.POSITION_AFTER_END)),
                   v(c, n.elements.slice(), h);
               b.getSelection().selectRanges([c]);
@@ -131,10 +130,19 @@
   CKEDITOR.plugins.add("font", {
     requires: "richcombo",
     lang: "af,ar,az,bg,bn,bs,ca,cs,cy,da,de,de-ch,el,en,en-au,en-ca,en-gb,eo,es,es-mx,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,oc,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn",
-    init: function (b) {
+    init: (b) => {
       var f = b.config;
       p(b, "Font", "family", b.lang.font, f.font_names, f.font_defaultLabel, f.font_style, 30);
-      p(b, "FontSize", "size", b.lang.font.fontSize, f.fontSize_sizes, f.fontSize_defaultLabel, f.fontSize_style, 40);
+      p(
+        b,
+        "FontSize",
+        "size",
+        b.lang.font.fontSize,
+        f.fontSize_sizes,
+        f.fontSize_defaultLabel,
+        f.fontSize_style,
+        40
+      );
     },
   });
 })();

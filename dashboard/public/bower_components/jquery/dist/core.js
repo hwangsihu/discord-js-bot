@@ -20,7 +20,7 @@ define([
   "./var/isWindow",
   "./core/DOMEval",
   "./core/toType",
-], function (
+], (
   arr,
   document,
   getProto,
@@ -36,14 +36,12 @@ define([
   support,
   isFunction,
   isWindow,
-  DOMEval,
+  domEval,
   toType
-) {
-  "use strict";
-
+) => {
   var version = "3.3.1",
     // Define a local copy of jQuery
-    jQuery = function (selector, context) {
+    jQuery = (selector, context) => {
       // The jQuery object is actually just the init constructor 'enhanced'
       // Need init if jQuery is called (just allow error to be thrown if not included)
       return new jQuery.fn.init(selector, context);
@@ -96,11 +94,7 @@ define([
     },
 
     map: function (callback) {
-      return this.pushStack(
-        jQuery.map(this, function (elem, i) {
-          return callback.call(elem, i, elem);
-        })
-      );
+      return this.pushStack(jQuery.map(this, (elem, i) => callback.call(elem, i, elem)));
     },
 
     slice: function () {
@@ -208,13 +202,13 @@ define([
     // Assume jQuery is ready without the ready module
     isReady: true,
 
-    error: function (msg) {
+    error: (msg) => {
       throw new Error(msg);
     },
 
-    noop: function () {},
+    noop: () => {},
 
-    isPlainObject: function (obj) {
+    isPlainObject: (obj) => {
       var proto, Ctor;
 
       // Detect obvious negatives
@@ -235,7 +229,7 @@ define([
       return typeof Ctor === "function" && fnToString.call(Ctor) === ObjectFunctionString;
     },
 
-    isEmptyObject: function (obj) {
+    isEmptyObject: (obj) => {
       /* eslint-disable no-unused-vars */
       // See https://github.com/eslint/eslint/issues/6125
       var name;
@@ -247,11 +241,11 @@ define([
     },
 
     // Evaluates a script in a global context
-    globalEval: function (code) {
-      DOMEval(code);
+    globalEval: (code) => {
+      domEval(code);
     },
 
-    each: function (obj, callback) {
+    each: (obj, callback) => {
       var length,
         i = 0;
 
@@ -274,12 +268,10 @@ define([
     },
 
     // Support: Android <=4.0 only
-    trim: function (text) {
-      return text == null ? "" : (text + "").replace(rtrim, "");
-    },
+    trim: (text) => (text == null ? "" : (text + "").replace(rtrim, "")),
 
     // results is for internal usage only
-    makeArray: function (arr, results) {
+    makeArray: (arr, results) => {
       var ret = results || [];
 
       if (arr != null) {
@@ -293,13 +285,11 @@ define([
       return ret;
     },
 
-    inArray: function (elem, arr, i) {
-      return arr == null ? -1 : indexOf.call(arr, elem, i);
-    },
+    inArray: (elem, arr, i) => (arr == null ? -1 : indexOf.call(arr, elem, i)),
 
     // Support: Android <=4.0 only, PhantomJS 1 only
     // push.apply(_, arraylike) throws on ancient WebKit
-    merge: function (first, second) {
+    merge: (first, second) => {
       var len = +second.length,
         j = 0,
         i = first.length;
@@ -313,7 +303,7 @@ define([
       return first;
     },
 
-    grep: function (elems, callback, invert) {
+    grep: (elems, callback, invert) => {
       var callbackInverse,
         matches = [],
         i = 0,
@@ -333,7 +323,7 @@ define([
     },
 
     // arg is for internal usage only
-    map: function (elems, callback, arg) {
+    map: (elems, callback, arg) => {
       var length,
         value,
         i = 0,
@@ -378,9 +368,12 @@ define([
   }
 
   // Populate the class2type map
-  jQuery.each("Boolean Number String Function Array Date RegExp Object Error Symbol".split(" "), function (i, name) {
-    class2type["[object " + name + "]"] = name.toLowerCase();
-  });
+  jQuery.each(
+    "Boolean Number String Function Array Date RegExp Object Error Symbol".split(" "),
+    (i, name) => {
+      class2type["[object " + name + "]"] = name.toLowerCase();
+    }
+  );
 
   function isArrayLike(obj) {
     // Support: real iOS 8.2 only (not reproducible in simulator)
@@ -394,7 +387,11 @@ define([
       return false;
     }
 
-    return type === "array" || length === 0 || (typeof length === "number" && length > 0 && length - 1 in obj);
+    return (
+      type === "array" ||
+      length === 0 ||
+      (typeof length === "number" && length > 0 && length - 1 in obj)
+    );
   }
 
   return jQuery;

@@ -7,7 +7,7 @@ Version: 0.0.0
 
 Optional extensions on the jquery.inputmask base
 */
-(function ($) {
+(($) => {
   //extra definitions
   $.extend($.inputmask.defaults.definitions, {
     A: {
@@ -28,29 +28,27 @@ Optional extensions on the jquery.inputmask base
       separator: "",
       defaultPrefix: "http://",
       regex: {
-        urlpre1: new RegExp("[fh]"),
-        urlpre2: new RegExp("(ft|ht)"),
-        urlpre3: new RegExp("(ftp|htt)"),
-        urlpre4: new RegExp("(ftp:|http|ftps)"),
-        urlpre5: new RegExp("(ftp:/|ftps:|http:|https)"),
-        urlpre6: new RegExp("(ftp://|ftps:/|http:/|https:)"),
-        urlpre7: new RegExp("(ftp://|ftps://|http://|https:/)"),
-        urlpre8: new RegExp("(ftp://|ftps://|http://|https://)"),
+        urlpre1: /[fh]/,
+        urlpre2: /(ft|ht)/,
+        urlpre3: /(ftp|htt)/,
+        urlpre4: /(ftp:|http|ftps)/,
+        urlpre5: /(ftp:\/|ftps:|http:|https)/,
+        urlpre6: /(ftp:\/\/|ftps:\/|http:\/|https:)/,
+        urlpre7: /(ftp:\/\/|ftps:\/\/|http:\/\/|https:\/)/,
+        urlpre8: /(ftp:\/\/|ftps:\/\/|http:\/\/|https:\/\/)/,
       },
       definitions: {
         i: {
-          validator: function (chrs, buffer, pos, strict, opts) {
-            return true;
-          },
+          validator: (chrs, buffer, pos, strict, opts) => true,
           cardinality: 8,
-          prevalidator: (function () {
+          prevalidator: (() => {
             var result = [],
               prefixLimit = 8;
             for (var i = 0; i < prefixLimit; i++) {
-              result[i] = (function () {
+              result[i] = (() => {
                 var j = i;
                 return {
-                  validator: function (chrs, buffer, pos, strict, opts) {
+                  validator: (chrs, buffer, pos, strict, opts) => {
                     if (opts.regex["urlpre" + (j + 1)]) {
                       var tmp = chrs,
                         k;
@@ -100,23 +98,23 @@ Optional extensions on the jquery.inputmask base
           definitionSymbol: "i",
         },
         y: {
-          validator: function (chrs, buffer, pos, strict, opts) {
+          validator: (chrs, buffer, pos, strict, opts) => {
             if (pos - 1 > -1 && buffer[pos - 1] != ".") chrs = buffer[pos - 1] + chrs;
             else chrs = "0" + chrs;
-            return new RegExp("2[0-5]|[01][0-9]").test(chrs);
+            return /2[0-5]|[01][0-9]/.test(chrs);
           },
           cardinality: 1,
           definitionSymbol: "i",
         },
         z: {
-          validator: function (chrs, buffer, pos, strict, opts) {
+          validator: (chrs, buffer, pos, strict, opts) => {
             if (pos - 1 > -1 && buffer[pos - 1] != ".") {
               chrs = buffer[pos - 1] + chrs;
               if (pos - 2 > -1 && buffer[pos - 2] != ".") {
                 chrs = buffer[pos - 2] + chrs;
               } else chrs = "0" + chrs;
             } else chrs = "00" + chrs;
-            return new RegExp("25[0-5]|2[0-4][0-9]|[01][0-9][0-9]").test(chrs);
+            return /25[0-5]|2[0-4][0-9]|[01][0-9][0-9]/.test(chrs);
           },
           cardinality: 1,
           definitionSymbol: "i",

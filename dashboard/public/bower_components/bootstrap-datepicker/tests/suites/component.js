@@ -232,7 +232,10 @@ test(
 
     // Overwritten `$.fn.hide` method adds the `foo` class to its matched elements
     var curDivShowing = childDivs.filter(".datepicker-" + viewModes[minViewMode].clsName);
-    ok(!curDivShowing.hasClass("foo"), "Shown div does not have overridden `$.fn.hide` side-effects");
+    ok(
+      !curDivShowing.hasClass("foo"),
+      "Shown div does not have overridden `$.fn.hide` side-effects"
+    );
 
     // Check that other classes do have `foo` class
     var divNotShown;
@@ -243,7 +246,7 @@ test(
   })
 );
 
-test("Focused ceil for decade/century/millenium views", function () {
+test("Focused ceil for decade/century/millenium views", () => {
   var input = $("<input />")
       .appendTo("#qunit-fixture")
       .datepicker({

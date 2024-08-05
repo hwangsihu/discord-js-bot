@@ -4,7 +4,7 @@
  *
  * DEPRECATED: This language code 'rs' is deprecated (invalid serbian language code) and will be removed in 2.0.
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["rs"] = {
     days: ["Недеља", "Понедељак", "Уторак", "Среда", "Четвртак", "Петак", "Субота"],
     daysShort: ["Нед", "Пон", "Уто", "Сре", "Чет", "Пет", "Суб"],
@@ -23,7 +23,20 @@
       "Новембар",
       "Децембар",
     ],
-    monthsShort: ["Јан", "Феб", "Мар", "Апр", "Мај", "Јун", "Јул", "Авг", "Сеп", "Окт", "Нов", "Дец"],
+    monthsShort: [
+      "Јан",
+      "Феб",
+      "Мар",
+      "Апр",
+      "Мај",
+      "Јун",
+      "Јул",
+      "Авг",
+      "Сеп",
+      "Окт",
+      "Нов",
+      "Дец",
+    ],
     today: "Данас",
     weekStart: 1,
     format: "dd.mm.yyyy",

@@ -83,8 +83,8 @@ module.exports = {
     else if (sub === "add") {
       const split = args.slice(1).join(" ").split("|");
       const category = split[0].trim();
-      const staff_roles = split[1]?.trim();
-      response = await addCategory(message.guild, data, category, staff_roles);
+      const staffRoles = split[1]?.trim();
+      response = await addCategory(message.guild, data, category, staffRoles);
     }
 
     // remove
@@ -113,8 +113,8 @@ module.exports = {
     // add
     else if (sub === "add") {
       const category = interaction.options.getString("category");
-      const staff_roles = interaction.options.getString("staff_roles");
-      response = await addCategory(interaction.guild, data, category, staff_roles);
+      const staffRoles = interaction.options.getString("staff_roles");
+      response = await addCategory(interaction.guild, data, category, staffRoles);
     }
 
     // remove
@@ -150,7 +150,9 @@ async function addCategory(guild, data, category, staff_roles) {
     return `Category \`${category}\` already exists.`;
   }
 
-  const staffRoles = (staff_roles?.split(",")?.map((r) => r.trim()) || []).filter((r) => guild.roles.cache.has(r));
+  const staffRoles = (staff_roles?.split(",")?.map((r) => r.trim()) || []).filter((r) =>
+    guild.roles.cache.has(r)
+  );
 
   data.settings.ticket.categories.push({ name: category, staff_roles: staffRoles });
   await data.settings.save();

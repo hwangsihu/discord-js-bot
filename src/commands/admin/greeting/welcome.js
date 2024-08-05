@@ -198,7 +198,8 @@ module.exports = {
 
     // desc
     else if (type === "desc") {
-      if (args.length < 2) return message.safeReply("Insufficient arguments! Please provide valid content");
+      if (args.length < 2)
+        return message.safeReply("Insufficient arguments! Please provide valid content");
       const desc = args.slice(1).join(" ");
       response = await setDescription(settings, desc);
     }
@@ -214,13 +215,15 @@ module.exports = {
     // color
     else if (type === "color") {
       const color = args[1];
-      if (!color || !isHex(color)) return message.safeReply("Invalid color. Value must be a valid hex color");
+      if (!color || !isHex(color))
+        return message.safeReply("Invalid color. Value must be a valid hex color");
       response = await setColor(settings, color);
     }
 
     // footer
     else if (type === "footer") {
-      if (args.length < 2) return message.safeReply("Insufficient arguments! Please provide valid content");
+      if (args.length < 2)
+        return message.safeReply("Insufficient arguments! Please provide valid content");
       const content = args.slice(1).join(" ");
       response = await setFooter(settings, content);
     }

@@ -5,7 +5,8 @@
 CKEDITOR.plugins.add("forms", {
   requires: "dialog,fakeobjects",
   lang: "af,ar,az,bg,bn,bs,ca,cs,cy,da,de,de-ch,el,en,en-au,en-ca,en-gb,eo,es,es-mx,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,oc,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn",
-  icons: "button,checkbox,form,hiddenfield,imagebutton,radio,select,select-rtl,textarea,textarea-rtl,textfield",
+  icons:
+    "button,checkbox,form,hiddenfield,imagebutton,radio,select,select-rtl,textarea,textarea-rtl,textfield",
   hidpi: !0,
   onLoad: function () {
     CKEDITOR.addCss(".cke_editable form{border: 1px dotted #FF0000;padding: 2px;}\n");
@@ -28,7 +29,8 @@ CKEDITOR.plugins.add("forms", {
         button: "input[type,name,value]",
         form: "form[action,name,id,enctype,target,method]",
         hiddenfield: "input[type,name,value]",
-        imagebutton: "input[type,alt,src]{width,height,border,border-width,border-style,margin,float}",
+        imagebutton:
+          "input[type,alt,src]{width,height,border,border-width,border-style,margin,float}",
       },
       m = {
         checkbox: "input",
@@ -41,7 +43,7 @@ CKEDITOR.plugins.add("forms", {
         hiddenfield: "input",
         imagebutton: "input",
       },
-      d = function (f, c, d) {
+      d = (f, c, d) => {
         var h = { allowedContent: l[c], requiredContent: m[c] };
         "form" == c && (h.context = "form");
         b.addCommand(c, new CKEDITOR.dialogCommand(c, h));
@@ -62,11 +64,17 @@ CKEDITOR.plugins.add("forms", {
     d("Select", "select", e + "select.js");
     d("Button", "button", e + "button.js");
     var k = b.plugins.image;
-    k && !b.plugins.image2 && d("ImageButton", "imagebutton", CKEDITOR.plugins.getPath("image") + "dialogs/image.js");
+    k &&
+      !b.plugins.image2 &&
+      d("ImageButton", "imagebutton", CKEDITOR.plugins.getPath("image") + "dialogs/image.js");
     d("HiddenField", "hiddenfield", e + "hiddenfield.js");
     b.addMenuItems &&
       ((d = {
-        checkbox: { label: a.forms.checkboxAndRadio.checkboxTitle, command: "checkbox", group: "checkbox" },
+        checkbox: {
+          label: a.forms.checkboxAndRadio.checkboxTitle,
+          command: "checkbox",
+          group: "checkbox",
+        },
         radio: { label: a.forms.checkboxAndRadio.radioTitle, command: "radio", group: "radio" },
         textfield: { label: a.forms.textfield.title, command: "textfield", group: "textfield" },
         hiddenfield: { label: a.forms.hidden.title, command: "hiddenfield", group: "hiddenfield" },
@@ -74,15 +82,21 @@ CKEDITOR.plugins.add("forms", {
         select: { label: a.forms.select.title, command: "select", group: "select" },
         textarea: { label: a.forms.textarea.title, command: "textarea", group: "textarea" },
       }),
-      k && (d.imagebutton = { label: a.image.titleButton, command: "imagebutton", group: "imagebutton" }),
+      k &&
+        (d.imagebutton = {
+          label: a.image.titleButton,
+          command: "imagebutton",
+          group: "imagebutton",
+        }),
       !b.blockless && (d.form = { label: a.forms.form.menu, command: "form", group: "form" }),
       b.addMenuItems(d));
     b.contextMenu &&
       (!b.blockless &&
-        b.contextMenu.addListener(function (f, c, b) {
-          if ((f = b.contains("form", 1)) && !f.isReadOnly()) return { form: CKEDITOR.TRISTATE_OFF };
+        b.contextMenu.addListener((f, c, b) => {
+          if ((f = b.contains("form", 1)) && !f.isReadOnly())
+            return { form: CKEDITOR.TRISTATE_OFF };
         }),
-      b.contextMenu.addListener(function (b) {
+      b.contextMenu.addListener((b) => {
         if (b && !b.isReadOnly()) {
           var c = b.getName();
           if ("select" == c) return { select: CKEDITOR.TRISTATE_OFF };
@@ -107,12 +121,13 @@ CKEDITOR.plugins.add("forms", {
             return { hiddenfield: CKEDITOR.TRISTATE_OFF };
         }
       }));
-    b.on("doubleclick", function (a) {
+    b.on("doubleclick", (a) => {
       var c = a.data.element;
       if (!b.blockless && c.is("form")) a.data.dialog = "form";
       else if (c.is("select")) a.data.dialog = "select";
       else if (c.is("textarea")) a.data.dialog = "textarea";
-      else if (c.is("img") && "hiddenfield" == c.data("cke-real-element-type")) a.data.dialog = "hiddenfield";
+      else if (c.is("img") && "hiddenfield" == c.data("cke-real-element-type"))
+        a.data.dialog = "hiddenfield";
       else if (c.is("input")) {
         c = c.getAttribute("type") || "text";
         switch (c) {
@@ -134,7 +149,7 @@ CKEDITOR.plugins.add("forms", {
       }
     });
   },
-  afterInit: function (b) {
+  afterInit: (b) => {
     var a = b.dataProcessor,
       g = a && a.htmlFilter,
       a = a && a.dataFilter;
@@ -143,7 +158,7 @@ CKEDITOR.plugins.add("forms", {
       g.addRules(
         {
           elements: {
-            input: function (a) {
+            input: (a) => {
               a = a.attributes;
               var b = a.type;
               b || (a.type = "text");
@@ -157,8 +172,9 @@ CKEDITOR.plugins.add("forms", {
       a.addRules(
         {
           elements: {
-            input: function (a) {
-              if ("hidden" == a.attributes.type) return b.createFakeParserElement(a, "cke_hidden", "hiddenfield");
+            input: (a) => {
+              if ("hidden" == a.attributes.type)
+                return b.createFakeParserElement(a, "cke_hidden", "hiddenfield");
             },
           },
         },

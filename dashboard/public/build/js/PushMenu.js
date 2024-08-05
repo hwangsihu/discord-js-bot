@@ -6,9 +6,7 @@
  *          or add [data-toggle="push-menu"] to any button
  *          Pass any option as data-option="value"
  */
-+(function ($) {
-  "use strict";
-
++(($) => {
   var DataKey = "lte.pushmenu";
 
   var Default = {
@@ -59,14 +57,17 @@
     $(Selector.contentWrapper).click(
       function () {
         // Enable hide menu when clicking on the content-wrapper on small screens
-        if ($(window).width() <= this.options.collapseScreenSize && $("body").hasClass(ClassName.open)) {
+        if (
+          $(window).width() <= this.options.collapseScreenSize &&
+          $("body").hasClass(ClassName.open)
+        ) {
           this.close();
         }
       }.bind(this)
     );
 
     // __Fix for android devices
-    $(Selector.searchInput).click(function (e) {
+    $(Selector.searchInput).click((e) => {
       e.stopPropagation();
     });
   };
@@ -79,10 +80,10 @@
       isOpen = $("body").hasClass(ClassName.open);
     }
 
-    if (!isOpen) {
-      this.open();
-    } else {
+    if (isOpen) {
       this.close();
+    } else {
+      this.open();
     }
   };
 
@@ -110,7 +111,10 @@
   PushMenu.prototype.expandOnHover = function () {
     $(Selector.mainSidebar).hover(
       function () {
-        if ($("body").is(Selector.mini + Selector.collapsed) && $(window).width() > this.options.collapseScreenSize) {
+        if (
+          $("body").is(Selector.mini + Selector.collapsed) &&
+          $(window).width() > this.options.collapseScreenSize
+        ) {
           this.expand();
         }
       }.bind(this),
@@ -123,13 +127,13 @@
   };
 
   PushMenu.prototype.expand = function () {
-    setTimeout(function () {
+    setTimeout(() => {
       $("body").removeClass(ClassName.collapsed).addClass(ClassName.expanded);
     }, this.options.expandTransitionDelay);
   };
 
   PushMenu.prototype.collapse = function () {
-    setTimeout(function () {
+    setTimeout(() => {
       $("body").removeClass(ClassName.expanded).addClass(ClassName.collapsed);
     }, this.options.expandTransitionDelay);
   };
@@ -168,7 +172,7 @@
     e.preventDefault();
     Plugin.call($(this), "toggle");
   });
-  $(window).on("load", function () {
+  $(window).on("load", () => {
     Plugin.call($(Selector.button));
   });
 })(jQuery);

@@ -1,8 +1,8 @@
-function UTCDate() {
+function utcDate() {
   return new Date(Date.UTC.apply(Date, arguments));
 }
 
-function format_date(date) {
+function formatDate(date) {
   var y = date.getUTCFullYear(),
     m = date.getUTCMonth() + 1,
     d = date.getUTCDate(),
@@ -17,5 +17,5 @@ function format_date(date) {
 }
 
 function datesEqual(actual, expected, message) {
-  QUnit.push(QUnit.equiv(actual, expected), format_date(actual), format_date(expected), message);
+  QUnit.push(QUnit.equiv(actual, expected), formatDate(actual), formatDate(expected), message);
 }

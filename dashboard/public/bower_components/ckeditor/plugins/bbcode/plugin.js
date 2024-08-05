@@ -2,8 +2,8 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
-  CKEDITOR.on("dialogDefinition", function (a) {
+(() => {
+  CKEDITOR.on("dialogDefinition", (a) => {
     var b;
     b = a.data.name;
     a = a.data.definition;
@@ -84,25 +84,15 @@
     B = {},
     r = [],
     t;
-  for (t in q)
-    (B[q[t]] = t),
-      r.push(
-        q[t].replace(/\(|\)|\:|\/|\*|\-|\|/g, function (a) {
-          return "\\" + a;
-        })
-      );
+  for (t in q) (B[q[t]] = t), r.push(q[t].replace(/\(|\)|\:|\/|\*|\-|\|/g, (a) => "\\" + a));
   var r = new RegExp(r.join("|"), "g"),
-    D = (function () {
+    D = (() => {
       var a = [],
         b = { nbsp: " ", shy: "­" },
         c;
       for (c in b) a.push(c);
       a = new RegExp("\x26(" + a.join("|") + ");", "g");
-      return function (c) {
-        return c.replace(a, function (e, a) {
-          return b[a];
-        });
-      };
+      return (c) => c.replace(a, (e, a) => b[a]);
     })();
   CKEDITOR.BBCodeParser = function () {
     this._ = { bbcPartsRegex: /(?:\[([^\/\]=]*?)(?:=([^\]]*?))?\])|(?:\[\/([a-z]{1,16})\])/gi };
@@ -149,7 +139,7 @@
       if (a.length > k) this.onText(a.substring(k, a.length), 1);
     },
   };
-  CKEDITOR.htmlParser.fragment.fromBBCode = function (a) {
+  CKEDITOR.htmlParser.fragment.fromBBCode = (a) => {
     function b(e) {
       if (0 < h.length)
         for (var a = 0; a < h.length; a++) {
@@ -170,7 +160,7 @@
         g = a && v.getRule(m[a], e ? "breakBeforeClose" : "breakBeforeOpen");
       f && (b || c || g) && f--;
       f && a in A && f++;
-      for (; f && f--; ) d.children.push(new CKEDITOR.htmlParser.element("br"));
+      while (f && f--) d.children.push(new CKEDITOR.htmlParser.element("br"));
     }
     function k(a, e) {
       c(a.name, 1);
@@ -198,7 +188,9 @@
             l;
           a == w
             ? k(d, d.parent)
-            : (a in CKEDITOR.dtd.$listItem ? (e.onTagOpen("ul", {}), (l = d)) : (k(d, d.parent), h.unshift(d)),
+            : (a in CKEDITOR.dtd.$listItem
+                ? (e.onTagOpen("ul", {}), (l = d))
+                : (k(d, d.parent), h.unshift(d)),
               (p = !0));
           d = l ? l : d.returnPoint || d.parent;
           if (p) {
@@ -214,7 +206,7 @@
         f.isEmpty ? k(f) : (d = f);
       }
     };
-    e.onTagClose = function (a) {
+    e.onTagClose = (a) => {
       for (var e = h.length - 1; 0 <= e; e--)
         if (a == h[e].name) {
           h.splice(e, 1);
@@ -230,16 +222,16 @@
         h = h.concat(c);
       }
     };
-    e.onText = function (a) {
+    e.onText = (a) => {
       var e = CKEDITOR.dtd[d.name];
       if (!e || e["#"])
         c(),
           b(),
-          a.replace(/(\r\n|[\r\n])|[^\r\n]*/g, function (a, e) {
+          a.replace(/(\r\n|[\r\n])|[^\r\n]*/g, (a, e) => {
             if (void 0 !== e && e.length) f++;
             else if (a.length) {
               var b = 0;
-              a.replace(r, function (e, c) {
+              a.replace(r, (e, c) => {
                 k(new CKEDITOR.htmlParser.text(a.substring(b, c)), d);
                 k(new CKEDITOR.htmlParser.element("smiley", { desc: B[e] }), d);
                 b = c + e.length;
@@ -255,9 +247,24 @@
   var v = new (CKEDITOR.tools.createClass({
     $: function () {
       this._ = { output: [], rules: [] };
-      this.setRules("list", { breakBeforeOpen: 1, breakAfterOpen: 1, breakBeforeClose: 1, breakAfterClose: 1 });
-      this.setRules("*", { breakBeforeOpen: 1, breakAfterOpen: 0, breakBeforeClose: 1, breakAfterClose: 0 });
-      this.setRules("quote", { breakBeforeOpen: 1, breakAfterOpen: 0, breakBeforeClose: 0, breakAfterClose: 1 });
+      this.setRules("list", {
+        breakBeforeOpen: 1,
+        breakAfterOpen: 1,
+        breakBeforeClose: 1,
+        breakAfterClose: 1,
+      });
+      this.setRules("*", {
+        breakBeforeOpen: 1,
+        breakAfterOpen: 0,
+        breakBeforeClose: 1,
+        breakAfterClose: 0,
+      });
+      this.setRules("quote", {
+        breakBeforeOpen: 1,
+        breakAfterOpen: 0,
+        breakBeforeClose: 0,
+        breakAfterClose: 1,
+      });
     },
     proto: {
       setRules: function (a, b) {
@@ -287,9 +294,11 @@
       text: function (a) {
         this.write(a);
       },
-      comment: function () {},
+      comment: () => {},
       lineBreak: function () {
-        !this._.hasLineBreak && this._.output.length && (this.write("\n"), (this._.hasLineBreak = 1));
+        !this._.hasLineBreak &&
+          this._.output.length &&
+          (this.write("\n"), (this._.hasLineBreak = 1));
       },
       write: function () {
         this._.hasLineBreak = 0;
@@ -309,7 +318,7 @@
   }))();
   CKEDITOR.plugins.add("bbcode", {
     requires: "entities",
-    beforeInit: function (a) {
+    beforeInit: (a) => {
       CKEDITOR.tools.extend(
         a.config,
         { enterMode: CKEDITOR.ENTER_BR, basicEntities: !1, entities: !1, fillEmptyBlocks: !1 },
@@ -318,7 +327,7 @@
       a.filter.disable();
       a.activeEnterMode = a.enterMode = CKEDITOR.ENTER_BR;
     },
-    init: function (a) {
+    init: (a) => {
       function b(a) {
         var b = a.data;
         a = CKEDITOR.htmlParser.fragment.fromBBCode(a.data.dataValue);
@@ -331,7 +340,7 @@
         k = new CKEDITOR.htmlParser.filter();
       k.addRules({
         elements: {
-          blockquote: function (a) {
+          blockquote: (a) => {
             var b = new CKEDITOR.htmlParser.element("div");
             b.children = a.children;
             a.children = [b];
@@ -342,24 +351,26 @@
               a.children.unshift(c);
             }
           },
-          span: function (a) {
+          span: (a) => {
             var b;
             if ((b = a.attributes.bbcode))
               "img" == b
                 ? ((a.name = "img"), (a.attributes.src = a.children[0].value), (a.children = []))
-                : "email" == b && ((a.name = "a"), (a.attributes.href = "mailto:" + a.children[0].value)),
+                : "email" == b &&
+                  ((a.name = "a"), (a.attributes.href = "mailto:" + a.children[0].value)),
                 delete a.attributes.bbcode;
           },
-          ol: function (a) {
+          ol: (a) => {
             a.attributes.listType
-              ? "decimal" != a.attributes.listType && (a.attributes.style = "list-style-type:" + a.attributes.listType)
+              ? "decimal" != a.attributes.listType &&
+                (a.attributes.style = "list-style-type:" + a.attributes.listType)
               : (a.name = "ul");
             delete a.attributes.listType;
           },
-          a: function (a) {
+          a: (a) => {
             a.attributes.href || (a.attributes.href = a.children[0].value);
           },
-          smiley: function (a) {
+          smiley: (a) => {
             a.name = "img";
             var b = a.attributes.desc,
               h = c.smiley_images[CKEDITOR.tools.indexOf(c.smiley_descriptions, b)],
@@ -371,7 +382,7 @@
       a.dataProcessor.htmlFilter.addRules(
         {
           elements: {
-            $: function (b) {
+            $: (b) => {
               var c = b.attributes,
                 h = CKEDITOR.tools.parseCssText(c.style, 1),
                 f,
@@ -379,53 +390,55 @@
               if (d in x) d = x[d];
               else if ("span" == d)
                 if ((f = h.color)) (d = "color"), (f = CKEDITOR.tools.convertRgbToHex(f));
-                else {
-                  if ((f = h["font-size"])) if ((c = f.match(/(\d+)%$/))) (f = c[1]), (d = "size");
-                }
-              else if ("ol" == d || "ul" == d) {
-                if ((f = h["list-style-type"]))
-                  switch (f) {
-                    case "lower-alpha":
-                      f = "a";
-                      break;
-                    case "upper-alpha":
-                      f = "A";
+                else if ((f = h["font-size"]))
+                  if ((c = f.match(/(\d+)%$/))) (f = c[1]), (d = "size");
+                  else if ("ol" == d || "ul" == d) {
+                    if ((f = h["list-style-type"]))
+                      switch (f) {
+                        case "lower-alpha":
+                          f = "a";
+                          break;
+                        case "upper-alpha":
+                          f = "A";
+                      }
+                    else "ol" == d && (f = 1);
+                    d = "list";
+                  } else if ("blockquote" == d) {
+                    try {
+                      var k = b.children[0],
+                        l = b.children[1],
+                        m = "cite" == k.name && k.children[0].value;
+                      m && ((f = '"' + m + '"'), (b.children = l.children));
+                    } catch (n) {}
+                    d = "quote";
+                  } else if ("a" == d) {
+                    if ((f = c.href))
+                      -1 !== f.indexOf("mailto:")
+                        ? ((d = "email"),
+                          (b.children = [new CKEDITOR.htmlParser.text(f.replace("mailto:", ""))]),
+                          (f = ""))
+                        : ((d = 1 == b.children.length && b.children[0]) &&
+                            d.type == CKEDITOR.NODE_TEXT &&
+                            d.value == f &&
+                            (f = ""),
+                          (d = "url"));
+                  } else if ("img" == d) {
+                    b.isEmpty = 0;
+                    h = c["data-cke-saved-src"] || c.src;
+                    c = c.alt;
+                    if (h && -1 != h.indexOf(a.config.smiley_path) && c)
+                      return new CKEDITOR.htmlParser.text(q[c]);
+                    b.children = [new CKEDITOR.htmlParser.text(h)];
                   }
-                else "ol" == d && (f = 1);
-                d = "list";
-              } else if ("blockquote" == d) {
-                try {
-                  var k = b.children[0],
-                    l = b.children[1],
-                    m = "cite" == k.name && k.children[0].value;
-                  m && ((f = '"' + m + '"'), (b.children = l.children));
-                } catch (n) {}
-                d = "quote";
-              } else if ("a" == d) {
-                if ((f = c.href))
-                  -1 !== f.indexOf("mailto:")
-                    ? ((d = "email"), (b.children = [new CKEDITOR.htmlParser.text(f.replace("mailto:", ""))]), (f = ""))
-                    : ((d = 1 == b.children.length && b.children[0]) &&
-                        d.type == CKEDITOR.NODE_TEXT &&
-                        d.value == f &&
-                        (f = ""),
-                      (d = "url"));
-              } else if ("img" == d) {
-                b.isEmpty = 0;
-                h = c["data-cke-saved-src"] || c.src;
-                c = c.alt;
-                if (h && -1 != h.indexOf(a.config.smiley_path) && c) return new CKEDITOR.htmlParser.text(q[c]);
-                b.children = [new CKEDITOR.htmlParser.text(h)];
-              }
               b.name = d;
               f && (b.attributes.option = f);
               return null;
             },
-            div: function (a) {
+            div: (a) => {
               var b = CKEDITOR.tools.parseCssText(a.attributes.style, 1)["text-align"] || "";
               if (b) return (a.name = b), null;
             },
-            br: function (a) {
+            br: (a) => {
               if ((a = a.next) && a.name in A) return !1;
             },
           },
@@ -434,16 +447,16 @@
       );
       a.dataProcessor.writer = v;
       if (a.elementMode == CKEDITOR.ELEMENT_MODE_INLINE)
-        a.once("contentDom", function () {
+        a.once("contentDom", () => {
           a.on("setData", b);
         });
       else a.on("setData", b);
     },
-    afterInit: function (a) {
+    afterInit: (a) => {
       var b;
       a._.elementsPath &&
         (b = a._.elementsPath.filters) &&
-        b.push(function (b) {
+        b.push((b) => {
           var k = b.getName(),
             e = m[k] || !1;
           "link" == e && 0 === b.getAttribute("href").indexOf("mailto:")

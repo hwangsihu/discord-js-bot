@@ -159,7 +159,8 @@ module.exports = class BotClient extends Client {
 
     // Slash Command
     if (cmd.slashCommand?.enabled) {
-      if (this.slashCommands.has(cmd.name)) throw new Error(`Slash Command ${cmd.name} already registered`);
+      if (this.slashCommands.has(cmd.name))
+        throw new Error(`Slash Command ${cmd.name} already registered`);
       this.slashCommands.set(cmd.name, cmd);
     } else {
       this.logger.debug(`Skipping slash command ${cmd.name}. Disabled!`);
@@ -186,7 +187,8 @@ module.exports = class BotClient extends Client {
 
     this.logger.success(`Loaded ${this.commands.length} commands`);
     this.logger.success(`Loaded ${this.slashCommands.size} slash commands`);
-    if (this.slashCommands.size > 100) throw new Error("A maximum of 100 slash commands can be enabled");
+    if (this.slashCommands.size > 100)
+      throw new Error("A maximum of 100 slash commands can be enabled");
   }
 
   /**
@@ -202,15 +204,20 @@ module.exports = class BotClient extends Client {
         if (typeof ctx !== "object") continue;
         validateContext(ctx);
         if (!ctx.enabled) return this.logger.debug(`Skipping context ${ctx.name}. Disabled!`);
-        if (this.contextMenus.has(ctx.name)) throw new Error(`Context already exists with that name`);
+        if (this.contextMenus.has(ctx.name))
+          throw new Error(`Context already exists with that name`);
         this.contextMenus.set(ctx.name, ctx);
       } catch (ex) {
         this.logger.error(`Failed to load ${file} Reason: ${ex.message}`);
       }
     }
 
-    const userContexts = this.contextMenus.filter((ctx) => ctx.type === ApplicationCommandType.User).size;
-    const messageContexts = this.contextMenus.filter((ctx) => ctx.type === ApplicationCommandType.Message).size;
+    const userContexts = this.contextMenus.filter(
+      (ctx) => ctx.type === ApplicationCommandType.User
+    ).size;
+    const messageContexts = this.contextMenus.filter(
+      (ctx) => ctx.type === ApplicationCommandType.Message
+    ).size;
 
     if (userContexts > 3) throw new Error("A maximum of 3 USER contexts can be enabled");
     if (messageContexts > 3) throw new Error("A maximum of 3 MESSAGE contexts can be enabled");
@@ -257,7 +264,10 @@ module.exports = class BotClient extends Client {
     else if (guildId && typeof guildId === "string") {
       const guild = this.guilds.cache.get(guildId);
       if (!guild) {
-        this.logger.error(`Failed to register interactions in guild ${guildId}`, new Error("No matching guild"));
+        this.logger.error(
+          `Failed to register interactions in guild ${guildId}`,
+          new Error("No matching guild")
+        );
         return;
       }
       await guild.commands.set(toRegister);

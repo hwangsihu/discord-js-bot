@@ -2,18 +2,19 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function u() {
     var c = this.getDialog(),
       p = c._.editor,
       n = p.config.linkPhoneRegExp,
       q = p.config.linkPhoneMsg,
       p = CKEDITOR.dialog.validate.notEmpty(p.lang.link.noTel).apply(this);
-    if (!c.getContentElement("info", "linkType") || "tel" != c.getValueOf("info", "linkType")) return !0;
+    if (!c.getContentElement("info", "linkType") || "tel" != c.getValueOf("info", "linkType"))
+      return !0;
     if (!0 !== p) return p;
     if (n) return CKEDITOR.dialog.validate.regex(n, q).call(this);
   }
-  CKEDITOR.dialog.add("link", function (c) {
+  CKEDITOR.dialog.add("link", (c) => {
     function p(a, b) {
       var c = a.createRange();
       c.setStartBefore(b);
@@ -104,7 +105,9 @@
                   : (a.hidePage("target"), f || a.hidePage("upload"));
                 for (f = 0; f < b.length; f++) {
                   var h = a.getContentElement("info", b[f]);
-                  h && ((h = h.getElement().getParent().getParent()), b[f] == r + "Options" ? h.show() : h.hide());
+                  h &&
+                    ((h = h.getElement().getParent().getParent()),
+                    b[f] == r + "Options" ? h.show() : h.hide());
                 }
                 a.layout();
               },
@@ -167,9 +170,11 @@
                       },
                       validate: function () {
                         var a = this.getDialog();
-                        return a.getContentElement("info", "linkType") && "url" != a.getValueOf("info", "linkType")
+                        return a.getContentElement("info", "linkType") &&
+                          "url" != a.getValueOf("info", "linkType")
                           ? !0
-                          : !c.config.linkJavaScriptLinksAllowed && /javascript\:/.test(this.getValue())
+                          : !c.config.linkJavaScriptLinksAllowed &&
+                              /javascript\:/.test(this.getValue())
                             ? (alert(g.invalidValue), !1)
                             : this.getDialog().fakeObj
                               ? !0
@@ -189,10 +194,17 @@
                     },
                   ],
                   setup: function () {
-                    this.getDialog().getContentElement("info", "linkType") || this.getElement().show();
+                    this.getDialog().getContentElement("info", "linkType") ||
+                      this.getElement().show();
                   },
                 },
-                { type: "button", id: "browse", hidden: "true", filebrowser: "info:url", label: g.browseServer },
+                {
+                  type: "button",
+                  id: "browse",
+                  hidden: "true",
+                  filebrowser: "info:url",
+                  label: g.browseServer,
+                },
               ],
             },
             {
@@ -225,7 +237,8 @@
                           setup: function (a) {
                             this.clear();
                             this.add("");
-                            if (d) for (var b = 0; b < d.length; b++) d[b].name && this.add(d[b].name);
+                            if (d)
+                              for (var b = 0; b < d.length; b++) d[b].name && this.add(d[b].name);
                             a.anchor && this.setValue(a.anchor.name);
                             (a = this.getDialog().getContentElement("info", "linkType")) &&
                               "email" == a.getValue() &&
@@ -291,7 +304,8 @@
                   required: !0,
                   validate: function () {
                     var a = this.getDialog();
-                    return a.getContentElement("info", "linkType") && "email" == a.getValueOf("info", "linkType")
+                    return a.getContentElement("info", "linkType") &&
+                      "email" == a.getValueOf("info", "linkType")
                       ? CKEDITOR.dialog.validate.notEmpty(b.noEmail).apply(this)
                       : !0;
                   },
@@ -429,29 +443,77 @@
                     {
                       type: "hbox",
                       children: [
-                        { type: "checkbox", id: "resizable", label: b.popupResizable, setup: l, commit: k },
-                        { type: "checkbox", id: "status", label: b.popupStatusBar, setup: l, commit: k },
+                        {
+                          type: "checkbox",
+                          id: "resizable",
+                          label: b.popupResizable,
+                          setup: l,
+                          commit: k,
+                        },
+                        {
+                          type: "checkbox",
+                          id: "status",
+                          label: b.popupStatusBar,
+                          setup: l,
+                          commit: k,
+                        },
                       ],
                     },
                     {
                       type: "hbox",
                       children: [
-                        { type: "checkbox", id: "location", label: b.popupLocationBar, setup: l, commit: k },
-                        { type: "checkbox", id: "toolbar", label: b.popupToolbar, setup: l, commit: k },
+                        {
+                          type: "checkbox",
+                          id: "location",
+                          label: b.popupLocationBar,
+                          setup: l,
+                          commit: k,
+                        },
+                        {
+                          type: "checkbox",
+                          id: "toolbar",
+                          label: b.popupToolbar,
+                          setup: l,
+                          commit: k,
+                        },
                       ],
                     },
                     {
                       type: "hbox",
                       children: [
-                        { type: "checkbox", id: "menubar", label: b.popupMenuBar, setup: l, commit: k },
-                        { type: "checkbox", id: "fullscreen", label: b.popupFullScreen, setup: l, commit: k },
+                        {
+                          type: "checkbox",
+                          id: "menubar",
+                          label: b.popupMenuBar,
+                          setup: l,
+                          commit: k,
+                        },
+                        {
+                          type: "checkbox",
+                          id: "fullscreen",
+                          label: b.popupFullScreen,
+                          setup: l,
+                          commit: k,
+                        },
                       ],
                     },
                     {
                       type: "hbox",
                       children: [
-                        { type: "checkbox", id: "scrollbars", label: b.popupScrollBars, setup: l, commit: k },
-                        { type: "checkbox", id: "dependent", label: b.popupDependent, setup: l, commit: k },
+                        {
+                          type: "checkbox",
+                          id: "scrollbars",
+                          label: b.popupScrollBars,
+                          setup: l,
+                          commit: k,
+                        },
+                        {
+                          type: "checkbox",
+                          id: "dependent",
+                          label: b.popupDependent,
+                          setup: l,
+                          commit: k,
+                        },
                       ],
                     },
                     {
@@ -536,7 +598,14 @@
                   type: "hbox",
                   widths: ["45%", "35%", "20%"],
                   children: [
-                    { type: "text", id: "advId", requiredContent: "a[id]", label: b.id, setup: e, commit: m },
+                    {
+                      type: "text",
+                      id: "advId",
+                      requiredContent: "a[id]",
+                      label: b.id,
+                      setup: e,
+                      commit: m,
+                    },
                     {
                       type: "select",
                       id: "advLangDir",
@@ -568,7 +637,14 @@
                   type: "hbox",
                   widths: ["45%", "35%", "20%"],
                   children: [
-                    { type: "text", label: b.name, id: "advName", requiredContent: "a[name]", setup: e, commit: m },
+                    {
+                      type: "text",
+                      label: b.name,
+                      id: "advName",
+                      requiredContent: "a[name]",
+                      setup: e,
+                      commit: m,
+                    },
                     {
                       type: "text",
                       label: b.langCode,
@@ -664,7 +740,9 @@
                       requiredContent: "a{cke-xyz}",
                       default: "",
                       id: "advStyles",
-                      validate: CKEDITOR.dialog.validate.inlineStyle(c.lang.common.invalidInlineStyle),
+                      validate: CKEDITOR.dialog.validate.inlineStyle(
+                        c.lang.common.invalidInlineStyle
+                      ),
                       setup: e,
                       commit: m,
                     },
@@ -696,10 +774,15 @@
       onShow: function () {
         var a = this.getParentEditor(),
           b = a.getSelection(),
-          c = this.getContentElement("info", "linkDisplayText").getElement().getParent().getParent(),
+          c = this.getContentElement("info", "linkDisplayText")
+            .getElement()
+            .getParent()
+            .getParent(),
           f = n.getSelectedLink(a, !0),
           h = f[0] || null;
-        h && h.hasAttribute("href") && (b.getSelectedElement() || b.isInTable() || b.selectElement(h));
+        h &&
+          h.hasAttribute("href") &&
+          (b.getSelectedElement() || b.isInTable() || b.selectElement(h));
         b = n.parseLinkAttributes(a, h);
         1 >= f.length && n.showDisplayTextForElement(h, a) ? c.show() : c.hide();
         this._.selectedElements = f;
@@ -741,7 +824,8 @@
             d = g[l];
             d.collapsed
               ? ((e = new CKEDITOR.dom.text(
-                  a.linkText || ("email" == a.type ? a.email.address : b.set["data-cke-saved-href"]),
+                  a.linkText ||
+                    ("email" == a.type ? a.email.address : b.set["data-cke-saved-href"]),
                   c.document
                 )),
                 d.insertNode(e),

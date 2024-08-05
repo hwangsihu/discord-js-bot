@@ -78,14 +78,17 @@ async function trackJoinedMember(member) {
 
   // compare newInvites with cached invites
   usedInvite = newInvites.find(
-    (inv) => inv.uses !== 0 && cachedInvites.get(inv.code) && cachedInvites.get(inv.code).uses < inv.uses
+    (inv) =>
+      inv.uses !== 0 && cachedInvites.get(inv.code) && cachedInvites.get(inv.code).uses < inv.uses
   );
 
   // Special case: Invitation was deleted after member's arrival and
   // just before GUILD_MEMBER_ADD (https://github.com/Androz2091/discord-invites-tracker/blob/29202ee8e85bb1651f19a466e2c0721b2373fefb/index.ts#L46)
   if (!usedInvite) {
     cachedInvites
-      .sort((a, b) => (a.deletedTimestamp && b.deletedTimestamp ? b.deletedTimestamp - a.deletedTimestamp : 0))
+      .sort((a, b) =>
+        a.deletedTimestamp && b.deletedTimestamp ? b.deletedTimestamp - a.deletedTimestamp : 0
+      )
       .forEach((invite) => {
         if (
           !newInvites.get(invite.code) && // If the invitation is no longer present

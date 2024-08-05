@@ -52,7 +52,10 @@ export function isSame(input, units) {
     return this.valueOf() === localInput.valueOf();
   } else {
     inputMs = localInput.valueOf();
-    return this.clone().startOf(units).valueOf() <= inputMs && inputMs <= this.clone().endOf(units).valueOf();
+    return (
+      this.clone().startOf(units).valueOf() <= inputMs &&
+      inputMs <= this.clone().endOf(units).valueOf()
+    );
   }
 }
 

@@ -19,7 +19,7 @@ can just fix the size of their placeholders.
  * Dual licensed under the MIT and GPL licenses.
  * http://benalman.com/about/license/
  */
-(function ($, e, t) {
+(($, e, t) => {
   "$:nomunge";
   var i = [],
     n = ($.resize = $.extend($.resize, {})),
@@ -119,34 +119,27 @@ can just fix the size of their placeholders.
     }
   }
   if (!e.requestAnimationFrame) {
-    e.requestAnimationFrame = (function () {
-      return (
-        e.webkitRequestAnimationFrame ||
-        e.mozRequestAnimationFrame ||
-        e.oRequestAnimationFrame ||
-        e.msRequestAnimationFrame ||
-        function (t, i) {
-          return e.setTimeout(function () {
-            t(new Date().getTime());
-          }, n[l]);
-        }
-      );
-    })();
+    e.requestAnimationFrame = (() =>
+      e.webkitRequestAnimationFrame ||
+      e.mozRequestAnimationFrame ||
+      e.oRequestAnimationFrame ||
+      e.msRequestAnimationFrame ||
+      ((t, i) =>
+        e.setTimeout(() => {
+          t(new Date().getTime());
+        }, n[l])))();
   }
   if (!e.cancelAnimationFrame) {
-    e.cancelAnimationFrame = (function () {
-      return (
-        e.webkitCancelRequestAnimationFrame ||
-        e.mozCancelRequestAnimationFrame ||
-        e.oCancelRequestAnimationFrame ||
-        e.msCancelRequestAnimationFrame ||
-        clearTimeout
-      );
-    })();
+    e.cancelAnimationFrame = (() =>
+      e.webkitCancelRequestAnimationFrame ||
+      e.mozCancelRequestAnimationFrame ||
+      e.oCancelRequestAnimationFrame ||
+      e.msCancelRequestAnimationFrame ||
+      clearTimeout)();
   }
 })(jQuery, this);
 
-(function ($) {
+(($) => {
   var options = {}; // no options
 
   function init(plot) {

@@ -1,14 +1,12 @@
-define(["../core", "../var/document", "../var/isFunction"], function (jQuery, document, isFunction) {
-  "use strict";
-
+define(["../core", "../var/document", "../var/isFunction"], (jQuery, document, isFunction) => {
   var readyCallbacks = [],
-    whenReady = function (fn) {
+    whenReady = (fn) => {
       readyCallbacks.push(fn);
     },
-    executeReady = function (fn) {
+    executeReady = (fn) => {
       // Prevent errors from freezing future callback execution (gh-1823)
       // Not backwards-compatible as this does not execute sync
-      window.setTimeout(function () {
+      window.setTimeout(() => {
         fn.call(document, jQuery);
       });
     };
@@ -26,7 +24,7 @@ define(["../core", "../var/document", "../var/isFunction"], function (jQuery, do
     // the ready event fires. See #6781
     readyWait: 1,
 
-    ready: function (wait) {
+    ready: (wait) => {
       // Abort if there are pending holds or we're already ready
       if (wait === true ? --jQuery.readyWait : jQuery.isReady) {
         return;
@@ -40,7 +38,7 @@ define(["../core", "../var/document", "../var/isFunction"], function (jQuery, do
         return;
       }
 
-      whenReady = function (fn) {
+      whenReady = (fn) => {
         readyCallbacks.push(fn);
 
         while (readyCallbacks.length) {
@@ -71,7 +69,10 @@ define(["../core", "../var/document", "../var/isFunction"], function (jQuery, do
   // after the browser event has already occurred.
   // Support: IE9-10 only
   // Older IE sometimes signals "interactive" too soon
-  if (document.readyState === "complete" || (document.readyState !== "loading" && !document.documentElement.doScroll)) {
+  if (
+    document.readyState === "complete" ||
+    (document.readyState !== "loading" && !document.documentElement.doScroll)
+  ) {
     // Handle it asynchronously to allow scripts the opportunity to delay ready
     window.setTimeout(jQuery.ready);
   } else {

@@ -5,7 +5,7 @@
  * French translation for bootstrap-datepicker
  * Nico Mollet <nico.mollet@gmail.com>
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["fr"] = {
     days: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
     daysShort: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
@@ -24,7 +24,20 @@
       "Novembre",
       "Décembre",
     ],
-    monthsShort: ["Jan", "Fév", "Mar", "Avr", "Mai", "Jui", "Jul", "Aou", "Sep", "Oct", "Nov", "Déc"],
+    monthsShort: [
+      "Jan",
+      "Fév",
+      "Mar",
+      "Avr",
+      "Mai",
+      "Jui",
+      "Jul",
+      "Aou",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Déc",
+    ],
     today: "Aujourd'hui",
     monthsTitle: "Mois",
     clear: "Effacer",

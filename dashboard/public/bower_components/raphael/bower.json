@@ -12,5 +12,14 @@
   "keywords": ["svg", "vml", "javascript"],
   "authors": ["Dmitry Baranovskiy"],
   "license": "MIT",
-  "ignore": ["**/.*", "*.html", "*.json", "*.markdown", "*.md", "copy.js", "Gruntfile.js", "reference.js"]
+  "ignore": [
+    "**/.*",
+    "*.html",
+    "*.json",
+    "*.markdown",
+    "*.md",
+    "copy.js",
+    "Gruntfile.js",
+    "reference.js"
+  ]
 }

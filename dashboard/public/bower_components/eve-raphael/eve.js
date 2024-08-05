@@ -17,17 +17,15 @@
 // │ Author Dmitry Baranovskiy (http://dmitry.baranovskiy.com/) │ \\
 // └────────────────────────────────────────────────────────────┘ \\
 
-(function (glob) {
+((glob) => {
   var version = "0.5.0",
     has = "hasOwnProperty",
     separator = /[\.\/]/,
     comaseparator = /\s*,\s*/,
     wildcard = "*",
-    fun = function () {},
-    numsort = function (a, b) {
-      return a - b;
-    },
-    current_event,
+    fun = () => {},
+    numsort = (a, b) => a - b,
+    currentEvent,
     stop,
     events = { n: {} },
     firstDefined = function () {
@@ -47,11 +45,7 @@
     },
     objtos = Object.prototype.toString,
     Str = String,
-    isArray =
-      Array.isArray ||
-      function (ar) {
-        return ar instanceof Array || objtos.call(ar) == "[object Array]";
-      };
+    isArray = Array.isArray || ((ar) => ar instanceof Array || objtos.call(ar) == "[object Array]");
   /*\
      * eve
      [ method ]
@@ -66,7 +60,7 @@
 
      = (object) array of returned values from the listeners. Array has two methods `.firstDefined()` and `.lastDefined()` to get first or last not `undefined` value.
     \*/
-  eve = function (name, scope) {
+  eve = (name, scope) => {
     var e = events,
       oldstop = stop,
       args = Array.prototype.slice.call(arguments, 2),
@@ -77,11 +71,11 @@
       indexed = [],
       queue = {},
       out = [],
-      ce = current_event,
+      ce = currentEvent,
       errors = [];
     out.firstDefined = firstDefined;
     out.lastDefined = lastDefined;
-    current_event = name;
+    currentEvent = name;
     stop = 0;
     for (var i = 0, ii = listeners.length; i < ii; i++)
       if ("zIndex" in listeners[i]) {
@@ -126,7 +120,7 @@
       }
     }
     stop = oldstop;
-    current_event = ce;
+    currentEvent = ce;
     return out;
   };
   // Undocumented. Debug only.
@@ -143,7 +137,7 @@
 
      = (array) array of event handlers
     \*/
-  eve.listeners = function (name) {
+  eve.listeners = (name) => {
     var names = isArray(name) ? name : name.split(separator),
       e = events,
       item,
@@ -184,7 +178,7 @@
 
      - separator (string) new separator. Empty string resets to default: `.` or `/`.
     \*/
-  eve.separator = function (sep) {
+  eve.separator = (sep) => {
     if (sep) {
       sep = Str(sep).replace(/(?=[\.\^\]\[\-])/g, "\\");
       sep = "[" + sep + "]";
@@ -218,13 +212,13 @@
      * If you want to put your handler before non-indexed handlers, specify a negative value.
      * Note: I assume most of the time you don’t need to worry about z-index, but it’s nice to have this feature “just in case”.
     \*/
-  eve.on = function (name, f) {
+  eve.on = (name, f) => {
     if (typeof f != "function") {
-      return function () {};
+      return () => {};
     }
     var names = isArray(name) ? (isArray(name[0]) ? name : [name]) : Str(name).split(comaseparator);
     for (var i = 0, ii = names.length; i < ii; i++) {
-      (function (name) {
+      ((name) => {
         var names = isArray(name) ? name : Str(name).split(separator),
           e = events,
           exist;
@@ -241,7 +235,7 @@
         !exist && e.f.push(f);
       })(names[i]);
     }
-    return function (zIndex) {
+    return (zIndex) => {
       if (+zIndex == +zIndex) {
         f.zIndex = +zIndex;
       }
@@ -263,9 +257,9 @@
      - varargs (…) and any other arguments
      = (function) possible event handler function
     \*/
-  eve.f = function (event) {
+  eve.f = (event) => {
     var attrs = [].slice.call(arguments, 1);
-    return function () {
+    return () => {
       eve.apply(null, [event, null].concat(attrs).concat([].slice.call(arguments, 0)));
     };
   };
@@ -275,7 +269,7 @@
      **
      * Is used inside an event handler to stop the event, preventing any subsequent listeners from firing.
     \*/
-  eve.stop = function () {
+  eve.stop = () => {
     stop = 1;
   };
   /*\
@@ -292,8 +286,8 @@
      * or
      = (boolean) `true`, if current event’s name contains `subname`
     \*/
-  eve.nt = function (subname) {
-    var cur = isArray(current_event) ? current_event.join(".") : current_event;
+  eve.nt = (subname) => {
+    var cur = isArray(currentEvent) ? currentEvent.join(".") : currentEvent;
     if (subname) {
       return new RegExp("(?:\\.|\\/|^)" + subname + "(?:\\.|\\/|$)").test(cur);
     }
@@ -308,9 +302,7 @@
      **
      = (array) names of the event
     \*/
-  eve.nts = function () {
-    return isArray(current_event) ? current_event : current_event.split(separator);
-  };
+  eve.nts = () => (isArray(currentEvent) ? currentEvent : currentEvent.split(separator));
   /*\
      * eve.off
      [ method ]
@@ -329,7 +321,7 @@
      **
      * See @eve.off
     \*/
-  eve.off = eve.unbind = function (name, f) {
+  eve.off = eve.unbind = (name, f) => {
     if (!name) {
       eve._events = events = { n: {} };
       return;
@@ -417,7 +409,7 @@
      **
      = (function) same return function as @eve.on
     \*/
-  eve.once = function (name, f) {
+  eve.once = (name, f) => {
     var f2 = function () {
       eve.off(name, f2);
       return f.apply(this, arguments);
@@ -431,14 +423,10 @@
      * Current version of the library.
     \*/
   eve.version = version;
-  eve.toString = function () {
-    return "You are running Eve " + version;
-  };
+  eve.toString = () => "You are running Eve " + version;
   typeof module != "undefined" && module.exports
     ? (module.exports = eve)
     : typeof define === "function" && define.amd
-      ? define("eve", [], function () {
-          return eve;
-        })
+      ? define("eve", [], () => eve)
       : (glob.eve = eve);
 })(this);

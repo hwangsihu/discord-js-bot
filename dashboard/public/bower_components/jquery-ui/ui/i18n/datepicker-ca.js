@@ -1,6 +1,6 @@
 /* Inicialització en català per a l'extensió 'UI date picker' per jQuery. */
 /* Writers: (joan.leon@gmail.com). */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["ca"] = {
     closeText: "Tanca",
     prevText: "Anterior",
@@ -28,7 +28,20 @@
       "novembre",
       "desembre",
     ],
-    monthNamesShort: ["gen", "feb", "març", "abr", "maig", "juny", "jul", "ag", "set", "oct", "nov", "des"],
+    monthNamesShort: [
+      "gen",
+      "feb",
+      "març",
+      "abr",
+      "maig",
+      "juny",
+      "jul",
+      "ag",
+      "set",
+      "oct",
+      "nov",
+      "des",
+    ],
     dayNames: ["diumenge", "dilluns", "dimarts", "dimecres", "dijous", "divendres", "dissabte"],
     dayNamesShort: ["dg", "dl", "dt", "dc", "dj", "dv", "ds"],
     dayNamesMin: ["dg", "dl", "dt", "dc", "dj", "dv", "ds"],

@@ -150,7 +150,8 @@ CKEDITOR.lang["lt"] = {
     title: "Įdėti kaip gryną tekstą",
   },
   pastefromword: {
-    confirmCleanup: "Tekstas, kurį įkeliate yra kopijuojamas iš Word. Ar norite jį išvalyti prieš įkeliant?",
+    confirmCleanup:
+      "Tekstas, kurį įkeliate yra kopijuojamas iš Word. Ar norite jį išvalyti prieš įkeliant?",
     error: "Dėl vidinių sutrikimų, nepavyko išvalyti įkeliamo teksto",
     title: "Įdėti iš Word",
     toolbar: "Įdėti iš Word",
@@ -346,7 +347,8 @@ CKEDITOR.lang["lt"] = {
     generalTab: "Bendros savybės",
     advancedTab: "Papildomas",
     validateNumberFailed: "Ši reikšmė nėra skaičius.",
-    confirmNewPage: "Visas neišsaugotas turinys bus prarastas. Ar tikrai norite įkrauti naują puslapį?",
+    confirmNewPage:
+      "Visas neišsaugotas turinys bus prarastas. Ar tikrai norite įkrauti naują puslapį?",
     confirmCancel: "Kai kurie parametrai pasikeitė. Ar tikrai norite užverti langą?",
     options: "Parametrai",
     target: "Tikslinė nuoroda",

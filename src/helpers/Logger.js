@@ -2,7 +2,9 @@ const config = require("@root/config");
 const { EmbedBuilder, WebhookClient } = require("discord.js");
 const pino = require("pino");
 
-const webhookLogger = process.env.ERROR_LOGS ? new WebhookClient({ url: process.env.ERROR_LOGS }) : undefined;
+const webhookLogger = process.env.ERROR_LOGS
+  ? new WebhookClient({ url: process.env.ERROR_LOGS })
+  : undefined;
 
 const today = new Date();
 const pinoLogger = pino.default(
@@ -39,11 +41,15 @@ function sendWebhook(content, err) {
   if (!content && !err) return;
   const errString = err?.stack || err;
 
-  const embed = new EmbedBuilder().setColor(config.EMBED_COLORS.ERROR).setAuthor({ name: err?.name || "Error" });
+  const embed = new EmbedBuilder()
+    .setColor(config.EMBED_COLORS.ERROR)
+    .setAuthor({ name: err?.name || "Error" });
 
   if (errString)
     embed.setDescription(
-      "```js\n" + (errString.length > 4096 ? `${errString.substr(0, 4000)}...` : errString) + "\n```"
+      "```js\n" +
+        (errString.length > 4096 ? `${errString.substr(0, 4000)}...` : errString) +
+        "\n```"
     );
 
   embed.addFields({ name: "Description", value: content || err?.message || "NA" });

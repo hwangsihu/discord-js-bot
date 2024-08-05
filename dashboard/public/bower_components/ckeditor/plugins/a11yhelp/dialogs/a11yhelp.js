@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-CKEDITOR.dialog.add("a11yHelp", function (f) {
+CKEDITOR.dialog.add("a11yHelp", (f) => {
   function m(a) {
     for (var b, c, h = [], d = 0; d < g.length; d++)
       (c = g[d]), (b = a / g[d]), 1 < b && 2 >= b && ((a -= c), h.push(e[c]));
@@ -103,7 +103,7 @@ CKEDITOR.dialog.add("a11yHelp", function (f) {
               this.getElement().focus();
             },
             html:
-              (function () {
+              (() => {
                 for (
                   var b =
                       '\x3cdiv class\x3d"cke_accessibility_legend" role\x3d"document" aria-labelledby\x3d"' +
@@ -125,10 +125,16 @@ CKEDITOR.dialog.add("a11yHelp", function (f) {
                       l = CKEDITOR.env.edge && k.legendEdge ? k.legendEdge : k.legend,
                       l = l.replace(q, t);
                     l.match(q) ||
-                      g.push("\x3cdt\x3e%1\x3c/dt\x3e\x3cdd\x3e%2\x3c/dd\x3e".replace("%1", k.name).replace("%2", l));
+                      g.push(
+                        "\x3cdt\x3e%1\x3c/dt\x3e\x3cdd\x3e%2\x3c/dd\x3e"
+                          .replace("%1", k.name)
+                          .replace("%2", l)
+                      );
                   }
                   e.push(
-                    "\x3ch1\x3e%1\x3c/h1\x3e\x3cdl\x3e%2\x3c/dl\x3e".replace("%1", f.name).replace("%2", g.join(""))
+                    "\x3ch1\x3e%1\x3c/h1\x3e\x3cdl\x3e%2\x3c/dl\x3e"
+                      .replace("%1", f.name)
+                      .replace("%2", g.join(""))
                   );
                 }
                 return b.replace("%1", e.join(""));

@@ -3,7 +3,7 @@
  * Matěj Koubík <matej@koubik.name>
  * Fixes by Michal Remiš <michal.remis@gmail.com>
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["cs"] = {
     days: ["Neděle", "Pondělí", "Úterý", "Středa", "Čtvrtek", "Pátek", "Sobota"],
     daysShort: ["Ned", "Pon", "Úte", "Stř", "Čtv", "Pát", "Sob"],
@@ -22,7 +22,20 @@
       "Listopad",
       "Prosinec",
     ],
-    monthsShort: ["Led", "Úno", "Bře", "Dub", "Kvě", "Čer", "Čnc", "Srp", "Zář", "Říj", "Lis", "Pro"],
+    monthsShort: [
+      "Led",
+      "Úno",
+      "Bře",
+      "Dub",
+      "Kvě",
+      "Čer",
+      "Čnc",
+      "Srp",
+      "Zář",
+      "Říj",
+      "Lis",
+      "Pro",
+    ],
     today: "Dnes",
     clear: "Vymazat",
     monthsTitle: "Měsíc",

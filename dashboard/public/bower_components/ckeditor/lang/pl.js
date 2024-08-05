@@ -347,7 +347,8 @@ CKEDITOR.lang["pl"] = {
     generalTab: "Ogólne",
     advancedTab: "Zaawansowane",
     validateNumberFailed: "Ta wartość nie jest liczbą.",
-    confirmNewPage: "Wszystkie niezapisane zmiany zostaną utracone. Czy na pewno wczytać nową stronę?",
+    confirmNewPage:
+      "Wszystkie niezapisane zmiany zostaną utracone. Czy na pewno wczytać nową stronę?",
     confirmCancel: "Pewne opcje zostały zmienione. Czy na pewno zamknąć okno dialogowe?",
     options: "Opcje",
     target: "Obiekt docelowy",

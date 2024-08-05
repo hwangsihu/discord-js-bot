@@ -1,5 +1,5 @@
 /* Portuguese initialisation for the jQuery UI date picker plugin. */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -7,7 +7,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["pt"] = {
     closeText: "Fechar",
     prevText: "Anterior",
@@ -27,8 +27,29 @@
       "Novembro",
       "Dezembro",
     ],
-    monthNamesShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
-    dayNames: ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"],
+    monthNamesShort: [
+      "Jan",
+      "Fev",
+      "Mar",
+      "Abr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Set",
+      "Out",
+      "Nov",
+      "Dez",
+    ],
+    dayNames: [
+      "Domingo",
+      "Segunda-feira",
+      "Terça-feira",
+      "Quarta-feira",
+      "Quinta-feira",
+      "Sexta-feira",
+      "Sábado",
+    ],
     dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
     dayNamesMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
     weekHeader: "Sem",

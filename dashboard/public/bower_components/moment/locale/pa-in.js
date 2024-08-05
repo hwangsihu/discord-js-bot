@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var symbolMap = {
       1: "੧",
       2: "੨",
@@ -73,20 +71,12 @@
       y: "ਇੱਕ ਸਾਲ",
       yy: "%d ਸਾਲ",
     },
-    preparse: function (string) {
-      return string.replace(/[੧੨੩੪੫੬੭੮੯੦]/g, function (match) {
-        return numberMap[match];
-      });
-    },
-    postformat: function (string) {
-      return string.replace(/\d/g, function (match) {
-        return symbolMap[match];
-      });
-    },
+    preparse: (string) => string.replace(/[੧੨੩੪੫੬੭੮੯੦]/g, (match) => numberMap[match]),
+    postformat: (string) => string.replace(/\d/g, (match) => symbolMap[match]),
     // Punjabi notation for meridiems are quite fuzzy in practice. While there exists
     // a rigid notion of a 'Pahar' it is not used as rigidly in modern Punjabi.
     meridiemParse: /ਰਾਤ|ਸਵੇਰ|ਦੁਪਹਿਰ|ਸ਼ਾਮ/,
-    meridiemHour: function (hour, meridiem) {
+    meridiemHour: (hour, meridiem) => {
       if (hour === 12) {
         hour = 0;
       }
@@ -100,7 +90,7 @@
         return hour + 12;
       }
     },
-    meridiem: function (hour, minute, isLower) {
+    meridiem: (hour, minute, isLower) => {
       if (hour < 4) {
         return "ਰਾਤ";
       } else if (hour < 10) {

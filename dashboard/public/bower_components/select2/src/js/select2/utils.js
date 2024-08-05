@@ -1,7 +1,7 @@
-define(["jquery"], function ($) {
+define(["jquery"], ($) => {
   var Utils = {};
 
-  Utils.Extend = function (ChildClass, SuperClass) {
+  Utils.Extend = (ChildClass, SuperClass) => {
     var __hasProp = {}.hasOwnProperty;
 
     function BaseConstructor() {
@@ -43,7 +43,7 @@ define(["jquery"], function ($) {
     return methods;
   }
 
-  Utils.Decorate = function (SuperClass, DecoratorClass) {
+  Utils.Decorate = (SuperClass, DecoratorClass) => {
     var decoratedMethods = getMethods(DecoratorClass);
     var superMethods = getMethods(SuperClass);
 
@@ -77,9 +77,9 @@ define(["jquery"], function ($) {
       DecoratedClass.prototype[superMethod] = SuperClass.prototype[superMethod];
     }
 
-    var calledMethod = function (methodName) {
+    var calledMethod = (methodName) => {
       // Stub out the original method if it's not decorating an actual method
-      var originalMethod = function () {};
+      var originalMethod = () => {};
 
       if (methodName in DecoratedClass.prototype) {
         originalMethod = DecoratedClass.prototype[methodName];
@@ -155,7 +155,7 @@ define(["jquery"], function ($) {
 
   Utils.Observable = Observable;
 
-  Utils.generateChars = function (length) {
+  Utils.generateChars = (length) => {
     var chars = "";
 
     for (var i = 0; i < length; i++) {
@@ -166,13 +166,11 @@ define(["jquery"], function ($) {
     return chars;
   };
 
-  Utils.bind = function (func, context) {
-    return function () {
-      func.apply(context, arguments);
-    };
+  Utils.bind = (func, context) => () => {
+    func.apply(context, arguments);
   };
 
-  Utils._convertData = function (data) {
+  Utils._convertData = (data) => {
     for (var originalKey in data) {
       var keys = originalKey.split("-");
 
@@ -206,7 +204,7 @@ define(["jquery"], function ($) {
     return data;
   };
 
-  Utils.hasScroll = function (index, el) {
+  Utils.hasScroll = (index, el) => {
     // Adapted from the function created by @ShadowScripter
     // and adapted by @BillBarry on the Stack Exchange Code Review website.
     // The original code can be found at
@@ -229,7 +227,7 @@ define(["jquery"], function ($) {
     return $el.innerHeight() < el.scrollHeight || $el.innerWidth() < el.scrollWidth;
   };
 
-  Utils.escapeMarkup = function (markup) {
+  Utils.escapeMarkup = (markup) => {
     var replaceMap = {
       "\\": "&#92;",
       "&": "&amp;",
@@ -245,19 +243,17 @@ define(["jquery"], function ($) {
       return markup;
     }
 
-    return String(markup).replace(/[&<>"'\/\\]/g, function (match) {
-      return replaceMap[match];
-    });
+    return String(markup).replace(/[&<>"'\/\\]/g, (match) => replaceMap[match]);
   };
 
   // Append an array of jQuery nodes to a given element.
-  Utils.appendMany = function ($element, $nodes) {
+  Utils.appendMany = ($element, $nodes) => {
     // jQuery 1.7.x does not support $.fn.append() with an array
     // Fall back to a jQuery object collection using $.fn.add()
     if ($.fn.jquery.substr(0, 3) === "1.7") {
       var $jqNodes = $();
 
-      $.map($nodes, function (node) {
+      $.map($nodes, (node) => {
         $jqNodes = $jqNodes.add(node);
       });
 
@@ -271,7 +267,7 @@ define(["jquery"], function ($) {
   Utils.__cache = {};
 
   var id = 0;
-  Utils.GetUniqueElementId = function (element) {
+  Utils.GetUniqueElementId = (element) => {
     // Get a unique element Id. If element has no id,
     // creates a new unique number, stores it in the id
     // attribute and returns the new id.
@@ -291,7 +287,7 @@ define(["jquery"], function ($) {
     return select2Id;
   };
 
-  Utils.StoreData = function (element, name, value) {
+  Utils.StoreData = (element, name, value) => {
     // Stores an item in the cache for a specified element.
     // name is the cache key.
     var id = Utils.GetUniqueElementId(element);
@@ -302,7 +298,7 @@ define(["jquery"], function ($) {
     Utils.__cache[id][name] = value;
   };
 
-  Utils.GetData = function (element, name) {
+  Utils.GetData = (element, name) => {
     // Retrieves a value from the cache by its key (name)
     // name is optional. If no name specified, return
     // all cache items for the specified element.
@@ -321,7 +317,7 @@ define(["jquery"], function ($) {
     }
   };
 
-  Utils.RemoveData = function (element) {
+  Utils.RemoveData = (element) => {
     // Removes all cached items for a specified element.
     var id = Utils.GetUniqueElementId(element);
     if (Utils.__cache[id] != null) {

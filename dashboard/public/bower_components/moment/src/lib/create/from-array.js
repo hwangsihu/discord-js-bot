@@ -67,7 +67,12 @@ export function configFromArray(config) {
   }
 
   // Check for 24:00:00.000
-  if (config._a[HOUR] === 24 && config._a[MINUTE] === 0 && config._a[SECOND] === 0 && config._a[MILLISECOND] === 0) {
+  if (
+    config._a[HOUR] === 24 &&
+    config._a[MINUTE] === 0 &&
+    config._a[SECOND] === 0 &&
+    config._a[MILLISECOND] === 0
+  ) {
     config._nextDay = true;
     config._a[HOUR] = 0;
   }

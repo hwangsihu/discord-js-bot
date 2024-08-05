@@ -2,11 +2,13 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function D(a) {
     function b() {
       this.deflated ||
-        (a.widgets.focused == this.widget && (this.focused = !0), a.widgets.destroy(this.widget), (this.deflated = !0));
+        (a.widgets.focused == this.widget && (this.focused = !0),
+        a.widgets.destroy(this.widget),
+        (this.deflated = !0));
     }
     function c() {
       var d = a.editable(),
@@ -31,8 +33,10 @@
           "center" == c ? b && e.addClass(d[1]) : "none" != c && e.addClass(d[q[c]]);
         } else
           "center" == c
-            ? (b ? e.setStyle("text-align", "center") : e.removeStyle("text-align"), e.removeStyle("float"))
-            : ("none" == c ? e.removeStyle("float") : e.setStyle("float", c), e.removeStyle("text-align"));
+            ? (b ? e.setStyle("text-align", "center") : e.removeStyle("text-align"),
+              e.removeStyle("float"))
+            : ("none" == c ? e.removeStyle("float") : e.setStyle("float", c),
+              e.removeStyle("text-align"));
       }
     }
     var g = a.config.image2_alignClasses,
@@ -43,7 +47,12 @@
       features: F(a),
       styleableElements: "img figure",
       contentTransformations: [["img[width]: sizeToAttribute"]],
-      editables: { caption: { selector: "figcaption", allowedContent: "br em strong sub sup u s; a[!href,target]" } },
+      editables: {
+        caption: {
+          selector: "figcaption",
+          allowedContent: "br em strong sub sup u s; a[!href,target]",
+        },
+      },
       parts: { image: "img", caption: "figcaption" },
       dialog: "image2",
       template: '\x3cimg alt\x3d"" src\x3d"" /\x3e',
@@ -62,7 +71,11 @@
         this.data.link
           ? this.parts.link || (this.parts.link = this.parts.image.getParent())
           : this.parts.link && delete this.parts.link;
-        this.parts.image.setAttributes({ src: this.data.src, "data-cke-saved-src": this.data.src, alt: this.data.alt });
+        this.parts.image.setAttributes({
+          src: this.data.src,
+          "data-cke-saved-src": this.data.src,
+          alt: this.data.alt,
+        });
         if (this.oldData && !this.oldData.hasCaption && this.data.hasCaption)
           for (var e in this.data.classes) this.parts.image.removeClass(e);
         if (a.filter.checkFeature(d.dimension)) {
@@ -107,7 +120,8 @@
         this.shiftState = d.stateShifter(this.editor);
         this.on("contextMenu", function (a) {
           a.data.image = CKEDITOR.TRISTATE_OFF;
-          if (this.parts.link || this.wrapper.getAscendant("a")) a.data.link = a.data.unlink = CKEDITOR.TRISTATE_OFF;
+          if (this.parts.link || this.wrapper.getAscendant("a"))
+            a.data.link = a.data.unlink = CKEDITOR.TRISTATE_OFF;
         });
         this.on(
           "dialog",
@@ -126,7 +140,7 @@
       removeClass: function (a) {
         m(this).removeClass(a);
       },
-      getClasses: (function () {
+      getClasses: (() => {
         var a = new RegExp("^(" + [].concat(f, g).join("|") + ")$");
         return function () {
           var b = this.repository.parseElementClasses(m(this).getAttribute("class")),
@@ -138,14 +152,17 @@
       upcast: H(a),
       downcast: I(a),
       getLabel: function () {
-        return this.editor.lang.widget.label.replace(/%1/, (this.data.alt || "") + " " + this.pathName);
+        return this.editor.lang.widget.label.replace(
+          /%1/,
+          (this.data.alt || "") + " " + this.pathName
+        );
       },
     };
   }
   function H(a) {
     var b = n(a),
       c = a.config.image2_captionedClass;
-    return function (a, f) {
+    return (a, f) => {
       var d = { width: 1, height: 1 },
         e = a.name,
         h;
@@ -156,9 +173,12 @@
             (f.align = "center"),
             (h = a.getFirst("img") || a.getFirst("a").getFirst("img")))
           : "figure" == e && a.hasClass(c)
-            ? (h = a.find(function (a) {
-                return "img" === a.name && -1 !== CKEDITOR.tools.array.indexOf(["figure", "a"], a.parent.name);
-              }, !0)[0])
+            ? (h = a.find(
+                (a) =>
+                  "img" === a.name &&
+                  -1 !== CKEDITOR.tools.array.indexOf(["figure", "a"], a.parent.name),
+                !0
+              )[0])
             : r(a) && (h = "a" == a.name ? a.children[0] : a),
         h)
       ) {
@@ -182,7 +202,10 @@
         ((e = CKEDITOR.tools.parseCssText(f.style || "")),
         "center" == d && "figure" == a.name
           ? (a = a.wrapWith(
-              new CKEDITOR.htmlParser.element("div", b ? { class: b[1] } : { style: "text-align:center" })
+              new CKEDITOR.htmlParser.element(
+                "div",
+                b ? { class: b[1] } : { style: "text-align:center" }
+              )
             ))
           : d in { left: 1, right: 1 } && (b ? g.addClass(b[q[d]]) : (e["float"] = d)),
         b || CKEDITOR.tools.isEmpty(e) || (f.style = CKEDITOR.tools.writeCssText(e)));
@@ -193,7 +216,7 @@
     var b = a.config.image2_captionedClass,
       c = a.config.image2_alignClasses,
       g = { figure: 1, a: 1, img: 1 };
-    return function (f) {
+    return (f) => {
       if (!(f.name in { div: 1, p: 1 })) return !1;
       var d = f.children;
       if (1 !== d.length) return !1;
@@ -235,7 +258,7 @@
       a.element.append(h, !0);
       e.is("span") && e.remove();
     }
-    f.on("mousedown", function (d) {
+    f.on("mousedown", (d) => {
       function l(a, b, d) {
         var l = CKEDITOR.document,
           c = [];
@@ -270,7 +293,7 @@
       b.fire("saveSnapshot");
       l(
         "mousemove",
-        function (a) {
+        (a) => {
           B = a.data.$;
           x = B.screenX - k;
           p = K - B.screenY;
@@ -304,7 +327,7 @@
       );
       l(
         "mouseup",
-        function () {
+        () => {
           for (var d; (d = n.pop()); ) d.removeListener();
           c.removeClass(r);
           f.removeClass("cke_image_resizing");
@@ -316,21 +339,21 @@
       c.addClass(r);
       f.addClass("cke_image_resizing");
     });
-    a.on("data", function () {
+    a.on("data", () => {
       f["right" == a.data.align ? "addClass" : "removeClass"]("cke_image_resizer_left");
     });
   }
   function L(a) {
     var b = [],
       c;
-    return function (g) {
+    return (g) => {
       var f = a.getCommand("justify" + g);
       if (f) {
-        b.push(function () {
+        b.push(() => {
           f.refresh(a, a.elementPath());
         });
         if (g in { right: 1, left: 1, center: 1 })
-          f.on("exec", function (d) {
+          f.on("exec", (d) => {
             var c = k(a);
             if (c) {
               c.setData("align", g);
@@ -345,7 +368,11 @@
             (void 0 === c && (c = a.filter.checkFeature(a.widgets.registered.image.features.align)),
             c
               ? this.setState(
-                  f.data.align == g ? CKEDITOR.TRISTATE_ON : g in h ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED
+                  f.data.align == g
+                    ? CKEDITOR.TRISTATE_ON
+                    : g in h
+                      ? CKEDITOR.TRISTATE_OFF
+                      : CKEDITOR.TRISTATE_DISABLED
                 )
               : this.setState(CKEDITOR.TRISTATE_DISABLED),
             b.cancel());
@@ -355,7 +382,7 @@
   }
   function M(a) {
     a.plugins.link &&
-      (CKEDITOR.on("dialogDefinition", function (b) {
+      (CKEDITOR.on("dialogDefinition", (b) => {
         b = b.data;
         if ("link" == b.name) {
           b = b.definition;
@@ -363,7 +390,10 @@
             g = b.onOk;
           b.onShow = function () {
             var b = k(a),
-              d = this.getContentElement("info", "linkDisplayText").getElement().getParent().getParent();
+              d = this.getContentElement("info", "linkDisplayText")
+                .getElement()
+                .getParent()
+                .getParent();
             b && (b.inline ? !b.wrapper.getAscendant("a") : 1)
               ? (this.setupContent(b.data.link || {}), d.hide())
               : (d.show(), c.apply(this, arguments));
@@ -380,13 +410,17 @@
       }),
       a.getCommand("unlink").on("exec", function (b) {
         var c = k(a);
-        c && c.parts.link && (c.setData("link", null), this.refresh(a, a.elementPath()), b.cancel());
+        c &&
+          c.parts.link &&
+          (c.setData("link", null), this.refresh(a, a.elementPath()), b.cancel());
       }),
       a.getCommand("unlink").on("refresh", function (b) {
         var c = k(a);
         c &&
           (this.setState(
-            c.data.link || c.wrapper.getAscendant("a") ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED
+            c.data.link || c.wrapper.getAscendant("a")
+              ? CKEDITOR.TRISTATE_OFF
+              : CKEDITOR.TRISTATE_DISABLED
           ),
           b.cancel());
       }));
@@ -435,7 +469,7 @@
     requires: "widget,dialog",
     icons: "image",
     hidpi: !0,
-    onLoad: function () {
+    onLoad: () => {
       CKEDITOR.addCss(
         ".cke_image_nocaption{line-height:0}.cke_editable.cke_image_sw, .cke_editable.cke_image_sw *{cursor:sw-resize !important}.cke_editable.cke_image_se, .cke_editable.cke_image_se *{cursor:se-resize !important}.cke_image_resizer{display:none;position:absolute;width:10px;height:10px;bottom:-5px;right:-5px;background:#000;outline:1px solid #fff;line-height:0;cursor:se-resize;}.cke_image_resizer_wrapper{position:relative;display:inline-block;line-height:0;}.cke_image_resizer.cke_image_resizer_left{right:auto;left:-5px;cursor:sw-resize;}.cke_widget_wrapper:hover .cke_image_resizer,.cke_image_resizer.cke_image_resizing{display:block}.cke_widget_wrapper\x3ea{display:inline-block}"
       );
@@ -451,13 +485,18 @@
         g.editables.caption.pathName = c.pathNameCaption;
         a.widgets.add("image", g);
         a.ui.addButton &&
-          a.ui.addButton("Image", { label: a.lang.common.image, command: "image", toolbar: "insert,10" });
+          a.ui.addButton("Image", {
+            label: a.lang.common.image,
+            command: "image",
+            toolbar: "insert,10",
+          });
         a.contextMenu &&
-          (a.addMenuGroup("image", 10), a.addMenuItem("image", { label: c.menu, command: "image", group: "image" }));
+          (a.addMenuGroup("image", 10),
+          a.addMenuItem("image", { label: c.menu, command: "image", group: "image" }));
         CKEDITOR.dialog.add("image2", this.path + "dialogs/image2.js");
       }
     },
-    afterInit: function (a) {
+    afterInit: (a) => {
       var b = { left: 1, right: 1, center: 1, block: 1 },
         c = L(a),
         g;
@@ -466,7 +505,7 @@
     },
   });
   CKEDITOR.plugins.image2 = {
-    stateShifter: function (a) {
+    stateShifter: (a) => {
       function b(a, b) {
         var d = {};
         f ? (d.attributes = { class: f[1] }) : (d.styles = { "text-align": "center" });
@@ -489,7 +528,7 @@
         e = a.editable(),
         h = ["hasCaption", "align", "link"],
         k = {
-          align: function (d, c, g) {
+          align: (d, c, g) => {
             var e = d.element;
             d.changed.align
               ? d.newData.hasCaption ||
@@ -498,16 +537,24 @@
                   "center" != c ||
                   "center" == g ||
                   (d.deflate(), (c = e.findOne("a,img")), c.replace(e), (d.element = c)))
-              : "center" == g && d.changed.hasCaption && !d.newData.hasCaption && (d.deflate(), (d.element = b(a, e)));
-            !f && e.is("figure") && ("center" == g ? e.setStyle("display", "inline-block") : e.removeStyle("display"));
+              : "center" == g &&
+                d.changed.hasCaption &&
+                !d.newData.hasCaption &&
+                (d.deflate(), (d.element = b(a, e)));
+            !f &&
+              e.is("figure") &&
+              ("center" == g ? e.setStyle("display", "inline-block") : e.removeStyle("display"));
           },
-          hasCaption: function (b, e, f) {
+          hasCaption: (b, e, f) => {
             b.changed.hasCaption &&
               ((e = b.element.is({ img: 1, a: 1 }) ? b.element : b.element.findOne("a,img")),
               b.deflate(),
               f
                 ? ((f = CKEDITOR.dom.element.createFromHtml(
-                    N.output({ captionedClass: d, captionPlaceholder: a.lang.image2.captionPlaceholder }),
+                    N.output({
+                      captionedClass: d,
+                      captionPlaceholder: a.lang.image2.captionPlaceholder,
+                    }),
                     g
                   )),
                   c(f, b.element),
@@ -515,7 +562,7 @@
                   (b.element = f))
                 : (e.replace(b.element), (b.element = e)));
           },
-          link: function (b, d, c) {
+          link: (b, d, c) => {
             if (b.changed.link) {
               var e = b.element.is("img") ? b.element : b.element.findOne("img"),
                 f = b.element.is("a") ? b.element : b.element.findOne("a"),
@@ -524,7 +571,9 @@
               h && b.deflate();
               c
                 ? (d ||
-                    ((k = g.createElement("a", { attributes: { href: b.newData.link.url } })), k.replace(e), e.move(k)),
+                    ((k = g.createElement("a", { attributes: { href: b.newData.link.url } })),
+                    k.replace(e),
+                    e.move(k)),
                   (c = CKEDITOR.plugins.image2.getLinkAttributesGetter()(a, c)),
                   CKEDITOR.tools.isEmpty(c.set) || (k || f).setAttributes(c.set),
                   c.removed.length && (k || f).removeAttributes(c.removed))
@@ -533,11 +582,13 @@
             }
           },
         };
-      return function (a) {
+      return (a) => {
         var b, c;
         a.changed = {};
-        for (c = 0; c < h.length; c++) (b = h[c]), (a.changed[b] = a.oldData ? a.oldData[b] !== a.newData[b] : !1);
-        for (c = 0; c < h.length; c++) (b = h[c]), k[b](a, a.oldData ? a.oldData[b] : null, a.newData[b]);
+        for (c = 0; c < h.length; c++)
+          (b = h[c]), (a.changed[b] = a.oldData ? a.oldData[b] !== a.newData[b] : !1);
+        for (c = 0; c < h.length; c++)
+          (b = h[c]), k[b](a, a.oldData ? a.oldData[b] : null, a.newData[b]);
         a.inflate();
       };
     },
@@ -549,7 +600,7 @@
         Math.round((b.clientHeight / a.height) * a.width) == b.clientWidth
       );
     },
-    getNatural: function (a) {
+    getNatural: (a) => {
       if (a.$.naturalWidth) a = { width: a.$.naturalWidth, height: a.$.naturalHeight };
       else {
         var b = new Image();
@@ -558,12 +609,8 @@
       }
       return a;
     },
-    getLinkAttributesGetter: function () {
-      return CKEDITOR.plugins.link.getLinkAttributes;
-    },
-    getLinkAttributesParser: function () {
-      return CKEDITOR.plugins.link.parseLinkAttributes;
-    },
+    getLinkAttributesGetter: () => CKEDITOR.plugins.link.getLinkAttributes,
+    getLinkAttributesParser: () => CKEDITOR.plugins.link.parseLinkAttributes,
   };
 })();
 CKEDITOR.config.image2_captionedClass = "image";

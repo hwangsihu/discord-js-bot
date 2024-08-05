@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var weekEndings = "vasárnap hétfőn kedden szerdán csütörtökön pénteken szombaton".split(" ");
   function translate(number, withoutSuffix, key, isFuture) {
     var num = number;
@@ -45,9 +43,10 @@
   }
 
   var hu = moment.defineLocale("hu", {
-    months: "január_február_március_április_május_június_július_augusztus_szeptember_október_november_december".split(
-      "_"
-    ),
+    months:
+      "január_február_március_április_május_június_július_augusztus_szeptember_október_november_december".split(
+        "_"
+      ),
     monthsShort: "jan_feb_márc_ápr_máj_jún_júl_aug_szept_okt_nov_dec".split("_"),
     weekdays: "vasárnap_hétfő_kedd_szerda_csütörtök_péntek_szombat".split("_"),
     weekdaysShort: "vas_hét_kedd_sze_csüt_pén_szo".split("_"),
@@ -61,10 +60,8 @@
       LLLL: "YYYY. MMMM D., dddd H:mm",
     },
     meridiemParse: /de|du/i,
-    isPM: function (input) {
-      return input.charAt(1).toLowerCase() === "u";
-    },
-    meridiem: function (hours, minutes, isLower) {
+    isPM: (input) => input.charAt(1).toLowerCase() === "u",
+    meridiem: (hours, minutes, isLower) => {
       if (hours < 12) {
         return isLower === true ? "de" : "DE";
       } else {

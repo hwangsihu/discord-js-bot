@@ -30,7 +30,9 @@ $.fn.sparkline.discrete = discrete = createClass($.fn.sparkline._base, barHighli
     this.initTarget();
     if (this.target) {
       this.lineHeight =
-        options.get("lineHeight") === "auto" ? Math.round(this.canvasHeight * 0.3) : options.get("lineHeight");
+        options.get("lineHeight") === "auto"
+          ? Math.round(this.canvasHeight * 0.3)
+          : options.get("lineHeight");
     }
   },
 

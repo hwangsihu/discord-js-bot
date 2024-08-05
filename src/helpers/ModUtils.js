@@ -146,7 +146,12 @@ module.exports = class ModUtils {
   static async addModAction(issuer, target, reason, action) {
     switch (action) {
       case "TIMEOUT":
-        return ModUtils.timeoutTarget(issuer, target, DEFAULT_TIMEOUT_HOURS * 60 * 60 * 1000, reason);
+        return ModUtils.timeoutTarget(
+          issuer,
+          target,
+          DEFAULT_TIMEOUT_HOURS * 60 * 60 * 1000,
+          reason
+        );
 
       case "KICK":
         return ModUtils.kickTarget(issuer, target, reason);
@@ -171,7 +176,9 @@ module.exports = class ModUtils {
       return "MEMBER_PERM";
     }
 
-    if (!channel.permissionsFor(issuer.guild.members.me).has(["ManageMessages", "ReadMessageHistory"])) {
+    if (
+      !channel.permissionsFor(issuer.guild.members.me).has(["ManageMessages", "ReadMessageHistory"])
+    ) {
       return "BOT_PERM";
     }
 
@@ -248,7 +255,12 @@ module.exports = class ModUtils {
 
       // check if max warnings are reached
       if (memberDb.warnings >= settings.max_warn.limit) {
-        await ModUtils.addModAction(issuer.guild.members.me, target, "Max warnings reached", settings.max_warn.action); // moderate
+        await ModUtils.addModAction(
+          issuer.guild.members.me,
+          target,
+          "Max warnings reached",
+          settings.max_warn.action
+        ); // moderate
         memberDb.warnings = 0; // reset warnings
       }
 

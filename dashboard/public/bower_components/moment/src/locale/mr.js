@@ -153,18 +153,10 @@ export default moment.defineLocale("mr", {
     y: relativeTimeMr,
     yy: relativeTimeMr,
   },
-  preparse: function (string) {
-    return string.replace(/[१२३४५६७८९०]/g, function (match) {
-      return numberMap[match];
-    });
-  },
-  postformat: function (string) {
-    return string.replace(/\d/g, function (match) {
-      return symbolMap[match];
-    });
-  },
+  preparse: (string) => string.replace(/[१२३४५६७८९०]/g, (match) => numberMap[match]),
+  postformat: (string) => string.replace(/\d/g, (match) => symbolMap[match]),
   meridiemParse: /रात्री|सकाळी|दुपारी|सायंकाळी/,
-  meridiemHour: function (hour, meridiem) {
+  meridiemHour: (hour, meridiem) => {
     if (hour === 12) {
       hour = 0;
     }
@@ -178,7 +170,7 @@ export default moment.defineLocale("mr", {
       return hour + 12;
     }
   },
-  meridiem: function (hour, minute, isLower) {
+  meridiem: (hour, minute, isLower) => {
     if (hour < 4) {
       return "रात्री";
     } else if (hour < 10) {

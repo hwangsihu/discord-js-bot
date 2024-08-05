@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(n) {
       if (r[n]) return r[n].exports;
       var o = (r[n] = { i: n, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = r),
-      (t.d = function (e, r, n) {
+      (t.d = (e, r, n) => {
         t.o(e, r) || Object.defineProperty(e, r, { configurable: !1, enumerable: !0, get: n });
       }),
-      (t.n = function (e) {
-        var r =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var r = e && e.__esModule ? () => e.default : () => e;
         return t.d(r, "a", r), r;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 81))
     );
   })({
-    0: function (t, r) {
+    0: (t, r) => {
       t.exports = e;
     },
-    1: function (e, r) {
+    1: (e, r) => {
       e.exports = t;
     },
-    81: function (e, t, r) {
+    81: (e, t, r) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), r(82);
       var n = r(1);
       n.datepickerLocale("ar-sa", "ar", {
@@ -84,15 +75,28 @@
           noEventsMessage: "أي أحداث لعرض",
         });
     },
-    82: function (e, t, r) {
-      !(function (e, t) {
+    82: (e, t, r) => {
+      !((e, t) => {
         t(r(0));
-      })(0, function (e) {
+      })(0, (e) => {
         var t = { 1: "١", 2: "٢", 3: "٣", 4: "٤", 5: "٥", 6: "٦", 7: "٧", 8: "٨", 9: "٩", 0: "٠" },
-          r = { "١": "1", "٢": "2", "٣": "3", "٤": "4", "٥": "5", "٦": "6", "٧": "7", "٨": "8", "٩": "9", "٠": "0" };
+          r = {
+            "١": "1",
+            "٢": "2",
+            "٣": "3",
+            "٤": "4",
+            "٥": "5",
+            "٦": "6",
+            "٧": "7",
+            "٨": "8",
+            "٩": "9",
+            "٠": "0",
+          };
         return e.defineLocale("ar-sa", {
-          months: "يناير_فبراير_مارس_أبريل_مايو_يونيو_يوليو_أغسطس_سبتمبر_أكتوبر_نوفمبر_ديسمبر".split("_"),
-          monthsShort: "يناير_فبراير_مارس_أبريل_مايو_يونيو_يوليو_أغسطس_سبتمبر_أكتوبر_نوفمبر_ديسمبر".split("_"),
+          months:
+            "يناير_فبراير_مارس_أبريل_مايو_يونيو_يوليو_أغسطس_سبتمبر_أكتوبر_نوفمبر_ديسمبر".split("_"),
+          monthsShort:
+            "يناير_فبراير_مارس_أبريل_مايو_يونيو_يوليو_أغسطس_سبتمبر_أكتوبر_نوفمبر_ديسمبر".split("_"),
           weekdays: "الأحد_الإثنين_الثلاثاء_الأربعاء_الخميس_الجمعة_السبت".split("_"),
           weekdaysShort: "أحد_إثنين_ثلاثاء_أربعاء_خميس_جمعة_سبت".split("_"),
           weekdaysMin: "ح_ن_ث_ر_خ_ج_س".split("_"),
@@ -106,12 +110,8 @@
             LLLL: "dddd D MMMM YYYY HH:mm",
           },
           meridiemParse: /ص|م/,
-          isPM: function (e) {
-            return "م" === e;
-          },
-          meridiem: function (e, t, r) {
-            return e < 12 ? "ص" : "م";
-          },
+          isPM: (e) => "م" === e,
+          meridiem: (e, t, r) => (e < 12 ? "ص" : "م"),
           calendar: {
             sameDay: "[اليوم على الساعة] LT",
             nextDay: "[غدا على الساعة] LT",
@@ -136,23 +136,11 @@
             y: "سنة",
             yy: "%d سنوات",
           },
-          preparse: function (e) {
-            return e
-              .replace(/[١٢٣٤٥٦٧٨٩٠]/g, function (e) {
-                return r[e];
-              })
-              .replace(/،/g, ",");
-          },
-          postformat: function (e) {
-            return e
-              .replace(/\d/g, function (e) {
-                return t[e];
-              })
-              .replace(/,/g, "،");
-          },
+          preparse: (e) => e.replace(/[١٢٣٤٥٦٧٨٩٠]/g, (e) => r[e]).replace(/،/g, ","),
+          postformat: (e) => e.replace(/\d/g, (e) => t[e]).replace(/,/g, "،"),
           week: { dow: 0, doy: 6 },
         });
       });
     },
-  });
-});
+  })
+);

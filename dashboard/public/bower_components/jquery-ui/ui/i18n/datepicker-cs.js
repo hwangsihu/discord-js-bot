@@ -1,6 +1,6 @@
 /* Czech initialisation for the jQuery UI date picker plugin. */
 /* Written by Tomas Muller (tomas@tomas-muller.net). */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["cs"] = {
     closeText: "Zavřít",
     prevText: "&#x3C;Dříve",
@@ -28,7 +28,20 @@
       "listopad",
       "prosinec",
     ],
-    monthNamesShort: ["led", "úno", "bře", "dub", "kvě", "čer", "čvc", "srp", "zář", "říj", "lis", "pro"],
+    monthNamesShort: [
+      "led",
+      "úno",
+      "bře",
+      "dub",
+      "kvě",
+      "čer",
+      "čvc",
+      "srp",
+      "zář",
+      "říj",
+      "lis",
+      "pro",
+    ],
     dayNames: ["neděle", "pondělí", "úterý", "středa", "čtvrtek", "pátek", "sobota"],
     dayNamesShort: ["ne", "po", "út", "st", "čt", "pá", "so"],
     dayNamesMin: ["ne", "po", "út", "st", "čt", "pá", "so"],

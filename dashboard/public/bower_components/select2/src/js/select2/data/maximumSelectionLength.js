@@ -1,4 +1,4 @@
-define([], function () {
+define([], () => {
   function MaximumSelectionLength(decorated, $e, options) {
     this.maximumSelectionLength = options.get("maximumSelectionLength");
 
@@ -6,20 +6,18 @@ define([], function () {
   }
 
   MaximumSelectionLength.prototype.query = function (decorated, params, callback) {
-    var self = this;
-
-    this.current(function (currentData) {
+    this.current((currentData) => {
       var count = currentData != null ? currentData.length : 0;
-      if (self.maximumSelectionLength > 0 && count >= self.maximumSelectionLength) {
-        self.trigger("results:message", {
+      if (this.maximumSelectionLength > 0 && count >= this.maximumSelectionLength) {
+        this.trigger("results:message", {
           message: "maximumSelected",
           args: {
-            maximum: self.maximumSelectionLength,
+            maximum: this.maximumSelectionLength,
           },
         });
         return;
       }
-      decorated.call(self, params, callback);
+      decorated.call(this, params, callback);
     });
   };
 

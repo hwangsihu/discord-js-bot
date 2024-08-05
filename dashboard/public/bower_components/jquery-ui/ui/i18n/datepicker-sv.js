@@ -1,6 +1,6 @@
 /* Swedish initialisation for the jQuery UI date picker plugin. */
 /* Written by Anders Ekdahl ( anders@nomadiz.se). */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["sv"] = {
     closeText: "Stäng",
     prevText: "&#xAB;Förra",
@@ -28,7 +28,20 @@
       "November",
       "December",
     ],
-    monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"],
+    monthNamesShort: [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Maj",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Dec",
+    ],
     dayNamesShort: ["Sön", "Mån", "Tis", "Ons", "Tor", "Fre", "Lör"],
     dayNames: ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"],
     dayNamesMin: ["Sö", "Må", "Ti", "On", "To", "Fr", "Lö"],

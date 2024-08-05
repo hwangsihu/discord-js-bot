@@ -2,7 +2,7 @@
 /* Used in most of Arab countries, primarily in Bahrain, Kuwait, Oman, Qatar, Saudi Arabia and the United Arab Emirates, Egypt, Sudan and Yemen. */
 /* Written by Mohammed Alshehri -- m@dralshehri.com */
 
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -10,7 +10,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["ar"] = {
     closeText: "إغلاق",
     prevText: "&#x3C;السابق",

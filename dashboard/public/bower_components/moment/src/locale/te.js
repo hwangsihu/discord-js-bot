@@ -46,7 +46,7 @@ export default moment.defineLocale("te", {
   dayOfMonthOrdinalParse: /\d{1,2}వ/,
   ordinal: "%dవ",
   meridiemParse: /రాత్రి|ఉదయం|మధ్యాహ్నం|సాయంత్రం/,
-  meridiemHour: function (hour, meridiem) {
+  meridiemHour: (hour, meridiem) => {
     if (hour === 12) {
       hour = 0;
     }
@@ -60,7 +60,7 @@ export default moment.defineLocale("te", {
       return hour + 12;
     }
   },
-  meridiem: function (hour, minute, isLower) {
+  meridiem: (hour, minute, isLower) => {
     if (hour < 4) {
       return "రాత్రి";
     } else if (hour < 10) {

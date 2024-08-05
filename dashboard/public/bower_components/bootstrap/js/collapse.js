@@ -8,9 +8,7 @@
 
 /* jshint latedef: false */
 
-+(function ($) {
-  "use strict";
-
++(($) => {
   // COLLAPSE PUBLIC CLASS DEFINITION
   // ================================
 
@@ -71,7 +69,11 @@
 
     var dimension = this.dimension();
 
-    this.$element.removeClass("collapse").addClass("collapsing")[dimension](0).attr("aria-expanded", true);
+    this.$element
+      .removeClass("collapse")
+      .addClass("collapsing")
+      [dimension](0)
+      .attr("aria-expanded", true);
 
     this.$trigger.removeClass("collapsed").attr("aria-expanded", true);
 
@@ -139,7 +141,7 @@
       .end();
   };
 
-  Collapse.prototype.addAriaAndCollapsedClass = function ($element, $trigger) {
+  Collapse.prototype.addAriaAndCollapsedClass = ($element, $trigger) => {
     var isOpen = $element.hasClass("in");
 
     $element.attr("aria-expanded", isOpen);
@@ -148,7 +150,9 @@
 
   function getTargetFromTrigger($trigger) {
     var href;
-    var target = $trigger.attr("data-target") || ((href = $trigger.attr("href")) && href.replace(/.*(?=#[^\s]+$)/, "")); // strip for ie7
+    var target =
+      $trigger.attr("data-target") ||
+      ((href = $trigger.attr("href")) && href.replace(/.*(?=#[^\s]+$)/, "")); // strip for ie7
 
     return $(document).find(target);
   }
@@ -160,7 +164,12 @@
     return this.each(function () {
       var $this = $(this);
       var data = $this.data("bs.collapse");
-      var options = $.extend({}, Collapse.DEFAULTS, $this.data(), typeof option == "object" && option);
+      var options = $.extend(
+        {},
+        Collapse.DEFAULTS,
+        $this.data(),
+        typeof option == "object" && option
+      );
 
       if (!data && options.toggle && /show|hide/.test(option)) options.toggle = false;
       if (!data) $this.data("bs.collapse", (data = new Collapse(this, options)));

@@ -59,7 +59,7 @@ module.exports = {
   },
 
   async interactionRun(interaction) {
-    let level = interaction.options.getString("level");
+    const level = interaction.options.getString("level");
     const response = setBassBoost(interaction, level);
     await interaction.followUp(response);
   },

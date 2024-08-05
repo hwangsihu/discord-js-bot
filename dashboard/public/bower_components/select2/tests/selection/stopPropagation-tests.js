@@ -11,7 +11,7 @@ var CutomSelection = Utils.Decorate(SingleSelection, StopPropagation);
 
 var options = new Options();
 
-test("click event does not propagate", function (assert) {
+test("click event does not propagate", (assert) => {
   assert.expect(1);
 
   var $container = $("#qunit-fixture .event-container");
@@ -23,7 +23,7 @@ test("click event does not propagate", function (assert) {
   selection.bind(container, $container);
 
   $container.append($selection);
-  $container.on("click", function () {
+  $container.on("click", () => {
     assert.ok(false, "The click event should have been stopped");
   });
 

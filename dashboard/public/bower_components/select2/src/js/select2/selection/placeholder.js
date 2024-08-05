@@ -1,11 +1,11 @@
-define(["../utils"], function (Utils) {
+define(["../utils"], (Utils) => {
   function Placeholder(decorated, $element, options) {
     this.placeholder = this.normalizePlaceholder(options.get("placeholder"));
 
     decorated.call(this, $element, options);
   }
 
-  Placeholder.prototype.normalizePlaceholder = function (_, placeholder) {
+  Placeholder.prototype.normalizePlaceholder = (_, placeholder) => {
     if (typeof placeholder === "string") {
       placeholder = {
         id: "",
@@ -20,7 +20,9 @@ define(["../utils"], function (Utils) {
     var $placeholder = this.selectionContainer();
 
     $placeholder.html(this.display(placeholder));
-    $placeholder.addClass("select2-selection__placeholder").removeClass("select2-selection__choice");
+    $placeholder
+      .addClass("select2-selection__placeholder")
+      .removeClass("select2-selection__choice");
 
     return $placeholder;
   };

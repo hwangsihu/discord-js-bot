@@ -67,11 +67,12 @@ module.exports = {
     if (sub === "add") {
       let role = interaction.options.getRole("role");
       if (!role) {
-        const role_id = interaction.options.getString("role_id");
-        if (!role_id) return interaction.followUp("Please provide a role or role id");
+        const roleId = interaction.options.getString("role_id");
+        if (!roleId) return interaction.followUp("Please provide a role or role id");
 
-        const roles = interaction.guild.findMatchingRoles(role_id);
-        if (roles.length === 0) return interaction.followUp("No matching roles found matching your query");
+        const roles = interaction.guild.findMatchingRoles(roleId);
+        if (roles.length === 0)
+          return interaction.followUp("No matching roles found matching your query");
         role = roles[0];
       }
 
@@ -98,15 +99,16 @@ module.exports = {
 async function setAutoRole({ guild }, role, settings) {
   if (role) {
     if (role.id === guild.roles.everyone.id) return "You cannot set `@everyone` as the autorole";
-    if (!guild.members.me.permissions.has("ManageRoles")) return "I don't have the `ManageRoles` permission";
+    if (!guild.members.me.permissions.has("ManageRoles"))
+      return "I don't have the `ManageRoles` permission";
     if (guild.members.me.roles.highest.position < role.position)
       return "I don't have the permissions to assign this role";
     if (role.managed) return "Oops! This role is managed by an integration";
   }
 
-  if (!role) settings.autorole = null;
-  else settings.autorole = role.id;
+  if (role) settings.autorole = role.id;
+  else settings.autorole = null;
 
   await settings.save();
-  return `Configuration saved! Autorole is ${!role ? "disabled" : "setup"}`;
+  return `Configuration saved! Autorole is ${role ? "setup" : "disabled"}`;
 }

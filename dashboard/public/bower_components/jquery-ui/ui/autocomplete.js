@@ -8,7 +8,7 @@
  *
  * http://api.jqueryui.com/autocomplete/
  */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["jquery", "./core", "./widget", "./position", "./menu"], factory);
@@ -16,7 +16,7 @@
     // Browser globals
     factory(jQuery);
   }
-})(function ($) {
+})(($) => {
   $.widget("ui.autocomplete", {
     version: "1.11.4",
     defaultElement: "<input>",
@@ -223,14 +223,13 @@
           var menuElement = this.menu.element[0];
           if (!$(event.target).closest(".ui-menu-item").length) {
             this._delay(function () {
-              var that = this;
-              this.document.one("mousedown", function (event) {
+              this.document.one("mousedown", (event) => {
                 if (
-                  event.target !== that.element[0] &&
+                  event.target !== this.element[0] &&
                   event.target !== menuElement &&
                   !$.contains(menuElement, event.target)
                 ) {
-                  that.close();
+                  this.close();
                 }
               });
             });
@@ -245,7 +244,7 @@
             if (event.originalEvent && /^mouse/.test(event.originalEvent.type)) {
               this.menu.blur();
 
-              this.document.one("mousemove", function () {
+              this.document.one("mousemove", () => {
                 $(event.target).trigger(event.originalEvent);
               });
 
@@ -339,7 +338,8 @@
       var element = this.options.appendTo;
 
       if (element) {
-        element = element.jquery || element.nodeType ? $(element) : this.document.find(element).eq(0);
+        element =
+          element.jquery || element.nodeType ? $(element) : this.document.find(element).eq(0);
       }
 
       if (!element || !element[0]) {
@@ -354,28 +354,26 @@
     },
 
     _initSource: function () {
-      var array,
-        url,
-        that = this;
+      var array, url;
       if ($.isArray(this.options.source)) {
         array = this.options.source;
-        this.source = function (request, response) {
+        this.source = (request, response) => {
           response($.ui.autocomplete.filter(array, request.term));
         };
       } else if (typeof this.options.source === "string") {
         url = this.options.source;
-        this.source = function (request, response) {
-          if (that.xhr) {
-            that.xhr.abort();
+        this.source = (request, response) => {
+          if (this.xhr) {
+            this.xhr.abort();
           }
-          that.xhr = $.ajax({
+          this.xhr = $.ajax({
             url: url,
             data: request,
             dataType: "json",
-            success: function (data) {
+            success: (data) => {
               response(data);
             },
-            error: function () {
+            error: () => {
               response([]);
             },
           });
@@ -474,12 +472,12 @@
       }
     },
 
-    _normalize: function (items) {
+    _normalize: (items) => {
       // assume all items have the right format when the first item is complete
       if (items.length && items[0].label && items[0].value) {
         return items;
       }
-      return $.map(items, function (item) {
+      return $.map(items, (item) => {
         if (typeof item === "string") {
           return {
             label: item,
@@ -529,9 +527,8 @@
     },
 
     _renderMenu: function (ul, items) {
-      var that = this;
-      $.each(items, function (index, item) {
-        that._renderItemData(ul, item);
+      $.each(items, (index, item) => {
+        this._renderItemData(ul, item);
       });
     },
 
@@ -539,9 +536,7 @@
       return this._renderItem(ul, item).data("ui-autocomplete-item", item);
     },
 
-    _renderItem: function (ul, item) {
-      return $("<li>").text(item.label).appendTo(ul);
-    },
+    _renderItem: (ul, item) => $("<li>").text(item.label).appendTo(ul),
 
     _move: function (direction, event) {
       if (!this.menu.element.is(":visible")) {
@@ -581,14 +576,10 @@
   });
 
   $.extend($.ui.autocomplete, {
-    escapeRegex: function (value) {
-      return value.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&");
-    },
-    filter: function (array, term) {
+    escapeRegex: (value) => value.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&"),
+    filter: (array, term) => {
       var matcher = new RegExp($.ui.autocomplete.escapeRegex(term), "i");
-      return $.grep(array, function (value) {
-        return matcher.test(value.label || value.value || value);
-      });
+      return $.grep(array, (value) => matcher.test(value.label || value.value || value));
     },
   });
 
@@ -599,13 +590,10 @@
     options: {
       messages: {
         noResults: "No search results.",
-        results: function (amount) {
-          return (
-            amount +
-            (amount > 1 ? " results are" : " result is") +
-            " available, use up and down arrow keys to navigate."
-          );
-        },
+        results: (amount) =>
+          amount +
+          (amount > 1 ? " results are" : " result is") +
+          " available, use up and down arrow keys to navigate.",
       },
     },
 

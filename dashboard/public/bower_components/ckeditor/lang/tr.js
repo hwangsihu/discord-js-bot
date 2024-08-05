@@ -127,7 +127,11 @@ CKEDITOR.lang["tr"] = {
     panelTitle2: "Inline Stilleri",
     panelTitle3: "Nesne Stilleri",
   },
-  specialchar: { options: "Özel Karakter Seçenekleri", title: "Özel Karakter Seç", toolbar: "Özel Karakter Ekle" },
+  specialchar: {
+    options: "Özel Karakter Seçenekleri",
+    title: "Özel Karakter Seç",
+    toolbar: "Özel Karakter Ekle",
+  },
   sourcearea: { toolbar: "Kaynak" },
   scayt: {
     btn_about: "SCAYT'ı hakkında",
@@ -146,7 +150,8 @@ CKEDITOR.lang["tr"] = {
     title: "Düz metin olarak yapıştır",
   },
   pastefromword: {
-    confirmCleanup: "Yapıştırmaya çalıştığınız metin Word'den kopyalanmıştır. Yapıştırmadan önce silmek istermisiniz?",
+    confirmCleanup:
+      "Yapıştırmaya çalıştığınız metin Word'den kopyalanmıştır. Yapıştırmadan önce silmek istermisiniz?",
     error: "Yapıştırmadaki veri bilgisi hata düzelene kadar silinmeyecektir",
     title: "Word'den Yapıştır",
     toolbar: "Word'den Yapıştır",
@@ -344,7 +349,8 @@ CKEDITOR.lang["tr"] = {
     validateNumberFailed: "Bu değer bir sayı değildir.",
     confirmNewPage:
       "Bu içerikle ilgili kaydedilmemiş tüm bilgiler kaybolacaktır. Yeni bir sayfa yüklemek istediğinizden emin misiniz?",
-    confirmCancel: "Bazı seçenekleri değiştirdiniz. İletişim penceresini kapatmak istediğinizden emin misiniz?",
+    confirmCancel:
+      "Bazı seçenekleri değiştirdiniz. İletişim penceresini kapatmak istediğinizden emin misiniz?",
     options: "Seçenekler",
     target: "Hedef",
     targetNew: "Yeni Pencere (_blank)",

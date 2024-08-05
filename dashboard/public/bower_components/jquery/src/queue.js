@@ -1,8 +1,6 @@
-define(["./core", "./data/var/dataPriv", "./deferred", "./callbacks"], function (jQuery, dataPriv) {
-  "use strict";
-
+define(["./core", "./data/var/dataPriv", "./deferred", "./callbacks"], (jQuery, dataPriv) => {
   jQuery.extend({
-    queue: function (elem, type, data) {
+    queue: (elem, type, data) => {
       var queue;
 
       if (elem) {
@@ -21,14 +19,14 @@ define(["./core", "./data/var/dataPriv", "./deferred", "./callbacks"], function 
       }
     },
 
-    dequeue: function (elem, type) {
+    dequeue: (elem, type) => {
       type = type || "fx";
 
       var queue = jQuery.queue(elem, type),
         startLength = queue.length,
         fn = queue.shift(),
         hooks = jQuery._queueHooks(elem, type),
-        next = function () {
+        next = () => {
           jQuery.dequeue(elem, type);
         };
 
@@ -56,12 +54,12 @@ define(["./core", "./data/var/dataPriv", "./deferred", "./callbacks"], function 
     },
 
     // Not public - generate a queueHooks object, or return the current one
-    _queueHooks: function (elem, type) {
+    _queueHooks: (elem, type) => {
       var key = type + "queueHooks";
       return (
         dataPriv.get(elem, key) ||
         dataPriv.access(elem, key, {
-          empty: jQuery.Callbacks("once memory").add(function () {
+          empty: jQuery.Callbacks("once memory").add(() => {
             dataPriv.remove(elem, [type + "queue", key]);
           }),
         })
@@ -111,11 +109,10 @@ define(["./core", "./data/var/dataPriv", "./deferred", "./callbacks"], function 
       var tmp,
         count = 1,
         defer = jQuery.Deferred(),
-        elements = this,
         i = this.length,
-        resolve = function () {
+        resolve = () => {
           if (!--count) {
-            defer.resolveWith(elements, [elements]);
+            defer.resolveWith(this, [this]);
           }
         };
 
@@ -126,7 +123,7 @@ define(["./core", "./data/var/dataPriv", "./deferred", "./callbacks"], function 
       type = type || "fx";
 
       while (i--) {
-        tmp = dataPriv.get(elements[i], type + "queueHooks");
+        tmp = dataPriv.get(this[i], type + "queueHooks");
         if (tmp && tmp.empty) {
           count++;
           tmp.empty.add(resolve);

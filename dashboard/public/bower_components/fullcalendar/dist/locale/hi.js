@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(r) {
       if (n[r]) return n[r].exports;
       var o = (n[r] = { i: r, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = n),
-      (t.d = function (e, n, r) {
+      (t.d = (e, n, r) => {
         t.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: r });
       }),
-      (t.n = function (e) {
-        var n =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var n = e && e.__esModule ? () => e.default : () => e;
         return t.d(n, "a", n), n;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 141))
     );
   })({
-    0: function (t, n) {
+    0: (t, n) => {
       t.exports = e;
     },
-    1: function (e, n) {
+    1: (e, n) => {
       e.exports = t;
     },
-    141: function (e, t, n) {
+    141: (e, t, n) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), n(142);
       var r = n(1);
       r.datepickerLocale("hi", "hi", {
@@ -66,7 +57,20 @@
           "नवम्बर",
           "दिसम्बर",
         ],
-        monthNamesShort: ["जन", "फर", "मार्च", "अप्रेल", "मई", "जून", "जूलाई", "अग", "सित", "अक्ट", "नव", "दि"],
+        monthNamesShort: [
+          "जन",
+          "फर",
+          "मार्च",
+          "अप्रेल",
+          "मई",
+          "जून",
+          "जूलाई",
+          "अग",
+          "सित",
+          "अक्ट",
+          "नव",
+          "दि",
+        ],
         dayNames: ["रविवार", "सोमवार", "मंगलवार", "बुधवार", "गुरुवार", "शुक्रवार", "शनिवार"],
         dayNamesShort: ["रवि", "सोम", "मंगल", "बुध", "गुरु", "शुक्र", "शनि"],
         dayNamesMin: ["रवि", "सोम", "मंगल", "बुध", "गुरु", "शुक्र", "शनि"],
@@ -80,18 +84,27 @@
         r.locale("hi", {
           buttonText: { month: "महीना", week: "सप्ताह", day: "दिन", list: "कार्यसूची" },
           allDayText: "सभी दिन",
-          eventLimitText: function (e) {
-            return "+अधिक " + e;
-          },
+          eventLimitText: (e) => "+अधिक " + e,
           noEventsMessage: "कोई घटनाओं को प्रदर्शित करने के लिए",
         });
     },
-    142: function (e, t, n) {
-      !(function (e, t) {
+    142: (e, t, n) => {
+      !((e, t) => {
         t(n(0));
-      })(0, function (e) {
+      })(0, (e) => {
         var t = { 1: "१", 2: "२", 3: "३", 4: "४", 5: "५", 6: "६", 7: "७", 8: "८", 9: "९", 0: "०" },
-          n = { "१": "1", "२": "2", "३": "3", "४": "4", "५": "5", "६": "6", "७": "7", "८": "8", "९": "9", "०": "0" };
+          n = {
+            "१": "1",
+            "२": "2",
+            "३": "3",
+            "४": "4",
+            "५": "5",
+            "६": "6",
+            "७": "7",
+            "८": "8",
+            "९": "9",
+            "०": "0",
+          };
         return e.defineLocale("hi", {
           months: "जनवरी_फ़रवरी_मार्च_अप्रैल_मई_जून_जुलाई_अगस्त_सितम्बर_अक्टूबर_नवम्बर_दिसम्बर".split("_"),
           monthsShort: "जन._फ़र._मार्च_अप्रै._मई_जून_जुल._अग._सित._अक्टू._नव._दिस.".split("_"),
@@ -131,41 +144,30 @@
             y: "एक वर्ष",
             yy: "%d वर्ष",
           },
-          preparse: function (e) {
-            return e.replace(/[१२३४५६७८९०]/g, function (e) {
-              return n[e];
-            });
-          },
-          postformat: function (e) {
-            return e.replace(/\d/g, function (e) {
-              return t[e];
-            });
-          },
+          preparse: (e) => e.replace(/[१२३४५६७८९०]/g, (e) => n[e]),
+          postformat: (e) => e.replace(/\d/g, (e) => t[e]),
           meridiemParse: /रात|सुबह|दोपहर|शाम/,
-          meridiemHour: function (e, t) {
-            return (
-              12 === e && (e = 0),
-              "रात" === t
-                ? e < 4
-                  ? e
-                  : e + 12
-                : "सुबह" === t
-                  ? e
-                  : "दोपहर" === t
-                    ? e >= 10
-                      ? e
-                      : e + 12
-                    : "शाम" === t
-                      ? e + 12
-                      : void 0
-            );
-          },
-          meridiem: function (e, t, n) {
-            return e < 4 ? "रात" : e < 10 ? "सुबह" : e < 17 ? "दोपहर" : e < 20 ? "शाम" : "रात";
-          },
+          meridiemHour: (e, t) => (
+            12 === e && (e = 0),
+            "रात" === t
+              ? e < 4
+                ? e
+                : e + 12
+              : "सुबह" === t
+                ? e
+                : "दोपहर" === t
+                  ? e >= 10
+                    ? e
+                    : e + 12
+                  : "शाम" === t
+                    ? e + 12
+                    : void 0
+          ),
+          meridiem: (e, t, n) =>
+            e < 4 ? "रात" : e < 10 ? "सुबह" : e < 17 ? "दोपहर" : e < 20 ? "शाम" : "रात",
           week: { dow: 0, doy: 6 },
         });
       });
     },
-  });
-});
+  })
+);

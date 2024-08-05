@@ -1,11 +1,11 @@
-﻿(function (p) {
+﻿((p) => {
   "object" == typeof exports && "object" == typeof module
     ? p(require("../../lib/codemirror"))
     : "function" == typeof define && define.amd
       ? define(["../../lib/codemirror"], p)
       : p(CodeMirror);
-})(function (p) {
-  p.defineMode("javascript", function (oa, t) {
+})((p) => {
+  p.defineMode("javascript", (oa, t) => {
     function q(a, c, e) {
       E = a;
       I = e;
@@ -29,9 +29,9 @@
           "sof" == c.lastType ||
           /^[\[{}\(,;:]$/.test(c.lastType)
         ) {
-          a: for (var e = !1, d, b = !1; null != (d = a.next()); ) {
+          for (var e = !1, d, b = !1; null != (d = a.next()); ) {
             if (!e) {
-              if ("/" == d && !b) break a;
+              if ("/" == d && !b) break;
               "[" == d ? (b = !0) : b && "]" == d && (b = !1);
             }
             e = !e && "\\" == d;
@@ -55,11 +55,12 @@
         );
     }
     function pa(a) {
-      return function (c, e) {
+      return (c, e) => {
         var d = !1,
           b;
-        if (L && "@" == c.peek() && c.match(qa)) return (e.tokenize = w), q("jsonld-keyword", "meta");
-        for (; null != (b = c.next()) && (b != a || d); ) d = !d && "\\" == b;
+        if (L && "@" == c.peek() && c.match(qa))
+          return (e.tokenize = w), q("jsonld-keyword", "meta");
+        while (null != (b = c.next()) && (b != a || d)) d = !d && "\\" == b;
         d || (e.tokenize = w);
         return q("string", "string");
       };
@@ -144,7 +145,7 @@
       f.state.context = f.state.context.prev;
     }
     function l(a, c) {
-      var b = function () {
+      var b = () => {
         var b = f.state,
           e = b.indented;
         if ("stat" == b.lexical.type) e = b.lexical.indented;
@@ -156,7 +157,8 @@
     }
     function k() {
       var a = f.state;
-      a.lexical.prev && (")" == a.lexical.type && (a.indented = a.lexical.indented), (a.lexical = a.lexical.prev));
+      a.lexical.prev &&
+        (")" == a.lexical.type && (a.indented = a.lexical.indented), (a.lexical = a.lexical.prev));
     }
     function m(a) {
       function c(e) {
@@ -176,7 +178,9 @@
               : ";" == a
                 ? b()
                 : "if" == a
-                  ? ("else" == f.state.lexical.info && f.state.cc[f.state.cc.length - 1] == k && f.state.cc.pop()(),
+                  ? ("else" == f.state.lexical.info &&
+                      f.state.cc[f.state.cc.length - 1] == k &&
+                      f.state.cc.pop()(),
                     b(l("form"), n, r, k, da))
                   : "function" == a
                     ? b(v)
@@ -277,7 +281,8 @@
     function za(a, c) {
       if ("variable" == a || "keyword" == f.style)
         return (f.marked = "property"), "get" == c || "set" == c ? b(Ca) : b(H);
-      if ("number" == a || "string" == a) return (f.marked = L ? "property" : f.style + " property"), b(H);
+      if ("number" == a || "string" == a)
+        return (f.marked = L ? "property" : f.style + " property"), b(H);
       if ("jsonld-keyword" == a) return b(H);
       if ("[" == a) return b(n, m("]"), H);
     }
@@ -298,9 +303,7 @@
             ? b()
             : b(m(c));
       }
-      return function (d) {
-        return d == c ? b() : g(a, e);
-      };
+      return (d) => (d == c ? b() : g(a, e));
     }
     function G(a, c, e) {
       for (var d = 3; d < arguments.length; d++) f.cc.push(arguments[d]);
@@ -341,13 +344,23 @@
       if ("(" == a) return b(l(")"), Ga, m(")"), k);
     }
     function Ga(a) {
-      return "var" == a ? b(T, m(";"), P) : ";" == a ? b(P) : "variable" == a ? b(Ha) : g(n, m(";"), P);
+      return "var" == a
+        ? b(T, m(";"), P)
+        : ";" == a
+          ? b(P)
+          : "variable" == a
+            ? b(Ha)
+            : g(n, m(";"), P);
     }
     function Ha(a, c) {
       return "in" == c || "of" == c ? ((f.marked = "keyword"), b(n)) : b(M, P);
     }
     function P(a, c) {
-      return ";" == a ? b(la) : "in" == c || "of" == c ? ((f.marked = "keyword"), b(n)) : g(n, m(";"), la);
+      return ";" == a
+        ? b(la)
+        : "in" == c || "of" == c
+          ? ((f.marked = "keyword"), b(n))
+          : g(n, m(";"), la);
     }
     function la(a) {
       ")" != a && b(n);
@@ -424,7 +437,7 @@
       D = t.json || L,
       ka = t.typescript,
       R = t.wordCharacters || /[\w$\xa1-\uffff]/,
-      ba = (function () {
+      ba = (() => {
         function a(a) {
           return { type: a, style: "keyword" };
         }
@@ -499,12 +512,20 @@
       qa = /^@(context|id|value|language|type|container|list|set|reverse|index|base|vocab|graph)"/,
       E,
       I,
-      xa = { atom: !0, number: !0, variable: !0, string: !0, regexp: !0, this: !0, "jsonld-keyword": !0 },
+      xa = {
+        atom: !0,
+        number: !0,
+        variable: !0,
+        string: !0,
+        regexp: !0,
+        this: !0,
+        "jsonld-keyword": !0,
+      },
       f = { state: null, column: null, marked: null, cc: null },
       ra = { name: "this", next: { name: "arguments" } };
     k.lex = !0;
     return {
-      startState: function (a) {
+      startState: (a) => {
         a = {
           tokenize: w,
           lastType: "sof",
@@ -517,9 +538,11 @@
         t.globalVars && "object" == typeof t.globalVars && (a.globalVars = t.globalVars);
         return a;
       },
-      token: function (a, b) {
+      token: (a, b) => {
         a.sol() &&
-          (b.lexical.hasOwnProperty("align") || (b.lexical.align = !1), (b.indented = a.indentation()), S(a, b));
+          (b.lexical.hasOwnProperty("align") || (b.lexical.align = !1),
+          (b.indented = a.indentation()),
+          S(a, b));
         if (b.tokenize != J && a.eatSpace()) return null;
         var e = b.tokenize(a, b);
         if ("comment" == E) return e;
@@ -536,7 +559,7 @@
           b.lexical.hasOwnProperty("align") || (b.lexical.align = !0);
           for (;;)
             if ((h.length ? h.pop() : D ? n : r)(d, g)) {
-              for (; h.length && h[h.length - 1].lex; ) h.pop()();
+              while (h.length && h[h.length - 1].lex) h.pop()();
               if (f.marked) {
                 e = f.marked;
                 break a;
@@ -565,7 +588,7 @@
         }
         return e;
       },
-      indent: function (a, b) {
+      indent: (a, b) => {
         if (a.tokenize == J) return p.Pass;
         if (a.tokenize != w) return 0;
         var e = b && b.charAt(0),
@@ -589,7 +612,10 @@
               : "stat" == f
                 ? ((e = d.indented),
                   (d =
-                    "operator" == a.lastType || "," == a.lastType || K.test(b.charAt(0)) || /[,.]/.test(b.charAt(0))),
+                    "operator" == a.lastType ||
+                    "," == a.lastType ||
+                    K.test(b.charAt(0)) ||
+                    /[,.]/.test(b.charAt(0))),
                   e + (d ? na || C : 0))
                 : "switch" != d.info || g || 0 == t.doubleIndentSwitch
                   ? d.align

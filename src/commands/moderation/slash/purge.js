@@ -158,7 +158,8 @@ module.exports = {
     const channel = options.getChannel("channel");
     const amount = options.getInteger("amount") || 99;
 
-    if (amount > 100) return interaction.followUp("The max amount of messages that I can delete is 99");
+    if (amount > 100)
+      return interaction.followUp("The max amount of messages that I can delete is 99");
 
     let response;
     switch (sub) {
@@ -208,7 +209,9 @@ module.exports = {
 
     // Bot missing permissions
     else if (response === "BOT_PERM") {
-      return interaction.followUp(`I do not have permissions to Read Message History & Manage Messages in ${channel}`);
+      return interaction.followUp(
+        `I do not have permissions to Read Message History & Manage Messages in ${channel}`
+      );
     }
 
     // No messages

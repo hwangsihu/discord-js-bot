@@ -8,7 +8,7 @@
  *
  * http://api.jqueryui.com/slider/
  */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["jquery", "./core", "./mouse", "./widget"], factory);
@@ -16,8 +16,8 @@
     // Browser globals
     factory(jQuery);
   }
-})(function ($) {
-  return $.widget("ui.slider", $.ui.mouse, {
+})(($) =>
+  $.widget("ui.slider", $.ui.mouse, {
     version: "1.11.4",
     widgetEventPrefix: "slide",
 
@@ -53,7 +53,12 @@
       this._calculateNewMax();
 
       this.element.addClass(
-        "ui-slider" + " ui-slider-" + this.orientation + " ui-widget" + " ui-widget-content" + " ui-corner-all"
+        "ui-slider" +
+          " ui-slider-" +
+          this.orientation +
+          " ui-widget" +
+          " ui-widget-content" +
+          " ui-corner-all"
       );
 
       this._refresh();
@@ -73,8 +78,11 @@
       var i,
         handleCount,
         options = this.options,
-        existingHandles = this.element.find(".ui-slider-handle").addClass("ui-state-default ui-corner-all"),
-        handle = "<span class='ui-slider-handle ui-state-default ui-corner-all' tabindex='0'></span>",
+        existingHandles = this.element
+          .find(".ui-slider-handle")
+          .addClass("ui-state-default ui-corner-all"),
+        handle =
+          "<span class='ui-slider-handle ui-state-default ui-corner-all' tabindex='0'></span>",
         handles = [];
 
       handleCount = (options.values && options.values.length) || 1;
@@ -131,7 +139,10 @@
         }
 
         this.range.addClass(
-          classes + (options.range === "min" || options.range === "max" ? " ui-slider-range-" + options.range : "")
+          classes +
+            (options.range === "min" || options.range === "max"
+              ? " ui-slider-range-" + options.range
+              : "")
         );
       } else {
         if (this.range) {
@@ -223,9 +234,9 @@
               event.pageY -
               offset.top -
               closestHandle.height() / 2 -
-              (parseInt(closestHandle.css("borderTopWidth"), 10) || 0) -
-              (parseInt(closestHandle.css("borderBottomWidth"), 10) || 0) +
-              (parseInt(closestHandle.css("marginTop"), 10) || 0),
+              (Number.parseInt(closestHandle.css("borderTopWidth"), 10) || 0) -
+              (Number.parseInt(closestHandle.css("borderBottomWidth"), 10) || 0) +
+              (Number.parseInt(closestHandle.css("marginTop"), 10) || 0),
           };
 
       if (!this.handles.hasClass("ui-state-hover")) {
@@ -235,9 +246,7 @@
       return true;
     },
 
-    _mouseStart: function () {
-      return true;
-    },
+    _mouseStart: () => true,
 
     _mouseDrag: function (event) {
       var position = { x: event.pageX, y: event.pageY },
@@ -271,10 +280,12 @@
 
       if (this.orientation === "horizontal") {
         pixelTotal = this.elementSize.width;
-        pixelMouse = position.x - this.elementOffset.left - (this._clickOffset ? this._clickOffset.left : 0);
+        pixelMouse =
+          position.x - this.elementOffset.left - (this._clickOffset ? this._clickOffset.left : 0);
       } else {
         pixelTotal = this.elementSize.height;
-        pixelMouse = position.y - this.elementOffset.top - (this._clickOffset ? this._clickOffset.top : 0);
+        pixelMouse =
+          position.y - this.elementOffset.top - (this._clickOffset ? this._clickOffset.top : 0);
       }
 
       percentMouse = pixelMouse / pixelTotal;
@@ -334,16 +345,14 @@
             this.values(index, newVal);
           }
         }
-      } else {
-        if (newVal !== this.value()) {
-          // A slide can be canceled by returning false from the slide callback
-          allowed = this._trigger("slide", event, {
-            handle: this.handles[index],
-            value: newVal,
-          });
-          if (allowed !== false) {
-            this.value(newVal);
-          }
+      } else if (newVal !== this.value()) {
+        // A slide can be canceled by returning false from the slide callback
+        allowed = this._trigger("slide", event, {
+          handle: this.handles[index],
+          value: newVal,
+        });
+        if (allowed !== false) {
+          this.value(newVal);
         }
       }
     },
@@ -409,12 +418,10 @@
             this._change(null, i);
           }
           this._refreshValue();
+        } else if (this.options.values && this.options.values.length) {
+          return this._values(index);
         } else {
-          if (this.options.values && this.options.values.length) {
-            return this._values(index);
-          } else {
-            return this.value();
-          }
+          return this.value();
         }
       } else {
         return this._values();
@@ -448,7 +455,9 @@
       switch (key) {
         case "orientation":
           this._detectOrientation();
-          this.element.removeClass("ui-slider-horizontal ui-slider-vertical").addClass("ui-slider-" + this.orientation);
+          this.element
+            .removeClass("ui-slider-horizontal ui-slider-vertical")
+            .addClass("ui-slider-" + this.orientation);
           this._refreshValue();
 
           // Reset positioning from previous orientation
@@ -536,7 +545,7 @@
 
       // Since JavaScript has problems with large floats, round
       // the final value to 5 digits after the decimal point (see #4124)
-      return parseFloat(alignValue.toFixed(5));
+      return Number.parseFloat(alignValue.toFixed(5));
     },
 
     _calculateNewMax: function () {
@@ -545,7 +554,7 @@
         step = this.options.step,
         aboveMin = Math.floor(+(max - min).toFixed(this._precision()) / step) * step;
       max = aboveMin + min;
-      this.max = parseFloat(max.toFixed(this._precision()));
+      this.max = Number.parseFloat(max.toFixed(this._precision()));
     },
 
     _precision: function () {
@@ -556,7 +565,7 @@
       return precision;
     },
 
-    _precisionOf: function (num) {
+    _precisionOf: (num) => {
       var str = num.toString(),
         decimal = str.indexOf(".");
       return decimal === -1 ? 0 : str.length - decimal - 1;
@@ -579,18 +588,21 @@
         oRange = this.options.range,
         o = this.options,
         that = this,
-        animate = !this._animateOff ? o.animate : false,
+        animate = this._animateOff ? false : o.animate,
         _set = {};
 
       if (this.options.values && this.options.values.length) {
         this.handles.each(function (i) {
-          valPercent = ((that.values(i) - that._valueMin()) / (that._valueMax() - that._valueMin())) * 100;
+          valPercent =
+            ((that.values(i) - that._valueMin()) / (that._valueMax() - that._valueMin())) * 100;
           _set[that.orientation === "horizontal" ? "left" : "bottom"] = valPercent + "%";
           $(this).stop(1, 1)[animate ? "animate" : "css"](_set, o.animate);
           if (that.options.range === true) {
             if (that.orientation === "horizontal") {
               if (i === 0) {
-                that.range.stop(1, 1)[animate ? "animate" : "css"]({ left: valPercent + "%" }, o.animate);
+                that.range
+                  .stop(1, 1)
+                  [animate ? "animate" : "css"]({ left: valPercent + "%" }, o.animate);
               }
               if (i === 1) {
                 that.range[animate ? "animate" : "css"](
@@ -600,7 +612,9 @@
               }
             } else {
               if (i === 0) {
-                that.range.stop(1, 1)[animate ? "animate" : "css"]({ bottom: valPercent + "%" }, o.animate);
+                that.range
+                  .stop(1, 1)
+                  [animate ? "animate" : "css"]({ bottom: valPercent + "%" }, o.animate);
               }
               if (i === 1) {
                 that.range[animate ? "animate" : "css"](
@@ -621,7 +635,9 @@
         this.handle.stop(1, 1)[animate ? "animate" : "css"](_set, o.animate);
 
         if (oRange === "min" && this.orientation === "horizontal") {
-          this.range.stop(1, 1)[animate ? "animate" : "css"]({ width: valPercent + "%" }, o.animate);
+          this.range
+            .stop(1, 1)
+            [animate ? "animate" : "css"]({ width: valPercent + "%" }, o.animate);
         }
         if (oRange === "max" && this.orientation === "horizontal") {
           this.range[animate ? "animate" : "css"](
@@ -630,7 +646,9 @@
           );
         }
         if (oRange === "min" && this.orientation === "vertical") {
-          this.range.stop(1, 1)[animate ? "animate" : "css"]({ height: valPercent + "%" }, o.animate);
+          this.range
+            .stop(1, 1)
+            [animate ? "animate" : "css"]({ height: valPercent + "%" }, o.animate);
         }
         if (oRange === "max" && this.orientation === "vertical") {
           this.range[animate ? "animate" : "css"](
@@ -685,10 +703,14 @@
             newVal = this._valueMax();
             break;
           case $.ui.keyCode.PAGE_UP:
-            newVal = this._trimAlignValue(curVal + (this._valueMax() - this._valueMin()) / this.numPages);
+            newVal = this._trimAlignValue(
+              curVal + (this._valueMax() - this._valueMin()) / this.numPages
+            );
             break;
           case $.ui.keyCode.PAGE_DOWN:
-            newVal = this._trimAlignValue(curVal - (this._valueMax() - this._valueMin()) / this.numPages);
+            newVal = this._trimAlignValue(
+              curVal - (this._valueMax() - this._valueMin()) / this.numPages
+            );
             break;
           case $.ui.keyCode.UP:
           case $.ui.keyCode.RIGHT:
@@ -719,5 +741,5 @@
         }
       },
     },
-  });
-});
+  })
+);

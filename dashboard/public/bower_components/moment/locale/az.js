@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var suffixes = {
     1: "-inci",
     5: "-inci",
@@ -31,7 +29,9 @@
   };
 
   var az = moment.defineLocale("az", {
-    months: "yanvar_fevral_mart_aprel_may_iyun_iyul_avqust_sentyabr_oktyabr_noyabr_dekabr".split("_"),
+    months: "yanvar_fevral_mart_aprel_may_iyun_iyul_avqust_sentyabr_oktyabr_noyabr_dekabr".split(
+      "_"
+    ),
     monthsShort: "yan_fev_mar_apr_may_iyn_iyl_avq_sen_okt_noy_dek".split("_"),
     weekdays: "Bazar_Bazar ertəsi_Çərşənbə axşamı_Çərşənbə_Cümə axşamı_Cümə_Şənbə".split("_"),
     weekdaysShort: "Baz_BzE_ÇAx_Çər_CAx_Cüm_Şən".split("_"),
@@ -70,10 +70,8 @@
       yy: "%d il",
     },
     meridiemParse: /gecə|səhər|gündüz|axşam/,
-    isPM: function (input) {
-      return /^(gündüz|axşam)$/.test(input);
-    },
-    meridiem: function (hour, minute, isLower) {
+    isPM: (input) => /^(gündüz|axşam)$/.test(input),
+    meridiem: (hour, minute, isLower) => {
       if (hour < 4) {
         return "gecə";
       } else if (hour < 12) {
@@ -85,7 +83,7 @@
       }
     },
     dayOfMonthOrdinalParse: /\d{1,2}-(ıncı|inci|nci|üncü|ncı|uncu)/,
-    ordinal: function (number) {
+    ordinal: (number) => {
       if (number === 0) {
         // special case for zero
         return number + "-ıncı";

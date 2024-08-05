@@ -1,6 +1,6 @@
 /* Albanian initialisation for the jQuery UI date picker plugin. */
 /* Written by Flakron Bytyqi (flakron@gmail.com). */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["sq"] = {
     closeText: "mbylle",
     prevText: "&#x3C;mbrapa",
@@ -28,7 +28,20 @@
       "Nëntor",
       "Dhjetor",
     ],
-    monthNamesShort: ["Jan", "Shk", "Mar", "Pri", "Maj", "Qer", "Kor", "Gus", "Sht", "Tet", "Nën", "Dhj"],
+    monthNamesShort: [
+      "Jan",
+      "Shk",
+      "Mar",
+      "Pri",
+      "Maj",
+      "Qer",
+      "Kor",
+      "Gus",
+      "Sht",
+      "Tet",
+      "Nën",
+      "Dhj",
+    ],
     dayNames: ["E Diel", "E Hënë", "E Martë", "E Mërkurë", "E Enjte", "E Premte", "E Shtune"],
     dayNamesShort: ["Di", "Hë", "Ma", "Më", "En", "Pr", "Sh"],
     dayNamesMin: ["Di", "Hë", "Ma", "Më", "En", "Pr", "Sh"],

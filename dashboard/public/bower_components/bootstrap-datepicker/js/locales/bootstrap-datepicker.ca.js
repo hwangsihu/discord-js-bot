@@ -2,7 +2,7 @@
  * Catalan translation for bootstrap-datepicker
  * J. Garcia <jogaco.en@gmail.com>
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["ca"] = {
     days: ["Diumenge", "Dilluns", "Dimarts", "Dimecres", "Dijous", "Divendres", "Dissabte"],
     daysShort: ["Diu", "Dil", "Dmt", "Dmc", "Dij", "Div", "Dis"],
@@ -21,7 +21,20 @@
       "Novembre",
       "Desembre",
     ],
-    monthsShort: ["Gen", "Feb", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Oct", "Nov", "Des"],
+    monthsShort: [
+      "Gen",
+      "Feb",
+      "Mar",
+      "Abr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Set",
+      "Oct",
+      "Nov",
+      "Des",
+    ],
     today: "Avui",
     monthsTitle: "Mesos",
     clear: "Esborrar",

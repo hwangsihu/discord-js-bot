@@ -5,22 +5,22 @@ module("Events on initialization", {
 });
 
 test("When initializing the datepicker, it should trigger no change or changeDate events", function () {
-  var triggered_change = 0,
-    triggered_changeDate = 0;
+  var triggeredChange = 0,
+    triggeredChangeDate = 0;
 
   this.input.on({
-    change: function () {
-      triggered_change++;
+    change: () => {
+      triggeredChange++;
     },
-    changeDate: function () {
-      triggered_changeDate++;
+    changeDate: () => {
+      triggeredChangeDate++;
     },
   });
 
   this.input.datepicker({ format: "dd-mm-yyyy" });
 
-  equal(triggered_change, 0);
-  equal(triggered_changeDate, 0);
+  equal(triggeredChange, 0);
+  equal(triggeredChangeDate, 0);
 });
 
 module("Events", {
@@ -41,7 +41,7 @@ test("Selecting a year from decade view triggers changeYear", function () {
   var target,
     triggered = 0;
 
-  this.input.on("changeYear", function () {
+  this.input.on("changeYear", () => {
     triggered++;
   });
 
@@ -80,7 +80,7 @@ test("Navigating forward/backward from month view triggers changeYear", function
   var target,
     triggered = 0;
 
-  this.input.on("changeYear", function () {
+  this.input.on("changeYear", () => {
     triggered++;
   });
 
@@ -111,7 +111,7 @@ test("Selecting a month from year view triggers changeMonth", function () {
   var target,
     triggered = 0;
 
-  this.input.on("changeMonth", function () {
+  this.input.on("changeMonth", () => {
     triggered++;
   });
 
@@ -139,7 +139,7 @@ test("Navigating forward/backward from month view triggers changeMonth", functio
   var target,
     triggered = 0;
 
-  this.input.on("changeMonth", function () {
+  this.input.on("changeMonth", () => {
     triggered++;
   });
 
@@ -162,7 +162,7 @@ test("Navigating forward/backward from month view triggers changeMonth", functio
 test("format() returns a formatted date string", function () {
   var target, error, out;
 
-  this.input.on("changeDate", function (e) {
+  this.input.on("changeDate", (e) => {
     try {
       out = e.format();
     } catch (e) {
@@ -183,7 +183,7 @@ test("format() returns a formatted date string", function () {
 test("format(altformat) returns a formatted date string", function () {
   var target, error, out;
 
-  this.input.on("changeDate", function (e) {
+  this.input.on("changeDate", (e) => {
     try {
       out = e.format("m/d/yy");
     } catch (e) {
@@ -206,7 +206,7 @@ test("format(ix) returns a formatted date string of the ix'th date selected", fu
 
   this.dp._process_options({ multidate: true });
 
-  this.input.on("changeDate", function (e) {
+  this.input.on("changeDate", (e) => {
     try {
       out = e.format(2);
     } catch (e) {
@@ -233,7 +233,7 @@ test("format(ix, altformat) returns a formatted date string", function () {
 
   this.dp._process_options({ multidate: true });
 
-  this.input.on("changeDate", function (e) {
+  this.input.on("changeDate", (e) => {
     try {
       out = e.format(2, "m/d/yy");
     } catch (e) {
@@ -267,15 +267,15 @@ test("Clear button: triggers change and changeDate events", function () {
   this.picker = this.dp.picker;
 
   var target,
-    triggered_change = 0,
-    triggered_changeDate = 0;
+    triggeredChange = 0,
+    triggeredChangeDate = 0;
 
   this.input.on({
-    changeDate: function () {
-      triggered_changeDate++;
+    changeDate: () => {
+      triggeredChangeDate++;
     },
-    change: function () {
-      triggered_change++;
+    change: () => {
+      triggeredChange++;
     },
   });
 
@@ -286,8 +286,8 @@ test("Clear button: triggers change and changeDate events", function () {
   target = this.picker.find(".datepicker-days tfoot .clear");
   target.click();
 
-  equal(triggered_change, 1);
-  equal(triggered_changeDate, 1);
+  equal(triggeredChange, 1);
+  equal(triggeredChangeDate, 1);
 });
 
 test("setDate: triggers change and changeDate events", function () {
@@ -301,15 +301,15 @@ test("setDate: triggers change and changeDate events", function () {
   this.picker = this.dp.picker;
 
   var target,
-    triggered_change = 0,
-    triggered_changeDate = 0;
+    triggeredChange = 0,
+    triggeredChangeDate = 0;
 
   this.input.on({
-    changeDate: function () {
-      triggered_changeDate++;
+    changeDate: () => {
+      triggeredChangeDate++;
     },
-    change: function () {
-      triggered_change++;
+    change: () => {
+      triggeredChange++;
     },
   });
 
@@ -318,8 +318,8 @@ test("setDate: triggers change and changeDate events", function () {
 
   this.dp.setDate(new Date(2011, 2, 5));
 
-  equal(triggered_change, 1);
-  equal(triggered_changeDate, 1);
+  equal(triggeredChange, 1);
+  equal(triggeredChangeDate, 1);
 });
 
 test("paste must update the date", function () {
@@ -329,11 +329,9 @@ test("paste must update the date", function () {
     originalEvent: {
       clipboardData: {
         types: ["text/plain"],
-        getData: function () {
-          return dateToPaste;
-        },
+        getData: () => dateToPaste,
       },
-      preventDefault: function () {
+      preventDefault: () => {
         evt.originalEvent.isDefaultPrevented = true;
       },
       isDefaultPrevented: false,
@@ -350,7 +348,7 @@ test("clicking outside datepicker triggers 'hide' event", function () {
   $("body").append($otherelement);
 
   var isHideTriggered;
-  this.input.on("hide", function () {
+  this.input.on("hide", () => {
     isHideTriggered = true;
   });
 
@@ -365,7 +363,7 @@ test("Selecting date from previous month triggers changeMonth", function () {
   var target,
     triggered = 0;
 
-  this.input.on("changeMonth", function () {
+  this.input.on("changeMonth", () => {
     triggered++;
   });
 
@@ -385,11 +383,11 @@ test("Selecting date from previous month in january triggers changeMonth/changeY
   this.input.val("01-01-2011");
   this.dp.update();
 
-  this.input.on("changeMonth", function () {
+  this.input.on("changeMonth", () => {
     triggeredM++;
   });
 
-  this.input.on("changeYear", function () {
+  this.input.on("changeYear", () => {
     triggeredY++;
   });
 
@@ -406,7 +404,7 @@ test("Selecting date from next month triggers changeMonth", function () {
   var target,
     triggered = 0;
 
-  this.input.on("changeMonth", function () {
+  this.input.on("changeMonth", () => {
     triggered++;
   });
 
@@ -426,11 +424,11 @@ test("Selecting date from next month in december triggers changeMonth/changeYear
   this.input.val("01-12-2011");
   this.dp.update();
 
-  this.input.on("changeMonth", function () {
+  this.input.on("changeMonth", () => {
     triggeredM++;
   });
 
-  this.input.on("changeYear", function () {
+  this.input.on("changeYear", () => {
     triggeredY++;
   });
 
@@ -450,7 +448,7 @@ test("Changing view mode triggers changeViewMode", function () {
   this.input.val("22-07-2016");
   this.dp.update();
 
-  this.input.on("changeViewMode", function (e) {
+  this.input.on("changeViewMode", (e) => {
     viewMode = e.viewMode;
     triggered++;
   });
@@ -481,9 +479,7 @@ test("Clicking inside content of date with custom beforeShowDay content works", 
     .appendTo("#qunit-fixture")
     .datepicker({
       format: "dd-mm-yyyy",
-      beforeShowDay: function (date) {
-        return { content: "<div><div>" + date.getDate() + "</div></div>" };
-      },
+      beforeShowDay: (date) => ({ content: "<div><div>" + date.getDate() + "</div></div>" }),
     })
     .focus(); // Activate for visibility checks
   this.dp = this.input.data("datepicker");
@@ -492,7 +488,7 @@ test("Clicking inside content of date with custom beforeShowDay content works", 
   var target,
     triggered = 0;
 
-  this.input.on("changeDate", function () {
+  this.input.on("changeDate", () => {
     triggered++;
   });
 

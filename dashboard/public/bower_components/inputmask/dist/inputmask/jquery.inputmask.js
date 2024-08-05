@@ -6,14 +6,14 @@
  * Version: 3.3.11
  */
 
-!(function (factory) {
+!((factory) => {
   "function" == typeof define && define.amd
     ? define(["jquery", "./inputmask"], factory)
     : "object" == typeof exports
       ? (module.exports = factory(require("jquery"), require("./inputmask")))
       : factory(jQuery, window.Inputmask);
-})(function ($, Inputmask) {
-  return (
+})(
+  ($, Inputmask) => (
     void 0 === $.fn.inputmask &&
       ($.fn.inputmask = function (fn, options) {
         var nptmask,
@@ -41,7 +41,8 @@
               return input && input.inputmask ? input.inputmask.getmetadata() : void 0;
 
             case "setvalue":
-              $(input).val(options), input && void 0 === input.inputmask && $(input).triggerHandler("setvalue");
+              $(input).val(options),
+                input && void 0 === input.inputmask && $(input).triggerHandler("setvalue");
               break;
 
             case "option":
@@ -81,5 +82,5 @@
         }
       }),
     $.fn.inputmask
-  );
-});
+  )
+);

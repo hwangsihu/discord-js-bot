@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function b(a, b, d) {
     this.editor = a;
     this.lastMatched = null;
@@ -46,7 +46,9 @@
     check: function (a) {
       this.ignoreNext
         ? (this.ignoreNext = !1)
-        : (a && "keyup" == a.name && -1 != CKEDITOR.tools.array.indexOf(this.ignoredKeys, a.data.getKey())) ||
+        : (a &&
+            "keyup" == a.name &&
+            -1 != CKEDITOR.tools.array.indexOf(this.ignoredKeys, a.data.getKey())) ||
           ((a = this.editor.getSelection()) && (a = a.getRanges()[0]) && this._buffer.input(a));
     },
     consumeNext: function () {
@@ -59,7 +61,7 @@
       return this;
     },
     destroy: function () {
-      CKEDITOR.tools.array.forEach(this._listeners, function (a) {
+      CKEDITOR.tools.array.forEach(this._listeners, (a) => {
         a.removeListener();
       });
       this._listeners = [];

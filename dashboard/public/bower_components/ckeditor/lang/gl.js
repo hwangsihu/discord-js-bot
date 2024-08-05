@@ -150,7 +150,8 @@ CKEDITOR.lang["gl"] = {
     title: "Pegar como texto simple",
   },
   pastefromword: {
-    confirmCleanup: "O texto que quere pegar semella ser copiado desde o Word. Quere depuralo antes de pegalo?",
+    confirmCleanup:
+      "O texto que quere pegar semella ser copiado desde o Word. Quere depuralo antes de pegalo?",
     error: "Non foi posíbel depurar os datos pegados por mor dun erro interno",
     title: "Pegar desde Word",
     toolbar: "Pegar desde Word",
@@ -158,7 +159,10 @@ CKEDITOR.lang["gl"] = {
   notification: { closed: "Notificación pechada." },
   maximize: { maximize: "Maximizar", minimize: "Minimizar" },
   magicline: { title: "Inserir aquí o parágrafo" },
-  list: { bulletedlist: "Inserir/retirar lista viñeteada", numberedlist: "Inserir/retirar lista numerada" },
+  list: {
+    bulletedlist: "Inserir/retirar lista viñeteada",
+    numberedlist: "Inserir/retirar lista numerada",
+  },
   link: {
     acccessKey: "Chave de acceso",
     advanced: "Avanzado",
@@ -265,7 +269,8 @@ CKEDITOR.lang["gl"] = {
   filetools: {
     loadError: "Produciuse un erro durante a lectura do ficheiro.",
     networkError: "Produciuse un erro na rede durante o envío do ficheiro.",
-    httpError404: "Produciuse un erro HTTP durante o envío do ficheiro (404: Ficheiro non atopado).",
+    httpError404:
+      "Produciuse un erro HTTP durante o envío do ficheiro (404: Ficheiro non atopado).",
     httpError403: "Produciuse un erro HTTP durante o envío do ficheiro (403: Acceso denegado).",
     httpError: "Produciuse un erro HTTP durante o envío do ficheiro (erro de estado: %1).",
     noUrlError: "Non foi definido o URL para o envío.",

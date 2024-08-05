@@ -1,8 +1,6 @@
-define(["../core"], function (jQuery) {
-  "use strict";
-
+define(["../core"], (jQuery) => {
   // Cross-browser xml parsing
-  jQuery.parseXML = function (data) {
+  jQuery.parseXML = (data) => {
     var xml;
     if (!data || typeof data !== "string") {
       return null;

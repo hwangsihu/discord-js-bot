@@ -78,7 +78,7 @@ The plugin allso adds the following methods to the plot object:
 
 */
 
-(function ($) {
+(($) => {
   function init(plot) {
     var selection = {
       first: { x: -1, y: -1 },
@@ -115,15 +115,11 @@ The plugin allso adds the following methods to the plot object:
       // prevent text selection and drag in old-school browsers
       if (document.onselectstart !== undefined && savedhandlers.onselectstart == null) {
         savedhandlers.onselectstart = document.onselectstart;
-        document.onselectstart = function () {
-          return false;
-        };
+        document.onselectstart = () => false;
       }
       if (document.ondrag !== undefined && savedhandlers.ondrag == null) {
         savedhandlers.ondrag = document.ondrag;
-        document.ondrag = function () {
-          return false;
-        };
+        document.ondrag = () => false;
       }
 
       setSelectionPos(selection.first, e);
@@ -132,7 +128,7 @@ The plugin allso adds the following methods to the plot object:
 
       // this is a bit silly, but we have to use a closure to be
       // able to whack the same handler again
-      mouseUpHandler = function (e) {
+      mouseUpHandler = (e) => {
         onMouseUp(e);
       };
 
@@ -143,7 +139,8 @@ The plugin allso adds the following methods to the plot object:
       mouseUpHandler = null;
 
       // revert drag stuff for old-school browsers
-      if (document.onselectstart !== undefined) document.onselectstart = savedhandlers.onselectstart;
+      if (document.onselectstart !== undefined)
+        document.onselectstart = savedhandlers.onselectstart;
       if (document.ondrag !== undefined) document.ondrag = savedhandlers.ondrag;
 
       // no more dragging
@@ -168,7 +165,7 @@ The plugin allso adds the following methods to the plot object:
       var r = {},
         c1 = selection.first,
         c2 = selection.second;
-      $.each(plot.getAxes(), function (name, axis) {
+      $.each(plot.getAxes(), (name, axis) => {
         if (axis.used) {
           var p1 = axis.c2p(c1[axis.direction]),
             p2 = axis.c2p(c2[axis.direction]);
@@ -187,7 +184,9 @@ The plugin allso adds the following methods to the plot object:
       if (r.xaxis && r.yaxis)
         plot
           .getPlaceholder()
-          .trigger("selected", [{ x1: r.xaxis.from, y1: r.yaxis.from, x2: r.xaxis.to, y2: r.yaxis.to }]);
+          .trigger("selected", [
+            { x1: r.xaxis.from, y1: r.yaxis.from, x2: r.xaxis.to, y2: r.yaxis.to },
+          ]);
     }
 
     function clamp(min, value, max) {
@@ -304,7 +303,7 @@ The plugin allso adds the following methods to the plot object:
     plot.setSelection = setSelection;
     plot.getSelection = getSelection;
 
-    plot.hooks.bindEvents.push(function (plot, eventHolder) {
+    plot.hooks.bindEvents.push((plot, eventHolder) => {
       var o = plot.getOptions();
       if (o.selection.mode != null) {
         eventHolder.mousemove(onMouseMove);
@@ -312,7 +311,7 @@ The plugin allso adds the following methods to the plot object:
       }
     });
 
-    plot.hooks.drawOverlay.push(function (plot, ctx) {
+    plot.hooks.drawOverlay.push((plot, ctx) => {
       // draw selection
       if (selection.show && selectionIsSane()) {
         var plotOffset = plot.getPlotOffset();
@@ -340,7 +339,7 @@ The plugin allso adds the following methods to the plot object:
       }
     });
 
-    plot.hooks.shutdown.push(function (plot, eventHolder) {
+    plot.hooks.shutdown.push((plot, eventHolder) => {
       eventHolder.unbind("mousemove", onMouseMove);
       eventHolder.unbind("mousedown", onMouseDown);
 

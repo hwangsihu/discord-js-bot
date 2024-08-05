@@ -38,9 +38,7 @@ jvm.NumericScale.prototype = {
 
   setNormalizeFunction: function (f) {
     if (f === "polynomial") {
-      this.normalize = function (value) {
-        return Math.pow(value, 0.2);
-      };
+      this.normalize = (value) => Math.pow(value, 0.2);
     } else if (f === "linear") {
       delete this.normalize;
     } else {
@@ -84,7 +82,10 @@ jvm.NumericScale.prototype = {
       value = this.vectorToNum(
         this.vectorAdd(
           this.scale[i],
-          this.vectorMult(this.vectorSubtract(this.scale[i + 1], this.scale[i]), value / lengthes[i])
+          this.vectorMult(
+            this.vectorSubtract(this.scale[i + 1], this.scale[i]),
+            value / lengthes[i]
+          )
         )
       );
     }
@@ -92,7 +93,7 @@ jvm.NumericScale.prototype = {
     return value;
   },
 
-  vectorToNum: function (vector) {
+  vectorToNum: (vector) => {
     var num = 0,
       i;
 
@@ -102,7 +103,7 @@ jvm.NumericScale.prototype = {
     return num;
   },
 
-  vectorSubtract: function (vector1, vector2) {
+  vectorSubtract: (vector1, vector2) => {
     var vector = [],
       i;
 
@@ -112,7 +113,7 @@ jvm.NumericScale.prototype = {
     return vector;
   },
 
-  vectorAdd: function (vector1, vector2) {
+  vectorAdd: (vector1, vector2) => {
     var vector = [],
       i;
 
@@ -122,7 +123,7 @@ jvm.NumericScale.prototype = {
     return vector;
   },
 
-  vectorMult: function (vector, num) {
+  vectorMult: (vector, num) => {
     var result = [],
       i;
 
@@ -132,7 +133,7 @@ jvm.NumericScale.prototype = {
     return result;
   },
 
-  vectorLength: function (vector) {
+  vectorLength: (vector) => {
     var result = 0,
       i;
     for (i = 0; i < vector.length; i++) {

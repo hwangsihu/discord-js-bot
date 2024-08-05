@@ -1,25 +1,18 @@
 /*! Select2 4.0.7 | https://github.com/select2/select2/blob/master/LICENSE.md */
 
-(function () {
-  if (jQuery && jQuery.fn && jQuery.fn.select2 && jQuery.fn.select2.amd) var e = jQuery.fn.select2.amd;
+(() => {
+  if (jQuery && jQuery.fn && jQuery.fn.select2 && jQuery.fn.select2.amd)
+    var e = jQuery.fn.select2.amd;
   return (
-    e.define("select2/i18n/sk", [], function () {
+    e.define("select2/i18n/sk", [], () => {
       var e = {
-        2: function (e) {
-          return e ? "dva" : "dve";
-        },
-        3: function () {
-          return "tri";
-        },
-        4: function () {
-          return "štyri";
-        },
+        2: (e) => (e ? "dva" : "dve"),
+        3: () => "tri",
+        4: () => "štyri",
       };
       return {
-        errorLoading: function () {
-          return "Výsledky sa nepodarilo načítať.";
-        },
-        inputTooLong: function (t) {
+        errorLoading: () => "Výsledky sa nepodarilo načítať.",
+        inputTooLong: (t) => {
           var n = t.input.length - t.maximum;
           return n == 1
             ? "Prosím, zadajte o jeden znak menej"
@@ -27,7 +20,7 @@
               ? "Prosím, zadajte o " + e[n](!0) + " znaky menej"
               : "Prosím, zadajte o " + n + " znakov menej";
         },
-        inputTooShort: function (t) {
+        inputTooShort: (t) => {
           var n = t.minimum - t.input.length;
           return n == 1
             ? "Prosím, zadajte ešte jeden znak"
@@ -35,25 +28,16 @@
               ? "Prosím, zadajte ešte ďalšie " + e[n](!0) + " znaky"
               : "Prosím, zadajte ešte ďalších " + n + " znakov";
         },
-        loadingMore: function () {
-          return "Načítanie ďalších výsledkov…";
-        },
-        maximumSelected: function (t) {
-          return t.maximum == 1
+        loadingMore: () => "Načítanie ďalších výsledkov…",
+        maximumSelected: (t) =>
+          t.maximum == 1
             ? "Môžete zvoliť len jednu položku"
             : t.maximum >= 2 && t.maximum <= 4
               ? "Môžete zvoliť najviac " + e[t.maximum](!1) + " položky"
-              : "Môžete zvoliť najviac " + t.maximum + " položiek";
-        },
-        noResults: function () {
-          return "Nenašli sa žiadne položky";
-        },
-        searching: function () {
-          return "Vyhľadávanie…";
-        },
-        removeAllItems: function () {
-          return "Odstráňte všetky položky";
-        },
+              : "Môžete zvoliť najviac " + t.maximum + " položiek",
+        noResults: () => "Nenašli sa žiadne položky",
+        searching: () => "Vyhľadávanie…",
+        removeAllItems: () => "Odstráňte všetky položky",
       };
     }),
     { define: e.define, require: e.require }

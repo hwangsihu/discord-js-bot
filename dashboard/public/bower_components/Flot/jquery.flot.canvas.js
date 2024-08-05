@@ -27,7 +27,7 @@ browser, but needs to redraw with canvas text when exporting as an image.
 
 */
 
-(function ($) {
+(($) => {
   var options = {
     canvas: true,
   };
@@ -154,7 +154,16 @@ browser, but needs to redraw with canvas text when exporting as an image.
       // If the font is a font-spec object, generate a CSS definition
 
       if (typeof font === "object") {
-        textStyle = font.style + " " + font.variant + " " + font.weight + " " + font.size + "px " + font.family;
+        textStyle =
+          font.style +
+          " " +
+          font.variant +
+          " " +
+          font.weight +
+          " " +
+          font.size +
+          "px " +
+          font.family;
       } else {
         textStyle = font;
       }
@@ -207,7 +216,16 @@ browser, but needs to redraw with canvas text when exporting as an image.
           element.remove();
         }
 
-        textStyle = font.style + " " + font.variant + " " + font.weight + " " + font.size + "px " + font.family;
+        textStyle =
+          font.style +
+          " " +
+          font.variant +
+          " " +
+          font.weight +
+          " " +
+          font.size +
+          "px " +
+          font.family;
 
         // Create a new info object, initializing the dimensions to
         // zero so we can count them up line-by-line.

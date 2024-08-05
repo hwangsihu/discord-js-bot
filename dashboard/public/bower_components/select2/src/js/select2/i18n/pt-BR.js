@@ -1,10 +1,8 @@
-define(function () {
+define(() => {
   // Brazilian Portuguese
   return {
-    errorLoading: function () {
-      return "Os resultados não puderam ser carregados.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "Os resultados não puderam ser carregados.",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "Apague " + overChars + " caracter";
@@ -15,17 +13,15 @@ define(function () {
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "Digite " + remainingChars + " ou mais caracteres";
 
       return message;
     },
-    loadingMore: function () {
-      return "Carregando mais resultados…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Carregando mais resultados…",
+    maximumSelected: (args) => {
       var message = "Você só pode selecionar " + args.maximum + " ite";
 
       if (args.maximum == 1) {
@@ -36,14 +32,8 @@ define(function () {
 
       return message;
     },
-    noResults: function () {
-      return "Nenhum resultado encontrado";
-    },
-    searching: function () {
-      return "Buscando…";
-    },
-    removeAllItems: function () {
-      return "Remover todos os itens";
-    },
+    noResults: () => "Nenhum resultado encontrado",
+    searching: () => "Buscando…",
+    removeAllItems: () => "Remover todos os itens",
   };
 });

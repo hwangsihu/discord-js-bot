@@ -1,7 +1,7 @@
-(function () {
+(() => {
   //we want this at global scope so outside callers can find it. In a more realistic implementation we
   //should probably put it in a namespace.
-  window.getCoverageByLine = function (silent) {
+  window.getCoverageByLine = (silent) => {
     var key = null;
     var lines = null;
     var source = null;
@@ -19,7 +19,7 @@
     return { key: key, lines: lines };
   };
 
-  QUnit.done = function (t) {
+  QUnit.done = (t) => {
     var cvgInfo = getCoverageByLine(true);
     if (!!cvgInfo.key) {
       var testableLines = 0;

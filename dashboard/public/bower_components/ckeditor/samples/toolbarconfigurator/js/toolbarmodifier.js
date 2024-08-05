@@ -1,4 +1,4 @@
-﻿(function () {
+﻿(() => {
   function d(a, b) {
     l.call(this, a, b);
     this.actualConfig = this.originalConfig = this.removedButtons = null;
@@ -42,7 +42,9 @@
         clickCallback: function () {
           if ("paste" === this.state) {
             var a = this.configContainer.findOne("textarea").getValue();
-            (a = d.evaluateToolbarGroupsConfig(a)) ? this.setConfig(a) : alert("Your pasted config is wrong.");
+            (a = d.evaluateToolbarGroupsConfig(a))
+              ? this.setConfig(a)
+              : alert("Your pasted config is wrong.");
           }
           this.state = "edit";
           this._showConfigurationTool();
@@ -78,9 +80,13 @@
     l.prototype._onInit.call(this, void 0, b);
     this.removedButtons = [];
     c
-      ? (this.removedButtons = this.actualConfig.removeButtons ? this.actualConfig.removeButtons.split(",") : [])
+      ? (this.removedButtons = this.actualConfig.removeButtons
+          ? this.actualConfig.removeButtons.split(",")
+          : [])
       : "removeButtons" in this.originalConfig
-        ? (this.removedButtons = this.originalConfig.removeButtons ? this.originalConfig.removeButtons.split(",") : [])
+        ? (this.removedButtons = this.originalConfig.removeButtons
+            ? this.originalConfig.removeButtons.split(",")
+            : [])
         : ((this.originalConfig.removeButtons = ""), (this.removedButtons = []));
     this.actualConfig.toolbarGroups ||
       (this.actualConfig.toolbarGroups = this.fullToolbarEditor.getFullToolbarGroupsConfig());
@@ -107,9 +113,12 @@
         else {
           if (e)
             for (var k = h.groups.length; k--; )
-              0 === d.getTotalSubGroupButtonsNumber(h.groups[k], this.fullToolbarEditor) && h.groups.splice(k, 1);
+              0 === d.getTotalSubGroupButtonsNumber(h.groups[k], this.fullToolbarEditor) &&
+                h.groups.splice(k, 1);
           (e && 0 === h.groups.length) ||
-            f.push(l.stringifyJSONintoOneLine(h, { addSpaces: !0, noQuotesOnKey: !0, singleQuotes: !0 }));
+            f.push(
+              l.stringifyJSONintoOneLine(h, { addSpaces: !0, noQuotesOnKey: !0, singleQuotes: !0 })
+            );
         }
       }
       b = "\n\t\t" + f.join(",\n\t\t");
@@ -148,18 +157,16 @@
       this
     );
     for (var e = c.count(), f = 0; f < e; f += 1) c.getItem(f).on("mouseenter", a);
-    CKEDITOR.document.on("keypress", function (a) {
+    CKEDITOR.document.on("keypress", (a) => {
       a = a.data.$.keyCode;
       a = 32 === a || 13 === a;
       var c = new CKEDITOR.dom.element(CKEDITOR.document.$.activeElement);
-      c.getAscendant(function (a) {
-        return a.$ === b.mainContainer.$;
-      }) &&
+      c.getAscendant((a) => a.$ === b.mainContainer.$) &&
         a &&
         "button" === c.data("type") &&
         c.findOne("input").$.click();
     });
-    this.modifyContainer.on("click", function (a) {
+    this.modifyContainer.on("click", (a) => {
       var c = a.data.$,
         e = new CKEDITOR.dom.element(c.target || c.srcElement);
       if ((a = d.getGroupOrSeparatorLiAncestor(e))) {
@@ -178,7 +185,8 @@
       }
     });
     this.toolbarContainer ||
-      (this._createToolbar(), this.toolbarContainer.insertBefore(this.mainContainer.getChildren().getItem(0)));
+      (this._createToolbar(),
+      this.toolbarContainer.insertBefore(this.mainContainer.getChildren().getItem(0)));
     this.showToolbarBtnsByGroupName("edit");
     this.configContainer ||
       ((this.configContainer = new CKEDITOR.dom.element("div")),
@@ -194,7 +202,7 @@
         d.data("group") == a ? d.removeClass("hidden") : d.addClass("hidden");
       }
   };
-  d.parseGroupToConfigValue = function (a) {
+  d.parseGroupToConfigValue = (a) => {
     if ("separator" == a.type) return "/";
     var b = a.groups,
       c = b.length;
@@ -202,14 +210,13 @@
     for (var e = 0; e < c; e += 1) b[e] = b[e].name;
     return a;
   };
-  d.getGroupOrSeparatorLiAncestor = function (a) {
-    return a.$ instanceof HTMLLIElement && "group" == a.data("type")
+  d.getGroupOrSeparatorLiAncestor = (a) =>
+    a.$ instanceof HTMLLIElement && "group" == a.data("type")
       ? a
-      : d.getFirstAncestor(a, function (a) {
+      : d.getFirstAncestor(a, (a) => {
           a = a.data("type");
           return "group" == a || "separator" == a;
         });
-  };
   d.prototype._setActiveElement = function (a, b) {
     this.currentActive && this.currentActive.elem.removeClass("active");
     if (null === a) this._dehighlightActiveToolGroup(), (this.currentActive = null);
@@ -231,19 +238,17 @@
   d.prototype._dehighlightActiveToolGroup = function () {
     var a = this.getActiveToolGroup();
     a && a.removeClass("active");
-    this.editorInstance.container && this.editorInstance.container.removeClass("some-toolbar-active");
+    this.editorInstance.container &&
+      this.editorInstance.container.removeClass("some-toolbar-active");
   };
   d.prototype._highlightGroup = function (a) {
     this.editorInstance.container &&
       ((a = this.getFirstEnabledButtonInGroup(a)),
       (a = this.editorInstance.container.findOne(".cke_button__" + a + ", .cke_combo__" + a)),
       this._dehighlightActiveToolGroup(),
-      this.editorInstance.container && this.editorInstance.container.addClass("some-toolbar-active"),
-      a &&
-        (a = d.getFirstAncestor(a, function (a) {
-          return a.hasClass("cke_toolbar");
-        })) &&
-        a.addClass("active"));
+      this.editorInstance.container &&
+        this.editorInstance.container.addClass("some-toolbar-active"),
+      a && (a = d.getFirstAncestor(a, (a) => a.hasClass("cke_toolbar"))) && a.addClass("active"));
   };
   d.prototype.getFirstEnabledButtonInGroup = function (a) {
     var b = this.actualConfig.toolbarGroups;
@@ -258,7 +263,11 @@
     return null;
   };
   d.prototype.getFirstEnabledButtonInSubgroup = function (a) {
-    for (var b = (a = this.fullToolbarEditor.buttonsByGroup[a]) ? a.length : 0, c = 0; c < b; c += 1) {
+    for (
+      var b = (a = this.fullToolbarEditor.buttonsByGroup[a]) ? a.length : 0, c = 0;
+      c < b;
+      c += 1
+    ) {
       var e = a[c].name;
       if (!this.isButtonRemoved(e)) return e;
     }
@@ -279,10 +288,16 @@
       h;
     if (a.hasClass("disabled")) return null;
     if (a.hasClass("remove"))
-      return b.remove(), this._removeSeparator(b.data("name")), this._setActiveElement(null), { action: "remove" };
+      return (
+        b.remove(),
+        this._removeSeparator(b.data("name")),
+        this._setActiveElement(null),
+        { action: "remove" }
+      );
     if (!a.hasClass("move") || !m) return { action: null };
     if ("group" === e || "separator" === e) h = this._moveGroup(g, d);
-    "subgroup" === e && ((h = b.getAscendant("li").data("name")), (h = this._moveSubgroup(g, h, d)));
+    "subgroup" === e &&
+      ((h = b.getAscendant("li").data("name")), (h = this._moveSubgroup(g, h, d)));
     "up" === g && b.insertBefore(c.getChild(h));
     "down" === g && b.insertAfter(c.getChild(h));
     for (var k; (b = "up" === g ? b.getPrevious() : b.getNext()); )
@@ -304,7 +319,9 @@
     }
     for (
       var b = this,
-        c = this.mainContainer.find("ul[data-type\x3dtable-body] li \x3e p \x3e span \x3e button.move.disabled"),
+        c = this.mainContainer.find(
+          "ul[data-type\x3dtable-body] li \x3e p \x3e span \x3e button.move.disabled"
+        ),
         e = c.count(),
         d = 0;
       d < e;
@@ -315,7 +332,11 @@
     a(this.mainContainer.find("ul[data-type\x3dtable-body] \x3e li \x3e ul"));
   };
   d.prototype._refreshBtnTabIndexes = function () {
-    for (var a = this.mainContainer.find('[data-tab\x3d"true"]'), b = a.count(), c = 0; c < b; c++) {
+    for (
+      var a = this.mainContainer.find('[data-tab\x3d"true"]'), b = a.count(), c = 0;
+      c < b;
+      c++
+    ) {
       var e = a.getItem(c),
         d = e.hasClass("disabled");
       e.setAttribute("tabindex", d ? -1 : c);
@@ -327,7 +348,9 @@
     }
     if (a.getChildren().count()) {
       var c;
-      this.emptyVisible ? ((c = a.getFirst()), (a = a.getLast())) : ((c = a.getFirst(b)), (a = a.getLast(b)));
+      this.emptyVisible
+        ? ((c = a.getFirst()), (a = a.getLast()))
+        : ((c = a.getFirst(b)), (a = a.getLast(b)));
       if (c) var e = c.findOne('p button[data-direction\x3d"up"]');
       if (a) var d = a.findOne('p button[data-direction\x3d"down"]');
       e && (e.addClass("disabled"), e.setAttribute("tabindex", "-1"));
@@ -335,7 +358,8 @@
     }
   };
   d.prototype.getGroupIndex = function (a) {
-    for (var b = this.actualConfig.toolbarGroups, c = b.length, d = 0; d < c; d += 1) if (b[d].name === a) return d;
+    for (var b = this.actualConfig.toolbarGroups, c = b.length, d = 0; d < c; d += 1)
+      if (b[d].name === a) return d;
     return -1;
   };
   d.prototype._addSeparator = function () {
@@ -350,9 +374,10 @@
     this._refreshEditor();
   };
   d.prototype._removeSeparator = function (a) {
-    var b = CKEDITOR.tools.indexOf(this.actualConfig.toolbarGroups, function (b) {
-      return "separator" == b.type && b.name == a;
-    });
+    var b = CKEDITOR.tools.indexOf(
+      this.actualConfig.toolbarGroups,
+      (b) => "separator" == b.type && b.name == a
+    );
     this.actualConfig.toolbarGroups.splice(b, 1);
     this._refreshMoveBtnsAvalibility();
     this._refreshBtnTabIndexes();
@@ -360,7 +385,8 @@
   };
   d.prototype._determineSeparatorToAddIndex = function () {
     return this.currentActive
-      ? ("group" == this.currentActive.elem.data("type") || "separator" == this.currentActive.elem.data("type")
+      ? ("group" == this.currentActive.elem.data("type") ||
+        "separator" == this.currentActive.elem.data("type")
           ? this.currentActive.elem
           : this.currentActive.elem.getAscendant("li")
         ).getIndex()
@@ -384,9 +410,7 @@
   d.prototype._moveSubgroup = function (a, b, c) {
     b = this.getGroupIndex(b);
     b = this.actualConfig.toolbarGroups[b];
-    var d = CKEDITOR.tools.indexOf(b.groups, function (a) {
-      return a.name == c;
-    });
+    var d = CKEDITOR.tools.indexOf(b.groups, (a) => a.name == c);
     a = this._moveElement(b.groups, d, a);
     this._refreshEditor();
     return a;
@@ -399,7 +423,8 @@
     }
   };
   d.prototype._addButtonToRemoved = function (a) {
-    if (-1 != CKEDITOR.tools.indexOf(this.removedButtons, a)) throw "Button already added to removed";
+    if (-1 != CKEDITOR.tools.indexOf(this.removedButtons, a))
+      throw "Button already added to removed";
     this.removedButtons.push(a);
     this.actualConfig.removeButtons = this.removedButtons.join(",");
     this._refreshEditor();
@@ -411,7 +436,7 @@
     this.actualConfig.removeButtons = this.removedButtons.join(",");
     this._refreshEditor();
   };
-  d.parseGroupToConfigValue = function (a) {
+  d.parseGroupToConfigValue = (a) => {
     if ("separator" == a.type) return "/";
     var b = a.groups,
       c = b.length;
@@ -419,25 +444,31 @@
     for (var d = 0; d < c; d += 1) b[d] = b[d].name;
     return a;
   };
-  d.getGroupOrSeparatorLiAncestor = function (a) {
-    return a.$ instanceof HTMLLIElement && "group" == a.data("type")
+  d.getGroupOrSeparatorLiAncestor = (a) =>
+    a.$ instanceof HTMLLIElement && "group" == a.data("type")
       ? a
-      : d.getFirstAncestor(a, function (a) {
+      : d.getFirstAncestor(a, (a) => {
           a = a.data("type");
           return "group" == a || "separator" == a;
         });
-  };
-  d.createSeparatorLiteral = function () {
-    return { type: "separator", name: "separator" + CKEDITOR.tools.getNextNumber() };
-  };
+  d.createSeparatorLiteral = () => ({
+    type: "separator",
+    name: "separator" + CKEDITOR.tools.getNextNumber(),
+  });
   d.prototype._toolbarConfigToListString = function () {
     for (
-      var a = this.actualConfig.toolbarGroups || [], b = '\x3cul data-type\x3d"table-body"\x3e', c = a.length, e = 0;
+      var a = this.actualConfig.toolbarGroups || [],
+        b = '\x3cul data-type\x3d"table-body"\x3e',
+        c = a.length,
+        e = 0;
       e < c;
       e += 1
     )
       var f = a[e],
-        b = "separator" === f.type ? b + d.getToolbarSeparatorString(f) : b + this._getToolbarGroupString(f);
+        b =
+          "separator" === f.type
+            ? b + d.getToolbarSeparatorString(f)
+            : b + this._getToolbarGroupString(f);
     b += "\x3c/ul\x3e";
     return d.getToolbarHeaderString() + b;
   };
@@ -446,9 +477,13 @@
       c;
     c =
       "" +
-      ['\x3cli data-type\x3d"group" data-name\x3d"', a.name, '" ', a.totalBtns ? "" : 'class\x3d"empty"', "\x3e"].join(
-        ""
-      );
+      [
+        '\x3cli data-type\x3d"group" data-name\x3d"',
+        a.name,
+        '" ',
+        a.totalBtns ? "" : 'class\x3d"empty"',
+        "\x3e",
+      ].join("");
     c += d.getToolbarElementPreString(a) + "\x3cul\x3e";
     a = b.length;
     for (var e = 0; e < a; e += 1) {
@@ -457,8 +492,8 @@
     }
     return c + "\x3c/ul\x3e\x3c/li\x3e";
   };
-  d.getToolbarSeparatorString = function (a) {
-    return [
+  d.getToolbarSeparatorString = (a) =>
+    [
       '\x3cli data-type\x3d"',
       a.type,
       '" data-name\x3d"',
@@ -467,30 +502,28 @@
       d.getToolbarElementPreString("row separator"),
       "\x3c/li\x3e",
     ].join("");
-  };
-  d.getToolbarHeaderString = function () {
-    return '\x3cul data-type\x3d"table-header"\x3e\x3cli data-type\x3d"header"\x3e\x3cp\x3eToolbars\x3c/p\x3e\x3cul\x3e\x3cli\x3e\x3cp\x3eToolbar groups\x3c/p\x3e\x3cp\x3eToolbar group items\x3c/p\x3e\x3c/li\x3e\x3c/ul\x3e\x3c/li\x3e\x3c/ul\x3e';
-  };
-  d.getFirstAncestor = function (a, b) {
+  d.getToolbarHeaderString = () =>
+    '\x3cul data-type\x3d"table-header"\x3e\x3cli data-type\x3d"header"\x3e\x3cp\x3eToolbars\x3c/p\x3e\x3cul\x3e\x3cli\x3e\x3cp\x3eToolbar groups\x3c/p\x3e\x3cp\x3eToolbar group items\x3c/p\x3e\x3c/li\x3e\x3c/ul\x3e\x3c/li\x3e\x3c/ul\x3e';
+  d.getFirstAncestor = (a, b) => {
     for (var c = a.getParents(), d = c.length; d--; ) if (b(c[d])) return c[d];
     return null;
   };
-  d.getFirstElementIndexWith = function (a, b, c, d) {
-    for (; "up" === c ? b-- : ++b < a.length; ) if (d(a[b])) return b;
+  d.getFirstElementIndexWith = (a, b, c, d) => {
+    while ("up" === c ? b-- : ++b < a.length) if (d(a[b])) return b;
     return -1;
   };
-  d.moveTo = function (a, b, c) {
+  d.moveTo = (a, b, c) => {
     var d;
     -1 !== c && (d = b.splice(c, 1)[0]);
     a = c + a;
     b.splice(a, 0, d);
     return a;
   };
-  d.getTotalSubGroupButtonsNumber = function (a, b) {
+  d.getTotalSubGroupButtonsNumber = (a, b) => {
     var c = b.buttonsByGroup["string" == typeof a ? a : a.name];
     return c ? c.length : 0;
   };
-  d.getTotalGroupButtonsNumber = function (a, b) {
+  d.getTotalGroupButtonsNumber = (a, b) => {
     for (var c = 0, e = a.groups, f = e ? e.length : 0, g = 0; g < f; g += 1)
       c += d.getTotalSubGroupButtonsNumber(e[g], b);
     return c;
@@ -534,7 +567,7 @@
       "\x3c/label\x3e\x3c/li\x3e",
     ].join("");
   };
-  d.getToolbarElementPreString = function (a) {
+  d.getToolbarElementPreString = (a) => {
     a = a.name ? a.name : a;
     return [
       '\x3cp\x3e\x3cspan\x3e\x3cbutton title\x3d"Move element upward" data-tab\x3d"true" data-direction\x3d"up" class\x3d"move icon-up-big"\x3e\x3c/button\x3e\x3cbutton title\x3d"Move element downward" data-tab\x3d"true" data-direction\x3d"down" class\x3d"move icon-down-big"\x3e\x3c/button\x3e',
@@ -545,8 +578,8 @@
       "\x3c/span\x3e\x3c/p\x3e",
     ].join("");
   };
-  d.evaluateToolbarGroupsConfig = function (a) {
-    return (a = (function (a) {
+  d.evaluateToolbarGroupsConfig = (a) =>
+    (a = ((a) => {
       var c = {},
         d;
       try {
@@ -566,6 +599,5 @@
             ? JSON.stringify(d)
             : null;
     })(a));
-  };
   return d;
 })();

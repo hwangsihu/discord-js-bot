@@ -89,7 +89,10 @@ async function getMatchingBans(guild, match) {
   }
 
   const menuRow = new ActionRowBuilder().addComponents(
-    new StringSelectMenuBuilder().setCustomId("unban-menu").setPlaceholder("Choose a user to unban").addOptions(options)
+    new StringSelectMenuBuilder()
+      .setCustomId("unban-menu")
+      .setPlaceholder("Choose a user to unban")
+      .addOptions(options)
   );
 
   return { content: "Please select a user you wish to unban", components: [menuRow] };
@@ -102,7 +105,8 @@ async function getMatchingBans(guild, match) {
  */
 async function waitForBan(issuer, reason, sent) {
   const collector = sent.channel.createMessageComponentCollector({
-    filter: (m) => m.member.id === issuer.id && m.customId === "unban-menu" && sent.id === m.message.id,
+    filter: (m) =>
+      m.member.id === issuer.id && m.customId === "unban-menu" && sent.id === m.message.id,
     time: 20000,
     max: 1,
     componentType: ComponentType.StringSelect,
@@ -114,7 +118,8 @@ async function waitForBan(issuer, reason, sent) {
     const user = await issuer.client.users.fetch(userId, { cache: true });
 
     const status = await unBanTarget(issuer, user, reason);
-    if (typeof status === "boolean") return sent.edit({ content: `${user.username} is un-banned!`, components: [] });
+    if (typeof status === "boolean")
+      return sent.edit({ content: `${user.username} is un-banned!`, components: [] });
     else return sent.edit({ content: `Failed to unban ${user.username}`, components: [] });
   });
 

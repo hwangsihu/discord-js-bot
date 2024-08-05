@@ -106,7 +106,12 @@ CKEDITOR.lang["hi"] = {
     invalidRows: "Number of rows must be a number greater than 0.",
     invalidWidth: "Table width must be a number.",
     menu: "टेबल प्रॉपर्टीज़",
-    row: { menu: "पंक्ति", insertBefore: "पहले पंक्ति डालें", insertAfter: "बाद में पंक्ति डालें", deleteRow: "पंक्तियाँ डिलीट करें" },
+    row: {
+      menu: "पंक्ति",
+      insertBefore: "पहले पंक्ति डालें",
+      insertAfter: "बाद में पंक्ति डालें",
+      deleteRow: "पंक्तियाँ डिलीट करें",
+    },
     rows: "पंक्तियाँ",
     summary: "सारांश",
     title: "टेबल प्रॉपर्टीज़",
@@ -122,7 +127,11 @@ CKEDITOR.lang["hi"] = {
     panelTitle2: "Inline Styles",
     panelTitle3: "Object Styles",
   },
-  specialchar: { options: "विशेष चरित्र विकल्प", title: "विशेष करॅक्टर चुनें", toolbar: "विशेष करॅक्टर इन्सर्ट करें" },
+  specialchar: {
+    options: "विशेष चरित्र विकल्प",
+    title: "विशेष करॅक्टर चुनें",
+    toolbar: "विशेष करॅक्टर इन्सर्ट करें",
+  },
   sourcearea: { toolbar: "सोर्स" },
   scayt: {
     btn_about: "About SCAYT",
@@ -141,7 +150,8 @@ CKEDITOR.lang["hi"] = {
     title: "पेस्ट (सादा टॅक्स्ट)",
   },
   pastefromword: {
-    confirmCleanup: "The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?",
+    confirmCleanup:
+      "The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?",
     error: "It was not possible to clean up the pasted data due to an internal error",
     title: "पेस्ट (वर्ड से)",
     toolbar: "पेस्ट (वर्ड से)",
@@ -273,9 +283,11 @@ CKEDITOR.lang["hi"] = {
   contextmenu: { options: "Context Menu Options" },
   clipboard: {
     copy: "कॉपी",
-    copyError: "आपके ब्राआउज़र की सुरक्षा सॅटिन्ग्स ने कॉपी करने की अनुमति नहीं प्रदान की है। (Ctrl/Cmd+C) का प्रयोग करें।",
+    copyError:
+      "आपके ब्राआउज़र की सुरक्षा सॅटिन्ग्स ने कॉपी करने की अनुमति नहीं प्रदान की है। (Ctrl/Cmd+C) का प्रयोग करें।",
     cut: "कट",
-    cutError: "आपके ब्राउज़र की सुरक्षा सॅटिन्ग्स ने कट करने की अनुमति नहीं प्रदान की है। (Ctrl/Cmd+X) का प्रयोग करें।",
+    cutError:
+      "आपके ब्राउज़र की सुरक्षा सॅटिन्ग्स ने कट करने की अनुमति नहीं प्रदान की है। (Ctrl/Cmd+X) का प्रयोग करें।",
     paste: "पेस्ट",
     pasteNotification:
       "Press %1 to paste. Your browser doesn‘t support pasting with the toolbar button or context menu option.",
@@ -335,8 +347,10 @@ CKEDITOR.lang["hi"] = {
     generalTab: "सामान्य",
     advancedTab: "ऍड्वान्स्ड",
     validateNumberFailed: "This value is not a number.",
-    confirmNewPage: "Any unsaved changes to this content will be lost. Are you sure you want to load new page?",
-    confirmCancel: "You have changed some options. Are you sure you want to close the dialog window?",
+    confirmNewPage:
+      "Any unsaved changes to this content will be lost. Are you sure you want to load new page?",
+    confirmCancel:
+      "You have changed some options. Are you sure you want to close the dialog window?",
     options: "Options",
     target: "टार्गेट",
     targetNew: "New Window (_blank)",

@@ -2,7 +2,7 @@
  * Serbian latin translation for bootstrap-datepicker
  * Bojan Milosavlević <milboj@gmail.com>
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["sr-latin"] = {
     days: ["Nedelja", "Ponedeljak", "Utorak", "Sreda", "Četvrtak", "Petak", "Subota"],
     daysShort: ["Ned", "Pon", "Uto", "Sre", "Čet", "Pet", "Sub"],
@@ -21,7 +21,20 @@
       "Novembar",
       "Decembar",
     ],
-    monthsShort: ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Avg", "Sep", "Okt", "Nov", "Dec"],
+    monthsShort: [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Maj",
+      "Jun",
+      "Jul",
+      "Avg",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Dec",
+    ],
     today: "Danas",
     weekStart: 1,
     format: "dd.mm.yyyy",

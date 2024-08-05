@@ -106,7 +106,12 @@ CKEDITOR.lang["si"] = {
     invalidRows: "Number of rows must be a number greater than 0.",
     invalidWidth: "Table width must be a number.",
     menu: "Table Properties",
-    row: { menu: "Row", insertBefore: "Insert Row Before", insertAfter: "Insert Row After", deleteRow: "Delete Rows" },
+    row: {
+      menu: "Row",
+      insertBefore: "Insert Row Before",
+      insertAfter: "Insert Row After",
+      deleteRow: "Delete Rows",
+    },
     rows: "Rows",
     summary: "Summary",
     title: "Table Properties",
@@ -141,7 +146,8 @@ CKEDITOR.lang["si"] = {
     title: "සාමාන්‍ය අක්ෂර ලෙස අලවන්න",
   },
   pastefromword: {
-    confirmCleanup: "The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?",
+    confirmCleanup:
+      "The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?",
     error: "It was not possible to clean up the pasted data due to an internal error",
     title: "වචන වලින් අලවන්න",
     toolbar: "වචන වලින් අලවන්න",
@@ -370,9 +376,12 @@ CKEDITOR.lang["si"] = {
       'Value specified for the "%1" field must be a positive number with or without a valid measurement unit (%2).',
     invalidCssLength:
       'වටිනාකමක් නිරූපණය කිරීම "%1" ප්‍රදේශය ධන සංක්‍යාත්මක වටිනාකමක් හෝ  නිවරදි නොවන  CSS මිනුම් එකක(px, %, in, cm, mm, em, ex, pt, pc)',
-    invalidHtmlLength: 'වටිනාකමක් නිරූපණය කිරීම "%1" ප්‍රදේශය ධන සංක්‍යාත්මක වටිනාකමක් හෝ  නිවරදි නොවන  HTML මිනුම් එකක (px හෝ %).',
-    invalidInlineStyle: 'වටිනාකමක් නිරූපණය කිරීම  පේළි විලාසයයට ආකෘතිය  අනතර්ග විය යුතය  "නම : වටිනාකම", තිත් කොමාවකින් වෙන් වෙන ලද.',
-    cssLengthTooltip: "සංක්‍යා ඇතුලත් කිරීමේදී වටිනාකම තිත් ප්‍රමාණය නිවරදි CSS  ඒකක(තිත්, %, අඟල්,සෙමි, mm, em, ex, pt, pc)",
+    invalidHtmlLength:
+      'වටිනාකමක් නිරූපණය කිරීම "%1" ප්‍රදේශය ධන සංක්‍යාත්මක වටිනාකමක් හෝ  නිවරදි නොවන  HTML මිනුම් එකක (px හෝ %).',
+    invalidInlineStyle:
+      'වටිනාකමක් නිරූපණය කිරීම  පේළි විලාසයයට ආකෘතිය  අනතර්ග විය යුතය  "නම : වටිනාකම", තිත් කොමාවකින් වෙන් වෙන ලද.',
+    cssLengthTooltip:
+      "සංක්‍යා ඇතුලත් කිරීමේදී වටිනාකම තිත් ප්‍රමාණය නිවරදි CSS  ඒකක(තිත්, %, අඟල්,සෙමි, mm, em, ex, pt, pc)",
     unavailable: '%1<span පන්තිය="ළඟා වියහැකි ද බලන්න">, නොමැතිනම්</span>',
     keyboard: {
       8: "Backspace",

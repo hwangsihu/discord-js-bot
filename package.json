@@ -11,8 +11,8 @@
   "scripts": {
     "dev": "nodemon .",
     "start": "node .",
-    "lint": "biome lint --fix src/ bot.js",
-    "format": "biome format --fix src/ bot.js",
+    "lint": "biome lint --write",
+    "format": "biome format --write",
     "docker:package": "tar -cf discord-js-bot.tar dashboard logs src bot.js config.js dockerfile package.json package-lock.json",
     "docker:build": "docker build -t saitejamadha/discord-js-bot:5.5.0 ."
   },
@@ -71,7 +71,15 @@
     "node": "^20.16.0",
     "nodemon": "^3.1.4"
   },
-  "keywords": ["discord", "discord.js", "discord-bot", "open-source", "bot", "multipurpose", "multi-purpose-bot"],
+  "keywords": [
+    "discord",
+    "discord.js",
+    "discord-bot",
+    "open-source",
+    "bot",
+    "multipurpose",
+    "multi-purpose-bot"
+  ],
   "_moduleAliases": {
     "@root": ".",
     "@handlers": "src/handlers/",

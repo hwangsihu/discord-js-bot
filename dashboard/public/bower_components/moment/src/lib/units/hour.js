@@ -76,25 +76,25 @@ addRegexToken("Hmm", match3to4);
 addRegexToken("Hmmss", match5to6);
 
 addParseToken(["H", "HH"], HOUR);
-addParseToken(["k", "kk"], function (input, array, config) {
+addParseToken(["k", "kk"], (input, array, config) => {
   var kInput = toInt(input);
   array[HOUR] = kInput === 24 ? 0 : kInput;
 });
-addParseToken(["a", "A"], function (input, array, config) {
+addParseToken(["a", "A"], (input, array, config) => {
   config._isPm = config._locale.isPM(input);
   config._meridiem = input;
 });
-addParseToken(["h", "hh"], function (input, array, config) {
+addParseToken(["h", "hh"], (input, array, config) => {
   array[HOUR] = toInt(input);
   getParsingFlags(config).bigHour = true;
 });
-addParseToken("hmm", function (input, array, config) {
+addParseToken("hmm", (input, array, config) => {
   var pos = input.length - 2;
   array[HOUR] = toInt(input.substr(0, pos));
   array[MINUTE] = toInt(input.substr(pos));
   getParsingFlags(config).bigHour = true;
 });
-addParseToken("hmmss", function (input, array, config) {
+addParseToken("hmmss", (input, array, config) => {
   var pos1 = input.length - 4;
   var pos2 = input.length - 2;
   array[HOUR] = toInt(input.substr(0, pos1));
@@ -102,12 +102,12 @@ addParseToken("hmmss", function (input, array, config) {
   array[SECOND] = toInt(input.substr(pos2));
   getParsingFlags(config).bigHour = true;
 });
-addParseToken("Hmm", function (input, array, config) {
+addParseToken("Hmm", (input, array, config) => {
   var pos = input.length - 2;
   array[HOUR] = toInt(input.substr(0, pos));
   array[MINUTE] = toInt(input.substr(pos));
 });
-addParseToken("Hmmss", function (input, array, config) {
+addParseToken("Hmmss", (input, array, config) => {
   var pos1 = input.length - 4;
   var pos2 = input.length - 2;
   array[HOUR] = toInt(input.substr(0, pos1));

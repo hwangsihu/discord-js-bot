@@ -11,7 +11,8 @@ CKEDITOR.lang["fr-ca"] = {
     btnUndo: "Annuler",
     changeTo: "Changer en",
     errorLoading: "Error loading application service host: %s.",
-    ieSpellDownload: "Le Correcteur d'orthographe n'est pas installé. Souhaitez-vous le télécharger maintenant?",
+    ieSpellDownload:
+      "Le Correcteur d'orthographe n'est pas installé. Souhaitez-vous le télécharger maintenant?",
     manyChanges: "Vérification d'orthographe terminée: %1 mots modifiés",
     noChanges: "Vérification d'orthographe terminée: Pas de modifications",
     noMispell: "Vérification d'orthographe terminée: pas d'erreur trouvée",

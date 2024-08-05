@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(n) {
       if (r[n]) return r[n].exports;
       var o = (r[n] = { i: n, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = r),
-      (t.d = function (e, r, n) {
+      (t.d = (e, r, n) => {
         t.o(e, r) || Object.defineProperty(e, r, { configurable: !1, enumerable: !0, get: n });
       }),
-      (t.n = function (e) {
-        var r =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var r = e && e.__esModule ? () => e.default : () => e;
         return t.d(r, "a", r), r;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 77))
     );
   })({
-    0: function (t, r) {
+    0: (t, r) => {
       t.exports = e;
     },
-    1: function (e, r) {
+    1: (e, r) => {
       e.exports = t;
     },
-    77: function (e, t, r) {
+    77: (e, t, r) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), r(78);
       var n = r(1);
       n.datepickerLocale("ar-ly", "ar", {
@@ -84,28 +75,56 @@
           noEventsMessage: "أي أحداث لعرض",
         });
     },
-    78: function (e, t, r) {
-      !(function (e, t) {
+    78: (e, t, r) => {
+      !((e, t) => {
         t(r(0));
-      })(0, function (e) {
+      })(0, (e) => {
         var t = { 1: "1", 2: "2", 3: "3", 4: "4", 5: "5", 6: "6", 7: "7", 8: "8", 9: "9", 0: "0" },
-          r = function (e) {
-            return 0 === e ? 0 : 1 === e ? 1 : 2 === e ? 2 : e % 100 >= 3 && e % 100 <= 10 ? 3 : e % 100 >= 11 ? 4 : 5;
-          },
+          r = (e) =>
+            0 === e
+              ? 0
+              : 1 === e
+                ? 1
+                : 2 === e
+                  ? 2
+                  : e % 100 >= 3 && e % 100 <= 10
+                    ? 3
+                    : e % 100 >= 11
+                      ? 4
+                      : 5,
           n = {
-            s: ["أقل من ثانية", "ثانية واحدة", ["ثانيتان", "ثانيتين"], "%d ثوان", "%d ثانية", "%d ثانية"],
-            m: ["أقل من دقيقة", "دقيقة واحدة", ["دقيقتان", "دقيقتين"], "%d دقائق", "%d دقيقة", "%d دقيقة"],
-            h: ["أقل من ساعة", "ساعة واحدة", ["ساعتان", "ساعتين"], "%d ساعات", "%d ساعة", "%d ساعة"],
+            s: [
+              "أقل من ثانية",
+              "ثانية واحدة",
+              ["ثانيتان", "ثانيتين"],
+              "%d ثوان",
+              "%d ثانية",
+              "%d ثانية",
+            ],
+            m: [
+              "أقل من دقيقة",
+              "دقيقة واحدة",
+              ["دقيقتان", "دقيقتين"],
+              "%d دقائق",
+              "%d دقيقة",
+              "%d دقيقة",
+            ],
+            h: [
+              "أقل من ساعة",
+              "ساعة واحدة",
+              ["ساعتان", "ساعتين"],
+              "%d ساعات",
+              "%d ساعة",
+              "%d ساعة",
+            ],
             d: ["أقل من يوم", "يوم واحد", ["يومان", "يومين"], "%d أيام", "%d يومًا", "%d يوم"],
             M: ["أقل من شهر", "شهر واحد", ["شهران", "شهرين"], "%d أشهر", "%d شهرا", "%d شهر"],
             y: ["أقل من عام", "عام واحد", ["عامان", "عامين"], "%d أعوام", "%d عامًا", "%d عام"],
           },
-          o = function (e) {
-            return function (t, o, d, a) {
-              var u = r(t),
-                s = n[e][r(t)];
-              return 2 === u && (s = s[o ? 0 : 1]), s.replace(/%d/i, t);
-            };
+          o = (e) => (t, o, d, a) => {
+            var u = r(t),
+              s = n[e][r(t)];
+            return 2 === u && (s = s[o ? 0 : 1]), s.replace(/%d/i, t);
           },
           d = [
             "يناير",
@@ -137,12 +156,8 @@
             LLLL: "dddd D MMMM YYYY HH:mm",
           },
           meridiemParse: /ص|م/,
-          isPM: function (e) {
-            return "م" === e;
-          },
-          meridiem: function (e, t, r) {
-            return e < 12 ? "ص" : "م";
-          },
+          isPM: (e) => "م" === e,
+          meridiem: (e, t, r) => (e < 12 ? "ص" : "م"),
           calendar: {
             sameDay: "[اليوم عند الساعة] LT",
             nextDay: "[غدًا عند الساعة] LT",
@@ -167,19 +182,11 @@
             y: o("y"),
             yy: o("y"),
           },
-          preparse: function (e) {
-            return e.replace(/،/g, ",");
-          },
-          postformat: function (e) {
-            return e
-              .replace(/\d/g, function (e) {
-                return t[e];
-              })
-              .replace(/,/g, "،");
-          },
+          preparse: (e) => e.replace(/،/g, ","),
+          postformat: (e) => e.replace(/\d/g, (e) => t[e]).replace(/,/g, "،"),
           week: { dow: 6, doy: 12 },
         });
       });
     },
-  });
-});
+  })
+);

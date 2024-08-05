@@ -21,5 +21,13 @@
     "moment": "^2.20.1"
   },
   "main": ["dist/fullcalendar.js", "dist/fullcalendar.css"],
-  "ignore": ["*", "**/.*", "!/dist/**", "!/README.*", "!/LICENSE.*", "!/CHANGELOG.*", "!/CONTRIBUTING.*"]
+  "ignore": [
+    "*",
+    "**/.*",
+    "!/dist/**",
+    "!/README.*",
+    "!/LICENSE.*",
+    "!/CHANGELOG.*",
+    "!/CONTRIBUTING.*"
+  ]
 }

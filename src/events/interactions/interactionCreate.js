@@ -1,5 +1,11 @@
 const { getSettings } = require("@schemas/Guild");
-const { commandHandler, contextHandler, statsHandler, suggestionHandler, ticketHandler } = require("@src/handlers");
+const {
+  commandHandler,
+  contextHandler,
+  statsHandler,
+  suggestionHandler,
+  ticketHandler,
+} = require("@src/handlers");
 const { InteractionType } = require("discord.js");
 
 /**
@@ -22,7 +28,10 @@ module.exports = async (client, interaction) => {
   else if (interaction.isContextMenuCommand()) {
     const context = client.contextMenus.get(interaction.commandName);
     if (context) await contextHandler.handleContext(interaction, context);
-    else return interaction.reply({ content: "An error has occurred", ephemeral: true }).catch(() => {});
+    else
+      return interaction
+        .reply({ content: "An error has occurred", ephemeral: true })
+        .catch(() => {});
   }
 
   // Buttons

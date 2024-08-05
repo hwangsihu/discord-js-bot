@@ -62,13 +62,29 @@ shadowSize and lineWidth are derived as well from the points series.
 
 */
 
-(function ($) {
+(($) => {
   var options = {
     series: {
       points: {
         errorbars: null, //should be 'x', 'y' or 'xy'
-        xerr: { err: "x", show: null, asymmetric: null, upperCap: null, lowerCap: null, color: null, radius: null },
-        yerr: { err: "y", show: null, asymmetric: null, upperCap: null, lowerCap: null, color: null, radius: null },
+        xerr: {
+          err: "x",
+          show: null,
+          asymmetric: null,
+          upperCap: null,
+          lowerCap: null,
+          color: null,
+          radius: null,
+        },
+        yerr: {
+          err: "y",
+          show: null,
+          asymmetric: null,
+          upperCap: null,
+          lowerCap: null,
+          color: null,
+          radius: null,
+        },
       },
     },
   };
@@ -198,8 +214,10 @@ shadowSize and lineWidth are derived as well from the points series.
             lower = [x, y][e] - errRanges[e * err.length];
 
           //points outside of the canvas
-          if (err[e].err == "x") if (y > ax[1].max || y < ax[1].min || upper < ax[0].min || lower > ax[0].max) continue;
-          if (err[e].err == "y") if (x > ax[0].max || x < ax[0].min || upper < ax[1].min || lower > ax[1].max) continue;
+          if (err[e].err == "x")
+            if (y > ax[1].max || y < ax[1].min || upper < ax[0].min || lower > ax[0].max) continue;
+          if (err[e].err == "y")
+            if (x > ax[0].max || x < ax[0].min || upper < ax[1].min || lower > ax[1].max) continue;
 
           // prevent errorbars getting out of the canvas
           var drawUpper = true,
@@ -243,7 +261,19 @@ shadowSize and lineWidth are derived as well from the points series.
             var w = sw / 2;
             ctx.lineWidth = w;
             ctx.strokeStyle = "rgba(0,0,0,0.1)";
-            drawError(ctx, err[e], x, y, upper, lower, drawUpper, drawLower, radius, w + w / 2, minmax);
+            drawError(
+              ctx,
+              err[e],
+              x,
+              y,
+              upper,
+              lower,
+              drawUpper,
+              drawLower,
+              radius,
+              w + w / 2,
+              minmax
+            );
 
             ctx.strokeStyle = "rgba(0,0,0,0.2)";
             drawError(ctx, err[e], x, y, upper, lower, drawUpper, drawLower, radius, w / 2, minmax);
@@ -347,8 +377,9 @@ shadowSize and lineWidth are derived as well from the points series.
 
     ctx.save();
     ctx.translate(plotOffset.left, plotOffset.top);
-    $.each(plot.getData(), function (i, s) {
-      if (s.points.errorbars && (s.points.xerr.show || s.points.yerr.show)) drawSeriesErrors(plot, ctx, s);
+    $.each(plot.getData(), (i, s) => {
+      if (s.points.errorbars && (s.points.xerr.show || s.points.yerr.show))
+        drawSeriesErrors(plot, ctx, s);
     });
     ctx.restore();
   }

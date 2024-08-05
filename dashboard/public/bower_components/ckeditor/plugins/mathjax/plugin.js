@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   CKEDITOR.plugins.add("mathjax", {
     lang: "af,ar,az,bg,ca,cs,cy,da,de,de-ch,el,en,en-au,en-gb,eo,es,es-mx,et,eu,fa,fi,fr,gl,he,hr,hu,id,it,ja,km,ko,ku,lt,lv,nb,nl,no,oc,pl,pt,pt-br,ro,ru,sk,sl,sq,sv,tr,tt,ug,uk,vi,zh,zh-cn",
     requires: "widget,dialog",
@@ -17,7 +17,7 @@
         button: b.lang.mathjax.button,
         mask: !0,
         allowedContent: "span(!" + c + ")",
-        styleToAllowedContentRules: function (a) {
+        styleToAllowedContentRules: (a) => {
           a = a.getClassesArray();
           if (!a) return null;
           a.push("!" + c);
@@ -25,7 +25,9 @@
         },
         pathName: b.lang.mathjax.pathName,
         template:
-          '\x3cspan class\x3d"' + c + '" style\x3d"display:inline-block" data-cke-survive\x3d1\x3e\x3c/span\x3e',
+          '\x3cspan class\x3d"' +
+          c +
+          '" style\x3d"display:inline-block" data-cke-survive\x3d1\x3e\x3c/span\x3e',
         parts: { span: "span" },
         defaults: { math: "\\(x \x3d {-b \\pm \\sqrt{b^2-4ac} \\over 2a}\\)" },
         init: function () {
@@ -49,7 +51,7 @@
         data: function () {
           this.frameWrapper && this.frameWrapper.setValue(this.data.math);
         },
-        upcast: function (a, b) {
+        upcast: (a, b) => {
           if (
             "span" == a.name &&
             a.hasClass(c) &&
@@ -64,7 +66,9 @@
           }
         },
         downcast: function (a) {
-          a.children[0].replaceWith(new CKEDITOR.htmlParser.text(CKEDITOR.tools.htmlEncode(this.data.math)));
+          a.children[0].replaceWith(
+            new CKEDITOR.htmlParser.text(CKEDITOR.tools.htmlEncode(this.data.math))
+          );
           var b = a.attributes;
           b.style = b.style.replace(/display:\s?inline-block;?\s?/, "");
           "" === b.style && delete b.style;
@@ -72,18 +76,18 @@
         },
       });
       CKEDITOR.dialog.add("mathjax", this.path + "dialogs/mathjax.js");
-      b.on("contentPreview", function (a) {
+      b.on("contentPreview", (a) => {
         a.data.dataValue = a.data.dataValue.replace(
           /<\/head>/,
-          '\x3cscript src\x3d"' + CKEDITOR.getUrl(b.config.mathJaxLib) + '"\x3e\x3c/script\x3e\x3c/head\x3e'
+          '\x3cscript src\x3d"' +
+            CKEDITOR.getUrl(b.config.mathJaxLib) +
+            '"\x3e\x3c/script\x3e\x3c/head\x3e'
         );
       });
-      b.on("paste", function (a) {
+      b.on("paste", (a) => {
         a.data.dataValue = a.data.dataValue.replace(
           new RegExp("\x3cspan[^\x3e]*?" + c + ".*?\x3c/span\x3e", "ig"),
-          function (a) {
-            return a.replace(/(<iframe.*?\/iframe>)/i, "");
-          }
+          (a) => a.replace(/(<iframe.*?\/iframe>)/i, "")
         );
       });
     },
@@ -93,11 +97,13 @@
     ? "javascript:true"
     : CKEDITOR.env.ie
       ? "javascript:void((function(){" +
-        encodeURIComponent("document.open();(" + CKEDITOR.tools.fixDomain + ")();document.close();") +
+        encodeURIComponent(
+          "document.open();(" + CKEDITOR.tools.fixDomain + ")();document.close();"
+        ) +
         "})())"
       : "javascript:void(0)";
   CKEDITOR.plugins.mathjax.loadingIcon = CKEDITOR.plugins.get("mathjax").path + "images/loader.gif";
-  CKEDITOR.plugins.mathjax.copyStyles = function (b, c) {
+  CKEDITOR.plugins.mathjax.copyStyles = (b, c) => {
     for (
       var a = "color font-family font-style font-weight font-variant font-size".split(" "), e = 0;
       e < a.length;
@@ -108,19 +114,19 @@
       g && c.setStyle(d, g);
     }
   };
-  CKEDITOR.plugins.mathjax.trim = function (b) {
+  CKEDITOR.plugins.mathjax.trim = (b) => {
     var c = b.indexOf("\\(") + 2,
       a = b.lastIndexOf("\\)");
     return b.substring(c, a);
   };
   CKEDITOR.plugins.mathjax.frameWrapper =
     CKEDITOR.env.ie && 8 == CKEDITOR.env.version
-      ? function (b, c) {
+      ? (b, c) => {
           b.getFrameDocument().write(
             '\x3c!DOCTYPE html\x3e\x3chtml\x3e\x3chead\x3e\x3cmeta charset\x3d"utf-8"\x3e\x3c/head\x3e\x3cbody style\x3d"padding:0;margin:0;background:transparent;overflow:hidden"\x3e\x3cspan style\x3d"white-space:nowrap;" id\x3d"tex"\x3e\x3c/span\x3e\x3c/body\x3e\x3c/html\x3e'
           );
           return {
-            setValue: function (a) {
+            setValue: (a) => {
               var e = b.getFrameDocument(),
                 d = e.getById("tex");
               d.setHtml(CKEDITOR.plugins.mathjax.trim(CKEDITOR.tools.htmlEncode(a)));
@@ -136,7 +142,7 @@
             },
           };
         }
-      : function (b, c) {
+      : (b, c) => {
           function a() {
             f = b.getFrameDocument();
             f.getById("preview") ||
@@ -157,9 +163,18 @@
             c.fire("lockSnapshot");
             d.setHtml(h);
             g.setHtml(
-              "\x3cimg src\x3d" + CKEDITOR.plugins.mathjax.loadingIcon + " alt\x3d" + c.lang.mathjax.loading + "\x3e"
+              "\x3cimg src\x3d" +
+                CKEDITOR.plugins.mathjax.loadingIcon +
+                " alt\x3d" +
+                c.lang.mathjax.loading +
+                "\x3e"
             );
-            b.setStyles({ height: "16px", width: "16px", display: "inline", "vertical-align": "middle" });
+            b.setStyles({
+              height: "16px",
+              width: "16px",
+              display: "inline",
+              "vertical-align": "middle",
+            });
             c.fire("unlockSnapshot");
             f.getWindow().$.update(h);
           }
@@ -170,14 +185,14 @@
             f = b.getFrameDocument(),
             l = !1,
             m = !1,
-            p = CKEDITOR.tools.addFunction(function () {
+            p = CKEDITOR.tools.addFunction(() => {
               g = f.getById("preview");
               d = f.getById("buffer");
               l = !0;
               k && e();
               CKEDITOR.fire("mathJaxLoaded", b);
             }),
-            n = CKEDITOR.tools.addFunction(function () {
+            n = CKEDITOR.tools.addFunction(() => {
               CKEDITOR.plugins.mathjax.copyStyles(b, g);
               g.setHtml(d.getHtml());
               c.fire("lockSnapshot");
@@ -192,7 +207,7 @@
           b.on("load", a);
           a();
           return {
-            setValue: function (a) {
+            setValue: (a) => {
               k = CKEDITOR.tools.htmlEncode(a);
               l && !m && e();
             },

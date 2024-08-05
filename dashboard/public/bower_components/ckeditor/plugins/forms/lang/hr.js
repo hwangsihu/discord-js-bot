@@ -14,7 +14,13 @@
     selected: "Odabrano",
     required: "Potrebno",
   },
-  form: { title: "Svojstva forme", menu: "Svojstva forme", action: "Akcija", method: "Metoda", encoding: "Encoding" },
+  form: {
+    title: "Svojstva forme",
+    menu: "Svojstva forme",
+    action: "Akcija",
+    method: "Metoda",
+    encoding: "Encoding",
+  },
   hidden: { title: "Svojstva sakrivenog polja", name: "Ime", value: "Vrijednost" },
   select: {
     title: "Svojstva selection polja",

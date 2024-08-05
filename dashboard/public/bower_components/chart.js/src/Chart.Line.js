@@ -1,8 +1,5 @@
 (function () {
-  "use strict";
-
-  var root = this,
-    Chart = root.Chart,
+  var Chart = this.Chart,
     helpers = Chart.helpers;
 
   var defaultConfig = {
@@ -75,10 +72,10 @@
       if (this.options.showTooltips) {
         helpers.bindEvents(this, this.options.tooltipEvents, function (evt) {
           var activePoints = evt.type !== "mouseout" ? this.getPointsAtEvent(evt) : [];
-          this.eachPoints(function (point) {
+          this.eachPoints((point) => {
             point.restore(["fillColor", "strokeColor"]);
           });
-          helpers.each(activePoints, function (activePoint) {
+          helpers.each(activePoints, (activePoint) => {
             activePoint.fillColor = activePoint.highlightFill;
             activePoint.strokeColor = activePoint.highlightStroke;
           });
@@ -138,10 +135,10 @@
     update: function () {
       this.scale.update();
       // Reset any highlight colours before updating.
-      helpers.each(this.activeElements, function (activeElement) {
+      helpers.each(this.activeElements, (activeElement) => {
         activeElement.restore(["fillColor", "strokeColor"]);
       });
-      this.eachPoints(function (point) {
+      this.eachPoints((point) => {
         point.save();
       });
       this.render();
@@ -160,8 +157,8 @@
         eventPosition = helpers.getRelativePosition(e);
       helpers.each(
         this.datasets,
-        function (dataset) {
-          helpers.each(dataset.points, function (point) {
+        (dataset) => {
+          helpers.each(dataset.points, (point) => {
             if (point.inRange(eventPosition.x, eventPosition.y)) pointsArray.push(point);
           });
         },
@@ -170,11 +167,9 @@
       return pointsArray;
     },
     buildScale: function (labels) {
-      var self = this;
-
-      var dataTotal = function () {
+      var dataTotal = () => {
         var values = [];
-        self.eachPoints(function (point) {
+        this.eachPoints((point) => {
           values.push(point.value);
         });
 
@@ -204,14 +199,22 @@
           helpers.extend(this, updatedRanges);
         },
         xLabels: labels,
-        font: helpers.fontString(this.options.scaleFontSize, this.options.scaleFontStyle, this.options.scaleFontFamily),
+        font: helpers.fontString(
+          this.options.scaleFontSize,
+          this.options.scaleFontStyle,
+          this.options.scaleFontFamily
+        ),
         lineWidth: this.options.scaleLineWidth,
         lineColor: this.options.scaleLineColor,
         showHorizontalLines: this.options.scaleShowHorizontalLines,
         showVerticalLines: this.options.scaleShowVerticalLines,
         gridLineWidth: this.options.scaleShowGridLines ? this.options.scaleGridLineWidth : 0,
-        gridLineColor: this.options.scaleShowGridLines ? this.options.scaleGridLineColor : "rgba(0,0,0,0)",
-        padding: this.options.showScale ? 0 : this.options.pointDotRadius + this.options.pointDotStrokeWidth,
+        gridLineColor: this.options.scaleShowGridLines
+          ? this.options.scaleGridLineColor
+          : "rgba(0,0,0,0)",
+        padding: this.options.showScale
+          ? 0
+          : this.options.pointDotRadius + this.options.pointDotStrokeWidth,
         showLabels: this.options.scaleShowLabels,
         display: this.options.showScale,
       };
@@ -258,7 +261,7 @@
       //Then re-render the chart.
       helpers.each(
         this.datasets,
-        function (dataset) {
+        (dataset) => {
           dataset.points.shift();
         },
         this
@@ -279,15 +282,11 @@
       var ctx = this.chart.ctx;
 
       // Some helper methods for getting the next/prev points
-      var hasValue = function (item) {
-          return item.value !== null;
-        },
-        nextPoint = function (point, collection, index) {
-          return helpers.findNextWhere(collection, hasValue, index) || point;
-        },
-        previousPoint = function (point, collection, index) {
-          return helpers.findPreviousWhere(collection, hasValue, index) || point;
-        };
+      var hasValue = (item) => item.value !== null,
+        nextPoint = (point, collection, index) =>
+          helpers.findNextWhere(collection, hasValue, index) || point,
+        previousPoint = (point, collection, index) =>
+          helpers.findPreviousWhere(collection, hasValue, index) || point;
 
       this.scale.draw(easingDecimal);
 
@@ -321,7 +320,10 @@
             helpers.each(
               pointsWithValues,
               function (point, index) {
-                var tension = index > 0 && index < pointsWithValues.length - 1 ? this.options.bezierCurveTension : 0;
+                var tension =
+                  index > 0 && index < pointsWithValues.length - 1
+                    ? this.options.bezierCurveTension
+                    : 0;
                 point.controlPoints = helpers.splineCurve(
                   previousPoint(point, pointsWithValues, index),
                   point,
@@ -359,21 +361,19 @@
             function (point, index) {
               if (index === 0) {
                 ctx.moveTo(point.x, point.y);
-              } else {
-                if (this.options.bezierCurve) {
-                  var previous = previousPoint(point, pointsWithValues, index);
+              } else if (this.options.bezierCurve) {
+                var previous = previousPoint(point, pointsWithValues, index);
 
-                  ctx.bezierCurveTo(
-                    previous.controlPoints.outer.x,
-                    previous.controlPoints.outer.y,
-                    point.controlPoints.inner.x,
-                    point.controlPoints.inner.y,
-                    point.x,
-                    point.y
-                  );
-                } else {
-                  ctx.lineTo(point.x, point.y);
-                }
+                ctx.bezierCurveTo(
+                  previous.controlPoints.outer.x,
+                  previous.controlPoints.outer.y,
+                  point.controlPoints.inner.x,
+                  point.controlPoints.inner.y,
+                  point.x,
+                  point.y
+                );
+              } else {
+                ctx.lineTo(point.x, point.y);
               }
             },
             this
@@ -393,7 +393,7 @@
           //Now draw the points over the line
           //A little inefficient double looping, but better than the line
           //lagging behind the point positions
-          helpers.each(pointsWithValues, function (point) {
+          helpers.each(pointsWithValues, (point) => {
             point.draw();
           });
         },

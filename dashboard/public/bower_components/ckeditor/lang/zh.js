@@ -85,7 +85,12 @@ CKEDITOR.lang["zh"] = {
     },
     cellPad: "儲存格邊距",
     cellSpace: "儲存格間距",
-    column: { menu: "行", insertBefore: "左方插入行", insertAfter: "右方插入行", deleteColumn: "刪除行" },
+    column: {
+      menu: "行",
+      insertBefore: "左方插入行",
+      insertAfter: "右方插入行",
+      deleteColumn: "刪除行",
+    },
     columns: "行",
     deleteTable: "刪除表格",
     headers: "頁首",
@@ -135,7 +140,8 @@ CKEDITOR.lang["zh"] = {
     title: "貼成純文字",
   },
   pastefromword: {
-    confirmCleanup: "您想貼上的文字似乎是自 Word 複製而來，請問您是否要先清除 Word 的格式後再行貼上？",
+    confirmCleanup:
+      "您想貼上的文字似乎是自 Word 複製而來，請問您是否要先清除 Word 的格式後再行貼上？",
     error: "由於發生內部錯誤，無法清除清除 Word 的格式。",
     title: "自 Word 貼上",
     toolbar: "自 Word 貼上",
@@ -267,9 +273,11 @@ CKEDITOR.lang["zh"] = {
   contextmenu: { options: "內容功能表選項" },
   clipboard: {
     copy: "複製",
-    copyError: "瀏覽器的安全性設定不允許編輯器自動執行複製動作。請使用鍵盤快捷鍵 (Ctrl/Cmd+C) 複製。",
+    copyError:
+      "瀏覽器的安全性設定不允許編輯器自動執行複製動作。請使用鍵盤快捷鍵 (Ctrl/Cmd+C) 複製。",
     cut: "剪下",
-    cutError: "瀏覽器的安全性設定不允許編輯器自動執行剪下動作。請使用鏐盤快捷鍵 (Ctrl/Cmd+X) 剪下。",
+    cutError:
+      "瀏覽器的安全性設定不允許編輯器自動執行剪下動作。請使用鏐盤快捷鍵 (Ctrl/Cmd+X) 剪下。",
     paste: "貼上",
     pasteNotification: "請按下「%1」貼上。您的瀏覽器不支援工具列按鈕或是內容功能表選項。",
     pasteArea: "貼上區",
@@ -358,10 +366,13 @@ CKEDITOR.lang["zh"] = {
     invalidHeight: "高度必須為數字。",
     invalidWidth: "寬度必須為數字。",
     invalidLength: "為「%1」欄位指定的值必須為正值，可包含或不包含測量單位（%2）。",
-    invalidCssLength: "「%1」的值應為正數，並可包含有效的 CSS 單位 (px, %, in, cm, mm, em, ex, pt, 或 pc)。",
+    invalidCssLength:
+      "「%1」的值應為正數，並可包含有效的 CSS 單位 (px, %, in, cm, mm, em, ex, pt, 或 pc)。",
     invalidHtmlLength: "「%1」的值應為正數，並可包含有效的 HTML 單位 (px 或 %)。",
-    invalidInlineStyle: "行內樣式的值應包含一個以上的變數值組，其格式如「名稱:值」，並以分號區隔之。",
-    cssLengthTooltip: "請輸入數值，單位是像素或有效的 CSS 單位 (px, %, in, cm, mm, em, ex, pt, 或 pc)。",
+    invalidInlineStyle:
+      "行內樣式的值應包含一個以上的變數值組，其格式如「名稱:值」，並以分號區隔之。",
+    cssLengthTooltip:
+      "請輸入數值，單位是像素或有效的 CSS 單位 (px, %, in, cm, mm, em, ex, pt, 或 pc)。",
     unavailable: '%1<span class="cke_accessibility">，無法使用</span>',
     keyboard: {
       8: "退格鍵",

@@ -16,9 +16,18 @@ var symbolMap = {
     9: "9",
     0: "0",
   },
-  pluralForm = function (n) {
-    return n === 0 ? 0 : n === 1 ? 1 : n === 2 ? 2 : n % 100 >= 3 && n % 100 <= 10 ? 3 : n % 100 >= 11 ? 4 : 5;
-  },
+  pluralForm = (n) =>
+    n === 0
+      ? 0
+      : n === 1
+        ? 1
+        : n === 2
+          ? 2
+          : n % 100 >= 3 && n % 100 <= 10
+            ? 3
+            : n % 100 >= 11
+              ? 4
+              : 5,
   plurals = {
     s: ["أقل من ثانية", "ثانية واحدة", ["ثانيتان", "ثانيتين"], "%d ثوان", "%d ثانية", "%d ثانية"],
     m: ["أقل من دقيقة", "دقيقة واحدة", ["دقيقتان", "دقيقتين"], "%d دقائق", "%d دقيقة", "%d دقيقة"],
@@ -27,15 +36,13 @@ var symbolMap = {
     M: ["أقل من شهر", "شهر واحد", ["شهران", "شهرين"], "%d أشهر", "%d شهرا", "%d شهر"],
     y: ["أقل من عام", "عام واحد", ["عامان", "عامين"], "%d أعوام", "%d عامًا", "%d عام"],
   },
-  pluralize = function (u) {
-    return function (number, withoutSuffix, string, isFuture) {
-      var f = pluralForm(number),
-        str = plurals[u][pluralForm(number)];
-      if (f === 2) {
-        str = str[withoutSuffix ? 0 : 1];
-      }
-      return str.replace(/%d/i, number);
-    };
+  pluralize = (u) => (number, withoutSuffix, string, isFuture) => {
+    var f = pluralForm(number),
+      str = plurals[u][pluralForm(number)];
+    if (f === 2) {
+      str = str[withoutSuffix ? 0 : 1];
+    }
+    return str.replace(/%d/i, number);
   },
   months = [
     "يناير",
@@ -68,10 +75,8 @@ export default moment.defineLocale("ar-ly", {
     LLLL: "dddd D MMMM YYYY HH:mm",
   },
   meridiemParse: /ص|م/,
-  isPM: function (input) {
-    return "م" === input;
-  },
-  meridiem: function (hour, minute, isLower) {
+  isPM: (input) => "م" === input,
+  meridiem: (hour, minute, isLower) => {
     if (hour < 12) {
       return "ص";
     } else {
@@ -102,16 +107,8 @@ export default moment.defineLocale("ar-ly", {
     y: pluralize("y"),
     yy: pluralize("y"),
   },
-  preparse: function (string) {
-    return string.replace(/،/g, ",");
-  },
-  postformat: function (string) {
-    return string
-      .replace(/\d/g, function (match) {
-        return symbolMap[match];
-      })
-      .replace(/,/g, "،");
-  },
+  preparse: (string) => string.replace(/،/g, ","),
+  postformat: (string) => string.replace(/\d/g, (match) => symbolMap[match]).replace(/,/g, "،"),
   week: {
     dow: 6, // Saturday is the first day of the week.
     doy: 12, // The week that contains Jan 12th is the first week of the year.

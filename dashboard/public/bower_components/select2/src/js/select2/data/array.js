@@ -1,4 +1,4 @@
-define(["./select", "../utils", "jquery"], function (SelectAdapter, Utils, $) {
+define(["./select", "../utils", "jquery"], (SelectAdapter, Utils, $) => {
   function ArrayAdapter($element, options) {
     var data = options.get("data") || [];
 
@@ -10,9 +10,7 @@ define(["./select", "../utils", "jquery"], function (SelectAdapter, Utils, $) {
   Utils.Extend(ArrayAdapter, SelectAdapter);
 
   ArrayAdapter.prototype.select = function (data) {
-    var $option = this.$element.find("option").filter(function (i, elm) {
-      return elm.value == data.id.toString();
-    });
+    var $option = this.$element.find("option").filter((i, elm) => elm.value == data.id.toString());
 
     if ($option.length === 0) {
       $option = this.option(data);

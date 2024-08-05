@@ -1,18 +1,18 @@
 module("DATA-API");
 
-test('DATA-API: data-provide="datepicker" on input; focus', function () {
+test('DATA-API: data-provide="datepicker" on input; focus', () => {
   var input = $('<input data-provide="datepicker" />').appendTo("#qunit-fixture");
   input.focus();
   ok(input.data("datepicker"), 'datepicker is initialized by "focus" event');
 });
 
-test('DATA-API: data-provide="datepicker" on input; click', function () {
+test('DATA-API: data-provide="datepicker" on input; click', () => {
   var input = $('<input data-provide="datepicker" />').appendTo("#qunit-fixture");
   input.click();
   ok(input.data("datepicker"), 'datepicker is initialized by "focus" event');
 });
 
-test('DATA-API: data-provide="datepicker" on component', function () {
+test('DATA-API: data-provide="datepicker" on component', () => {
   var html, comp;
 
   html =
@@ -66,7 +66,7 @@ test('DATA-API: data-provide="datepicker" on component', function () {
   comp.remove();
 });
 
-test('DATA-API: data-provide="datepicker" on button', function () {
+test('DATA-API: data-provide="datepicker" on button', () => {
   var html, comp;
 
   html = '<button data-provide="datepicker">';
@@ -82,7 +82,7 @@ test('DATA-API: data-provide="datepicker" on button', function () {
   comp.remove();
 });
 
-test('DATA-API: data-provide="datepicker" on rangepicker', function () {
+test('DATA-API: data-provide="datepicker" on rangepicker', () => {
   var html, comp;
 
   html =

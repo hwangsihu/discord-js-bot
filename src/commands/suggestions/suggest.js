@@ -37,7 +37,8 @@ module.exports = {
   async messageRun(message, args, data) {
     const suggestion = args.join(" ");
     const response = await suggest(message.member, suggestion, data.settings);
-    if (typeof response === "boolean") return message.channel.safeSend("Your suggestion has been submitted!", 5);
+    if (typeof response === "boolean")
+      return message.channel.safeSend("Your suggestion has been submitted!", 5);
     else await message.safeReply(response);
   },
 
@@ -74,10 +75,19 @@ async function suggest(member, suggestion, settings) {
     )
     .setTimestamp();
 
-  let buttonsRow = new ActionRowBuilder().addComponents(
-    new ButtonBuilder().setCustomId("SUGGEST_APPROVE").setLabel("Approve").setStyle(ButtonStyle.Success),
-    new ButtonBuilder().setCustomId("SUGGEST_REJECT").setLabel("Reject").setStyle(ButtonStyle.Danger),
-    new ButtonBuilder().setCustomId("SUGGEST_DELETE").setLabel("Delete").setStyle(ButtonStyle.Secondary)
+  const buttonsRow = new ActionRowBuilder().addComponents(
+    new ButtonBuilder()
+      .setCustomId("SUGGEST_APPROVE")
+      .setLabel("Approve")
+      .setStyle(ButtonStyle.Success),
+    new ButtonBuilder()
+      .setCustomId("SUGGEST_REJECT")
+      .setLabel("Reject")
+      .setStyle(ButtonStyle.Danger),
+    new ButtonBuilder()
+      .setCustomId("SUGGEST_DELETE")
+      .setLabel("Delete")
+      .setStyle(ButtonStyle.Secondary)
   );
 
   try {

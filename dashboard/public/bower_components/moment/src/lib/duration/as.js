@@ -4,7 +4,7 @@ import { daysToMonths, monthsToDays } from "./bubble";
 
 export function as(units) {
   if (!this.isValid()) {
-    return NaN;
+    return Number.NaN;
   }
   var days;
   var months;
@@ -49,9 +49,14 @@ export function as(units) {
 // TODO: Use this.as('ms')?
 export function valueOf() {
   if (!this.isValid()) {
-    return NaN;
+    return Number.NaN;
   }
-  return this._milliseconds + this._days * 864e5 + (this._months % 12) * 2592e6 + toInt(this._months / 12) * 31536e6;
+  return (
+    this._milliseconds +
+    this._days * 864e5 +
+    (this._months % 12) * 2592e6 +
+    toInt(this._months / 12) * 31536e6
+  );
 }
 
 function makeAs(alias) {

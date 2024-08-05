@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(n) {
       if (r[n]) return r[n].exports;
       var s = (r[n] = { i: n, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = r),
-      (t.d = function (e, r, n) {
+      (t.d = (e, r, n) => {
         t.o(e, r) || Object.defineProperty(e, r, { configurable: !1, enumerable: !0, get: n });
       }),
-      (t.n = function (e) {
-        var r =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var r = e && e.__esModule ? () => e.default : () => e;
         return t.d(r, "a", r), r;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 189))
     );
   })({
-    0: function (t, r) {
+    0: (t, r) => {
       t.exports = e;
     },
-    1: function (e, r) {
+    1: (e, r) => {
       e.exports = t;
     },
-    189: function (e, t, r) {
+    189: (e, t, r) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), r(190);
       var n = r(1);
       n.datepickerLocale("ru", "ru", {
@@ -66,8 +57,29 @@
           "Ноябрь",
           "Декабрь",
         ],
-        monthNamesShort: ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"],
-        dayNames: ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"],
+        monthNamesShort: [
+          "Янв",
+          "Фев",
+          "Мар",
+          "Апр",
+          "Май",
+          "Июн",
+          "Июл",
+          "Авг",
+          "Сен",
+          "Окт",
+          "Ноя",
+          "Дек",
+        ],
+        dayNames: [
+          "воскресенье",
+          "понедельник",
+          "вторник",
+          "среда",
+          "четверг",
+          "пятница",
+          "суббота",
+        ],
         dayNamesShort: ["вск", "пнд", "втр", "срд", "чтв", "птн", "сбт"],
         dayNamesMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
         weekHeader: "Нед",
@@ -80,16 +92,14 @@
         n.locale("ru", {
           buttonText: { month: "Месяц", week: "Неделя", day: "День", list: "Повестка дня" },
           allDayText: "Весь день",
-          eventLimitText: function (e) {
-            return "+ ещё " + e;
-          },
+          eventLimitText: (e) => "+ ещё " + e,
           noEventsMessage: "Нет событий для отображения",
         });
     },
-    190: function (e, t, r) {
-      !(function (e, t) {
+    190: (e, t, r) => {
+      !((e, t) => {
         t(r(0));
-      })(0, function (e) {
+      })(0, (e) => {
         function t(e, t) {
           var r = e.split("_");
           return t % 10 == 1 && t % 100 != 11
@@ -125,8 +135,14 @@
         ];
         return e.defineLocale("ru", {
           months: {
-            format: "января_февраля_марта_апреля_мая_июня_июля_августа_сентября_октября_ноября_декабря".split("_"),
-            standalone: "январь_февраль_март_апрель_май_июнь_июль_август_сентябрь_октябрь_ноябрь_декабрь".split("_"),
+            format:
+              "января_февраля_марта_апреля_мая_июня_июля_августа_сентября_октября_ноября_декабря".split(
+                "_"
+              ),
+            standalone:
+              "январь_февраль_март_апрель_май_июнь_июль_август_сентябрь_октябрь_ноябрь_декабрь".split(
+                "_"
+              ),
           },
           monthsShort: {
             format: "янв._февр._мар._апр._мая_июня_июля_авг._сент._окт._нояб._дек.".split("_"),
@@ -163,7 +179,8 @@
             nextDay: "[Завтра, в] LT",
             lastDay: "[Вчера, в] LT",
             nextWeek: function (e) {
-              if (e.week() === this.week()) return 2 === this.day() ? "[Во] dddd, [в] LT" : "[В] dddd, [в] LT";
+              if (e.week() === this.week())
+                return 2 === this.day() ? "[Во] dddd, [в] LT" : "[В] dddd, [в] LT";
               switch (this.day()) {
                 case 0:
                   return "[В следующее] dddd, [в] LT";
@@ -178,7 +195,8 @@
               }
             },
             lastWeek: function (e) {
-              if (e.week() === this.week()) return 2 === this.day() ? "[Во] dddd, [в] LT" : "[В] dddd, [в] LT";
+              if (e.week() === this.week())
+                return 2 === this.day() ? "[Во] dddd, [в] LT" : "[В] dddd, [в] LT";
               switch (this.day()) {
                 case 0:
                   return "[В прошлое] dddd, [в] LT";
@@ -211,14 +229,10 @@
             yy: r,
           },
           meridiemParse: /ночи|утра|дня|вечера/i,
-          isPM: function (e) {
-            return /^(дня|вечера)$/.test(e);
-          },
-          meridiem: function (e, t, r) {
-            return e < 4 ? "ночи" : e < 12 ? "утра" : e < 17 ? "дня" : "вечера";
-          },
+          isPM: (e) => /^(дня|вечера)$/.test(e),
+          meridiem: (e, t, r) => (e < 4 ? "ночи" : e < 12 ? "утра" : e < 17 ? "дня" : "вечера"),
           dayOfMonthOrdinalParse: /\d{1,2}-(й|го|я)/,
-          ordinal: function (e, t) {
+          ordinal: (e, t) => {
             switch (t) {
               case "M":
               case "d":
@@ -237,5 +251,5 @@
         });
       });
     },
-  });
-});
+  })
+);

@@ -11,7 +11,8 @@ CKEDITOR.lang["vi"] = {
     btnUndo: "Phục hồi lại",
     changeTo: "Chuyển thành",
     errorLoading: "Lỗi khi đang nạp dịch vụ ứng dụng: %s.",
-    ieSpellDownload: "Chức năng kiểm tra chính tả chưa được cài đặt. Bạn có muốn tải về ngay bây giờ?",
+    ieSpellDownload:
+      "Chức năng kiểm tra chính tả chưa được cài đặt. Bạn có muốn tải về ngay bây giờ?",
     manyChanges: "Hoàn tất kiểm tra chính tả: %1 từ đã được thay đổi",
     noChanges: "Hoàn tất kiểm tra chính tả: Không có từ nào được thay đổi",
     noMispell: "Hoàn tất kiểm tra chính tả: Không có lỗi chính tả",
@@ -150,7 +151,8 @@ CKEDITOR.lang["vi"] = {
     title: "Dán theo định dạng văn bản thuần",
   },
   pastefromword: {
-    confirmCleanup: "Văn bản bạn muốn dán có kèm định dạng của Word. Bạn có muốn loại bỏ định dạng Word trước khi dán?",
+    confirmCleanup:
+      "Văn bản bạn muốn dán có kèm định dạng của Word. Bạn có muốn loại bỏ định dạng Word trước khi dán?",
     error: "Không thể để làm sạch các dữ liệu dán do một lỗi nội bộ",
     title: "Dán với định dạng Word",
     toolbar: "Dán với định dạng Word",
@@ -158,7 +160,10 @@ CKEDITOR.lang["vi"] = {
   notification: { closed: "Notification closed." },
   maximize: { maximize: "Phóng to tối đa", minimize: "Thu nhỏ" },
   magicline: { title: "Chèn đoạn vào đây" },
-  list: { bulletedlist: "Chèn/Xoá Danh sách không thứ tự", numberedlist: "Chèn/Xoá Danh sách có thứ tự" },
+  list: {
+    bulletedlist: "Chèn/Xoá Danh sách không thứ tự",
+    numberedlist: "Chèn/Xoá Danh sách có thứ tự",
+  },
   link: {
     acccessKey: "Phím hỗ trợ truy cập",
     advanced: "Mở rộng",
@@ -346,7 +351,8 @@ CKEDITOR.lang["vi"] = {
     generalTab: "Tab chung",
     advancedTab: "Tab mở rộng",
     validateNumberFailed: "Giá trị này không phải là số.",
-    confirmNewPage: "Mọi thay đổi không được lưu lại, nội dung này sẽ bị mất. Bạn có chắc chắn muốn tải một trang mới?",
+    confirmNewPage:
+      "Mọi thay đổi không được lưu lại, nội dung này sẽ bị mất. Bạn có chắc chắn muốn tải một trang mới?",
     confirmCancel: "Một vài tùy chọn đã bị thay đổi. Bạn có chắc chắn muốn đóng hộp thoại?",
     options: "Tùy chọn",
     target: "Đích đến",

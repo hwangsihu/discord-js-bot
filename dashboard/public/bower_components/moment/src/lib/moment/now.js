@@ -1,3 +1,1 @@
-export var now = function () {
-  return Date.now ? Date.now() : +new Date();
-};
+export var now = () => (Date.now ? Date.now() : +new Date());

@@ -8,7 +8,7 @@
  *
  * http://api.jqueryui.com/category/ui-core/
  */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["jquery"], factory);
@@ -16,7 +16,7 @@
     // Browser globals
     factory(jQuery);
   }
-})(function ($) {
+})(($) => {
   // $.ui might exist from components with no dependencies, e.g., $.ui.position
   $.ui = $.ui || {};
 
@@ -55,14 +55,18 @@
             if (excludeStaticParent && parent.css("position") === "static") {
               return false;
             }
-            return overflowRegex.test(parent.css("overflow") + parent.css("overflow-y") + parent.css("overflow-x"));
+            return overflowRegex.test(
+              parent.css("overflow") + parent.css("overflow-y") + parent.css("overflow-x")
+            );
           })
           .eq(0);
 
-      return position === "fixed" || !scrollParent.length ? $(this[0].ownerDocument || document) : scrollParent;
+      return position === "fixed" || !scrollParent.length
+        ? $(this[0].ownerDocument || document)
+        : scrollParent;
     },
 
-    uniqueId: (function () {
+    uniqueId: (() => {
       var uuid = 0;
 
       return function () {
@@ -123,21 +127,13 @@
 
   $.extend($.expr[":"], {
     data: $.expr.createPseudo
-      ? $.expr.createPseudo(function (dataName) {
-          return function (elem) {
-            return !!$.data(elem, dataName);
-          };
-        })
+      ? $.expr.createPseudo((dataName) => (elem) => !!$.data(elem, dataName))
       : // support: jQuery <1.8
-        function (elem, i, match) {
-          return !!$.data(elem, match[3]);
-        },
+        (elem, i, match) => !!$.data(elem, match[3]),
 
-    focusable: function (element) {
-      return focusable(element, !isNaN($.attr(element, "tabindex")));
-    },
+    focusable: (element) => focusable(element, !isNaN($.attr(element, "tabindex"))),
 
-    tabbable: function (element) {
+    tabbable: (element) => {
       var tabIndex = $.attr(element, "tabindex"),
         isTabIndexNaN = isNaN(tabIndex);
       return (isTabIndexNaN || tabIndex >= 0) && focusable(element, !isTabIndexNaN);
@@ -146,7 +142,7 @@
 
   // support: jQuery <1.8
   if (!$("<a>").outerWidth(1).jquery) {
-    $.each(["Width", "Height"], function (i, name) {
+    $.each(["Width", "Height"], (i, name) => {
       var side = name === "Width" ? ["Left", "Right"] : ["Top", "Bottom"],
         type = name.toLowerCase(),
         orig = {
@@ -158,12 +154,12 @@
 
       function reduce(elem, size, border, margin) {
         $.each(side, function () {
-          size -= parseFloat($.css(elem, "padding" + this)) || 0;
+          size -= Number.parseFloat($.css(elem, "padding" + this)) || 0;
           if (border) {
-            size -= parseFloat($.css(elem, "border" + this + "Width")) || 0;
+            size -= Number.parseFloat($.css(elem, "border" + this + "Width")) || 0;
           }
           if (margin) {
-            size -= parseFloat($.css(elem, "margin" + this)) || 0;
+            size -= Number.parseFloat($.css(elem, "margin" + this)) || 0;
           }
         });
         return size;
@@ -200,42 +196,40 @@
 
   // support: jQuery 1.6.1, 1.6.2 (http://bugs.jquery.com/ticket/9413)
   if ($("<a>").data("a-b", "a").removeData("a-b").data("a-b")) {
-    $.fn.removeData = (function (removeData) {
-      return function (key) {
+    $.fn.removeData = ((removeData) =>
+      function (key) {
         if (arguments.length) {
           return removeData.call(this, $.camelCase(key));
         } else {
           return removeData.call(this);
         }
-      };
-    })($.fn.removeData);
+      })($.fn.removeData);
   }
 
   // deprecated
   $.ui.ie = !!/msie [\w.]+/.exec(navigator.userAgent.toLowerCase());
 
   $.fn.extend({
-    focus: (function (orig) {
-      return function (delay, fn) {
+    focus: ((orig) =>
+      function (delay, fn) {
         return typeof delay === "number"
           ? this.each(function () {
-              var elem = this;
-              setTimeout(function () {
-                $(elem).focus();
+              setTimeout(() => {
+                $(this).focus();
                 if (fn) {
-                  fn.call(elem);
+                  fn.call(this);
                 }
               }, delay);
             })
           : orig.apply(this, arguments);
-      };
-    })($.fn.focus),
+      })($.fn.focus),
 
-    disableSelection: (function () {
-      var eventType = "onselectstart" in document.createElement("div") ? "selectstart" : "mousedown";
+    disableSelection: (() => {
+      var eventType =
+        "onselectstart" in document.createElement("div") ? "selectstart" : "mousedown";
 
       return function () {
-        return this.bind(eventType + ".ui-disableSelection", function (event) {
+        return this.bind(eventType + ".ui-disableSelection", (event) => {
           event.preventDefault();
         });
       };
@@ -264,7 +258,7 @@
             // other browsers return a string
             // we ignore the case of nested elements with an explicit value of 0
             // <div style="z-index: -10;"><div style="z-index: 0;"></div></div>
-            value = parseInt(elem.css("zIndex"), 10);
+            value = Number.parseInt(elem.css("zIndex"), 10);
             if (!isNaN(value) && value !== 0) {
               return value;
             }
@@ -279,7 +273,7 @@
 
   // $.ui.plugin is deprecated. Use $.widget() extensions instead.
   $.ui.plugin = {
-    add: function (module, option, set) {
+    add: (module, option, set) => {
       var i,
         proto = $.ui[module].prototype;
       for (i in set) {
@@ -287,7 +281,7 @@
         proto.plugins[i].push([option, set[i]]);
       }
     },
-    call: function (instance, name, args, allowDisconnected) {
+    call: (instance, name, args, allowDisconnected) => {
       var i,
         set = instance.plugins[name];
 
@@ -295,7 +289,10 @@
         return;
       }
 
-      if (!allowDisconnected && (!instance.element[0].parentNode || instance.element[0].parentNode.nodeType === 11)) {
+      if (
+        !allowDisconnected &&
+        (!instance.element[0].parentNode || instance.element[0].parentNode.nodeType === 11)
+      ) {
         return;
       }
 

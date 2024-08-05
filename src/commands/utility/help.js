@@ -40,7 +40,7 @@ module.exports = {
   },
 
   async messageRun(message, args, data) {
-    let trigger = args[0];
+    const trigger = args[0];
 
     // !help
     if (!trigger) {
@@ -61,7 +61,7 @@ module.exports = {
   },
 
   async interactionRun(interaction) {
-    let cmdName = interaction.options.getString("command");
+    const cmdName = interaction.options.getString("command");
 
     // !help
     if (!cmdName) {
@@ -106,13 +106,21 @@ async function getHelpMenu({ client, guild }) {
   );
 
   // Buttons Row
-  let components = [];
+  const components = [];
   components.push(
-    new ButtonBuilder().setCustomId("previousBtn").setEmoji("⬅️").setStyle(ButtonStyle.Secondary).setDisabled(true),
-    new ButtonBuilder().setCustomId("nextBtn").setEmoji("➡️").setStyle(ButtonStyle.Secondary).setDisabled(true)
+    new ButtonBuilder()
+      .setCustomId("previousBtn")
+      .setEmoji("⬅️")
+      .setStyle(ButtonStyle.Secondary)
+      .setDisabled(true),
+    new ButtonBuilder()
+      .setCustomId("nextBtn")
+      .setEmoji("➡️")
+      .setStyle(ButtonStyle.Secondary)
+      .setDisabled(true)
   );
 
-  let buttonsRow = new ActionRowBuilder().addComponents(components);
+  const buttonsRow = new ActionRowBuilder().addComponents(components);
 
   const embed = new EmbedBuilder()
     .setColor(EMBED_COLORS.BOT_EMBED)
@@ -146,7 +154,7 @@ const waiter = (msg, userId, prefix) => {
 
   let arrEmbeds = [];
   let currentPage = 0;
-  let menuRow = msg.components[0];
+  const menuRow = msg.components[0];
   let buttonsRow = msg.components[1];
 
   collector.on("collect", async (response) => {
@@ -156,31 +164,44 @@ const waiter = (msg, userId, prefix) => {
     switch (response.customId) {
       case "help-menu": {
         const cat = response.values[0].toUpperCase();
-        arrEmbeds = prefix ? getMsgCategoryEmbeds(msg.client, cat, prefix) : getSlashCategoryEmbeds(msg.client, cat);
+        arrEmbeds = prefix
+          ? getMsgCategoryEmbeds(msg.client, cat, prefix)
+          : getSlashCategoryEmbeds(msg.client, cat);
         currentPage = 0;
 
         // Buttons Row
-        let components = [];
+        const components = [];
         buttonsRow.components.forEach((button) =>
-          components.push(ButtonBuilder.from(button).setDisabled(arrEmbeds.length > 1 ? false : true))
+          components.push(
+            ButtonBuilder.from(button).setDisabled(arrEmbeds.length > 1 ? false : true)
+          )
         );
 
         buttonsRow = new ActionRowBuilder().addComponents(components);
-        msg.editable && (await msg.edit({ embeds: [arrEmbeds[currentPage]], components: [menuRow, buttonsRow] }));
+        msg.editable &&
+          (await msg.edit({ embeds: [arrEmbeds[currentPage]], components: [menuRow, buttonsRow] }));
         break;
       }
 
       case "previousBtn":
         if (currentPage !== 0) {
           --currentPage;
-          msg.editable && (await msg.edit({ embeds: [arrEmbeds[currentPage]], components: [menuRow, buttonsRow] }));
+          msg.editable &&
+            (await msg.edit({
+              embeds: [arrEmbeds[currentPage]],
+              components: [menuRow, buttonsRow],
+            }));
         }
         break;
 
       case "nextBtn":
         if (currentPage < arrEmbeds.length - 1) {
           currentPage++;
-          msg.editable && (await msg.edit({ embeds: [arrEmbeds[currentPage]], components: [menuRow, buttonsRow] }));
+          msg.editable &&
+            (await msg.edit({
+              embeds: [arrEmbeds[currentPage]],
+              components: [menuRow, buttonsRow],
+            }));
         }
         break;
     }
@@ -217,7 +238,10 @@ function getSlashCategoryEmbeds(client, category) {
       .join(", ");
 
     collector +=
-      "**Available Filters:**\n" + `${availableFilters}` + `*\n\n**Available Generators**\n` + `${availableGens}`;
+      "**Available Filters:**\n" +
+      `${availableFilters}` +
+      `*\n\n**Available Generators**\n` +
+      `${availableGens}`;
 
     const embed = new EmbedBuilder()
       .setColor(EMBED_COLORS.BOT_EMBED)
@@ -229,7 +253,9 @@ function getSlashCategoryEmbeds(client, category) {
   }
 
   // For REMAINING Categories
-  const commands = Array.from(client.slashCommands.filter((cmd) => cmd.category === category).values());
+  const commands = Array.from(
+    client.slashCommands.filter((cmd) => cmd.category === category).values()
+  );
 
   if (commands.length === 0) {
     const embed = new EmbedBuilder()
@@ -245,14 +271,19 @@ function getSlashCategoryEmbeds(client, category) {
   const arrEmbeds = [];
 
   while (commands.length) {
-    let toAdd = commands.splice(0, commands.length > CMDS_PER_PAGE ? CMDS_PER_PAGE : commands.length);
+    let toAdd = commands.splice(
+      0,
+      commands.length > CMDS_PER_PAGE ? CMDS_PER_PAGE : commands.length
+    );
 
     toAdd = toAdd.map((cmd) => {
-      const subCmds = cmd.slashCommand.options?.filter((opt) => opt.type === ApplicationCommandOptionType.Subcommand);
+      const subCmds = cmd.slashCommand.options?.filter(
+        (opt) => opt.type === ApplicationCommandOptionType.Subcommand
+      );
       const subCmdsString = subCmds?.map((s) => s.name).join(", ");
 
       return `\`/${cmd.name}\`\n ❯ **Description**: ${cmd.description}\n ${
-        !subCmds?.length ? "" : `❯ **SubCommands [${subCmds?.length}]**: ${subCmdsString}\n`
+        subCmds?.length ? `❯ **SubCommands [${subCmds?.length}]**: ${subCmdsString}\n` : ""
       } `;
     });
 
@@ -324,7 +355,10 @@ function getMsgCategoryEmbeds(client, category, prefix) {
   const arrEmbeds = [];
 
   while (commands.length) {
-    let toAdd = commands.splice(0, commands.length > CMDS_PER_PAGE ? CMDS_PER_PAGE : commands.length);
+    let toAdd = commands.splice(
+      0,
+      commands.length > CMDS_PER_PAGE ? CMDS_PER_PAGE : commands.length
+    );
     toAdd = toAdd.map((cmd) => `\`${prefix}${cmd.name}\`\n ❯ ${cmd.description}\n`);
     arrSplitted.push(toAdd);
   }

@@ -1,12 +1,12 @@
-define(["./raphael.core"], function (R) {
+define(["./raphael.core"], (R) => {
   if (R && !R.svg) {
     return;
   }
 
   var has = "hasOwnProperty",
     Str = String,
-    toFloat = parseFloat,
-    toInt = parseInt,
+    toFloat = Number.parseFloat,
+    toInt = Number.parseInt,
     math = Math,
     mmax = math.max,
     abs = math.abs,
@@ -27,7 +27,7 @@ define(["./raphael.core"], function (R) {
   R.toString = function () {
     return "Your browser supports SVG.\nYou are running Rapha\xebl " + this.version;
   };
-  var $ = function (el, attr) {
+  var $ = (el, attr) => {
       if (attr) {
         if (typeof el == "string") {
           el = $(el);
@@ -46,17 +46,17 @@ define(["./raphael.core"], function (R) {
       }
       return el;
     },
-    addGradientFill = function (element, gradient) {
+    addGradientFill = (element, gradient) => {
       var type = "linear",
         id = element.id + gradient,
         fx = 0.5,
         fy = 0.5,
         o = element.node,
-        SVG = element.paper,
+        svg = element.paper,
         s = o.style,
         el = R._g.doc.getElementById(id);
       if (!el) {
-        gradient = Str(gradient).replace(R._radial_gradient, function (all, _fx, _fy) {
+        gradient = Str(gradient).replace(R._radial_gradient, (all, _fx, _fy) => {
           type = "radial";
           if (_fx && _fy) {
             fx = toFloat(_fx);
@@ -96,7 +96,7 @@ define(["./raphael.core"], function (R) {
         id = id.replace(/[\(\)\s,\xb0#]/g, "_");
 
         if (element.gradient && id != element.gradient.id) {
-          SVG.defs.removeChild(element.gradient);
+          svg.defs.removeChild(element.gradient);
           delete element.gradient;
         }
 
@@ -118,7 +118,7 @@ define(["./raphael.core"], function (R) {
                   gradientTransform: element.matrix.invert(),
                 }
           );
-          SVG.defs.appendChild(el);
+          svg.defs.appendChild(el);
           for (var i = 0, ii = dots.length; i < ii; i++) {
             el.appendChild(
               $("stop", {
@@ -140,23 +140,26 @@ define(["./raphael.core"], function (R) {
       s.fillOpacity = 1;
       return 1;
     },
-    isIE9or10 = function () {
+    isIe9or10 = () => {
       var mode = document.documentMode;
       return mode && (mode === 9 || mode === 10);
     },
-    fillurl = function (id) {
-      if (isIE9or10()) {
+    fillurl = (id) => {
+      if (isIe9or10()) {
         return "url('#" + id + "')";
       }
       var location = document.location;
-      var locationString = location.protocol + "//" + location.host + location.pathname + location.search;
+      var locationString =
+        location.protocol + "//" + location.host + location.pathname + location.search;
       return "url('" + locationString + "#" + id + "')";
     },
-    updatePosition = function (o) {
+    updatePosition = (o) => {
       var bbox = o.getBBox(1);
-      $(o.pattern, { patternTransform: o.matrix.invert() + " translate(" + bbox.x + "," + bbox.y + ")" });
+      $(o.pattern, {
+        patternTransform: o.matrix.invert() + " translate(" + bbox.x + "," + bbox.y + ")",
+      });
     },
-    addArrow = function (o, value, isEnd) {
+    addArrow = (o, value, isEnd) => {
       if (o.type == "path") {
         var values = Str(value).toLowerCase().split("-"),
           p = o.paper,
@@ -229,7 +232,9 @@ define(["./raphael.core"], function (R) {
         if (type != "none") {
           var pathId = "raphael-marker-" + type,
             markerId = "raphael-marker-" + se + type + w + h + "-obj" + o.id;
-          if (!R._g.doc.getElementById(pathId)) {
+          if (R._g.doc.getElementById(pathId)) {
+            markerCounter[pathId]++;
+          } else {
             p.defs.appendChild(
               $($("path"), {
                 "stroke-linecap": "round",
@@ -238,12 +243,13 @@ define(["./raphael.core"], function (R) {
               })
             );
             markerCounter[pathId] = 1;
-          } else {
-            markerCounter[pathId]++;
           }
           var marker = R._g.doc.getElementById(markerId),
             use;
-          if (!marker) {
+          if (marker) {
+            markerCounter[markerId]++;
+            use = marker.getElementsByTagName("use")[0];
+          } else {
             marker = $($("marker"), {
               id: markerId,
               markerHeight: h,
@@ -255,15 +261,17 @@ define(["./raphael.core"], function (R) {
             use = $($("use"), {
               "xlink:href": "#" + pathId,
               transform:
-                (isEnd ? "rotate(180 " + w / 2 + " " + h / 2 + ") " : E) + "scale(" + w / t + "," + h / t + ")",
+                (isEnd ? "rotate(180 " + w / 2 + " " + h / 2 + ") " : E) +
+                "scale(" +
+                w / t +
+                "," +
+                h / t +
+                ")",
               "stroke-width": (1 / ((w / t + h / t) / 2)).toFixed(4),
             });
             marker.appendChild(use);
             p.defs.appendChild(marker);
             markerCounter[markerId] = 1;
-          } else {
-            markerCounter[markerId]++;
-            use = marker.getElementsByTagName("use")[0];
           }
           $(use, attr);
           var delta = dx * (type != "diamond" && type != "oval");
@@ -319,11 +327,14 @@ define(["./raphael.core"], function (R) {
       "--.": [8, 3, 1, 3],
       "--..": [8, 3, 1, 3, 1, 3],
     },
-    addDashes = function (o, value, params) {
+    addDashes = (o, value, params) => {
       value = dasharray[Str(value).toLowerCase()];
       if (value) {
         var width = o.attrs["stroke-width"] || "1",
-          butt = { round: width, square: width, butt: 0 }[o.attrs["stroke-linecap"] || params["stroke-linecap"]] || 0,
+          butt =
+            { round: width, square: width, butt: 0 }[
+              o.attrs["stroke-linecap"] || params["stroke-linecap"]
+            ] || 0,
           dashes = [],
           i = value.length;
         while (i--) {
@@ -334,7 +345,7 @@ define(["./raphael.core"], function (R) {
         $(o.node, { "stroke-dasharray": "none" });
       }
     },
-    setFillAndStroke = function (o, params) {
+    setFillAndStroke = (o, params) => {
       var node = o.node,
         attrs = o.attrs,
         vis = node.style.visibility;
@@ -502,17 +513,17 @@ define(["./raphael.core"], function (R) {
               addDashes(o, value, params);
               break;
             case "fill":
-              var isURL = Str(value).match(R._ISURL);
-              if (isURL) {
+              var isUrl = Str(value).match(R._ISURL);
+              if (isUrl) {
                 el = $("pattern");
                 var ig = $("image");
                 el.id = R.createUUID();
                 $(el, { x: 0, y: 0, patternUnits: "userSpaceOnUse", height: 1, width: 1 });
-                $(ig, { x: 0, y: 0, "xlink:href": isURL[1] });
+                $(ig, { x: 0, y: 0, "xlink:href": isUrl[1] });
                 el.appendChild(ig);
 
-                (function (el) {
-                  R._preload(isURL[1], function () {
+                ((el) => {
+                  R._preload(isUrl[1], function () {
                     var w = this.offsetWidth,
                       h = this.offsetHeight;
                     $(el, { width: w, height: h });
@@ -540,7 +551,9 @@ define(["./raphael.core"], function (R) {
                 addGradientFill(o, value)
               ) {
                 if ("opacity" in attrs || "fill-opacity" in attrs) {
-                  var gradient = R._g.doc.getElementById(node.getAttribute("fill").replace(/^url\(#|\)$/g, E));
+                  var gradient = R._g.doc.getElementById(
+                    node.getAttribute("fill").replace(/^url\(#|\)$/g, E)
+                  );
                   if (gradient) {
                     var stops = gradient.getElementsByTagName("stop");
                     $(stops[stops.length - 1], {
@@ -554,7 +567,8 @@ define(["./raphael.core"], function (R) {
                 attrs.fill = "none";
                 break;
               }
-              clr[has]("opacity") && $(node, { "fill-opacity": clr.opacity > 1 ? clr.opacity / 100 : clr.opacity });
+              clr[has]("opacity") &&
+                $(node, { "fill-opacity": clr.opacity > 1 ? clr.opacity / 100 : clr.opacity });
             case "stroke":
               clr = R.getRGB(value);
               node.setAttribute(att, clr.hex);
@@ -567,7 +581,8 @@ define(["./raphael.core"], function (R) {
               }
               break;
             case "gradient":
-              (o.type == "circle" || o.type == "ellipse" || Str(value).charAt() != "r") && addGradientFill(o, value);
+              (o.type == "circle" || o.type == "ellipse" || Str(value).charAt() != "r") &&
+                addGradientFill(o, value);
               break;
             case "opacity":
               if (attrs.gradient && !attrs[has]("stroke-opacity")) {
@@ -576,7 +591,9 @@ define(["./raphael.core"], function (R) {
             // fall
             case "fill-opacity":
               if (attrs.gradient) {
-                gradient = R._g.doc.getElementById(node.getAttribute("fill").replace(/^url\(#|\)$/g, E));
+                gradient = R._g.doc.getElementById(
+                  node.getAttribute("fill").replace(/^url\(#|\)$/g, E)
+                );
                 if (gradient) {
                   stops = gradient.getElementsByTagName("stop");
                   $(stops[stops.length - 1], { "stop-opacity": value });
@@ -585,9 +602,7 @@ define(["./raphael.core"], function (R) {
               }
             default:
               att == "font-size" && (value = toInt(value, 10) + "px");
-              var cssrule = att.replace(/(\-.)/g, function (w) {
-                return w.substring(1).toUpperCase();
-              });
+              var cssrule = att.replace(/(\-.)/g, (w) => w.substring(1).toUpperCase());
               node.style[cssrule] = value;
               o._.dirty = 1;
               node.setAttribute(att, value);
@@ -600,7 +615,7 @@ define(["./raphael.core"], function (R) {
       node.style.visibility = vis;
     },
     leading = 1.2,
-    tuneText = function (el, params) {
+    tuneText = (el, params) => {
       if (
         el.type != "text" ||
         !(
@@ -616,7 +631,12 @@ define(["./raphael.core"], function (R) {
       var a = el.attrs,
         node = el.node,
         fontSize = node.firstChild
-          ? toInt(R._g.doc.defaultView.getComputedStyle(node.firstChild, E).getPropertyValue("font-size"), 10)
+          ? toInt(
+              R._g.doc.defaultView
+                .getComputedStyle(node.firstChild, E)
+                .getPropertyValue("font-size"),
+              10
+            )
           : 10;
 
       if (params[has]("text")) {
@@ -649,7 +669,7 @@ define(["./raphael.core"], function (R) {
         dif = a.y - (bb.y + bb.height / 2);
       dif && R.is(dif, "finite") && $(tspans[0], { dy: dif });
     },
-    getRealNode = function (node) {
+    getRealNode = (node) => {
       if (node.parentNode && node.parentNode.tagName.toLowerCase() === "a") {
         return node.parentNode;
       } else {
@@ -753,10 +773,10 @@ define(["./raphael.core"], function (R) {
   Element.prototype = elproto;
   elproto.constructor = Element;
 
-  R._engine.path = function (pathString, SVG) {
+  R._engine.path = (pathString, svg) => {
     var el = $("path");
-    SVG.canvas && SVG.canvas.appendChild(el);
-    var p = new Element(el, SVG);
+    svg.canvas && svg.canvas.appendChild(el);
+    var p = new Element(el, svg);
     p.type = "path";
     setFillAndStroke(p, {
       fill: "none",
@@ -1226,29 +1246,27 @@ define(["./raphael.core"], function (R) {
     return this;
   };
   elproto.blur = function (size) {
-    // Experimental. No Safari support. Use it on your own risk.
-    var t = this;
     if (+size !== 0) {
       var fltr = $("filter"),
         blur = $("feGaussianBlur");
-      t.attrs.blur = size;
+      this.attrs.blur = size;
       fltr.id = R.createUUID();
       $(blur, { stdDeviation: +size || 1.5 });
       fltr.appendChild(blur);
-      t.paper.defs.appendChild(fltr);
-      t._blur = fltr;
-      $(t.node, { filter: "url(#" + fltr.id + ")" });
+      this.paper.defs.appendChild(fltr);
+      this._blur = fltr;
+      $(this.node, { filter: "url(#" + fltr.id + ")" });
     } else {
-      if (t._blur) {
-        t._blur.parentNode.removeChild(t._blur);
-        delete t._blur;
-        delete t.attrs.blur;
+      if (this._blur) {
+        this._blur.parentNode.removeChild(this._blur);
+        delete this._blur;
+        delete this.attrs.blur;
       }
-      t.node.removeAttribute("filter");
+      this.node.removeAttribute("filter");
     }
-    return t;
+    return this;
   };
-  R._engine.circle = function (svg, x, y, r) {
+  R._engine.circle = (svg, x, y, r) => {
     var el = $("circle");
     svg.canvas && svg.canvas.appendChild(el);
     var res = new Element(el, svg);
@@ -1257,16 +1275,25 @@ define(["./raphael.core"], function (R) {
     $(el, res.attrs);
     return res;
   };
-  R._engine.rect = function (svg, x, y, w, h, r) {
+  R._engine.rect = (svg, x, y, w, h, r) => {
     var el = $("rect");
     svg.canvas && svg.canvas.appendChild(el);
     var res = new Element(el, svg);
-    res.attrs = { x: x, y: y, width: w, height: h, rx: r || 0, ry: r || 0, fill: "none", stroke: "#000" };
+    res.attrs = {
+      x: x,
+      y: y,
+      width: w,
+      height: h,
+      rx: r || 0,
+      ry: r || 0,
+      fill: "none",
+      stroke: "#000",
+    };
     res.type = "rect";
     $(el, res.attrs);
     return res;
   };
-  R._engine.ellipse = function (svg, x, y, rx, ry) {
+  R._engine.ellipse = (svg, x, y, rx, ry) => {
     var el = $("ellipse");
     svg.canvas && svg.canvas.appendChild(el);
     var res = new Element(el, svg);
@@ -1275,7 +1302,7 @@ define(["./raphael.core"], function (R) {
     $(el, res.attrs);
     return res;
   };
-  R._engine.image = function (svg, src, x, y, w, h) {
+  R._engine.image = (svg, src, x, y, w, h) => {
     var el = $("image");
     $(el, { x: x, y: y, width: w, height: h, preserveAspectRatio: "none" });
     el.setAttributeNS(xlink, "href", src);
@@ -1285,7 +1312,7 @@ define(["./raphael.core"], function (R) {
     res.type = "image";
     return res;
   };
-  R._engine.text = function (svg, x, y, text) {
+  R._engine.text = (svg, x, y, text) => {
     var el = $("text");
     svg.canvas && svg.canvas.appendChild(el);
     var res = new Element(el, svg);
@@ -1313,7 +1340,7 @@ define(["./raphael.core"], function (R) {
     }
     return this;
   };
-  R._engine.create = function () {
+  R._engine.create = () => {
     var con = R._getContainer.apply(0, arguments),
       container = con && con.container,
       x = con.x,
@@ -1355,7 +1382,7 @@ define(["./raphael.core"], function (R) {
     container.canvas = cnvs;
     container.clear();
     container._left = container._top = 0;
-    isFloating && (container.renderfix = function () {});
+    isFloating && (container.renderfix = () => {});
     container.renderfix();
     return container;
   };
@@ -1436,7 +1463,9 @@ define(["./raphael.core"], function (R) {
       c.removeChild(c.firstChild);
     }
     this.bottom = this.top = null;
-    (this.desc = $("desc")).appendChild(R._g.doc.createTextNode("Created with Rapha\xebl " + R.version));
+    (this.desc = $("desc")).appendChild(
+      R._g.doc.createTextNode("Created with Rapha\xebl " + R.version)
+    );
     c.appendChild(this.desc);
     c.appendChild((this.defs = $("defs")));
   };
@@ -1456,13 +1485,12 @@ define(["./raphael.core"], function (R) {
   var setproto = R.st;
   for (var method in elproto)
     if (elproto[has](method) && !setproto[has](method)) {
-      setproto[method] = (function (methodname) {
-        return function () {
+      setproto[method] = ((methodname) =>
+        function () {
           var arg = arguments;
-          return this.forEach(function (el) {
+          return this.forEach((el) => {
             el[methodname].apply(el, arg);
           });
-        };
-      })(method);
+        })(method);
     }
 });

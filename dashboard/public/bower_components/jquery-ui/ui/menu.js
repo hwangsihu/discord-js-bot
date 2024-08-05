@@ -8,7 +8,7 @@
  *
  * http://api.jqueryui.com/menu/
  */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["jquery", "./core", "./widget", "./position"], factory);
@@ -16,8 +16,8 @@
     // Browser globals
     factory(jQuery);
   }
-})(function ($) {
-  return $.widget("ui.menu", {
+})(($) =>
+  $.widget("ui.menu", {
     version: "1.11.4",
     defaultElement: "<ul>",
     delay: 300,
@@ -61,7 +61,7 @@
       this._on({
         // Prevent focus from sticking to links inside menu after clicking
         // them (focus should always stay on UL during navigation).
-        "mousedown .ui-menu-item": function (event) {
+        "mousedown .ui-menu-item": (event) => {
           event.preventDefault();
         },
         "click .ui-menu-item": function (event) {
@@ -77,7 +77,10 @@
             // Open submenu on click
             if (target.has(".ui-menu").length) {
               this.expand(event);
-            } else if (!this.element.is(":focus") && $(this.document[0].activeElement).closest(".ui-menu").length) {
+            } else if (
+              !this.element.is(":focus") &&
+              $(this.document[0].activeElement).closest(".ui-menu").length
+            ) {
               // Redirect focus to the menu
               this.element.trigger("focus", [true]);
 
@@ -233,7 +236,10 @@
           }
 
           match = this._filterMenuItems(character);
-          match = skip && match.index(this.active.next()) !== -1 ? this.active.nextAll(".ui-menu-item") : match;
+          match =
+            skip && match.index(this.active.next()) !== -1
+              ? this.active.nextAll(".ui-menu-item")
+              : match;
 
           // If no matches on the current filter, reset to the last character pressed
           // to move down the menu to the first item that starts with that character
@@ -333,7 +339,10 @@
 
     _setOption: function (key, value) {
       if (key === "icons") {
-        this.element.find(".ui-menu-icon").removeClass(this.options.icons.submenu).addClass(value.submenu);
+        this.element
+          .find(".ui-menu-icon")
+          .removeClass(this.options.icons.submenu)
+          .addClass(value.submenu);
       }
       if (key === "disabled") {
         this.element.toggleClass("ui-state-disabled", !!value).attr("aria-disabled", value);
@@ -378,8 +387,8 @@
     _scrollIntoView: function (item) {
       var borderTop, paddingTop, offset, scroll, elementHeight, itemHeight;
       if (this._hasScroll()) {
-        borderTop = parseFloat($.css(this.activeMenu[0], "borderTopWidth")) || 0;
-        paddingTop = parseFloat($.css(this.activeMenu[0], "paddingTop")) || 0;
+        borderTop = Number.parseFloat($.css(this.activeMenu[0], "borderTopWidth")) || 0;
+        paddingTop = Number.parseFloat($.css(this.activeMenu[0], "paddingTop")) || 0;
         offset = item.offset().top - this.activeMenu.offset().top - borderTop - paddingTop;
         scroll = this.activeMenu.scrollTop();
         elementHeight = this.activeMenu.height();
@@ -432,7 +441,11 @@
       );
 
       clearTimeout(this.timer);
-      this.element.find(".ui-menu").not(submenu.parents(".ui-menu")).hide().attr("aria-hidden", "true");
+      this.element
+        .find(".ui-menu")
+        .not(submenu.parents(".ui-menu"))
+        .hide()
+        .attr("aria-hidden", "true");
 
       submenu.show().removeAttr("aria-hidden").attr("aria-expanded", "true").position(position);
     },
@@ -441,7 +454,9 @@
       clearTimeout(this.timer);
       this.timer = this._delay(function () {
         // If we were passed an event, look for the submenu that contains the event
-        var currentMenu = all ? this.element : $(event && event.target).closest(this.element.find(".ui-menu"));
+        var currentMenu = all
+          ? this.element
+          : $(event && event.target).closest(this.element.find(".ui-menu"));
 
         // If we found no valid submenu ancestor, use the main menu to close all sub menus anyway
         if (!currentMenu.length) {
@@ -473,11 +488,9 @@
         .removeClass("ui-state-active");
     },
 
-    _closeOnDocumentClick: function (event) {
-      return !$(event.target).closest(".ui-menu").length;
-    },
+    _closeOnDocumentClick: (event) => !$(event.target).closest(".ui-menu").length,
 
-    _isDivider: function (item) {
+    _isDivider: (item) => {
       // Match hyphen, em dash, en dash
       return !/[^\-\u2014\u2013\s]/.test(item.text());
     },
@@ -491,7 +504,8 @@
     },
 
     expand: function (event) {
-      var newItem = this.active && this.active.children(".ui-menu ").find(this.options.items).first();
+      var newItem =
+        this.active && this.active.children(".ui-menu ").find(this.options.items).first();
 
       if (newItem && newItem.length) {
         this._open(newItem.parent());
@@ -555,7 +569,10 @@
 
         this.focus(event, item);
       } else {
-        this.focus(event, this.activeMenu.find(this.options.items)[!this.active ? "first" : "last"]());
+        this.focus(
+          event,
+          this.activeMenu.find(this.options.items)[this.active ? "last" : "first"]()
+        );
       }
     },
 
@@ -612,5 +629,5 @@
           })
       );
     },
-  });
-});
+  })
+);

@@ -5,7 +5,7 @@ var $ = require("jquery");
 var Select2 = require("select2/core");
 var select = new Select2($("<select></select>"));
 
-test("string passed as width", function (assert) {
+test("string passed as width", (assert) => {
   var $test = $("<select></select>");
 
   var width = select._resolveWidth($test, "80%");
@@ -13,7 +13,7 @@ test("string passed as width", function (assert) {
   assert.equal(width, "80%");
 });
 
-test("width from style attribute", function (assert) {
+test("width from style attribute", (assert) => {
   var $test = $('<select style="width: 50%;"></selct>');
 
   var width = select._resolveWidth($test, "style");
@@ -21,7 +21,7 @@ test("width from style attribute", function (assert) {
   assert.equal(width, "50%");
 });
 
-test("width from style returns null if nothing is found", function (assert) {
+test("width from style returns null if nothing is found", (assert) => {
   var $test = $("<select></selct>");
 
   var width = select._resolveWidth($test, "style");
@@ -29,7 +29,7 @@ test("width from style returns null if nothing is found", function (assert) {
   assert.equal(width, null);
 });
 
-test("width from computed element width", function (assert) {
+test("width from computed element width", (assert) => {
   var $style = $('<style type="text/css">.css-set-width { width: 500px; }</style>');
   var $test = $('<select class="css-set-width"></select>');
 
@@ -41,7 +41,7 @@ test("width from computed element width", function (assert) {
   assert.equal(width, "500px");
 });
 
-test("resolve gets the style if it is there", function (assert) {
+test("resolve gets the style if it is there", (assert) => {
   var $test = $('<select style="width: 20%;"></selct>');
 
   var width = select._resolveWidth($test, "resolve");
@@ -49,7 +49,7 @@ test("resolve gets the style if it is there", function (assert) {
   assert.equal(width, "20%");
 });
 
-test("resolve falls back to element if there is no style", function (assert) {
+test("resolve falls back to element if there is no style", (assert) => {
   var $style = $('<style type="text/css">.css-set-width { width: 500px; }</style>');
   var $test = $('<select class="css-set-width"></select>');
 

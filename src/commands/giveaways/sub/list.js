@@ -19,7 +19,9 @@ module.exports = async (member) => {
     return "There are no giveaways running in this server.";
   }
 
-  const description = giveaways.map((g, i) => `${i + 1}. ${g.prize} in <#${g.channelId}>`).join("\n");
+  const description = giveaways
+    .map((g, i) => `${i + 1}. ${g.prize} in <#${g.channelId}>`)
+    .join("\n");
 
   try {
     return { embeds: [{ description, color: EMBED_COLORS.GIVEAWAYS }] };

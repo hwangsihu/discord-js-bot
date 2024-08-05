@@ -57,7 +57,11 @@ CKEDITOR.plugins.setLang("a11yhelp", "zh-cn", {
             "按 ${accessNextSpace} 以访问^符号后最近的不可访问的焦点区域。例如：两个相邻的 HR 元素。重复此组合按键可以到达远处的焦点区域。",
         },
         { name: "辅助功能帮助", legend: "按 ${a11yHelp}" },
-        { name: "粘贴为纯文本", legend: "按 ${pastetext}", legendEdge: "按 ${pastetext}，然后再按 ${paste}" },
+        {
+          name: "粘贴为纯文本",
+          legend: "按 ${pastetext}",
+          legendEdge: "按 ${pastetext}，然后再按 ${paste}",
+        },
       ],
     },
   ],

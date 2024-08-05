@@ -1,4 +1,4 @@
-define(["jquery", "./utils"], function ($, Utils) {
+define(["jquery", "./utils"], ($, Utils) => {
   function Results($element, options, dataAdapter) {
     this.$element = $element;
     this.data = dataAdapter;
@@ -31,7 +31,9 @@ define(["jquery", "./utils"], function ($, Utils) {
     this.clear();
     this.hideLoading();
 
-    var $message = $('<li role="treeitem" aria-live="assertive"' + ' class="select2-results__option"></li>');
+    var $message = $(
+      '<li role="treeitem" aria-live="assertive"' + ' class="select2-results__option"></li>'
+    );
 
     var message = this.options.get("translations").get(params.message);
 
@@ -74,7 +76,7 @@ define(["jquery", "./utils"], function ($, Utils) {
     this.$results.append($options);
   };
 
-  Results.prototype.position = function ($results, $dropdown) {
+  Results.prototype.position = ($results, $dropdown) => {
     var $resultsContainer = $dropdown.find(".select2-results");
     $resultsContainer.append($results);
   };
@@ -104,14 +106,10 @@ define(["jquery", "./utils"], function ($, Utils) {
   };
 
   Results.prototype.setClasses = function () {
-    var self = this;
+    this.data.current((selected) => {
+      var selectedIds = $.map(selected, (s) => s.id.toString());
 
-    this.data.current(function (selected) {
-      var selectedIds = $.map(selected, function (s) {
-        return s.id.toString();
-      });
-
-      var $options = self.$results.find(".select2-results__option[aria-selected]");
+      var $options = this.$results.find(".select2-results__option[aria-selected]");
 
       $options.each(function () {
         var $option = $(this);
@@ -234,7 +232,7 @@ define(["jquery", "./utils"], function ($, Utils) {
 
     this.$results.attr("id", id);
 
-    container.on("results:all", function (params) {
+    container.on("results:all", (params) => {
       self.clear();
       self.append(params.data);
 
@@ -244,7 +242,7 @@ define(["jquery", "./utils"], function ($, Utils) {
       }
     });
 
-    container.on("results:append", function (params) {
+    container.on("results:append", (params) => {
       self.append(params.data);
 
       if (container.isOpen()) {
@@ -252,12 +250,12 @@ define(["jquery", "./utils"], function ($, Utils) {
       }
     });
 
-    container.on("query", function (params) {
+    container.on("query", (params) => {
       self.hideMessages();
       self.showLoading(params);
     });
 
-    container.on("select", function () {
+    container.on("select", () => {
       if (!container.isOpen()) {
         return;
       }
@@ -269,7 +267,7 @@ define(["jquery", "./utils"], function ($, Utils) {
       }
     });
 
-    container.on("unselect", function () {
+    container.on("unselect", () => {
       if (!container.isOpen()) {
         return;
       }
@@ -281,7 +279,7 @@ define(["jquery", "./utils"], function ($, Utils) {
       }
     });
 
-    container.on("open", function () {
+    container.on("open", () => {
       // When the dropdown is open, aria-expended="true"
       self.$results.attr("aria-expanded", "true");
       self.$results.attr("aria-hidden", "false");
@@ -290,14 +288,14 @@ define(["jquery", "./utils"], function ($, Utils) {
       self.ensureHighlightVisible();
     });
 
-    container.on("close", function () {
+    container.on("close", () => {
       // When the dropdown is closed, aria-expended="false"
       self.$results.attr("aria-expanded", "false");
       self.$results.attr("aria-hidden", "true");
       self.$results.removeAttr("aria-activedescendant");
     });
 
-    container.on("results:toggle", function () {
+    container.on("results:toggle", () => {
       var $highlighted = self.getHighlightedResults();
 
       if ($highlighted.length === 0) {
@@ -307,7 +305,7 @@ define(["jquery", "./utils"], function ($, Utils) {
       $highlighted.trigger("mouseup");
     });
 
-    container.on("results:select", function () {
+    container.on("results:select", () => {
       var $highlighted = self.getHighlightedResults();
 
       if ($highlighted.length === 0) {
@@ -325,7 +323,7 @@ define(["jquery", "./utils"], function ($, Utils) {
       }
     });
 
-    container.on("results:previous", function () {
+    container.on("results:previous", () => {
       var $highlighted = self.getHighlightedResults();
 
       var $options = self.$results.find("[aria-selected]");
@@ -360,7 +358,7 @@ define(["jquery", "./utils"], function ($, Utils) {
       }
     });
 
-    container.on("results:next", function () {
+    container.on("results:next", () => {
       var $highlighted = self.getHighlightedResults();
 
       var $options = self.$results.find("[aria-selected]");
@@ -389,16 +387,16 @@ define(["jquery", "./utils"], function ($, Utils) {
       }
     });
 
-    container.on("results:focus", function (params) {
+    container.on("results:focus", (params) => {
       params.element.addClass("select2-results__option--highlighted");
     });
 
-    container.on("results:message", function (params) {
+    container.on("results:message", (params) => {
       self.displayMessage(params);
     });
 
     if ($.fn.mousewheel) {
-      this.$results.on("mousewheel", function (e) {
+      this.$results.on("mousewheel", (e) => {
         var top = self.$results.scrollTop();
 
         var bottom = self.$results.get(0).scrollHeight - top + e.deltaY;

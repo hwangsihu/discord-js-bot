@@ -1,44 +1,45 @@
 ﻿window.ToolbarConfigurator = {};
-(function () {
+(() => {
   function e() {
     this.instanceid = "fte" + CKEDITOR.tools.getNextId();
     this.textarea = new CKEDITOR.dom.element("textarea");
-    this.textarea.setAttributes({ id: this.instanceid, name: this.instanceid, contentEditable: !0 });
+    this.textarea.setAttributes({
+      id: this.instanceid,
+      name: this.instanceid,
+      contentEditable: !0,
+    });
     this.editorInstance = this.buttons = null;
   }
   ToolbarConfigurator.FullToolbarEditor = e;
   e.prototype.init = function (b) {
-    var a = this;
     document.body.appendChild(this.textarea.$);
     CKEDITOR.replace(this.instanceid);
     this.editorInstance = CKEDITOR.instances[this.instanceid];
-    this.editorInstance.once("configLoaded", function (d) {
+    this.editorInstance.once("configLoaded", (d) => {
       var c = d.editor.config;
       delete c.removeButtons;
       delete c.toolbarGroups;
       delete c.toolbar;
       ToolbarConfigurator.AbstractToolbarModifier.extendPluginsConfig(c);
-      d.editor.once("loaded", function () {
-        a.buttons = e.toolbarToButtons(a.editorInstance.toolbar);
-        a.buttonsByGroup = e.groupButtons(a.buttons);
-        a.buttonNamesByGroup = a.groupButtonNamesByGroup(a.buttons);
+      d.editor.once("loaded", () => {
+        this.buttons = e.toolbarToButtons(this.editorInstance.toolbar);
+        this.buttonsByGroup = e.groupButtons(this.buttons);
+        this.buttonNamesByGroup = this.groupButtonNamesByGroup(this.buttons);
         d.editor.container.hide();
-        "function" === typeof b && b(a.buttons);
+        "function" === typeof b && b(this.buttons);
       });
     });
   };
   e.prototype.groupButtonNamesByGroup = function (b) {
-    var a = this;
     b = e.groupButtons(b);
-    for (var d in b)
-      b[d] = e.map(b[d], function (b) {
-        return a.getCamelCasedButtonName(b.name);
-      });
+    for (var d in b) b[d] = e.map(b[d], (b) => this.getCamelCasedButtonName(b.name));
     return b;
   };
   e.prototype.getGroupByName = function (b) {
     for (
-      var a = this.editorInstance.config.toolbarGroups || this.getFullToolbarGroupsConfig(), d = a.length, c = 0;
+      var a = this.editorInstance.config.toolbarGroups || this.getFullToolbarGroupsConfig(),
+        d = a.length,
+        c = 0;
       c < d;
       c += 1
     )
@@ -58,15 +59,18 @@
         g = {};
       "string" != typeof e.name
         ? b && a.push("/")
-        : ((g.name = e.name), e.groups && (g.groups = Array.prototype.slice.call(e.groups)), a.push(g));
+        : ((g.name = e.name),
+          e.groups && (g.groups = Array.prototype.slice.call(e.groups)),
+          a.push(g));
     }
     return a;
   };
-  e.filter = function (b, a) {
-    for (var d = b && b.length ? b.length : 0, c = [], f = 0; f < d; f += 1) a(b[f]) && c.push(b[f]);
+  e.filter = (b, a) => {
+    for (var d = b && b.length ? b.length : 0, c = [], f = 0; f < d; f += 1)
+      a(b[f]) && c.push(b[f]);
     return c;
   };
-  e.map = function (b, a) {
+  e.map = (b, a) => {
     var d;
     if (CKEDITOR.tools.isArray(b)) {
       d = [];
@@ -74,7 +78,7 @@
     } else for (c in ((d = {}), b)) d[c] = a(b[c]);
     return d;
   };
-  e.groupButtons = function (b) {
+  e.groupButtons = (b) => {
     for (var a = {}, d = b.length, c = 0; c < d; c += 1) {
       var f = b[c],
         e = f.toolbar.split(",")[0];
@@ -83,17 +87,18 @@
     }
     return a;
   };
-  e.toolbarToButtons = function (b) {
+  e.toolbarToButtons = (b) => {
     for (var a = [], d = b.length, c = 0; c < d; c += 1)
       "object" == typeof b[c] && (a = a.concat(e.groupToButtons(b[c])));
     return a;
   };
-  e.createToolbarButton = function (b) {
+  e.createToolbarButton = (b) => {
     var a = new CKEDITOR.dom.element("a"),
       d = e.createIcon(b.name, b.icon, b.command);
     a.setStyle("float", "none");
     a.addClass("cke_" + ("rtl" == CKEDITOR.lang.dir ? "rtl" : "ltr"));
-    if (b instanceof CKEDITOR.ui.button) a.addClass("cke_button"), a.addClass("cke_toolgroup"), a.append(d);
+    if (b instanceof CKEDITOR.ui.button)
+      a.addClass("cke_button"), a.addClass("cke_toolgroup"), a.append(d);
     else if (CKEDITOR.ui.richCombo && b instanceof CKEDITOR.ui.richCombo) {
       var d = new CKEDITOR.dom.element("span"),
         c = new CKEDITOR.dom.element("span"),
@@ -110,7 +115,7 @@
     }
     return a;
   };
-  e.createIcon = function (b, a, d) {
+  e.createIcon = (b, a, d) => {
     var c = CKEDITOR.skin.getIconStyle(b, "rtl" == CKEDITOR.lang.dir),
       c =
         (c = c || CKEDITOR.skin.getIconStyle(a, "rtl" == CKEDITOR.lang.dir)) ||
@@ -122,7 +127,7 @@
     a.setStyle("float", "none");
     return a;
   };
-  e.createButton = function (b, a) {
+  e.createButton = (b, a) => {
     var d = new CKEDITOR.dom.element("button");
     d.addClass("button-a");
     d.setAttribute("type", "button");
@@ -133,10 +138,13 @@
     d.setHtml(b);
     return d;
   };
-  e.groupToButtons = function (b) {
+  e.groupToButtons = (b) => {
     for (var a = [], d = (b = b.items) ? b.length : 0, c = 0; c < d; c += 1) {
       var f = b[c];
-      if (f instanceof CKEDITOR.ui.button || (CKEDITOR.ui.richCombo && f instanceof CKEDITOR.ui.richCombo))
+      if (
+        f instanceof CKEDITOR.ui.button ||
+        (CKEDITOR.ui.richCombo && f instanceof CKEDITOR.ui.richCombo)
+      )
         (f.$ = e.createToolbarButton(f)), a.push(f);
     }
     return a;

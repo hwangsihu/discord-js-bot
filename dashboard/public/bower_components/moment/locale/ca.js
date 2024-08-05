@@ -1,17 +1,18 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var ca = moment.defineLocale("ca", {
     months: {
-      standalone: "gener_febrer_març_abril_maig_juny_juliol_agost_setembre_octubre_novembre_desembre".split("_"),
+      standalone:
+        "gener_febrer_març_abril_maig_juny_juliol_agost_setembre_octubre_novembre_desembre".split(
+          "_"
+        ),
       format:
         "de gener_de febrer_de març_d'abril_de maig_de juny_de juliol_d'agost_de setembre_d'octubre_de novembre_de desembre".split(
           "_"
@@ -70,8 +71,9 @@
       yy: "%d anys",
     },
     dayOfMonthOrdinalParse: /\d{1,2}(r|n|t|è|a)/,
-    ordinal: function (number, period) {
-      var output = number === 1 ? "r" : number === 2 ? "n" : number === 3 ? "r" : number === 4 ? "t" : "è";
+    ordinal: (number, period) => {
+      var output =
+        number === 1 ? "r" : number === 2 ? "n" : number === 3 ? "r" : number === 4 ? "t" : "è";
       if (period === "w" || period === "W") {
         output = "a";
       }

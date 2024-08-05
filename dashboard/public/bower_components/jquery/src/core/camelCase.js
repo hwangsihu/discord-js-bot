@@ -1,6 +1,4 @@
-define([], function () {
-  "use strict";
-
+define([], () => {
   // Matches dashed string for camelizing
   var rmsPrefix = /^-ms-/,
     rdashAlpha = /-([a-z])/g;

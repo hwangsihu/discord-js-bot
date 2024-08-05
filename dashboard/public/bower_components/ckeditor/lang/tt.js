@@ -127,7 +127,11 @@ CKEDITOR.lang["tt"] = {
     panelTitle2: "Эчке стильләр",
     panelTitle3: "Объектлар стильләре",
   },
-  specialchar: { options: "Махсус символ үзлекләре", title: "Махсус символ сайлау", toolbar: "Махсус символ өстәү" },
+  specialchar: {
+    options: "Махсус символ үзлекләре",
+    title: "Махсус символ сайлау",
+    toolbar: "Махсус символ өстәү",
+  },
   sourcearea: { toolbar: "Чыганак" },
   scayt: {
     btn_about: "About SCAYT",
@@ -146,7 +150,8 @@ CKEDITOR.lang["tt"] = {
     title: "Форматлаусыз текст өстәү",
   },
   pastefromword: {
-    confirmCleanup: "The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?",
+    confirmCleanup:
+      "The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?",
     error: "It was not possible to clean up the pasted data due to an internal error",
     title: "Word'тан өстәү",
     toolbar: "Word'тан өстәү",
@@ -154,7 +159,10 @@ CKEDITOR.lang["tt"] = {
   notification: { closed: "Notification closed." },
   maximize: { maximize: "Зурайту", minimize: "Кечерәйтү" },
   magicline: { title: "Бирегә параграф өстәү" },
-  list: { bulletedlist: "Маркерлы тезмә өстәү/бетерү", numberedlist: " Номерланган тезмә өстәү/бетерү" },
+  list: {
+    bulletedlist: "Маркерлы тезмә өстәү/бетерү",
+    numberedlist: " Номерланган тезмә өстәү/бетерү",
+  },
   link: {
     acccessKey: "Access Key",
     advanced: "Киңәйтелгән көйләүләр",
@@ -342,8 +350,10 @@ CKEDITOR.lang["tt"] = {
     generalTab: "Төп",
     advancedTab: "Киңәйтелгән көйләүләр",
     validateNumberFailed: "Әлеге кыйммәт сан түгел.",
-    confirmNewPage: "Any unsaved changes to this content will be lost. Are you sure you want to load new page?",
-    confirmCancel: "You have changed some options. Are you sure you want to close the dialog window?",
+    confirmNewPage:
+      "Any unsaved changes to this content will be lost. Are you sure you want to load new page?",
+    confirmCancel:
+      "You have changed some options. Are you sure you want to close the dialog window?",
     options: "Үзлекләр",
     target: "Максат",
     targetNew: "Яңа тәрәзә (_blank)",

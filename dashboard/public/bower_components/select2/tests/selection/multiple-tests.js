@@ -8,11 +8,11 @@ var Utils = require("select2/utils");
 
 var options = new Options({});
 
-test("display uses templateSelection", function (assert) {
+test("display uses templateSelection", (assert) => {
   var called = false;
 
   var templateOptions = new Options({
-    templateSelection: function (data) {
+    templateSelection: (data) => {
       called = true;
 
       return data.text;
@@ -30,11 +30,11 @@ test("display uses templateSelection", function (assert) {
   assert.equal(out, "test");
 });
 
-test("templateSelection can addClass", function (assert) {
+test("templateSelection can addClass", (assert) => {
   var called = false;
 
   var templateOptions = new Options({
-    templateSelection: function (data, container) {
+    templateSelection: (data, container) => {
       called = true;
       container.addClass("testclass");
       return data.text;
@@ -59,7 +59,7 @@ test("templateSelection can addClass", function (assert) {
   assert.ok($container.hasClass("testclass"));
 });
 
-test("empty update clears the selection", function (assert) {
+test("empty update clears the selection", (assert) => {
   var selection = new MultipleSelection($("#qunit-fixture .multiple"), options);
 
   var $selection = selection.render();
@@ -74,7 +74,7 @@ test("empty update clears the selection", function (assert) {
   assert.equal($rendered.attr("title"), undefined);
 });
 
-test("escapeMarkup is being used", function (assert) {
+test("escapeMarkup is being used", (assert) => {
   var selection = new MultipleSelection($("#qunit-fixture .multiple"), options);
 
   var $selection = selection.render();
@@ -88,10 +88,14 @@ test("escapeMarkup is being used", function (assert) {
     },
   ]);
 
-  assert.equal($rendered.text().substr(1), unescapedText, "The text should be escaped by default to prevent injection");
+  assert.equal(
+    $rendered.text().substr(1),
+    unescapedText,
+    "The text should be escaped by default to prevent injection"
+  );
 });
 
-test("clear button respects the disabled state", function (assert) {
+test("clear button respects the disabled state", (assert) => {
   var options = new Options({
     disabled: true,
   });
@@ -126,7 +130,7 @@ test("clear button respects the disabled state", function (assert) {
   assert.equal($remove.length, 1, "The remove icon is displayed for the selection");
 
   // Set up the unselect handler
-  selection.on("unselect", function (params) {
+  selection.on("unselect", (params) => {
     assert.ok(false, "The unselect handler should not be triggered");
   });
 

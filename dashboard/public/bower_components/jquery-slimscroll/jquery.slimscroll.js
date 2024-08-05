@@ -5,7 +5,7 @@
  * Version: 1.3.8
  *
  */
-(function ($) {
+(($) => {
   $.fn.extend({
     slimScroll: function (options) {
       var defaults = {
@@ -123,10 +123,10 @@
 
             if ("scrollTo" in options) {
               // jump to a static point
-              offset = parseInt(o.scrollTo);
+              offset = Number.parseInt(o.scrollTo);
             } else if ("scrollBy" in options) {
               // jump by value pixels
-              offset += parseInt(o.scrollBy);
+              offset += Number.parseInt(o.scrollBy);
             } else if ("destroy" in options) {
               // remove slimscroll elements
               bar.remove();
@@ -211,26 +211,26 @@
         // make it draggable and no longer dependent on the jqueryUI
         if (o.railDraggable) {
           bar
-            .bind("mousedown", function (e) {
+            .bind("mousedown", (e) => {
               var $doc = $(document);
               isDragg = true;
-              t = parseFloat(bar.css("top"));
+              t = Number.parseFloat(bar.css("top"));
               pageY = e.pageY;
 
-              $doc.bind("mousemove.slimscroll", function (e) {
+              $doc.bind("mousemove.slimscroll", (e) => {
                 currTop = t + e.pageY - pageY;
                 bar.css("top", currTop);
                 scrollContent(0, bar.position().top, false); // scroll content
               });
 
-              $doc.bind("mouseup.slimscroll", function (e) {
+              $doc.bind("mouseup.slimscroll", (e) => {
                 isDragg = false;
                 hideBar();
                 $doc.unbind(".slimscroll");
               });
               return false;
             })
-            .bind("selectstart.slimscroll", function (e) {
+            .bind("selectstart.slimscroll", (e) => {
               e.stopPropagation();
               e.preventDefault();
               return false;
@@ -239,46 +239,46 @@
 
         // on rail over
         rail.hover(
-          function () {
+          () => {
             showBar();
           },
-          function () {
+          () => {
             hideBar();
           }
         );
 
         // on bar over
         bar.hover(
-          function () {
+          () => {
             isOverBar = true;
           },
-          function () {
+          () => {
             isOverBar = false;
           }
         );
 
         // show on parent mouseover
         me.hover(
-          function () {
+          () => {
             isOverPanel = true;
             showBar();
             hideBar();
           },
-          function () {
+          () => {
             isOverPanel = false;
             hideBar();
           }
         );
 
         // support for mobile
-        me.bind("touchstart", function (e, b) {
+        me.bind("touchstart", (e, b) => {
           if (e.originalEvent.touches.length) {
             // record where touch started
             touchDif = e.originalEvent.touches[0].pageY;
           }
         });
 
-        me.bind("touchmove", function (e) {
+        me.bind("touchmove", (e) => {
           // prevent scrolling the page if necessary
           if (!releaseScroll) {
             e.originalEvent.preventDefault();
@@ -355,7 +355,9 @@
 
           if (isWheel) {
             // move bar with mouse wheel
-            delta = parseInt(bar.css("top")) + ((y * parseInt(o.wheelStep)) / 100) * bar.outerHeight();
+            delta =
+              Number.parseInt(bar.css("top")) +
+              ((y * Number.parseInt(o.wheelStep)) / 100) * bar.outerHeight();
 
             // move bar, make sure it doesn't go out
             delta = Math.min(Math.max(delta, 0), maxTop);
@@ -371,7 +373,7 @@
           }
 
           // calculate actual scroll amount
-          percentScroll = parseInt(bar.css("top")) / (me.outerHeight() - bar.outerHeight());
+          percentScroll = Number.parseInt(bar.css("top")) / (me.outerHeight() - bar.outerHeight());
           delta = percentScroll * (me[0].scrollHeight - me.outerHeight());
 
           if (isJump) {
@@ -405,7 +407,10 @@
 
         function getBarHeight() {
           // calculate scrollbar height and make sure it is not too small
-          barHeight = Math.max((me.outerHeight() / me[0].scrollHeight) * me.outerHeight(), minBarHeight);
+          barHeight = Math.max(
+            (me.outerHeight() / me[0].scrollHeight) * me.outerHeight(),
+            minBarHeight
+          );
           bar.css({ height: barHeight + "px" });
 
           // hide scrollbar if content is not long enough
@@ -448,7 +453,7 @@
         function hideBar() {
           // only hide when options allow it
           if (!o.alwaysVisible) {
-            queueHide = setTimeout(function () {
+            queueHide = setTimeout(() => {
               if (!(o.disableFadeOut && isOverPanel) && !isOverBar && !isDragg) {
                 bar.fadeOut("slow");
                 rail.fadeOut("slow");

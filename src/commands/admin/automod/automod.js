@@ -172,7 +172,8 @@ module.exports = {
       response = await setAction(settings, message.guild, action);
     } else if (input === "debug") {
       const status = args[1].toLowerCase();
-      if (!["on", "off"].includes(status)) return message.safeReply("Invalid status. Value must be `on/off`");
+      if (!["on", "off"].includes(status))
+        return message.safeReply("Invalid status. Value must be `on/off`");
       response = await setDebug(settings, status);
     }
 
@@ -207,10 +208,16 @@ module.exports = {
     let response;
 
     if (sub === "status") response = await getStatus(settings, interaction.guild);
-    else if (sub === "strikes") response = await setStrikes(settings, interaction.options.getInteger("amount"));
+    else if (sub === "strikes")
+      response = await setStrikes(settings, interaction.options.getInteger("amount"));
     else if (sub === "action")
-      response = await setAction(settings, interaction.guild, interaction.options.getString("action"));
-    else if (sub === "debug") response = await setDebug(settings, interaction.options.getString("status"));
+      response = await setAction(
+        settings,
+        interaction.guild,
+        interaction.options.getString("action")
+      );
+    else if (sub === "debug")
+      response = await setDebug(settings, interaction.options.getString("status"));
     else if (sub === "whitelist") {
       response = getWhitelist(interaction.guild, settings);
     } else if (sub === "whitelistadd") {
@@ -233,7 +240,7 @@ async function getStatus(settings, guild) {
     : "Not Configured";
 
   // String Builder
-  let desc = stripIndent`
+  const desc = stripIndent`
     ❯ **Max Lines**: ${automod.max_lines || "NA"}
     ❯ **Anti-Massmention**: ${automod.anti_massmention > 0 ? "✓" : "✕"}
     ❯ **Anti-Attachment**: ${automod.anti_attachment ? "✓" : "✕"}

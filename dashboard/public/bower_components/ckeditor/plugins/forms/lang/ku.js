@@ -14,7 +14,13 @@
     selected: "هەڵبژاردرا",
     required: "پێویستە",
   },
-  form: { title: "خاسیەتی داڕشتە", menu: "خاسیەتی داڕشتە", action: "کردار", method: "ڕێگە", encoding: "بەکۆدکەر" },
+  form: {
+    title: "خاسیەتی داڕشتە",
+    menu: "خاسیەتی داڕشتە",
+    action: "کردار",
+    method: "ڕێگە",
+    encoding: "بەکۆدکەر",
+  },
   hidden: { title: "خاسیەتی خانەی شاردراوە", name: "ناو", value: "نرخ" },
   select: {
     title: "هەڵبژاردەی خاسیەتی خانە",

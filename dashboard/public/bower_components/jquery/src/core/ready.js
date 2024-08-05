@@ -1,6 +1,7 @@
-define(["../core", "../var/document", "../core/readyException", "../deferred"], function (jQuery, document) {
-  "use strict";
-
+define(["../core", "../var/document", "../core/readyException", "../deferred"], (
+  jQuery,
+  document
+) => {
   // The deferred used on DOM ready
   var readyList = jQuery.Deferred();
 
@@ -11,7 +12,7 @@ define(["../core", "../var/document", "../core/readyException", "../deferred"], 
       // Wrap jQuery.readyException in a function so that the lookup
       // happens at the time of error handling instead of callback
       // registration.
-      .catch(function (error) {
+      .catch((error) => {
         jQuery.readyException(error);
       });
 
@@ -27,7 +28,7 @@ define(["../core", "../var/document", "../core/readyException", "../deferred"], 
     readyWait: 1,
 
     // Handle when the DOM is ready
-    ready: function (wait) {
+    ready: (wait) => {
       // Abort if there are pending holds or we're already ready
       if (wait === true ? --jQuery.readyWait : jQuery.isReady) {
         return;
@@ -59,7 +60,10 @@ define(["../core", "../var/document", "../core/readyException", "../deferred"], 
   // after the browser event has already occurred.
   // Support: IE <=9 - 10 only
   // Older IE sometimes signals "interactive" too soon
-  if (document.readyState === "complete" || (document.readyState !== "loading" && !document.documentElement.doScroll)) {
+  if (
+    document.readyState === "complete" ||
+    (document.readyState !== "loading" && !document.documentElement.doScroll)
+  ) {
     // Handle it asynchronously to allow scripts the opportunity to delay ready
     window.setTimeout(jQuery.ready);
   } else {

@@ -1,4 +1,4 @@
-define(function () {
+define(() => {
   // Serbian
   function ending(count, one, some, many) {
     if (count % 10 == 1 && count % 100 != 11) {
@@ -13,10 +13,8 @@ define(function () {
   }
 
   return {
-    errorLoading: function () {
-      return "Preuzimanje nije uspelo.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "Preuzimanje nije uspelo.",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "Obrišite " + overChars + " simbol";
@@ -25,7 +23,7 @@ define(function () {
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "Ukucajte bar još " + remainingChars + " simbol";
@@ -34,24 +32,16 @@ define(function () {
 
       return message;
     },
-    loadingMore: function () {
-      return "Preuzimanje još rezultata…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Preuzimanje još rezultata…",
+    maximumSelected: (args) => {
       var message = "Možete izabrati samo " + args.maximum + " stavk";
 
       message += ending(args.maximum, "u", "e", "i");
 
       return message;
     },
-    noResults: function () {
-      return "Ništa nije pronađeno";
-    },
-    searching: function () {
-      return "Pretraga…";
-    },
-    removeAllItems: function () {
-      return "Уклоните све ставке";
-    },
+    noResults: () => "Ništa nije pronađeno",
+    searching: () => "Pretraga…",
+    removeAllItems: () => "Уклоните све ставке",
   };
 });

@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   function relativeTimeWithPlural(number, withoutSuffix, key) {
     var format = {
         ss: "secunde",
@@ -26,9 +24,10 @@
   }
 
   var ro = moment.defineLocale("ro", {
-    months: "ianuarie_februarie_martie_aprilie_mai_iunie_iulie_august_septembrie_octombrie_noiembrie_decembrie".split(
-      "_"
-    ),
+    months:
+      "ianuarie_februarie_martie_aprilie_mai_iunie_iulie_august_septembrie_octombrie_noiembrie_decembrie".split(
+        "_"
+      ),
     monthsShort: "ian._febr._mart._apr._mai_iun._iul._aug._sept._oct._nov._dec.".split("_"),
     monthsParseExact: true,
     weekdays: "duminică_luni_marți_miercuri_joi_vineri_sâmbătă".split("_"),

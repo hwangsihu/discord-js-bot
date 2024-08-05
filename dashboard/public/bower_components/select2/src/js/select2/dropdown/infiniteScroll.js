@@ -1,4 +1,4 @@
-define(["jquery"], function ($) {
+define(["jquery"], ($) => {
   function InfiniteScroll(decorated, $element, options, dataAdapter) {
     this.lastParams = {};
 
@@ -20,32 +20,30 @@ define(["jquery"], function ($) {
   };
 
   InfiniteScroll.prototype.bind = function (decorated, container, $container) {
-    var self = this;
-
     decorated.call(this, container, $container);
 
-    container.on("query", function (params) {
-      self.lastParams = params;
-      self.loading = true;
+    container.on("query", (params) => {
+      this.lastParams = params;
+      this.loading = true;
     });
 
-    container.on("query:append", function (params) {
-      self.lastParams = params;
-      self.loading = true;
+    container.on("query:append", (params) => {
+      this.lastParams = params;
+      this.loading = true;
     });
 
-    this.$results.on("scroll", function () {
-      var isLoadMoreVisible = $.contains(document.documentElement, self.$loadingMore[0]);
+    this.$results.on("scroll", () => {
+      var isLoadMoreVisible = $.contains(document.documentElement, this.$loadingMore[0]);
 
-      if (self.loading || !isLoadMoreVisible) {
+      if (this.loading || !isLoadMoreVisible) {
         return;
       }
 
-      var currentOffset = self.$results.offset().top + self.$results.outerHeight(false);
-      var loadingMoreOffset = self.$loadingMore.offset().top + self.$loadingMore.outerHeight(false);
+      var currentOffset = this.$results.offset().top + this.$results.outerHeight(false);
+      var loadingMoreOffset = this.$loadingMore.offset().top + this.$loadingMore.outerHeight(false);
 
       if (currentOffset + 50 >= loadingMoreOffset) {
-        self.loadMore();
+        this.loadMore();
       }
     });
   };
@@ -60,9 +58,7 @@ define(["jquery"], function ($) {
     this.trigger("query:append", params);
   };
 
-  InfiniteScroll.prototype.showLoadingMore = function (_, data) {
-    return data.pagination && data.pagination.more;
-  };
+  InfiniteScroll.prototype.showLoadingMore = (_, data) => data.pagination && data.pagination.more;
 
   InfiniteScroll.prototype.createLoadingMore = function () {
     var $option = $(

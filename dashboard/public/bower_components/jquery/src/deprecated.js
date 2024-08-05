@@ -8,9 +8,7 @@ define([
   "./var/slice",
 
   "./event/alias",
-], function (jQuery, nodeName, camelCase, toType, isFunction, isWindow, slice) {
-  "use strict";
-
+], (jQuery, nodeName, camelCase, toType, isFunction, isWindow, slice) => {
   jQuery.fn.extend({
     bind: function (types, data, fn) {
       return this.on(types, null, data, fn);
@@ -24,7 +22,9 @@ define([
     },
     undelegate: function (selector, types, fn) {
       // ( namespace ) or ( selector, types [, fn] )
-      return arguments.length === 1 ? this.off(selector, "**") : this.off(types, selector || "**", fn);
+      return arguments.length === 1
+        ? this.off(selector, "**")
+        : this.off(types, selector || "**", fn);
     },
   });
 
@@ -32,7 +32,7 @@ define([
   // arguments.
   // jQuery.proxy is deprecated to promote standards (specifically Function#bind)
   // However, it is not slated for removal any time soon
-  jQuery.proxy = function (fn, context) {
+  jQuery.proxy = (fn, context) => {
     var tmp, args, proxy;
 
     if (typeof context === "string") {
@@ -59,7 +59,7 @@ define([
     return proxy;
   };
 
-  jQuery.holdReady = function (hold) {
+  jQuery.holdReady = (hold) => {
     if (hold) {
       jQuery.readyWait++;
     } else {
@@ -76,7 +76,7 @@ define([
 
   jQuery.now = Date.now;
 
-  jQuery.isNumeric = function (obj) {
+  jQuery.isNumeric = (obj) => {
     // As of jQuery 3.0, isNumeric is limited to
     // strings and numbers (primitives or objects)
     // that can be coerced to finite numbers (gh-2662)
@@ -86,7 +86,7 @@ define([
       // parseFloat NaNs numeric-cast false positives ("")
       // ...but misinterprets leading-number strings, particularly hex literals ("0x...")
       // subtraction forces infinities to NaN
-      !isNaN(obj - parseFloat(obj))
+      !isNaN(obj - Number.parseFloat(obj))
     );
   };
 });

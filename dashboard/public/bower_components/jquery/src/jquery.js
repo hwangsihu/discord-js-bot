@@ -31,8 +31,4 @@ define([
   "./deprecated",
   "./exports/amd",
   "./exports/global",
-], function (jQuery) {
-  "use strict";
-
-  return jQuery;
-});
+], (jQuery) => jQuery);

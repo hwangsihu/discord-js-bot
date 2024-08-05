@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var lo = moment.defineLocale("lo", {
     months: "ມັງກອນ_ກຸມພາ_ມີນາ_ເມສາ_ພຶດສະພາ_ມິຖຸນາ_ກໍລະກົດ_ສິງຫາ_ກັນຍາ_ຕຸລາ_ພະຈິກ_ທັນວາ".split("_"),
     monthsShort: "ມັງກອນ_ກຸມພາ_ມີນາ_ເມສາ_ພຶດສະພາ_ມິຖຸນາ_ກໍລະກົດ_ສິງຫາ_ກັນຍາ_ຕຸລາ_ພະຈິກ_ທັນວາ".split("_"),
@@ -25,10 +23,8 @@
       LLLL: "ວັນdddd D MMMM YYYY HH:mm",
     },
     meridiemParse: /ຕອນເຊົ້າ|ຕອນແລງ/,
-    isPM: function (input) {
-      return input === "ຕອນແລງ";
-    },
-    meridiem: function (hour, minute, isLower) {
+    isPM: (input) => input === "ຕອນແລງ",
+    meridiem: (hour, minute, isLower) => {
       if (hour < 12) {
         return "ຕອນເຊົ້າ";
       } else {
@@ -60,9 +56,7 @@
       yy: "%d ປີ",
     },
     dayOfMonthOrdinalParse: /(ທີ່)\d{1,2}/,
-    ordinal: function (number) {
-      return "ທີ່" + number;
-    },
+    ordinal: (number) => "ທີ່" + number,
   });
 
   return lo;

@@ -2,8 +2,8 @@ const { getUser } = require("@schemas/User");
 const Discord = require("discord.js");
 const { getSettings } = require("@schemas/Guild");
 
-async function fetchGuild(guildID, client, guilds) {
-  const guild = client.guilds.cache.get(guildID);
+async function fetchGuild(guildId, client, guilds) {
+  const guild = client.guilds.cache.get(guildId);
   const settings = await getSettings(guild);
   return { ...guild, ...settings._doc, ...guilds.find((g) => g.id === guild.id) };
 }

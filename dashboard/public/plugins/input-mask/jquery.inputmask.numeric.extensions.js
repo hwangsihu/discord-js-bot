@@ -7,7 +7,7 @@ Version: 0.0.0
 
 Optional extensions on the jquery.inputmask base
 */
-(function ($) {
+(($) => {
   //number aliases
   $.extend($.inputmask.defaults.aliases, {
     decimal: {
@@ -108,8 +108,7 @@ Optional extensions on the jquery.inputmask base
         },
       },
       onKeyDown: function (e, buffer, opts) {
-        var $input = $(this),
-          input = this;
+        var $input = $(this);
         if (e.keyCode == opts.keyCode.TAB) {
           var radixPosition = $.inArray(opts.radixPoint, buffer);
           if (radixPosition != -1) {
@@ -131,11 +130,11 @@ Optional extensions on the jquery.inputmask base
               if (buffer[radixPosition + i] == undefined || buffer[radixPosition + i] == "")
                 buffer[radixPosition + i] = "0";
             }
-            input._valueSet(buffer.join(""));
+            this._valueSet(buffer.join(""));
           }
         } else if (e.keyCode == opts.keyCode.DELETE || e.keyCode == opts.keyCode.BACKSPACE) {
           opts.postFormat(buffer, 0, true, opts);
-          input._valueSet(buffer.join(""));
+          this._valueSet(buffer.join(""));
           return true;
         }
       },
@@ -148,7 +147,7 @@ Optional extensions on the jquery.inputmask base
               !strict &&
               pos <= 1 &&
               buffer[0] === "0" &&
-              new RegExp("[\\d-]").test(chrs) &&
+              /[\d-]/.test(chrs) &&
               buffer.join("").length == 1
             ) {
               //handle first char

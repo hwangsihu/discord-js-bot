@@ -2,7 +2,7 @@ module("select2(val)");
 
 var Utils = require("select2/utils");
 
-test("multiple elements with arguments works", function (assert) {
+test("multiple elements with arguments works", (assert) => {
   var $ = require("jquery");
   require("jquery.select2");
 
@@ -18,7 +18,7 @@ test("multiple elements with arguments works", function (assert) {
   assert.equal($second.val(), "2", "The call should also change the value on the second element");
 });
 
-test("initializes when jQuery $.data contains" + " cyclic reference", function (assert) {
+test("initializes when jQuery $.data contains" + " cyclic reference", (assert) => {
   var $ = require("jquery");
   require("jquery.select2");
 
@@ -42,7 +42,7 @@ test("initializes when jQuery $.data contains" + " cyclic reference", function (
   assert.equal($select.val(), "3", "The option value should be pulled correctly");
 });
 
-test("$element.data returns instance and options correctly", function (assert) {
+test("$element.data returns instance and options correctly", (assert) => {
   var $ = require("jquery");
   require("jquery.select2");
 

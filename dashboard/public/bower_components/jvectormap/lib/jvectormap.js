@@ -7,7 +7,7 @@ var jvm = {
    * @param {Function} child
    * @param {Function} parent
    */
-  inherits: function (child, parent) {
+  inherits: (child, parent) => {
     function temp() {}
     temp.prototype = parent.prototype;
     child.prototype = new temp();
@@ -20,7 +20,7 @@ var jvm = {
    * @param {Function} target
    * @param {Function} source
    */
-  mixin: function (target, source) {
+  mixin: (target, source) => {
     var prop;
 
     for (prop in source.prototype) {
@@ -30,7 +30,7 @@ var jvm = {
     }
   },
 
-  min: function (values) {
+  min: (values) => {
     var min = Number.MAX_VALUE,
       i;
 
@@ -50,7 +50,7 @@ var jvm = {
     return min;
   },
 
-  max: function (values) {
+  max: (values) => {
     var max = Number.MIN_VALUE,
       i;
 
@@ -70,7 +70,7 @@ var jvm = {
     return max;
   },
 
-  keys: function (object) {
+  keys: (object) => {
     var keys = [],
       key;
 
@@ -80,7 +80,7 @@ var jvm = {
     return keys;
   },
 
-  values: function (object) {
+  values: (object) => {
     var values = [],
       key,
       i;

@@ -13,15 +13,13 @@ $.fn.simpledraw = function (width, height, useExisting, interact) {
     var el = document.createElement("canvas");
     if (!!(el.getContext && el.getContext("2d"))) {
       // Canvas is available
-      $.fn.sparkline.canvas = function (width, height, target, interact) {
-        return new VCanvas_canvas(width, height, target, interact);
-      };
+      $.fn.sparkline.canvas = (width, height, target, interact) =>
+        new VCanvas_canvas(width, height, target, interact);
     } else if (document.namespaces && !document.namespaces.v) {
       // VML is available
       document.namespaces.add("v", "urn:schemas-microsoft-com:vml", "#default#VML");
-      $.fn.sparkline.canvas = function (width, height, target, interact) {
-        return new VCanvas_vml(width, height, target);
-      };
+      $.fn.sparkline.canvas = (width, height, target, interact) =>
+        new VCanvas_vml(width, height, target);
     } else {
       // Neither Canvas nor VML are available
       $.fn.sparkline.canvas = false;

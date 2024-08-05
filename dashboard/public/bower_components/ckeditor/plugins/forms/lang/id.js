@@ -14,7 +14,13 @@
     selected: "Terpilih",
     required: "Wajib",
   },
-  form: { title: "Form Properties", menu: "Form Properties", action: "Aksi", method: "Metode", encoding: "Encoding" },
+  form: {
+    title: "Form Properties",
+    menu: "Form Properties",
+    action: "Aksi",
+    method: "Metode",
+    encoding: "Encoding",
+  },
   hidden: { title: "Hidden Field Properties", name: "Nama", value: "Nilai" },
   select: {
     title: "Selection Field Properties",

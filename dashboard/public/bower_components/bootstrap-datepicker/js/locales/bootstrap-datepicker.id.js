@@ -2,7 +2,7 @@
  * Bahasa translation for bootstrap-datepicker
  * Azwar Akbar <azwar.akbar@gmail.com>
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["id"] = {
     days: ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"],
     daysShort: ["Mgu", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"],
@@ -21,7 +21,20 @@
       "November",
       "Desember",
     ],
-    monthsShort: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Ags", "Sep", "Okt", "Nov", "Des"],
+    monthsShort: [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Mei",
+      "Jun",
+      "Jul",
+      "Ags",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Des",
+    ],
     today: "Hari Ini",
     clear: "Kosongkan",
   };

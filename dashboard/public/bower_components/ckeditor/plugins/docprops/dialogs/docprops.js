@@ -2,34 +2,36 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-CKEDITOR.dialog.add("docProps", function (g) {
+CKEDITOR.dialog.add("docProps", (g) => {
   function t(a, d) {
     var e = function () {
         b(this);
         d(this, this._.parentDialog);
       },
-      b = function (a) {
+      b = (a) => {
         a.removeListener("ok", e);
         a.removeListener("cancel", b);
       },
-      f = function (a) {
+      f = (a) => {
         a.on("ok", e);
         a.on("cancel", b);
       };
     g.execCommand(a);
     if (g._.storedDialogs.colordialog) f(g._.storedDialogs.colordialog);
     else
-      CKEDITOR.on("dialogDefinition", function (b) {
+      CKEDITOR.on("dialogDefinition", (b) => {
         if (b.data.name == a) {
           var d = b.data.definition;
           b.removeListener();
-          d.onLoad = CKEDITOR.tools.override(d.onLoad, function (a) {
-            return function () {
-              f(this);
-              d.onLoad = a;
-              "function" == typeof a && a.call(this);
-            };
-          });
+          d.onLoad = CKEDITOR.tools.override(
+            d.onLoad,
+            (a) =>
+              function () {
+                f(this);
+                d.onLoad = a;
+                "function" == typeof a && a.call(this);
+              }
+          );
         }
       });
   }
@@ -37,8 +39,11 @@ CKEDITOR.dialog.add("docProps", function (g) {
     var a = this.getDialog().getContentElement("general", this.id + "Other");
     a &&
       ("other" == this.getValue()
-        ? (a.getInputElement().removeAttribute("readOnly"), a.focus(), a.getElement().removeClass("cke_disabled"))
-        : (a.getInputElement().setAttribute("readOnly", !0), a.getElement().addClass("cke_disabled")));
+        ? (a.getInputElement().removeAttribute("readOnly"),
+          a.focus(),
+          a.getElement().removeClass("cke_disabled"))
+        : (a.getInputElement().setAttribute("readOnly", !0),
+          a.getElement().addClass("cke_disabled")));
   }
   function k(a, d, e) {
     return function (b, f, c) {
@@ -68,7 +73,9 @@ CKEDITOR.dialog.add("docProps", function (g) {
     return function (d, e, b, f) {
       f.removeAttribute("margin" + a);
       d = this.getValue();
-      "" !== d ? f.setStyle("margin-" + a, CKEDITOR.tools.cssLength(d)) : f.removeStyle("margin-" + a);
+      "" !== d
+        ? f.setStyle("margin-" + a, CKEDITOR.tools.cssLength(d))
+        : f.removeStyle("margin-" + a);
     };
   }
   function q(a, d, e) {
@@ -78,31 +85,28 @@ CKEDITOR.dialog.add("docProps", function (g) {
   var c = g.lang.docprops,
     h = g.lang.common,
     m = {},
-    r = function (a, d, e) {
-      return {
-        type: "hbox",
-        padding: 0,
-        widths: ["60%", "40%"],
-        children: [
-          CKEDITOR.tools.extend({ type: "text", id: a, label: c[d] }, e || {}, 1),
-          {
-            type: "button",
-            id: a + "Choose",
-            label: c.chooseColor,
-            className: "colorChooser",
-            onClick: function () {
-              var b = this;
-              t("colordialog", function (d) {
-                var e = b.getDialog();
-                e.getContentElement(e._.currentTabId, a).setValue(
-                  d.getContentElement("picker", "selectedColor").getValue()
-                );
-              });
-            },
+    r = (a, d, e) => ({
+      type: "hbox",
+      padding: 0,
+      widths: ["60%", "40%"],
+      children: [
+        CKEDITOR.tools.extend({ type: "text", id: a, label: c[d] }, e || {}, 1),
+        {
+          type: "button",
+          id: a + "Choose",
+          label: c.chooseColor,
+          className: "colorChooser",
+          onClick: function () {
+            t("colordialog", (d) => {
+              var e = this.getDialog();
+              e.getContentElement(e._.currentTabId, a).setValue(
+                d.getContentElement("picker", "selectedColor").getValue()
+              );
+            });
           },
-        ],
-      };
-    },
+        },
+      ],
+    }),
     u =
       "javascript:void((function(){" +
       encodeURIComponent(
@@ -136,7 +140,7 @@ CKEDITOR.dialog.add("docProps", function (g) {
       m = f;
       this.setupContent(a, d, e, b);
     },
-    onHide: function () {
+    onHide: () => {
       m = {};
     },
     onOk: function () {
@@ -223,13 +227,16 @@ CKEDITOR.dialog.add("docProps", function (g) {
                 ],
                 default: "",
                 onChange: function () {
-                  this.getDialog().selectedCharset = "other" != this.getValue() ? this.getValue() : "";
+                  this.getDialog().selectedCharset =
+                    "other" != this.getValue() ? this.getValue() : "";
                   n.call(this);
                 },
                 setup: function () {
                   this.metaCharset = "charset" in m;
                   var a = l(this.metaCharset ? "charset" : "content-type", 1, 1).call(this);
-                  !this.metaCharset && a.match(/charset=[^=]+$/) && (a = a.substring(a.indexOf("\x3d") + 1));
+                  !this.metaCharset &&
+                    a.match(/charset=[^=]+$/) &&
+                    (a = a.substring(a.indexOf("\x3d") + 1));
                   if (a) {
                     this.setValue(a.toLowerCase());
                     if (!this.getValue()) {
@@ -249,7 +256,9 @@ CKEDITOR.dialog.add("docProps", function (g) {
                     b &&
                       !this.metaCharset &&
                       (b =
-                        (m["content-type"] ? m["content-type"].getAttribute("content").split(";")[0] : "text/html") +
+                        (m["content-type"]
+                          ? m["content-type"].getAttribute("content").split(";")[0]
+                          : "text/html") +
                         "; charset\x3d" +
                         b),
                     k(this.metaCharset ? "charset" : "content-type", 1, b).call(this, a, d, e));
@@ -292,7 +301,10 @@ CKEDITOR.dialog.add("docProps", function (g) {
                     '\x3c!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd"\x3e',
                   ],
                   ["HTML 5", "\x3c!DOCTYPE html\x3e"],
-                  ["HTML 4.01 Transitional", '\x3c!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"\x3e'],
+                  [
+                    "HTML 4.01 Transitional",
+                    '\x3c!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"\x3e',
+                  ],
                   [
                     "HTML 4.01 Strict",
                     '\x3c!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"\x3e',
@@ -392,9 +404,7 @@ CKEDITOR.dialog.add("docProps", function (g) {
                           a =
                             "none" == a
                               ? ""
-                              : a.replace(/url\(\s*(["']?)\s*([^\)]*)\s*\1\s*\)/i, function (a, b, d) {
-                                  return d;
-                                });
+                              : a.replace(/url\(\s*(["']?)\s*([^\)]*)\s*\1\s*\)/i, (a, b, d) => d);
                           this.setValue(a);
                         },
                         commit: function (a, d, c, b) {
@@ -463,7 +473,9 @@ CKEDITOR.dialog.add("docProps", function (g) {
                         align: "center",
                         inputStyle: "text-align: center",
                         setup: function (a, d, c, b) {
-                          this.setValue(b.getStyle("margin-left") || b.getAttribute("marginleft") || "");
+                          this.setValue(
+                            b.getStyle("margin-left") || b.getAttribute("marginleft") || ""
+                          );
                         },
                         commit: p("left"),
                       },
@@ -475,7 +487,9 @@ CKEDITOR.dialog.add("docProps", function (g) {
                         align: "center",
                         inputStyle: "text-align: center",
                         setup: function (a, d, c, b) {
-                          this.setValue(b.getStyle("margin-right") || b.getAttribute("marginright") || "");
+                          this.setValue(
+                            b.getStyle("margin-right") || b.getAttribute("marginright") || ""
+                          );
                         },
                         commit: p("right"),
                       },
@@ -489,7 +503,9 @@ CKEDITOR.dialog.add("docProps", function (g) {
                     align: "center",
                     inputStyle: "text-align: center",
                     setup: function (a, c, e, b) {
-                      this.setValue(b.getStyle("margin-bottom") || b.getAttribute("marginbottom") || "");
+                      this.setValue(
+                        b.getStyle("margin-bottom") || b.getAttribute("marginbottom") || ""
+                      );
                     },
                     commit: p("bottom"),
                   },
@@ -503,7 +519,13 @@ CKEDITOR.dialog.add("docProps", function (g) {
         id: "meta",
         label: c.meta,
         elements: [
-          { type: "textarea", id: "metaKeywords", label: c.metaKeywords, setup: l("keywords"), commit: k("keywords") },
+          {
+            type: "textarea",
+            id: "metaKeywords",
+            label: c.metaKeywords,
+            setup: l("keywords"),
+            commit: k("keywords"),
+          },
           {
             type: "textarea",
             id: "metaDescription",
@@ -511,8 +533,20 @@ CKEDITOR.dialog.add("docProps", function (g) {
             setup: l("description"),
             commit: k("description"),
           },
-          { type: "text", id: "metaAuthor", label: c.metaAuthor, setup: l("author"), commit: k("author") },
-          { type: "text", id: "metaCopyright", label: c.metaCopyright, setup: l("copyright"), commit: k("copyright") },
+          {
+            type: "text",
+            id: "metaAuthor",
+            label: c.metaAuthor,
+            setup: l("author"),
+            commit: k("author"),
+          },
+          {
+            type: "text",
+            id: "metaCopyright",
+            label: c.metaCopyright,
+            setup: l("copyright"),
+            commit: k("copyright"),
+          },
         ],
       },
       {
@@ -530,13 +564,12 @@ CKEDITOR.dialog.add("docProps", function (g) {
               var a = this.getElement();
               this.getDialog().on("selectPage", function (c) {
                 if ("preview" == c.data.page) {
-                  var e = this;
-                  setTimeout(function () {
+                  setTimeout(() => {
                     var b = a.getFrameDocument(),
                       c = b.getElementsByTag("html").getItem(0),
                       d = b.getHead(),
                       g = b.getBody();
-                    e.commitContent(b, c, d, g, 1);
+                    this.commitContent(b, c, d, g, 1);
                   }, 50);
                 }
               });

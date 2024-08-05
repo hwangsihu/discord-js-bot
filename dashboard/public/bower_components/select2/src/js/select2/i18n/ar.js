@@ -1,33 +1,21 @@
-define(function () {
+define(() => {
   // Arabic
   return {
-    errorLoading: function () {
-      return "لا يمكن تحميل النتائج";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "لا يمكن تحميل النتائج",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       return "الرجاء حذف " + overChars + " عناصر";
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       return "الرجاء إضافة " + remainingChars + " عناصر";
     },
-    loadingMore: function () {
-      return "جاري تحميل نتائج إضافية...";
-    },
-    maximumSelected: function (args) {
-      return "تستطيع إختيار " + args.maximum + " بنود فقط";
-    },
-    noResults: function () {
-      return "لم يتم العثور على أي نتائج";
-    },
-    searching: function () {
-      return "جاري البحث…";
-    },
-    removeAllItems: function () {
-      return "قم بإزالة كل العناصر";
-    },
+    loadingMore: () => "جاري تحميل نتائج إضافية...",
+    maximumSelected: (args) => "تستطيع إختيار " + args.maximum + " بنود فقط",
+    noResults: () => "لم يتم العثور على أي نتائج",
+    searching: () => "جاري البحث…",
+    removeAllItems: () => "قم بإزالة كل العناصر",
   };
 });

@@ -1,6 +1,6 @@
 /* Croatian i18n for the jQuery UI date picker plugin. */
 /* Written by Vjekoslav Nesek. */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["hr"] = {
     closeText: "Zatvori",
     prevText: "&#x3C;",
@@ -28,7 +28,20 @@
       "Studeni",
       "Prosinac",
     ],
-    monthNamesShort: ["Sij", "Velj", "Ožu", "Tra", "Svi", "Lip", "Srp", "Kol", "Ruj", "Lis", "Stu", "Pro"],
+    monthNamesShort: [
+      "Sij",
+      "Velj",
+      "Ožu",
+      "Tra",
+      "Svi",
+      "Lip",
+      "Srp",
+      "Kol",
+      "Ruj",
+      "Lis",
+      "Stu",
+      "Pro",
+    ],
     dayNames: ["Nedjelja", "Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak", "Subota"],
     dayNamesShort: ["Ned", "Pon", "Uto", "Sri", "Čet", "Pet", "Sub"],
     dayNamesMin: ["Ne", "Po", "Ut", "Sr", "Če", "Pe", "Su"],

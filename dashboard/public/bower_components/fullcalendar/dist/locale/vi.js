@@ -1,4 +1,4 @@
-!(function (t, n) {
+!((t, n) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = n(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? n(require("moment"), require("fullcalendar"))
         : n(t.moment, t.FullCalendar);
-})("undefined" != typeof self ? self : this, function (t, n) {
-  return (function (t) {
+})("undefined" != typeof self ? self : this, (t, n) =>
+  ((t) => {
     function n(h) {
       if (e[h]) return e[h].exports;
       var r = (e[h] = { i: h, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (n.m = t),
       (n.c = e),
-      (n.d = function (t, e, h) {
+      (n.d = (t, e, h) => {
         n.o(t, e) || Object.defineProperty(t, e, { configurable: !1, enumerable: !0, get: h });
       }),
-      (n.n = function (t) {
-        var e =
-          t && t.__esModule
-            ? function () {
-                return t.default;
-              }
-            : function () {
-                return t;
-              };
+      (n.n = (t) => {
+        var e = t && t.__esModule ? () => t.default : () => t;
         return n.d(e, "a", e), e;
       }),
-      (n.o = function (t, n) {
-        return Object.prototype.hasOwnProperty.call(t, n);
-      }),
+      (n.o = (t, n) => Object.prototype.hasOwnProperty.call(t, n)),
       (n.p = ""),
       n((n.s = 209))
     );
   })({
-    0: function (n, e) {
+    0: (n, e) => {
       n.exports = t;
     },
-    1: function (t, e) {
+    1: (t, e) => {
       t.exports = n;
     },
-    209: function (t, n, e) {
+    209: (t, n, e) => {
       Object.defineProperty(n, "__esModule", { value: !0 }), e(210);
       var h = e(1);
       h.datepickerLocale("vi", "vi", {
@@ -93,17 +84,15 @@
         h.locale("vi", {
           buttonText: { month: "Tháng", week: "Tuần", day: "Ngày", list: "Lịch biểu" },
           allDayText: "Cả ngày",
-          eventLimitText: function (t) {
-            return "+ thêm " + t;
-          },
+          eventLimitText: (t) => "+ thêm " + t,
           noEventsMessage: "Không có sự kiện để hiển thị",
         });
     },
-    210: function (t, n, e) {
-      !(function (t, n) {
+    210: (t, n, e) => {
+      !((t, n) => {
         n(e(0));
-      })(0, function (t) {
-        return t.defineLocale("vi", {
+      })(0, (t) =>
+        t.defineLocale("vi", {
           months:
             "tháng 1_tháng 2_tháng 3_tháng 4_tháng 5_tháng 6_tháng 7_tháng 8_tháng 9_tháng 10_tháng 11_tháng 12".split(
               "_"
@@ -115,12 +104,8 @@
           weekdaysMin: "CN_T2_T3_T4_T5_T6_T7".split("_"),
           weekdaysParseExact: !0,
           meridiemParse: /sa|ch/i,
-          isPM: function (t) {
-            return /^ch$/i.test(t);
-          },
-          meridiem: function (t, n, e) {
-            return t < 12 ? (e ? "sa" : "SA") : e ? "ch" : "CH";
-          },
+          isPM: (t) => /^ch$/i.test(t),
+          meridiem: (t, n, e) => (t < 12 ? (e ? "sa" : "SA") : e ? "ch" : "CH"),
           longDateFormat: {
             LT: "HH:mm",
             LTS: "HH:mm:ss",
@@ -158,12 +143,10 @@
             yy: "%d năm",
           },
           dayOfMonthOrdinalParse: /\d{1,2}/,
-          ordinal: function (t) {
-            return t;
-          },
+          ordinal: (t) => t,
           week: { dow: 1, doy: 4 },
-        });
-      });
+        })
+      );
     },
-  });
-});
+  })
+);

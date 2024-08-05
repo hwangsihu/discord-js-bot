@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(i) {
       if (n[i]) return n[i].exports;
       var r = (n[i] = { i: i, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = n),
-      (t.d = function (e, n, i) {
+      (t.d = (e, n, i) => {
         t.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: i });
       }),
-      (t.n = function (e) {
-        var n =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var n = e && e.__esModule ? () => e.default : () => e;
         return t.d(n, "a", n), n;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 187))
     );
   })({
-    0: function (t, n) {
+    0: (t, n) => {
       t.exports = e;
     },
-    1: function (e, n) {
+    1: (e, n) => {
       e.exports = t;
     },
-    187: function (e, t, n) {
+    187: (e, t, n) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), n(188);
       var i = n(1);
       i.datepickerLocale("ro", "ro", {
@@ -66,7 +57,20 @@
           "Noiembrie",
           "Decembrie",
         ],
-        monthNamesShort: ["Ian", "Feb", "Mar", "Apr", "Mai", "Iun", "Iul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        monthNamesShort: [
+          "Ian",
+          "Feb",
+          "Mar",
+          "Apr",
+          "Mai",
+          "Iun",
+          "Iul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ],
         dayNames: ["Duminică", "Luni", "Marţi", "Miercuri", "Joi", "Vineri", "Sâmbătă"],
         dayNamesShort: ["Dum", "Lun", "Mar", "Mie", "Joi", "Vin", "Sâm"],
         dayNamesMin: ["Du", "Lu", "Ma", "Mi", "Jo", "Vi", "Sâ"],
@@ -87,16 +91,14 @@
             list: "Agendă",
           },
           allDayText: "Toată ziua",
-          eventLimitText: function (e) {
-            return "+alte " + e;
-          },
+          eventLimitText: (e) => "+alte " + e,
           noEventsMessage: "Nu există evenimente de afișat",
         });
     },
-    188: function (e, t, n) {
-      !(function (e, t) {
+    188: (e, t, n) => {
+      !((e, t) => {
         t(n(0));
-      })(0, function (e) {
+      })(0, (e) => {
         function t(e, t, n) {
           var i = { ss: "secunde", mm: "minute", hh: "ore", dd: "zile", MM: "luni", yy: "ani" },
             r = " ";
@@ -148,5 +150,5 @@
         });
       });
     },
-  });
-});
+  })
+);

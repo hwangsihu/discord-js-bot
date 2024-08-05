@@ -1,5 +1,5 @@
-define([], function () {
-  var KEYS = {
+define([], () => {
+  var keys = {
     BACKSPACE: 8,
     TAB: 9,
     ENTER: 13,
@@ -19,5 +19,5 @@ define([], function () {
     DELETE: 46,
   };
 
-  return KEYS;
+  return keys;
 });

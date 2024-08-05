@@ -21,14 +21,14 @@ var srcDir = './src/';
  *			- A minified version of this code, in Chart.min.js
  */
 
-gulp.task('build', function(){
+gulp.task('build', ()=> {
 
 	// Default to all of the chart types, with Chart.Core first
 	var srcFiles = [FileName('Core')],
 		isCustom = !!(util.env.types),
 		outputDir = (isCustom) ? 'custom' : '.';
 	if (isCustom){
-		util.env.types.split(',').forEach(function(type){ return srcFiles.push(FileName(type))});
+		util.env.types.split(',').forEach((type)=> srcFiles.push(FileName(type)));
 	}
 	else{
 		// Seems gulp-concat remove duplicates - nice!
@@ -55,17 +55,15 @@ gulp.task('build', function(){
  *	Output: - New version number written into package.json & bower.json
  */
 
-gulp.task('bump', function(complete){
+gulp.task('bump', (complete)=> {
 	util.log('Current version:', util.colors.cyan(package.version));
-	var choices = ['major', 'premajor', 'minor', 'preminor', 'patch', 'prepatch', 'prerelease'].map(function(versionType){
-		return versionType + ' (v' + semver.inc(package.version, versionType) + ')';
-	});
+	var choices = ['major', 'premajor', 'minor', 'preminor', 'patch', 'prepatch', 'prerelease'].map((versionType)=> versionType + ' (v' + semver.inc(package.version, versionType) + ')');
 	inquirer.prompt({
 		type: 'list',
 		name: 'version',
 		message: 'What version update would you like?',
 		choices: choices
-	}, function(res){
+	}, (res)=> {
 		var increment = res.version.split(' ')[0],
 			newVersion = semver.inc(package.version, increment);
 
@@ -81,38 +79,30 @@ gulp.task('bump', function(complete){
 	});
 });
 
-gulp.task('release', ['build'], function(){
+gulp.task('release', ['build'], ()=> {
 	exec('git tag -a v' + package.version);
 });
 
-gulp.task('jshint', function(){
-	return gulp.src(srcDir + '*.js')
+gulp.task('jshint', ()=> gulp.src(srcDir + '*.js')
 		.pipe(jshint())
-		.pipe(jshint.reporter('default'));
-});
+		.pipe(jshint.reporter('default')));
 
-gulp.task('valid', function(){
-	return gulp.src('samples/*.html')
-    .pipe(htmlv());
-});
+gulp.task('valid', ()=> gulp.src('samples/*.html')
+    .pipe(htmlv()));
 
-gulp.task('library-size', function(){
-	return gulp.src('Chart.min.js')
+gulp.task('library-size', ()=> gulp.src('Chart.min.js')
 		.pipe(size({
 			gzip: true
-		}));
-});
+		})));
 
-gulp.task('module-sizes', function(){
-	return gulp.src(srcDir + '*.js')
+gulp.task('module-sizes', ()=> gulp.src(srcDir + '*.js')
 	.pipe(uglify({preserveComments:'some'}))
 	.pipe(size({
 		showFiles: true,
 		gzip: true
-	}))
-});
+	})));
 
-gulp.task('watch', function(){
+gulp.task('watch', ()=> {
 	gulp.watch('./src/*', ['build']);
 });
 
@@ -122,14 +112,14 @@ gulp.task('size', ['library-size', 'module-sizes']);
 
 gulp.task('default', ['build', 'watch']);
 
-gulp.task('server', function(){
+gulp.task('server', ()=> {
 	connect.server({
 		port: 8000
 	});
 });
 
 // Convenience task for opening the project straight from the command line
-gulp.task('_open', function(){
+gulp.task('_open', ()=> {
 	exec('open http://localhost:8000');
 	exec('subl .');
 });

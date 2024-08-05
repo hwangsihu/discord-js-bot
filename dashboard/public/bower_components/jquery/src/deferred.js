@@ -1,6 +1,8 @@
-define(["./core", "./var/isFunction", "./var/slice", "./callbacks"], function (jQuery, isFunction, slice) {
-  "use strict";
-
+define(["./core", "./var/isFunction", "./var/slice", "./callbacks"], (
+  jQuery,
+  isFunction,
+  slice
+) => {
   function Identity(v) {
     return v;
   }
@@ -39,34 +41,44 @@ define(["./core", "./var/isFunction", "./var/slice", "./callbacks"], function (j
   }
 
   jQuery.extend({
-    Deferred: function (func) {
+    Deferred: (func) => {
       var tuples = [
           // action, add listener, callbacks,
           // ... .then handlers, argument index, [final state]
           ["notify", "progress", jQuery.Callbacks("memory"), jQuery.Callbacks("memory"), 2],
-          ["resolve", "done", jQuery.Callbacks("once memory"), jQuery.Callbacks("once memory"), 0, "resolved"],
-          ["reject", "fail", jQuery.Callbacks("once memory"), jQuery.Callbacks("once memory"), 1, "rejected"],
+          [
+            "resolve",
+            "done",
+            jQuery.Callbacks("once memory"),
+            jQuery.Callbacks("once memory"),
+            0,
+            "resolved",
+          ],
+          [
+            "reject",
+            "fail",
+            jQuery.Callbacks("once memory"),
+            jQuery.Callbacks("once memory"),
+            1,
+            "rejected",
+          ],
         ],
         state = "pending",
         promise = {
-          state: function () {
-            return state;
-          },
+          state: () => state,
           always: function () {
             deferred.done(arguments).fail(arguments);
             return this;
           },
-          catch: function (fn) {
-            return promise.then(null, fn);
-          },
+          catch: (fn) => promise.then(null, fn),
 
           // Keep pipe for back-compat
-          pipe: function (/* fnDone, fnFail, fnProgress */) {
+          pipe: (/* fnDone, fnFail, fnProgress */) => {
             var fns = arguments;
 
             return jQuery
-              .Deferred(function (newDefer) {
-                jQuery.each(tuples, function (i, tuple) {
+              .Deferred((newDefer) => {
+                jQuery.each(tuples, (i, tuple) => {
                   // Map tuples (progress, done, fail) to arguments (done, fail, progress)
                   var fn = isFunction(fns[tuple[4]]) && fns[tuple[4]];
 
@@ -76,7 +88,11 @@ define(["./core", "./var/isFunction", "./var/slice", "./callbacks"], function (j
                   deferred[tuple[1]](function () {
                     var returned = fn && fn.apply(this, arguments);
                     if (returned && isFunction(returned.promise)) {
-                      returned.promise().progress(newDefer.notify).done(newDefer.resolve).fail(newDefer.reject);
+                      returned
+                        .promise()
+                        .progress(newDefer.notify)
+                        .done(newDefer.resolve)
+                        .fail(newDefer.reject);
                     } else {
                       newDefer[tuple[0] + "With"](this, fn ? [returned] : arguments);
                     }
@@ -86,13 +102,13 @@ define(["./core", "./var/isFunction", "./var/slice", "./callbacks"], function (j
               })
               .promise();
           },
-          then: function (onFulfilled, onRejected, onProgress) {
+          then: (onFulfilled, onRejected, onProgress) => {
             var maxDepth = 0;
             function resolve(depth, deferred, handler, special) {
               return function () {
                 var that = this,
                   args = arguments,
-                  mightThrow = function () {
+                  mightThrow = () => {
                     var returned, then;
 
                     // Support: Promises/A+ section 2.3.3.3.3
@@ -162,7 +178,7 @@ define(["./core", "./var/isFunction", "./var/slice", "./callbacks"], function (j
                   // Only normal processors (resolve) catch and reject exceptions
                   process = special
                     ? mightThrow
-                    : function () {
+                    : () => {
                         try {
                           mightThrow();
                         } catch (e) {
@@ -204,31 +220,38 @@ define(["./core", "./var/isFunction", "./var/slice", "./callbacks"], function (j
             }
 
             return jQuery
-              .Deferred(function (newDefer) {
+              .Deferred((newDefer) => {
                 // progress_handlers.add( ... )
                 tuples[0][3].add(
-                  resolve(0, newDefer, isFunction(onProgress) ? onProgress : Identity, newDefer.notifyWith)
+                  resolve(
+                    0,
+                    newDefer,
+                    isFunction(onProgress) ? onProgress : Identity,
+                    newDefer.notifyWith
+                  )
                 );
 
                 // fulfilled_handlers.add( ... )
-                tuples[1][3].add(resolve(0, newDefer, isFunction(onFulfilled) ? onFulfilled : Identity));
+                tuples[1][3].add(
+                  resolve(0, newDefer, isFunction(onFulfilled) ? onFulfilled : Identity)
+                );
 
                 // rejected_handlers.add( ... )
-                tuples[2][3].add(resolve(0, newDefer, isFunction(onRejected) ? onRejected : Thrower));
+                tuples[2][3].add(
+                  resolve(0, newDefer, isFunction(onRejected) ? onRejected : Thrower)
+                );
               })
               .promise();
           },
 
           // Get a promise for this deferred
           // If obj is provided, the promise aspect is added to the object
-          promise: function (obj) {
-            return obj != null ? jQuery.extend(obj, promise) : promise;
-          },
+          promise: (obj) => (obj != null ? jQuery.extend(obj, promise) : promise),
         },
         deferred = {};
 
       // Add list-specific methods
-      jQuery.each(tuples, function (i, tuple) {
+      jQuery.each(tuples, (i, tuple) => {
         var list = tuple[2],
           stateString = tuple[5];
 
@@ -240,7 +263,7 @@ define(["./core", "./var/isFunction", "./var/slice", "./callbacks"], function (j
         // Handle state
         if (stateString) {
           list.add(
-            function () {
+            () => {
               // state = "resolved" (i.e., fulfilled)
               // state = "rejected"
               state = stateString;
@@ -294,7 +317,7 @@ define(["./core", "./var/isFunction", "./var/slice", "./callbacks"], function (j
     },
 
     // Deferred helper
-    when: function (singleValue) {
+    when: (singleValue) => {
       var // count of uncompleted subordinates
         remaining = arguments.length,
         // count of unprocessed arguments
@@ -305,15 +328,14 @@ define(["./core", "./var/isFunction", "./var/slice", "./callbacks"], function (j
         // the master Deferred
         master = jQuery.Deferred(),
         // subordinate callback factory
-        updateFunc = function (i) {
-          return function (value) {
+        updateFunc = (i) =>
+          function (value) {
             resolveContexts[i] = this;
             resolveValues[i] = arguments.length > 1 ? slice.call(arguments) : value;
             if (!--remaining) {
               master.resolveWith(resolveContexts, resolveValues);
             }
           };
-        };
 
       // Single- and empty arguments are adopted like Promise.resolve
       if (remaining <= 1) {

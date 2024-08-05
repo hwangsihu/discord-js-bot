@@ -18,5 +18,8 @@ jvm.SVGCanvasElement.prototype.applyTransformParams = function (scale, transX, t
   this.scale = scale;
   this.transX = transX;
   this.transY = transY;
-  this.rootElement.node.setAttribute("transform", "scale(" + scale + ") translate(" + transX + ", " + transY + ")");
+  this.rootElement.node.setAttribute(
+    "transform",
+    "scale(" + scale + ") translate(" + transX + ", " + transY + ")"
+  );
 };

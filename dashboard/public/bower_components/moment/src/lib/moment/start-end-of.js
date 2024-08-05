@@ -110,7 +110,10 @@ export function endOf(units) {
       break;
     case "hour":
       time = this._d.valueOf();
-      time += MS_PER_HOUR - mod(time + (this._isUTC ? 0 : this.utcOffset() * MS_PER_MINUTE), MS_PER_HOUR) - 1;
+      time +=
+        MS_PER_HOUR -
+        mod(time + (this._isUTC ? 0 : this.utcOffset() * MS_PER_MINUTE), MS_PER_HOUR) -
+        1;
       break;
     case "minute":
       time = this._d.valueOf();

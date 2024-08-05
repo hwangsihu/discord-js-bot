@@ -1,4 +1,4 @@
-define(["jquery", "require"], function ($, require) {
+define(["jquery", "require"], ($, require) => {
   function Translation(dict) {
     this.dict = dict || {};
   }
@@ -19,7 +19,7 @@ define(["jquery", "require"], function ($, require) {
 
   Translation._cache = {};
 
-  Translation.loadPath = function (path) {
+  Translation.loadPath = (path) => {
     if (!(path in Translation._cache)) {
       var translations = require(path);
 

@@ -1,8 +1,6 @@
-define(["../core"], function (jQuery) {
-  "use strict";
-
-  jQuery.readyException = function (error) {
-    window.setTimeout(function () {
+define(["../core"], (jQuery) => {
+  jQuery.readyException = (error) => {
+    window.setTimeout(() => {
       throw error;
     });
   };

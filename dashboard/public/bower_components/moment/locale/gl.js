@@ -1,16 +1,17 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var gl = moment.defineLocale("gl", {
-    months: "xaneiro_febreiro_marzo_abril_maio_xuño_xullo_agosto_setembro_outubro_novembro_decembro".split("_"),
+    months:
+      "xaneiro_febreiro_marzo_abril_maio_xuño_xullo_agosto_setembro_outubro_novembro_decembro".split(
+        "_"
+      ),
     monthsShort: "xan._feb._mar._abr._mai._xuñ._xul._ago._set._out._nov._dec.".split("_"),
     monthsParseExact: true,
     weekdays: "domingo_luns_martes_mércores_xoves_venres_sábado".split("_"),
@@ -44,7 +45,7 @@
       sameElse: "L",
     },
     relativeTime: {
-      future: function (str) {
+      future: (str) => {
         if (str.indexOf("un") === 0) {
           return "n" + str;
         }

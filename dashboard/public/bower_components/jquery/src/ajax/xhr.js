@@ -1,7 +1,5 @@
-define(["../core", "../var/support", "../ajax"], function (jQuery, support) {
-  "use strict";
-
-  jQuery.ajaxSettings.xhr = function () {
+define(["../core", "../var/support", "../ajax"], (jQuery, support) => {
+  jQuery.ajaxSettings.xhr = () => {
     try {
       return new window.XMLHttpRequest();
     } catch (e) {}
@@ -20,13 +18,13 @@ define(["../core", "../var/support", "../ajax"], function (jQuery, support) {
   support.cors = !!xhrSupported && "withCredentials" in xhrSupported;
   support.ajax = xhrSupported = !!xhrSupported;
 
-  jQuery.ajaxTransport(function (options) {
+  jQuery.ajaxTransport((options) => {
     var callback, errorCallback;
 
     // Cross domain only allowed if supported through XMLHttpRequest
     if (support.cors || (xhrSupported && !options.crossDomain)) {
       return {
-        send: function (headers, complete) {
+        send: (headers, complete) => {
           var i,
             xhr = options.xhr();
 
@@ -59,49 +57,47 @@ define(["../core", "../var/support", "../ajax"], function (jQuery, support) {
           }
 
           // Callback
-          callback = function (type) {
-            return function () {
-              if (callback) {
-                callback =
-                  errorCallback =
-                  xhr.onload =
-                  xhr.onerror =
-                  xhr.onabort =
-                  xhr.ontimeout =
-                  xhr.onreadystatechange =
-                    null;
+          callback = (type) => () => {
+            if (callback) {
+              callback =
+                errorCallback =
+                xhr.onload =
+                xhr.onerror =
+                xhr.onabort =
+                xhr.ontimeout =
+                xhr.onreadystatechange =
+                  null;
 
-                if (type === "abort") {
-                  xhr.abort();
-                } else if (type === "error") {
-                  // Support: IE <=9 only
-                  // On a manual native abort, IE9 throws
-                  // errors on any property access that is not readyState
-                  if (typeof xhr.status !== "number") {
-                    complete(0, "error");
-                  } else {
-                    complete(
-                      // File: protocol always yields status 0; see #8605, #14207
-                      xhr.status,
-                      xhr.statusText
-                    );
-                  }
+              if (type === "abort") {
+                xhr.abort();
+              } else if (type === "error") {
+                // Support: IE <=9 only
+                // On a manual native abort, IE9 throws
+                // errors on any property access that is not readyState
+                if (typeof xhr.status !== "number") {
+                  complete(0, "error");
                 } else {
                   complete(
-                    xhrSuccessStatus[xhr.status] || xhr.status,
-                    xhr.statusText,
-
-                    // Support: IE <=9 only
-                    // IE9 has no XHR2 but throws on binary (trac-11426)
-                    // For XHR2 non-text, let the caller handle it (gh-2498)
-                    (xhr.responseType || "text") !== "text" || typeof xhr.responseText !== "string"
-                      ? { binary: xhr.response }
-                      : { text: xhr.responseText },
-                    xhr.getAllResponseHeaders()
+                    // File: protocol always yields status 0; see #8605, #14207
+                    xhr.status,
+                    xhr.statusText
                   );
                 }
+              } else {
+                complete(
+                  xhrSuccessStatus[xhr.status] || xhr.status,
+                  xhr.statusText,
+
+                  // Support: IE <=9 only
+                  // IE9 has no XHR2 but throws on binary (trac-11426)
+                  // For XHR2 non-text, let the caller handle it (gh-2498)
+                  (xhr.responseType || "text") !== "text" || typeof xhr.responseText !== "string"
+                    ? { binary: xhr.response }
+                    : { text: xhr.responseText },
+                  xhr.getAllResponseHeaders()
+                );
               }
-            };
+            }
           };
 
           // Listen to events
@@ -114,14 +110,14 @@ define(["../core", "../var/support", "../ajax"], function (jQuery, support) {
           if (xhr.onabort !== undefined) {
             xhr.onabort = errorCallback;
           } else {
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = () => {
               // Check readyState before timeout as it changes
               if (xhr.readyState === 4) {
                 // Allow onerror to be called first,
                 // but that will not handle a native abort
                 // Also, save errorCallback to a variable
                 // as xhr.onerror cannot be accessed
-                window.setTimeout(function () {
+                window.setTimeout(() => {
                   if (callback) {
                     errorCallback();
                   }
@@ -144,7 +140,7 @@ define(["../core", "../var/support", "../ajax"], function (jQuery, support) {
           }
         },
 
-        abort: function () {
+        abort: () => {
           if (callback) {
             callback();
           }

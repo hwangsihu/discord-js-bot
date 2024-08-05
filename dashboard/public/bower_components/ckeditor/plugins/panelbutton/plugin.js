@@ -4,7 +4,7 @@
 */
 CKEDITOR.plugins.add("panelbutton", {
   requires: "button",
-  onLoad: function () {
+  onLoad: () => {
     function e(c) {
       var a = this._;
       a.state != CKEDITOR.TRISTATE_DISABLED &&
@@ -26,9 +26,7 @@ CKEDITOR.plugins.add("panelbutton", {
       },
       statics: {
         handler: {
-          create: function (c) {
-            return new CKEDITOR.ui.panelButton(c);
-          },
+          create: (c) => new CKEDITOR.ui.panelButton(c),
         },
       },
       proto: {
@@ -50,16 +48,18 @@ CKEDITOR.plugins.add("panelbutton", {
             };
             d.onHide = function (d) {
               b.className && this.element.getFirst().removeClass(b.className + "_panel");
-              b.setState(b.modes && b.modes[c.mode] ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED);
+              b.setState(
+                b.modes && b.modes[c.mode] ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED
+              );
               a.on = 0;
               if (!d && b.onClose) b.onClose();
             };
-            d.onEscape = function () {
+            d.onEscape = () => {
               d.hide(1);
               b.document.getById(a.id).focus();
             };
             if (this.onBlock) this.onBlock(d, f);
-            f.onHide = function () {
+            f.onHide = () => {
               a.on = 0;
               b.setState(CKEDITOR.TRISTATE_OFF);
             };
@@ -68,7 +68,7 @@ CKEDITOR.plugins.add("panelbutton", {
       },
     });
   },
-  beforeInit: function (e) {
+  beforeInit: (e) => {
     e.ui.addHandler(CKEDITOR.UI_PANELBUTTON, CKEDITOR.ui.panelButton.handler);
   },
 });

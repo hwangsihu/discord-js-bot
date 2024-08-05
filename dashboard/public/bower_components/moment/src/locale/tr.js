@@ -64,7 +64,7 @@ export default moment.defineLocale("tr", {
     y: "bir yıl",
     yy: "%d yıl",
   },
-  ordinal: function (number, period) {
+  ordinal: (number, period) => {
     switch (period) {
       case "d":
       case "D":

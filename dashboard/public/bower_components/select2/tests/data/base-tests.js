@@ -6,18 +6,18 @@ var Options = require("select2/options");
 
 var options = new Options({});
 
-test("current is required", function (assert) {
+test("current is required", (assert) => {
   var data = new BaseData($("#qunit-fixture select"), options);
 
-  assert.throws(function () {
-    data.current(function () {});
+  assert.throws(() => {
+    data.current(() => {});
   }, "current has no default implementation");
 });
 
-test("query is required", function (assert) {
+test("query is required", (assert) => {
   var data = new BaseData($("#qunit-fixture select"), options);
 
-  assert.throws(function () {
-    data.query({}, function () {});
+  assert.throws(() => {
+    data.query({}, () => {});
   }, "query has no default implementation");
 });

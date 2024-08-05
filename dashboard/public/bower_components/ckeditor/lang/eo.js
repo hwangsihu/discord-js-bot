@@ -347,7 +347,8 @@ CKEDITOR.lang["eo"] = {
     generalTab: "Ĝenerala",
     advancedTab: "Speciala",
     validateNumberFailed: "Tiu valoro ne estas nombro.",
-    confirmNewPage: "La neregistritaj ŝanĝoj estas perdotaj. Ĉu vi certas, ke vi volas ŝargi novan paĝon?",
+    confirmNewPage:
+      "La neregistritaj ŝanĝoj estas perdotaj. Ĉu vi certas, ke vi volas ŝargi novan paĝon?",
     confirmCancel: "Iuj opcioj esta ŝanĝitaj. Ĉu vi certas, ke vi volas fermi la dialogon?",
     options: "Opcioj",
     target: "Celo",

@@ -3,7 +3,7 @@
  * Original code: Cauan Cabral <cauan@radig.com.br>
  * Tiago Melo <tiago.blackcode@gmail.com>
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["pt"] = {
     days: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
     daysShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
@@ -22,7 +22,20 @@
       "Novembro",
       "Dezembro",
     ],
-    monthsShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+    monthsShort: [
+      "Jan",
+      "Fev",
+      "Mar",
+      "Abr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Set",
+      "Out",
+      "Nov",
+      "Dez",
+    ],
     today: "Hoje",
     monthsTitle: "Meses",
     clear: "Limpar",

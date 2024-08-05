@@ -1,16 +1,17 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var bg = moment.defineLocale("bg", {
-    months: "януари_февруари_март_април_май_юни_юли_август_септември_октомври_ноември_декември".split("_"),
+    months:
+      "януари_февруари_март_април_май_юни_юли_август_септември_октомври_ноември_декември".split(
+        "_"
+      ),
     monthsShort: "янр_фев_мар_апр_май_юни_юли_авг_сеп_окт_ное_дек".split("_"),
     weekdays: "неделя_понеделник_вторник_сряда_четвъртък_петък_събота".split("_"),
     weekdaysShort: "нед_пон_вто_сря_чет_пет_съб".split("_"),
@@ -60,7 +61,7 @@
       yy: "%d години",
     },
     dayOfMonthOrdinalParse: /\d{1,2}-(ев|ен|ти|ви|ри|ми)/,
-    ordinal: function (number) {
+    ordinal: (number) => {
       var lastDigit = number % 10,
         last2Digits = number % 100;
       if (number === 0) {

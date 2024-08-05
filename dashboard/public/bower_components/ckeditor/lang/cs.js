@@ -150,7 +150,8 @@ CKEDITOR.lang["cs"] = {
     title: "Vložit jako čistý text",
   },
   pastefromword: {
-    confirmCleanup: "Jak je vidět, vkládaný text je kopírován z Wordu. Chcete jej před vložením vyčistit?",
+    confirmCleanup:
+      "Jak je vidět, vkládaný text je kopírován z Wordu. Chcete jej před vložením vyčistit?",
     error: "Z důvodu vnitřní chyby nebylo možné provést vyčištění vkládaného textu.",
     title: "Vložit z Wordu",
     toolbar: "Vložit z Wordu",
@@ -346,7 +347,8 @@ CKEDITOR.lang["cs"] = {
     generalTab: "Obecné",
     advancedTab: "Rozšířené",
     validateNumberFailed: "Zadaná hodnota není číselná.",
-    confirmNewPage: "Jakékoliv neuložené změny obsahu budou ztraceny. Skutečně chcete otevřít novou stránku?",
+    confirmNewPage:
+      "Jakékoliv neuložené změny obsahu budou ztraceny. Skutečně chcete otevřít novou stránku?",
     confirmCancel: "Některá z nastavení byla změněna. Skutečně chcete zavřít dialogové okno?",
     options: "Nastavení",
     target: "Cíl",
@@ -375,7 +377,8 @@ CKEDITOR.lang["cs"] = {
     invalidValue: "Neplatná hodnota.",
     invalidHeight: "Zadaná výška musí být číslo.",
     invalidWidth: "Šířka musí být číslo.",
-    invalidLength: 'Hodnota určená pro pole "%1" musí být kladné číslo bez nebo s platnou jednotkou míry (%2).',
+    invalidLength:
+      'Hodnota určená pro pole "%1" musí být kladné číslo bez nebo s platnou jednotkou míry (%2).',
     invalidCssLength:
       'Hodnota určená pro pole "%1" musí být kladné číslo bez nebo s platnou jednotkou míry CSS (px, %, in, cm, mm, em, ex, pt, nebo pc).',
     invalidHtmlLength:

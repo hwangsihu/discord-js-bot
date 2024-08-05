@@ -19,7 +19,7 @@ define([
   "./manipulation",
   "./css",
   "./effects/Tween",
-], function (
+], (
   jQuery,
   camelCase,
   document,
@@ -29,12 +29,10 @@ define([
   cssExpand,
   isHiddenWithinTree,
   swap,
-  adjustCSS,
+  adjustCss,
   dataPriv,
   showHide
-) {
-  "use strict";
-
+) => {
   var fxNow,
     inProgress,
     rfxtypes = /^(?:toggle|show|hide)$/,
@@ -54,7 +52,7 @@ define([
 
   // Animations created synchronously will run synchronously
   function createFxNow() {
-    window.setTimeout(function () {
+    window.setTimeout(() => {
       fxNow = undefined;
     });
     return (fxNow = Date.now());
@@ -104,7 +102,6 @@ define([
       restoreDisplay,
       display,
       isBox = "width" in props || "height" in props,
-      anim = this,
       orig = {},
       style = elem.style,
       hidden = elem.nodeType && isHiddenWithinTree(elem),
@@ -116,7 +113,7 @@ define([
       if (hooks.unqueued == null) {
         hooks.unqueued = 0;
         oldfire = hooks.empty.fire;
-        hooks.empty.fire = function () {
+        hooks.empty.fire = () => {
           if (!hooks.unqueued) {
             oldfire();
           }
@@ -124,9 +121,9 @@ define([
       }
       hooks.unqueued++;
 
-      anim.always(function () {
+      this.always(() => {
         // Ensure the complete handler is called before this completes
-        anim.always(function () {
+        this.always(() => {
           hooks.unqueued--;
           if (!jQuery.queue(elem, "fx").length) {
             hooks.empty.fire();
@@ -193,7 +190,7 @@ define([
         if (jQuery.css(elem, "float") === "none") {
           // Restore the original display value at the end of pure show/hide animations
           if (!propTween) {
-            anim.done(function () {
+            this.done(() => {
               style.display = restoreDisplay;
             });
             if (restoreDisplay == null) {
@@ -208,7 +205,7 @@ define([
 
     if (opts.overflow) {
       style.overflow = "hidden";
-      anim.always(function () {
+      this.always(() => {
         style.overflow = opts.overflow[0];
         style.overflowX = opts.overflow[1];
         style.overflowY = opts.overflow[2];
@@ -240,7 +237,7 @@ define([
 
         /* eslint-disable no-loop-func */
 
-        anim.done(function () {
+        this.done(() => {
           /* eslint-enable no-loop-func */
 
           // The final step of a "hide" animation is actually hiding the element
@@ -255,7 +252,7 @@ define([
       }
 
       // Per-property setup
-      propTween = createTween(hidden ? dataShow[prop] : 0, prop, anim);
+      propTween = createTween(hidden ? dataShow[prop] : 0, prop, this);
       if (!(prop in dataShow)) {
         dataShow[prop] = propTween.start;
         if (hidden) {
@@ -308,11 +305,11 @@ define([
       stopped,
       index = 0,
       length = Animation.prefilters.length,
-      deferred = jQuery.Deferred().always(function () {
+      deferred = jQuery.Deferred().always(() => {
         // Don't match elem in the :animated selector
         delete tick.elem;
       }),
-      tick = function () {
+      tick = () => {
         if (stopped) {
           return false;
         }
@@ -361,7 +358,7 @@ define([
         startTime: fxNow || createFxNow(),
         duration: options.duration,
         tweens: [],
-        createTween: function (prop, end) {
+        createTween: (prop, end) => {
           var tween = jQuery.Tween(
             elem,
             animation.opts,
@@ -438,13 +435,13 @@ define([
       "*": [
         function (prop, value) {
           var tween = this.createTween(prop, value);
-          adjustCSS(tween.elem, prop, rcssNum.exec(value), tween);
+          adjustCss(tween.elem, prop, rcssNum.exec(value), tween);
           return tween;
         },
       ],
     },
 
-    tweener: function (props, callback) {
+    tweener: (props, callback) => {
       if (isFunction(props)) {
         callback = props;
         props = ["*"];
@@ -465,7 +462,7 @@ define([
 
     prefilters: [defaultPrefilter],
 
-    prefilter: function (callback, prepend) {
+    prefilter: (callback, prepend) => {
       if (prepend) {
         Animation.prefilters.unshift(callback);
       } else {
@@ -474,7 +471,7 @@ define([
     },
   });
 
-  jQuery.speed = function (speed, easing, fn) {
+  jQuery.speed = (speed, easing, fn) => {
     var opt =
       speed && typeof speed === "object"
         ? jQuery.extend({}, speed)
@@ -487,13 +484,11 @@ define([
     // Go to the end state if fx are off
     if (jQuery.fx.off) {
       opt.duration = 0;
-    } else {
-      if (typeof opt.duration !== "number") {
-        if (opt.duration in jQuery.fx.speeds) {
-          opt.duration = jQuery.fx.speeds[opt.duration];
-        } else {
-          opt.duration = jQuery.fx.speeds._default;
-        }
+    } else if (typeof opt.duration !== "number") {
+      if (opt.duration in jQuery.fx.speeds) {
+        opt.duration = jQuery.fx.speeds[opt.duration];
+      } else {
+        opt.duration = jQuery.fx.speeds._default;
       }
     }
 
@@ -545,10 +540,12 @@ define([
         };
       doAnimation.finish = doAnimation;
 
-      return empty || optall.queue === false ? this.each(doAnimation) : this.queue(optall.queue, doAnimation);
+      return empty || optall.queue === false
+        ? this.each(doAnimation)
+        : this.queue(optall.queue, doAnimation);
     },
     stop: function (type, clearQueue, gotoEnd) {
-      var stopQueue = function (hooks) {
+      var stopQueue = (hooks) => {
         var stop = hooks.stop;
         delete hooks.stop;
         stop(gotoEnd);
@@ -640,7 +637,7 @@ define([
     },
   });
 
-  jQuery.each(["toggle", "show", "hide"], function (i, name) {
+  jQuery.each(["toggle", "show", "hide"], (i, name) => {
     var cssFn = jQuery.fn[name];
     jQuery.fn[name] = function (speed, easing, callback) {
       return speed == null || typeof speed === "boolean"
@@ -659,7 +656,7 @@ define([
       fadeOut: { opacity: "hide" },
       fadeToggle: { opacity: "toggle" },
     },
-    function (name, props) {
+    (name, props) => {
       jQuery.fn[name] = function (speed, easing, callback) {
         return this.animate(props, speed, easing, callback);
       };
@@ -667,7 +664,7 @@ define([
   );
 
   jQuery.timers = [];
-  jQuery.fx.tick = function () {
+  jQuery.fx.tick = () => {
     var timer,
       i = 0,
       timers = jQuery.timers;
@@ -689,13 +686,13 @@ define([
     fxNow = undefined;
   };
 
-  jQuery.fx.timer = function (timer) {
+  jQuery.fx.timer = (timer) => {
     jQuery.timers.push(timer);
     jQuery.fx.start();
   };
 
   jQuery.fx.interval = 13;
-  jQuery.fx.start = function () {
+  jQuery.fx.start = () => {
     if (inProgress) {
       return;
     }
@@ -704,7 +701,7 @@ define([
     schedule();
   };
 
-  jQuery.fx.stop = function () {
+  jQuery.fx.stop = () => {
     inProgress = null;
   };
 

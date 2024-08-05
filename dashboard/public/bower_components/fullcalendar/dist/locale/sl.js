@@ -1,4 +1,4 @@
-!(function (e, n) {
+!((e, n) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = n(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? n(require("moment"), require("fullcalendar"))
         : n(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, n) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, n) =>
+  ((e) => {
     function n(r) {
       if (t[r]) return t[r].exports;
       var a = (t[r] = { i: r, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (n.m = e),
       (n.c = t),
-      (n.d = function (e, t, r) {
+      (n.d = (e, t, r) => {
         n.o(e, t) || Object.defineProperty(e, t, { configurable: !1, enumerable: !0, get: r });
       }),
-      (n.n = function (e) {
-        var t =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (n.n = (e) => {
+        var t = e && e.__esModule ? () => e.default : () => e;
         return n.d(t, "a", t), t;
       }),
-      (n.o = function (e, n) {
-        return Object.prototype.hasOwnProperty.call(e, n);
-      }),
+      (n.o = (e, n) => Object.prototype.hasOwnProperty.call(e, n)),
       (n.p = ""),
       n((n.s = 193))
     );
   })({
-    0: function (n, t) {
+    0: (n, t) => {
       n.exports = e;
     },
-    1: function (e, t) {
+    1: (e, t) => {
       e.exports = n;
     },
-    193: function (e, n, t) {
+    193: (e, n, t) => {
       Object.defineProperty(n, "__esModule", { value: !0 }), t(194);
       var r = t(1);
       r.datepickerLocale("sl", "sl", {
@@ -66,7 +57,20 @@
           "November",
           "December",
         ],
-        monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Avg", "Sep", "Okt", "Nov", "Dec"],
+        monthNamesShort: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "Maj",
+          "Jun",
+          "Jul",
+          "Avg",
+          "Sep",
+          "Okt",
+          "Nov",
+          "Dec",
+        ],
         dayNames: ["Nedelja", "Ponedeljek", "Torek", "Sreda", "Četrtek", "Petek", "Sobota"],
         dayNamesShort: ["Ned", "Pon", "Tor", "Sre", "Čet", "Pet", "Sob"],
         dayNamesMin: ["Ne", "Po", "To", "Sr", "Če", "Pe", "So"],
@@ -84,10 +88,10 @@
           noEventsMessage: "Ni dogodkov za prikaz",
         });
     },
-    194: function (e, n, t) {
-      !(function (e, n) {
+    194: (e, n, t) => {
+      !((e, n) => {
         n(t(0));
-      })(0, function (e) {
+      })(0, (e) => {
         function n(e, n, t, r) {
           var a = e + " ";
           switch (t) {
@@ -202,7 +206,10 @@
           }
         }
         return e.defineLocale("sl", {
-          months: "januar_februar_marec_april_maj_junij_julij_avgust_september_oktober_november_december".split("_"),
+          months:
+            "januar_februar_marec_april_maj_junij_julij_avgust_september_oktober_november_december".split(
+              "_"
+            ),
           monthsShort: "jan._feb._mar._apr._maj._jun._jul._avg._sep._okt._nov._dec.".split("_"),
           monthsParseExact: !0,
           weekdays: "nedelja_ponedeljek_torek_sreda_četrtek_petek_sobota".split("_"),
@@ -275,5 +282,5 @@
         });
       });
     },
-  });
-});
+  })
+);

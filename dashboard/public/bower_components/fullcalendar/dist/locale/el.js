@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(o) {
       if (n[o]) return n[o].exports;
       var r = (n[o] = { i: o, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = n),
-      (t.d = function (e, n, o) {
+      (t.d = (e, n, o) => {
         t.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: o });
       }),
-      (t.n = function (e) {
-        var n =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var n = e && e.__esModule ? () => e.default : () => e;
         return t.d(n, "a", n), n;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 105))
     );
   })({
-    0: function (t, n) {
+    0: (t, n) => {
       t.exports = e;
     },
-    1: function (e, n) {
+    1: (e, n) => {
       e.exports = t;
     },
-    105: function (e, t, n) {
+    105: (e, t, n) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), n(106);
       var o = n(1);
       o.datepickerLocale("el", "el", {
@@ -66,7 +57,20 @@
           "Νοέμβριος",
           "Δεκέμβριος",
         ],
-        monthNamesShort: ["Ιαν", "Φεβ", "Μαρ", "Απρ", "Μαι", "Ιουν", "Ιουλ", "Αυγ", "Σεπ", "Οκτ", "Νοε", "Δεκ"],
+        monthNamesShort: [
+          "Ιαν",
+          "Φεβ",
+          "Μαρ",
+          "Απρ",
+          "Μαι",
+          "Ιουν",
+          "Ιουλ",
+          "Αυγ",
+          "Σεπ",
+          "Οκτ",
+          "Νοε",
+          "Δεκ",
+        ],
         dayNames: ["Κυριακή", "Δευτέρα", "Τρίτη", "Τετάρτη", "Πέμπτη", "Παρασκευή", "Σάββατο"],
         dayNamesShort: ["Κυρ", "Δευ", "Τρι", "Τετ", "Πεμ", "Παρ", "Σαβ"],
         dayNamesMin: ["Κυ", "Δε", "Τρ", "Τε", "Πε", "Πα", "Σα"],
@@ -84,10 +88,10 @@
           noEventsMessage: "Δεν υπάρχουν γεγονότα για να εμφανιστεί",
         });
     },
-    106: function (e, t, n) {
-      !(function (e, t) {
+    106: (e, t, n) => {
+      !((e, t) => {
         t(n(0));
-      })(0, function (e) {
+      })(0, (e) => {
         function t(e) {
           return e instanceof Function || "[object Function]" === Object.prototype.toString.call(e);
         }
@@ -111,12 +115,8 @@
           weekdays: "Κυριακή_Δευτέρα_Τρίτη_Τετάρτη_Πέμπτη_Παρασκευή_Σάββατο".split("_"),
           weekdaysShort: "Κυρ_Δευ_Τρι_Τετ_Πεμ_Παρ_Σαβ".split("_"),
           weekdaysMin: "Κυ_Δε_Τρ_Τε_Πε_Πα_Σα".split("_"),
-          meridiem: function (e, t, n) {
-            return e > 11 ? (n ? "μμ" : "ΜΜ") : n ? "πμ" : "ΠΜ";
-          },
-          isPM: function (e) {
-            return "μ" === (e + "").toLowerCase()[0];
-          },
+          meridiem: (e, t, n) => (e > 11 ? (n ? "μμ" : "ΜΜ") : n ? "πμ" : "ΠΜ"),
+          isPM: (e) => "μ" === (e + "").toLowerCase()[0],
           meridiemParse: /[ΠΜ]\.?Μ?\.?/i,
           longDateFormat: {
             LT: "h:mm A",
@@ -168,5 +168,5 @@
         });
       });
     },
-  });
-});
+  })
+);

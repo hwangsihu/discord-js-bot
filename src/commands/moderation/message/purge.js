@@ -19,7 +19,8 @@ module.exports = {
     const amount = args[0];
 
     if (isNaN(amount)) return message.safeReply("Numbers are only allowed");
-    if (parseInt(amount) > 99) return message.safeReply("The max amount of messages that I can delete is 99");
+    if (Number.parseInt(amount) > 99)
+      return message.safeReply("The max amount of messages that I can delete is 99");
 
     const { channel } = message;
     const response = await purgeMessages(message.member, channel, "ALL", amount);
@@ -27,9 +28,15 @@ module.exports = {
     if (typeof response === "number") {
       return channel.safeSend(`Successfully deleted ${response} messages`, 5);
     } else if (response === "BOT_PERM") {
-      return message.safeReply("I don't have `Read Message History` & `Manage Messages` to delete messages", 5);
+      return message.safeReply(
+        "I don't have `Read Message History` & `Manage Messages` to delete messages",
+        5
+      );
     } else if (response === "MEMBER_PERM") {
-      return message.safeReply("You don't have `Read Message History` & `Manage Messages` to delete messages", 5);
+      return message.safeReply(
+        "You don't have `Read Message History` & `Manage Messages` to delete messages",
+        5
+      );
     } else if (response === "NO_MESSAGES") {
       return channel.safeSend("No messages found that can be cleaned", 5);
     } else {

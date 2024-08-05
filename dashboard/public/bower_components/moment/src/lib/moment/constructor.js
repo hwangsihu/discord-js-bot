@@ -1,5 +1,4 @@
 import getParsingFlags from "../create/parsing-flags";
-import hasOwnProp from "../utils/has-own-prop";
 import { hooks } from "../utils/hooks";
 import isUndefined from "../utils/is-undefined";
 
@@ -59,9 +58,9 @@ var updateInProgress = false;
 // Moment prototype object
 export function Moment(config) {
   copyConfig(this, config);
-  this._d = new Date(config._d != null ? config._d.getTime() : NaN);
+  this._d = new Date(config._d != null ? config._d.getTime() : Number.NaN);
   if (!this.isValid()) {
-    this._d = new Date(NaN);
+    this._d = new Date(Number.NaN);
   }
   // Prevent infinite loop in case updateOffset creates new moment
   // objects.

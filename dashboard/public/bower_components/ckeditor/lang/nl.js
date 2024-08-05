@@ -347,8 +347,10 @@ CKEDITOR.lang["nl"] = {
     generalTab: "Algemeen",
     advancedTab: "Geavanceerd",
     validateNumberFailed: "Deze waarde is geen geldig getal.",
-    confirmNewPage: "Alle aangebrachte wijzigingen gaan verloren. Weet u zeker dat u een nieuwe pagina wilt openen?",
-    confirmCancel: "Enkele opties zijn gewijzigd. Weet u zeker dat u dit dialoogvenster wilt sluiten?",
+    confirmNewPage:
+      "Alle aangebrachte wijzigingen gaan verloren. Weet u zeker dat u een nieuwe pagina wilt openen?",
+    confirmCancel:
+      "Enkele opties zijn gewijzigd. Weet u zeker dat u dit dialoogvenster wilt sluiten?",
     options: "Opties",
     target: "Doelvenster",
     targetNew: "Nieuw venster (_blank)",

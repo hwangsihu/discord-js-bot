@@ -2,16 +2,18 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-CKEDITOR.dialog.add("select", function (c) {
+CKEDITOR.dialog.add("select", (c) => {
   function h(a, b, e, d, c) {
     a = f(a);
     d = d ? d.createElement("OPTION") : document.createElement("OPTION");
     if (a && d && "option" == d.getName())
       CKEDITOR.env.ie
-        ? (isNaN(parseInt(c, 10)) ? a.$.options.add(d.$) : a.$.options.add(d.$, c),
+        ? (isNaN(Number.parseInt(c, 10)) ? a.$.options.add(d.$) : a.$.options.add(d.$, c),
           (d.$.innerHTML = 0 < b.length ? b : ""),
           (d.$.value = e))
-        : (null !== c && c < a.getChildCount() ? a.getChild(0 > c ? 0 : c).insertBeforeMe(d) : a.append(d),
+        : (null !== c && c < a.getChildCount()
+            ? a.getChild(0 > c ? 0 : c).insertBeforeMe(d)
+            : a.append(d),
           d.setText(0 < b.length ? b : ""),
           d.setValue(e));
     else return !1;
@@ -19,7 +21,8 @@ CKEDITOR.dialog.add("select", function (c) {
   }
   function p(a) {
     a = f(a);
-    for (var b = g(a), e = a.getChildren().count() - 1; 0 <= e; e--) a.getChild(e).$.selected && a.getChild(e).remove();
+    for (var b = g(a), e = a.getChildren().count() - 1; 0 <= e; e--)
+      a.getChild(e).$.selected && a.getChild(e).remove();
     k(a, b);
   }
   function q(a, b, e, d) {
@@ -88,7 +91,7 @@ CKEDITOR.dialog.add("select", function (c) {
       if (e && (a.insertElement(b), CKEDITOR.env.ie)) {
         var d = a.getSelection(),
           c = d.createBookmarks();
-        setTimeout(function () {
+        setTimeout(() => {
           d.selectBookmarks(c);
         }, 0);
       }
@@ -112,7 +115,8 @@ CKEDITOR.dialog.add("select", function (c) {
             setup: function (a, b) {
               "clear" == a
                 ? this.setValue(this["default"] || "")
-                : "select" == a && this.setValue(b.data("cke-saved-name") || b.getAttribute("name") || "");
+                : "select" == a &&
+                  this.setValue(b.data("cke-saved-name") || b.getAttribute("name") || "");
             },
             commit: function (a) {
               this.getValue()
@@ -160,18 +164,26 @@ CKEDITOR.dialog.add("select", function (c) {
                   CKEDITOR.env.webkit && this.getInputElement().setStyle("width", "86px");
                 },
                 commit: function (a) {
-                  this.getValue() ? a.setAttribute("size", this.getValue()) : a.removeAttribute("size");
+                  this.getValue()
+                    ? a.setAttribute("size", this.getValue())
+                    : a.removeAttribute("size");
                 },
               },
               {
                 type: "html",
-                html: "\x3cspan\x3e" + CKEDITOR.tools.htmlEncode(c.lang.forms.select.lines) + "\x3c/span\x3e",
+                html:
+                  "\x3cspan\x3e" +
+                  CKEDITOR.tools.htmlEncode(c.lang.forms.select.lines) +
+                  "\x3c/span\x3e",
               },
             ],
           },
           {
             type: "html",
-            html: "\x3cspan\x3e" + CKEDITOR.tools.htmlEncode(c.lang.forms.select.opAvail) + "\x3c/span\x3e",
+            html:
+              "\x3cspan\x3e" +
+              CKEDITOR.tools.htmlEncode(c.lang.forms.select.opAvail) +
+              "\x3c/span\x3e",
           },
           {
             type: "hbox",
@@ -212,7 +224,12 @@ CKEDITOR.dialog.add("select", function (c) {
                       "clear" == a
                         ? m(this)
                         : "option" == a &&
-                          h(this, b.getText(), b.getText(), this.getDialog().getParentEditor().document);
+                          h(
+                            this,
+                            b.getText(),
+                            b.getText(),
+                            this.getDialog().getParentEditor().document
+                          );
                     },
                     commit: function (a) {
                       var b = this.getDialog(),
@@ -221,8 +238,14 @@ CKEDITOR.dialog.add("select", function (c) {
                         c = b.getContentElement("info", "txtValue").getValue();
                       m(a);
                       for (var f = 0; f < e.count(); f++) {
-                        var g = h(a, e.getItem(f).getValue(), d.getItem(f).getValue(), b.getParentEditor().document);
-                        d.getItem(f).getValue() == c && (g.setAttribute("selected", "selected"), (g.selected = !0));
+                        var g = h(
+                          a,
+                          e.getItem(f).getValue(),
+                          d.getItem(f).getValue(),
+                          b.getParentEditor().document
+                        );
+                        d.getItem(f).getValue() == c &&
+                          (g.setAttribute("selected", "selected"), (g.selected = !0));
                       }
                     },
                   },
@@ -304,7 +327,8 @@ CKEDITOR.dialog.add("select", function (c) {
                         d = a.getContentElement("info", "cmbName"),
                         a = a.getContentElement("info", "cmbValue"),
                         c = g(d);
-                      0 <= c && (q(d, c, b.getValue(), b.getValue()), q(a, c, e.getValue(), e.getValue()));
+                      0 <= c &&
+                        (q(d, c, b.getValue(), b.getValue()), q(a, c, e.getValue(), e.getValue()));
                     },
                   },
                   {
@@ -385,7 +409,9 @@ CKEDITOR.dialog.add("select", function (c) {
                       "select" == a && this.setValue(b.getAttribute("multiple"));
                     },
                     commit: function (a) {
-                      this.getValue() ? a.setAttribute("multiple", this.getValue()) : a.removeAttribute("multiple");
+                      this.getValue()
+                        ? a.setAttribute("multiple", this.getValue())
+                        : a.removeAttribute("multiple");
                     },
                   },
                   {
@@ -399,7 +425,9 @@ CKEDITOR.dialog.add("select", function (c) {
                       "select" == a && CKEDITOR.plugins.forms._setupRequiredAttribute.call(this, b);
                     },
                     commit: function (a) {
-                      this.getValue() ? a.setAttribute("required", "required") : a.removeAttribute("required");
+                      this.getValue()
+                        ? a.setAttribute("required", "required")
+                        : a.removeAttribute("required");
                     },
                   },
                 ],

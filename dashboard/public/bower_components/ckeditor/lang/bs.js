@@ -106,7 +106,12 @@ CKEDITOR.lang["bs"] = {
     invalidRows: "Number of rows must be a number greater than 0.",
     invalidWidth: "Table width must be a number.",
     menu: "Svojstva tabele",
-    row: { menu: "Row", insertBefore: "Insert Row Before", insertAfter: "Insert Row After", deleteRow: "Briši redove" },
+    row: {
+      menu: "Row",
+      insertBefore: "Insert Row Before",
+      insertAfter: "Insert Row After",
+      deleteRow: "Briši redove",
+    },
     rows: "Redova",
     summary: "Summary",
     title: "Svojstva tabele",
@@ -145,7 +150,8 @@ CKEDITOR.lang["bs"] = {
     title: "Zalijepi kao obièan tekst",
   },
   pastefromword: {
-    confirmCleanup: "The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?",
+    confirmCleanup:
+      "The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?",
     error: "It was not possible to clean up the pasted data due to an internal error",
     title: "Zalijepi iz Word-a",
     toolbar: "Zalijepi iz Word-a",
@@ -341,8 +347,10 @@ CKEDITOR.lang["bs"] = {
     generalTab: "General",
     advancedTab: "Naprednije",
     validateNumberFailed: "This value is not a number.",
-    confirmNewPage: "Any unsaved changes to this content will be lost. Are you sure you want to load new page?",
-    confirmCancel: "You have changed some options. Are you sure you want to close the dialog window?",
+    confirmNewPage:
+      "Any unsaved changes to this content will be lost. Are you sure you want to load new page?",
+    confirmCancel:
+      "You have changed some options. Are you sure you want to close the dialog window?",
     options: "Options",
     target: "Prozor",
     targetNew: "New Window (_blank)",

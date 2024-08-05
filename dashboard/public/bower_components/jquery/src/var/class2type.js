@@ -1,6 +1,4 @@
-define(function () {
-  "use strict";
-
+define(() => {
   // [[Class]] -> type pairs
   return {};
 });

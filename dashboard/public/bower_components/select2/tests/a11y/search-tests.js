@@ -9,7 +9,7 @@ var Utils = require("select2/utils");
 var Options = require("select2/options");
 var options = new Options({});
 
-test("aria-autocomplete attribute is present", function (assert) {
+test("aria-autocomplete attribute is present", (assert) => {
   var $select = $("#qunit-fixture .multiple");
 
   var CustomSelection = Utils.Decorate(MultipleSelection, InlineSearch);
@@ -19,10 +19,14 @@ test("aria-autocomplete attribute is present", function (assert) {
   // Update the selection so the search is rendered
   selection.update([]);
 
-  assert.equal($selection.find("input").attr("aria-autocomplete"), "list", "The search box is marked as autocomplete");
+  assert.equal(
+    $selection.find("input").attr("aria-autocomplete"),
+    "list",
+    "The search box is marked as autocomplete"
+  );
 });
 
-test("aria-activedescendant should be removed when closed", function (assert) {
+test("aria-activedescendant should be removed when closed", (assert) => {
   var $select = $("#qunit-fixture .multiple");
 
   var CustomSelection = Utils.Decorate(MultipleSelection, InlineSearch);
@@ -40,5 +44,8 @@ test("aria-activedescendant should be removed when closed", function (assert) {
 
   container.trigger("close");
 
-  assert.ok(!$search.attr("aria-activedescendant"), "There is no active descendant when the dropdown is closed");
+  assert.ok(
+    !$search.attr("aria-activedescendant"),
+    "There is no active descendant when the dropdown is closed"
+  );
 });

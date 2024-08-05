@@ -6,14 +6,17 @@
  * Version: 3.3.11
  */
 
-!(function (factory) {
+!((factory) => {
   "function" == typeof define && define.amd
     ? define(["./dependencyLibs/inputmask.dependencyLib", "./inputmask"], factory)
     : "object" == typeof exports
-      ? (module.exports = factory(require("./dependencyLibs/inputmask.dependencyLib"), require("./inputmask")))
+      ? (module.exports = factory(
+          require("./dependencyLibs/inputmask.dependencyLib"),
+          require("./inputmask")
+        ))
       : factory(window.dependencyLib || jQuery, window.Inputmask);
-})(function ($, Inputmask) {
-  return (
+})(
+  ($, Inputmask) => (
     Inputmask.extendAliases({
       Regex: {
         mask: "r",
@@ -24,12 +27,11 @@
         tokenizer:
           /\[\^?]?(?:[^\\\]]+|\\[\S\s]?)*]?|\\(?:0(?:[0-3][0-7]{0,2}|[4-7][0-7]?)?|[1-9][0-9]*|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|c[A-Za-z]|[\S\s]?)|\((?:\?[:=!]?)?|(?:[?*+]|\{[0-9]+(?:,[0-9]*)?\})\??|[^.?*+^${[()|\\]+|./g,
         quantifierFilter: /[0-9]+[^,]/,
-        isComplete: function (buffer, opts) {
-          return new RegExp(opts.regex, opts.casing ? "i" : "").test(buffer.join(""));
-        },
+        isComplete: (buffer, opts) =>
+          new RegExp(opts.regex, opts.casing ? "i" : "").test(buffer.join("")),
         definitions: {
           r: {
-            validator: function (chrs, maskset, pos, strict, opts) {
+            validator: (chrs, maskset, pos, strict, opts) => {
               function RegexToken(isGroup, isQuantifier) {
                 (this.matches = []),
                   (this.isGroup = isGroup || !1),
@@ -51,12 +53,11 @@
                       matchGroup = token.matches[crrntndx - 1],
                       regexPartBak = regexPart;
                     if (isNaN(matchToken.quantifier.max)) {
-                      for (
-                        ;
+                      while (
                         matchToken.repeaterPart &&
                         matchToken.repeaterPart !== regexPart &&
                         matchToken.repeaterPart.length > regexPart.length &&
-                        !(isvalid = validateRegexToken(matchGroup, !0));
+                        !(isvalid = validateRegexToken(matchGroup, !0))
                       );
                       (isvalid = isvalid || validateRegexToken(matchGroup, !0)) &&
                         (matchToken.repeaterPart = regexPart),
@@ -68,12 +69,18 @@
                         i++
                       );
                       regexPart =
-                        regexPartBak + "{" + matchToken.quantifier.min + "," + matchToken.quantifier.max + "}";
+                        regexPartBak +
+                        "{" +
+                        matchToken.quantifier.min +
+                        "," +
+                        matchToken.quantifier.max +
+                        "}";
                     }
                   } else if (void 0 !== matchToken.matches)
                     for (
                       var k = 0;
-                      k < matchToken.length && !(isvalid = validateRegexToken(matchToken[k], fromGroup));
+                      k < matchToken.length &&
+                      !(isvalid = validateRegexToken(matchToken[k], fromGroup));
                       k++
                     );
                   else {
@@ -81,7 +88,10 @@
                     if ("[" == matchToken.charAt(0)) {
                       (testExp = regexPart), (testExp += matchToken);
                       for (j = 0; j < openGroupCount; j++) testExp += ")";
-                      isvalid = (exp = new RegExp("^(" + testExp + ")$", opts.casing ? "i" : "")).test(bufferStr);
+                      isvalid = (exp = new RegExp(
+                        "^(" + testExp + ")$",
+                        opts.casing ? "i" : ""
+                      )).test(bufferStr);
                     } else
                       for (var l = 0, tl = matchToken.length; l < tl; l++)
                         if ("\\" !== matchToken.charAt(l)) {
@@ -104,7 +114,7 @@
                 isValid = !1,
                 openGroupCount = 0;
               null === opts.regexTokens &&
-                (function () {
+                (() => {
                   var match,
                     m,
                     currentToken = new RegexToken(),
@@ -127,8 +137,9 @@
                       case "*":
                         var quantifierToken = new RegexToken(!1, !0),
                           mq = (m = m.replace(/[{}]/g, "")).split(","),
-                          mq0 = isNaN(mq[0]) ? mq[0] : parseInt(mq[0]),
-                          mq1 = 1 === mq.length ? mq0 : isNaN(mq[1]) ? mq[1] : parseInt(mq[1]);
+                          mq0 = isNaN(mq[0]) ? mq[0] : Number.parseInt(mq[0]),
+                          mq1 =
+                            1 === mq.length ? mq0 : isNaN(mq[1]) ? mq[1] : Number.parseInt(mq[1]);
                         if (
                           ((quantifierToken.quantifier = {
                             min: mq0,
@@ -138,12 +149,14 @@
                         ) {
                           var matches = opengroups[opengroups.length - 1].matches;
                           (match = matches.pop()).isGroup ||
-                            ((groupToken = new RegexToken(!0)).matches.push(match), (match = groupToken)),
+                            ((groupToken = new RegexToken(!0)).matches.push(match),
+                            (match = groupToken)),
                             matches.push(match),
                             matches.push(quantifierToken);
                         } else
                           (match = currentToken.matches.pop()).isGroup ||
-                            ((groupToken = new RegexToken(!0)).matches.push(match), (match = groupToken)),
+                            ((groupToken = new RegexToken(!0)).matches.push(match),
+                            (match = groupToken)),
                             currentToken.matches.push(match),
                             currentToken.matches.push(quantifierToken);
                         break;
@@ -169,5 +182,5 @@
       },
     }),
     Inputmask
-  );
-});
+  )
+);

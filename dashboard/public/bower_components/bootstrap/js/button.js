@@ -6,9 +6,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
-+(function ($) {
-  "use strict";
-
++(($) => {
   // BUTTON PUBLIC CLASS DEFINITION
   // ==============================
 
@@ -106,7 +104,7 @@
   // ===============
 
   $(document)
-    .on("click.bs.button.data-api", '[data-toggle^="button"]', function (e) {
+    .on("click.bs.button.data-api", '[data-toggle^="button"]', (e) => {
       var $btn = $(e.target).closest(".btn");
       Plugin.call($btn, "toggle");
       if (!$(e.target).is('input[type="radio"], input[type="checkbox"]')) {
@@ -117,7 +115,7 @@
         else $btn.find("input:visible,button:visible").first().trigger("focus");
       }
     })
-    .on("focus.bs.button.data-api blur.bs.button.data-api", '[data-toggle^="button"]', function (e) {
+    .on("focus.bs.button.data-api blur.bs.button.data-api", '[data-toggle^="button"]', (e) => {
       $(e.target)
         .closest(".btn")
         .toggleClass("focus", /^focus(in)?$/.test(e.type));

@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   function plural(word, num) {
     var forms = word.split("_");
     return num % 10 === 1 && num % 100 !== 11
@@ -52,8 +50,14 @@
   // CLDR data:          http://www.unicode.org/cldr/charts/28/summary/ru.html#1753
   var ru = moment.defineLocale("ru", {
     months: {
-      format: "января_февраля_марта_апреля_мая_июня_июля_августа_сентября_октября_ноября_декабря".split("_"),
-      standalone: "январь_февраль_март_апрель_май_июнь_июль_август_сентябрь_октябрь_ноябрь_декабрь".split("_"),
+      format:
+        "января_февраля_марта_апреля_мая_июня_июля_августа_сентября_октября_ноября_декабря".split(
+          "_"
+        ),
+      standalone:
+        "январь_февраль_март_апрель_май_июнь_июль_август_сентябрь_октябрь_ноябрь_декабрь".split(
+          "_"
+        ),
     },
     monthsShort: {
       // по CLDR именно "июл." и "июн.", но какой смысл менять букву на точку ?
@@ -112,12 +116,10 @@
             case 6:
               return "[В следующую] dddd, [в] LT";
           }
+        } else if (this.day() === 2) {
+          return "[Во] dddd, [в] LT";
         } else {
-          if (this.day() === 2) {
-            return "[Во] dddd, [в] LT";
-          } else {
-            return "[В] dddd, [в] LT";
-          }
+          return "[В] dddd, [в] LT";
         }
       },
       lastWeek: function (now) {
@@ -134,12 +136,10 @@
             case 6:
               return "[В прошлую] dddd, [в] LT";
           }
+        } else if (this.day() === 2) {
+          return "[Во] dddd, [в] LT";
         } else {
-          if (this.day() === 2) {
-            return "[Во] dddd, [в] LT";
-          } else {
-            return "[В] dddd, [в] LT";
-          }
+          return "[В] dddd, [в] LT";
         }
       },
       sameElse: "L",
@@ -161,10 +161,8 @@
       yy: relativeTimeWithPlural,
     },
     meridiemParse: /ночи|утра|дня|вечера/i,
-    isPM: function (input) {
-      return /^(дня|вечера)$/.test(input);
-    },
-    meridiem: function (hour, minute, isLower) {
+    isPM: (input) => /^(дня|вечера)$/.test(input),
+    meridiem: (hour, minute, isLower) => {
       if (hour < 4) {
         return "ночи";
       } else if (hour < 12) {
@@ -176,7 +174,7 @@
       }
     },
     dayOfMonthOrdinalParse: /\d{1,2}-(й|го|я)/,
-    ordinal: function (number, period) {
+    ordinal: (number, period) => {
       switch (period) {
         case "M":
         case "d":

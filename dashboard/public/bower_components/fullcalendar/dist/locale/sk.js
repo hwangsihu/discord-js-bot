@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(n) {
       if (r[n]) return r[n].exports;
       var o = (r[n] = { i: n, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = r),
-      (t.d = function (e, r, n) {
+      (t.d = (e, r, n) => {
         t.o(e, r) || Object.defineProperty(e, r, { configurable: !1, enumerable: !0, get: n });
       }),
-      (t.n = function (e) {
-        var r =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var r = e && e.__esModule ? () => e.default : () => e;
         return t.d(r, "a", r), r;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 191))
     );
   })({
-    0: function (t, r) {
+    0: (t, r) => {
       t.exports = e;
     },
-    1: function (e, r) {
+    1: (e, r) => {
       e.exports = t;
     },
-    191: function (e, t, r) {
+    191: (e, t, r) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), r(192);
       var n = r(1);
       n.datepickerLocale("sk", "sk", {
@@ -66,7 +57,20 @@
           "november",
           "december",
         ],
-        monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "Máj", "Jún", "Júl", "Aug", "Sep", "Okt", "Nov", "Dec"],
+        monthNamesShort: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "Máj",
+          "Jún",
+          "Júl",
+          "Aug",
+          "Sep",
+          "Okt",
+          "Nov",
+          "Dec",
+        ],
         dayNames: ["nedeľa", "pondelok", "utorok", "streda", "štvrtok", "piatok", "sobota"],
         dayNamesShort: ["Ned", "Pon", "Uto", "Str", "Štv", "Pia", "Sob"],
         dayNamesMin: ["Ne", "Po", "Ut", "St", "Št", "Pia", "So"],
@@ -80,16 +84,14 @@
         n.locale("sk", {
           buttonText: { month: "Mesiac", week: "Týždeň", day: "Deň", list: "Rozvrh" },
           allDayText: "Celý deň",
-          eventLimitText: function (e) {
-            return "+ďalšie: " + e;
-          },
+          eventLimitText: (e) => "+ďalšie: " + e,
           noEventsMessage: "Žiadne akcie na zobrazenie",
         });
     },
-    192: function (e, t, r) {
-      !(function (e, t) {
+    192: (e, t, r) => {
+      !((e, t) => {
         t(r(0));
-      })(0, function (e) {
+      })(0, (e) => {
         function t(e) {
           return e > 1 && e < 5;
         }
@@ -122,7 +124,10 @@
               return r || o ? a + (t(e) ? "roky" : "rokov") : a + "rokmi";
           }
         }
-        var n = "január_február_marec_apríl_máj_jún_júl_august_september_október_november_december".split("_"),
+        var n =
+            "január_február_marec_apríl_máj_jún_júl_august_september_október_november_december".split(
+              "_"
+            ),
           o = "jan_feb_mar_apr_máj_jún_júl_aug_sep_okt_nov_dec".split("_");
         return e.defineLocale("sk", {
           months: n,
@@ -199,5 +204,5 @@
         });
       });
     },
-  });
-});
+  })
+);

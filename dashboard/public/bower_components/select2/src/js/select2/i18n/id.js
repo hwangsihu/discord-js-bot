@@ -1,33 +1,21 @@
-define(function () {
+define(() => {
   // Indonesian
   return {
-    errorLoading: function () {
-      return "Data tidak boleh diambil.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "Data tidak boleh diambil.",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       return "Hapuskan " + overChars + " huruf";
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       return "Masukkan " + remainingChars + " huruf lagi";
     },
-    loadingMore: function () {
-      return "Mengambil data…";
-    },
-    maximumSelected: function (args) {
-      return "Anda hanya dapat memilih " + args.maximum + " pilihan";
-    },
-    noResults: function () {
-      return "Tidak ada data yang sesuai";
-    },
-    searching: function () {
-      return "Mencari…";
-    },
-    removeAllItems: function () {
-      return "Hapus semua item";
-    },
+    loadingMore: () => "Mengambil data…",
+    maximumSelected: (args) => "Anda hanya dapat memilih " + args.maximum + " pilihan",
+    noResults: () => "Tidak ada data yang sesuai",
+    searching: () => "Mencari…",
+    removeAllItems: () => "Hapus semua item",
   };
 });

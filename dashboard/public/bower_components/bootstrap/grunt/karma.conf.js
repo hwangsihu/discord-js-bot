@@ -1,16 +1,19 @@
-"use strict";
-
 var ip = require("ip");
 var browserConfig = require("./browsers");
 var browserStack = process.env.BROWSER === "true";
 
-module.exports = function (config) {
+module.exports = (config) => {
   var conf = {
     basePath: "../",
     frameworks: ["qunit"],
     plugins: ["karma-qunit"],
     // list of files / patterns to load in the browser
-    files: ["js/tests/vendor/jquery.min.js", "js/tooltip.js", "js/!(tooltip).js", "js/tests/unit/*.js"],
+    files: [
+      "js/tests/vendor/jquery.min.js",
+      "js/tooltip.js",
+      "js/!(tooltip).js",
+      "js/tests/unit/*.js",
+    ],
     reporters: ["dots"],
     port: 9876,
     colors: true,
@@ -18,7 +21,7 @@ module.exports = function (config) {
     logLevel: config.LOG_ERROR || config.LOG_WARN,
     autoWatch: false,
     singleRun: true,
-    concurrency: Infinity,
+    concurrency: Number.POSITIVE_INFINITY,
     client: {
       qunit: {
         showUI: true,
@@ -45,8 +48,11 @@ module.exports = function (config) {
 
     conf.detectBrowsers = {
       usePhantomJS: false,
-      postDetection: function (availableBrowser) {
-        if (typeof process.env.TRAVIS_JOB_ID !== "undefined" || availableBrowser.includes("Chrome")) {
+      postDetection: (availableBrowser) => {
+        if (
+          typeof process.env.TRAVIS_JOB_ID !== "undefined" ||
+          availableBrowser.includes("Chrome")
+        ) {
           return ["ChromeHeadless"];
         }
 

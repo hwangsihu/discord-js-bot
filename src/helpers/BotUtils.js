@@ -6,11 +6,14 @@ module.exports = class BotUtils {
    * Check if the bot is up to date
    */
   static async checkForUpdates() {
-    const response = await getJson("https://api.github.com/repos/saiteja-madha/discord-js-bot/releases/latest");
+    const response = await getJson(
+      "https://api.github.com/repos/saiteja-madha/discord-js-bot/releases/latest"
+    );
     if (!response.success) return error("VersionCheck: Failed to check for bot updates");
     if (response.data) {
       if (
-        require("@root/package.json").version.replace(/[^0-9]/g, "") >= response.data.tag_name.replace(/[^0-9]/g, "")
+        require("@root/package.json").version.replace(/[^0-9]/g, "") >=
+        response.data.tag_name.replace(/[^0-9]/g, "")
       ) {
         success("VersionCheck: Your discord bot is up to date");
       } else {
@@ -32,11 +35,13 @@ module.exports = class BotUtils {
     if (message.attachments.size > 0) {
       const attachment = message.attachments.first();
       const attachUrl = attachment.url;
-      const attachIsImage = attachUrl.endsWith(".png") || attachUrl.endsWith(".jpg") || attachUrl.endsWith(".jpeg");
+      const attachIsImage =
+        attachUrl.endsWith(".png") || attachUrl.endsWith(".jpg") || attachUrl.endsWith(".jpeg");
       if (attachIsImage) url = attachUrl;
     }
 
-    if (!url && args.length === 0) url = message.author.displayAvatarURL({ size: 256, extension: "png" });
+    if (!url && args.length === 0)
+      url = message.author.displayAvatarURL({ size: 256, extension: "png" });
 
     if (!url && args.length !== 0) {
       try {

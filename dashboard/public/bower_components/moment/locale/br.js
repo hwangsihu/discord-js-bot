@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   function relativeTimeWithMutation(number, withoutSuffix, key) {
     var format = {
       mm: "munutenn",
@@ -54,7 +52,9 @@
   }
 
   var br = moment.defineLocale("br", {
-    months: "Genver_C'hwevrer_Meurzh_Ebrel_Mae_Mezheven_Gouere_Eost_Gwengolo_Here_Du_Kerzu".split("_"),
+    months: "Genver_C'hwevrer_Meurzh_Ebrel_Mae_Mezheven_Gouere_Eost_Gwengolo_Here_Du_Kerzu".split(
+      "_"
+    ),
     monthsShort: "Gen_C'hwe_Meu_Ebr_Mae_Eve_Gou_Eos_Gwe_Her_Du_Ker".split("_"),
     weekdays: "Sul_Lun_Meurzh_Merc'her_Yaou_Gwener_Sadorn".split("_"),
     weekdaysShort: "Sul_Lun_Meu_Mer_Yao_Gwe_Sad".split("_"),
@@ -93,7 +93,7 @@
       yy: specialMutationForYears,
     },
     dayOfMonthOrdinalParse: /\d{1,2}(añ|vet)/,
-    ordinal: function (number) {
+    ordinal: (number) => {
       var output = number === 1 ? "añ" : "vet";
       return number + output;
     },

@@ -8,7 +8,13 @@ module.exports = {
   description: "play snake game on discord",
   cooldown: 300,
   category: "FUN",
-  botPermissions: ["SendMessages", "EmbedLinks", "AddReactions", "ReadMessageHistory", "ManageMessages"],
+  botPermissions: [
+    "SendMessages",
+    "EmbedLinks",
+    "AddReactions",
+    "ReadMessageHistory",
+    "ManageMessages",
+  ],
   command: {
     enabled: true,
   },

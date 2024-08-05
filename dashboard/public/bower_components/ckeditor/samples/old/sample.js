@@ -6,12 +6,14 @@
 // Tool scripts for the sample pages.
 // This file can be ignored and is not required to make use of CKEditor.
 
-(function () {
-  CKEDITOR.on("instanceReady", function (ev) {
+(() => {
+  CKEDITOR.on("instanceReady", (ev) => {
     // Check for sample compliance.
     var editor = ev.editor,
       meta = CKEDITOR.document.$.getElementsByName("ckeditor-sample-required-plugins"),
-      requires = meta.length ? CKEDITOR.dom.element.get(meta[0]).getAttribute("content").split(",") : [],
+      requires = meta.length
+        ? CKEDITOR.dom.element.get(meta[0]).getAttribute("content").split(",")
+        : [],
       missing = [],
       i;
 

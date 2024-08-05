@@ -5,15 +5,15 @@ var Utils = require("select2/utils");
 var Options = require("select2/options");
 
 var SingleSelection = require("select2/selection/single");
-var ContainerCSS = Utils.Decorate(SingleSelection, require("select2/compat/containerCss"));
+var containerCss = Utils.Decorate(SingleSelection, require("select2/compat/containerCss"));
 
-test("all classes will be copied if :all: is used", function (assert) {
+test("all classes will be copied if :all: is used", (assert) => {
   var $element = $('<select class="test copy works"></select>');
   var options = new Options({
     containerCssClass: ":all:",
   });
 
-  var select = new ContainerCSS($element, options);
+  var select = new containerCss($element, options);
   var $container = select.render();
 
   assert.ok($container.hasClass("test"));
@@ -22,13 +22,13 @@ test("all classes will be copied if :all: is used", function (assert) {
   assert.ok(!$container.hasClass(":all:"));
 });
 
-test(":all: can be used with other classes", function (assert) {
+test(":all: can be used with other classes", (assert) => {
   var $element = $('<select class="test copy works"></select>');
   var options = new Options({
     containerCssClass: ":all: other",
   });
 
-  var select = new ContainerCSS($element, options);
+  var select = new containerCss($element, options);
   var $container = select.render();
 
   assert.ok($container.hasClass("test"));
@@ -38,43 +38,39 @@ test(":all: can be used with other classes", function (assert) {
   assert.ok(!$container.hasClass(":all:"));
 });
 
-test("classes can be passed in as a string", function (assert) {
+test("classes can be passed in as a string", (assert) => {
   var $element = $('<select class="test copy works"></select>');
   var options = new Options({
     containerCssClass: "other",
   });
 
-  var select = new ContainerCSS($element, options);
+  var select = new containerCss($element, options);
   var $container = select.render();
 
   assert.ok($container.hasClass("other"));
 });
 
-test("a function can be used based on the element", function (assert) {
+test("a function can be used based on the element", (assert) => {
   var $element = $('<select class="test"></select>');
   var options = new Options({
-    containerCssClass: function ($element) {
-      return "function";
-    },
+    containerCssClass: ($element) => "function",
   });
 
-  var select = new ContainerCSS($element, options);
+  var select = new containerCss($element, options);
   var $container = select.render();
 
   assert.ok($container.hasClass("function"));
   assert.ok(!$container.hasClass("test"));
 });
 
-test(":all: works around custom adapters", function (assert) {
+test(":all: works around custom adapters", (assert) => {
   var $element = $('<select class="test"></select>');
   var options = new Options({
     containerCssClass: ":all: something",
-    adaptContainerCssClass: function (clazz) {
-      return clazz + "-modified";
-    },
+    adaptContainerCssClass: (clazz) => clazz + "-modified",
   });
 
-  var select = new ContainerCSS($element, options);
+  var select = new containerCss($element, options);
   var $container = select.render();
 
   assert.ok($container.hasClass("something"));
@@ -85,15 +81,13 @@ test(":all: works around custom adapters", function (assert) {
 
 module("Selection - adaptContainerCss compatibility");
 
-test("only return when adapted", function (assert) {
+test("only return when adapted", (assert) => {
   var $element = $('<select class="original"></select>');
   var options = new Options({
-    adaptContainerCssClass: function (clazz) {
-      return "modified";
-    },
+    adaptContainerCssClass: (clazz) => "modified",
   });
 
-  var select = new ContainerCSS($element, options);
+  var select = new containerCss($element, options);
   var $container = select.render();
 
   assert.ok(!$container.hasClass("original"));

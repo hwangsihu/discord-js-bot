@@ -6,13 +6,13 @@ export function diff(input, units, asFloat) {
   var that, zoneDelta, delta, output;
 
   if (!this.isValid()) {
-    return NaN;
+    return Number.NaN;
   }
 
   that = cloneWithOffset(input, this);
 
   if (!that.isValid()) {
-    return NaN;
+    return Number.NaN;
   }
 
   zoneDelta = (that.utcOffset() - this.utcOffset()) * 6e4;

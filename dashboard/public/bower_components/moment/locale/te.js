@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var te = moment.defineLocale("te", {
     months: "జనవరి_ఫిబ్రవరి_మార్చి_ఏప్రిల్_మే_జూన్_జులై_ఆగస్టు_సెప్టెంబర్_అక్టోబర్_నవంబర్_డిసెంబర్".split("_"),
     monthsShort: "జన._ఫిబ్ర._మార్చి_ఏప్రి._మే_జూన్_జులై_ఆగ._సెప్._అక్టో._నవ._డిసె.".split("_"),
@@ -51,7 +49,7 @@
     dayOfMonthOrdinalParse: /\d{1,2}వ/,
     ordinal: "%dవ",
     meridiemParse: /రాత్రి|ఉదయం|మధ్యాహ్నం|సాయంత్రం/,
-    meridiemHour: function (hour, meridiem) {
+    meridiemHour: (hour, meridiem) => {
       if (hour === 12) {
         hour = 0;
       }
@@ -65,7 +63,7 @@
         return hour + 12;
       }
     },
-    meridiem: function (hour, minute, isLower) {
+    meridiem: (hour, minute, isLower) => {
       if (hour < 4) {
         return "రాత్రి";
       } else if (hour < 10) {

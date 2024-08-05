@@ -127,7 +127,11 @@ CKEDITOR.lang["no"] = {
     panelTitle2: "Inlinestiler",
     panelTitle3: "Objektstiler",
   },
-  specialchar: { options: "Alternativer for spesialtegn", title: "Velg spesialtegn", toolbar: "Sett inn spesialtegn" },
+  specialchar: {
+    options: "Alternativer for spesialtegn",
+    title: "Velg spesialtegn",
+    toolbar: "Sett inn spesialtegn",
+  },
   sourcearea: { toolbar: "Kilde" },
   scayt: {
     btn_about: "Om SCAYT",
@@ -146,7 +150,8 @@ CKEDITOR.lang["no"] = {
     title: "Lim inn som ren tekst",
   },
   pastefromword: {
-    confirmCleanup: "Teksten du limer inn ser ut til å være kopiert fra Word. Vil du renske den før du limer den inn?",
+    confirmCleanup:
+      "Teksten du limer inn ser ut til å være kopiert fra Word. Vil du renske den før du limer den inn?",
     error: "Det var ikke mulig å renske den innlimte teksten på grunn av en intern feil",
     title: "Lim inn fra Word",
     toolbar: "Lim inn fra Word",
@@ -154,7 +159,10 @@ CKEDITOR.lang["no"] = {
   notification: { closed: "Notification closed." },
   maximize: { maximize: "Maksimer", minimize: "Minimer" },
   magicline: { title: "Sett inn nytt avsnitt her" },
-  list: { bulletedlist: "Legg til/Fjern punktmerket liste", numberedlist: "Legg til/Fjern nummerert liste" },
+  list: {
+    bulletedlist: "Legg til/Fjern punktmerket liste",
+    numberedlist: "Legg til/Fjern nummerert liste",
+  },
   link: {
     acccessKey: "Aksessknapp",
     advanced: "Avansert",

@@ -8,7 +8,7 @@
  *
  * http://api.jqueryui.com/droppable/
  */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["jquery", "./core", "./widget", "./mouse", "./draggable"], factory);
@@ -16,7 +16,7 @@
     // Browser globals
     factory(jQuery);
   }
-})(function ($) {
+})(($) => {
   $.widget("ui.droppable", {
     version: "1.11.4",
     widgetEventPrefix: "drop",
@@ -44,11 +44,7 @@
       this.isover = false;
       this.isout = true;
 
-      this.accept = $.isFunction(accept)
-        ? accept
-        : function (d) {
-            return d.is(accept);
-          };
+      this.accept = $.isFunction(accept) ? accept : (d) => d.is(accept);
 
       this.proportions = function (/* valueToWrite */) {
         if (arguments.length) {
@@ -95,11 +91,7 @@
 
     _setOption: function (key, value) {
       if (key === "accept") {
-        this.accept = $.isFunction(value)
-          ? value
-          : function (d) {
-              return d.is(value);
-            };
+        this.accept = $.isFunction(value) ? value : (d) => d.is(value);
       } else if (key === "scope") {
         var drop = $.ui.ddmanager.droppables[this.options.scope];
 
@@ -181,7 +173,12 @@
             !inst.options.disabled &&
             inst.options.scope === draggable.options.scope &&
             inst.accept.call(inst.element[0], draggable.currentItem || draggable.element) &&
-            $.ui.intersect(draggable, $.extend(inst, { offset: inst.element.offset() }), inst.options.tolerance, event)
+            $.ui.intersect(
+              draggable,
+              $.extend(inst, { offset: inst.element.offset() }),
+              inst.options.tolerance,
+              event
+            )
           ) {
             childrenIntersection = true;
             return false;
@@ -205,22 +202,20 @@
       return false;
     },
 
-    ui: function (c) {
-      return {
-        draggable: c.currentItem || c.element,
-        helper: c.helper,
-        position: c.position,
-        offset: c.positionAbs,
-      };
-    },
+    ui: (c) => ({
+      draggable: c.currentItem || c.element,
+      helper: c.helper,
+      position: c.position,
+      offset: c.positionAbs,
+    }),
   });
 
-  $.ui.intersect = (function () {
+  $.ui.intersect = (() => {
     function isOverAxis(x, reference, size) {
       return x >= reference && x < reference + size;
     }
 
-    return function (draggable, droppable, toleranceMode, event) {
+    return (draggable, droppable, toleranceMode, event) => {
       if (!droppable.offset) {
         return false;
       }
@@ -270,7 +265,7 @@
   $.ui.ddmanager = {
     current: null,
     droppables: { default: [] },
-    prepareOffsets: function (t, event) {
+    prepareOffsets: (t, event) => {
       var i,
         j,
         m = $.ui.ddmanager.droppables[t.options.scope] || [],
@@ -279,7 +274,10 @@
 
       droppablesLoop: for (i = 0; i < m.length; i++) {
         // No disabled and non-accepted
-        if (m[i].options.disabled || (t && !m[i].accept.call(m[i].element[0], t.currentItem || t.element))) {
+        if (
+          m[i].options.disabled ||
+          (t && !m[i].accept.call(m[i].element[0], t.currentItem || t.element))
+        ) {
           continue;
         }
 
@@ -302,17 +300,24 @@
         }
 
         m[i].offset = m[i].element.offset();
-        m[i].proportions({ width: m[i].element[0].offsetWidth, height: m[i].element[0].offsetHeight });
+        m[i].proportions({
+          width: m[i].element[0].offsetWidth,
+          height: m[i].element[0].offsetHeight,
+        });
       }
     },
-    drop: function (draggable, event) {
+    drop: (draggable, event) => {
       var dropped = false;
       // Create a copy of the droppables in case the list changes during the drop (#9116)
       $.each(($.ui.ddmanager.droppables[draggable.options.scope] || []).slice(), function () {
         if (!this.options) {
           return;
         }
-        if (!this.options.disabled && this.visible && $.ui.intersect(draggable, this, this.options.tolerance, event)) {
+        if (
+          !this.options.disabled &&
+          this.visible &&
+          $.ui.intersect(draggable, this, this.options.tolerance, event)
+        ) {
           dropped = this._drop.call(this, event) || dropped;
         }
 
@@ -328,15 +333,15 @@
       });
       return dropped;
     },
-    dragStart: function (draggable, event) {
+    dragStart: (draggable, event) => {
       // Listen for scrolling so that if the dragging causes scrolling the position of the droppables can be recalculated (see #5003)
-      draggable.element.parentsUntil("body").bind("scroll.droppable", function () {
+      draggable.element.parentsUntil("body").bind("scroll.droppable", () => {
         if (!draggable.options.refreshPositions) {
           $.ui.ddmanager.prepareOffsets(draggable, event);
         }
       });
     },
-    drag: function (draggable, event) {
+    drag: (draggable, event) => {
       // If you have a highly dynamic page, you might try this option. It renders positions every time you move the mouse.
       if (draggable.options.refreshPositions) {
         $.ui.ddmanager.prepareOffsets(draggable, event);
@@ -389,7 +394,7 @@
         }
       });
     },
-    dragStop: function (draggable, event) {
+    dragStop: (draggable, event) => {
       draggable.element.parentsUntil("body").unbind("scroll.droppable");
       // Call prepareOffsets one final time since IE does not fire return scroll events when overflow was caused by drag (see #5003)
       if (!draggable.options.refreshPositions) {

@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function q(a, f, d, b) {
     if (!a.isReadOnly() && !a.equals(d.editable())) {
       CKEDITOR.dom.element.setMarker(b, a, "bidi_processed", 1);
@@ -14,10 +14,12 @@
           return;
         }
       b = "useComputedState" in d.config ? d.config.useComputedState : 1;
-      (b ? a.getComputedStyle("direction") : a.getStyle("direction") || a.hasAttribute("dir")) != f &&
+      (b ? a.getComputedStyle("direction") : a.getStyle("direction") || a.hasAttribute("dir")) !=
+        f &&
         (a.removeStyle("direction"),
         b
-          ? (a.removeAttribute("dir"), f != a.getComputedStyle("direction") && a.setAttribute("dir", f))
+          ? (a.removeAttribute("dir"),
+            f != a.getComputedStyle("direction") && a.setAttribute("dir", f))
           : a.setAttribute("dir", f),
         d.forceNextSelectionCheck());
     }
@@ -25,11 +27,17 @@
   function v(a, f, d) {
     var b = a.getCommonAncestor(!1, !0);
     a = a.clone();
-    a.enlarge(d == CKEDITOR.ENTER_BR ? CKEDITOR.ENLARGE_LIST_ITEM_CONTENTS : CKEDITOR.ENLARGE_BLOCK_CONTENTS);
+    a.enlarge(
+      d == CKEDITOR.ENTER_BR ? CKEDITOR.ENLARGE_LIST_ITEM_CONTENTS : CKEDITOR.ENLARGE_BLOCK_CONTENTS
+    );
     if (a.checkBoundaryOfElement(b, CKEDITOR.START) && a.checkBoundaryOfElement(b, CKEDITOR.END)) {
       for (
         var c;
-        b && b.type == CKEDITOR.NODE_ELEMENT && (c = b.getParent()) && 1 == c.getChildCount() && !(b.getName() in f);
+        b &&
+        b.type == CKEDITOR.NODE_ELEMENT &&
+        (c = b.getParent()) &&
+        1 == c.getChildCount() &&
+        !(b.getName() in f);
       )
         b = c;
       return b.type == CKEDITOR.NODE_ELEMENT && b.getName() in f && b;
@@ -39,10 +47,13 @@
     return {
       context: "p",
       allowedContent: {
-        "h1 h2 h3 h4 h5 h6 table ul ol blockquote div tr p div li td": { propertiesOnly: !0, attributes: "dir" },
+        "h1 h2 h3 h4 h5 h6 table ul ol blockquote div tr p div li td": {
+          propertiesOnly: !0,
+          attributes: "dir",
+        },
       },
       requiredContent: "p[dir]",
-      refresh: function (a, d) {
+      refresh: (a, d) => {
         var b = a.config.useComputedState,
           c,
           b = void 0 === b || b;
@@ -60,25 +71,35 @@
           h.type == CKEDITOR.NODE_ELEMENT &&
           (c = h);
         c &&
-          ((b = b ? c.getComputedStyle("direction") : c.getStyle("direction") || c.getAttribute("dir")),
-          a.getCommand("bidirtl").setState("rtl" == b ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF),
-          a.getCommand("bidiltr").setState("ltr" == b ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF));
+          ((b = b
+            ? c.getComputedStyle("direction")
+            : c.getStyle("direction") || c.getAttribute("dir")),
+          a
+            .getCommand("bidirtl")
+            .setState("rtl" == b ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF),
+          a
+            .getCommand("bidiltr")
+            .setState("ltr" == b ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF));
         b = (d.block || d.blockLimit || a.editable()).getDirection(1);
         b != (a._.selDir || a.lang.dir) && ((a._.selDir = b), a.fire("contentDirChanged", b));
       },
-      exec: function (f) {
+      exec: (f) => {
         var d = f.getSelection(),
           b = f.config.enterMode,
           c = d.getRanges();
         if (c && c.length) {
-          for (var h = {}, e = d.createBookmarks(), c = c.createIterator(), g, l = 0; (g = c.getNextRange(1)); ) {
+          for (
+            var h = {}, e = d.createBookmarks(), c = c.createIterator(), g, l = 0;
+            (g = c.getNextRange(1));
+          ) {
             var k = g.getEnclosedNode();
-            (k && (!k || (k.type == CKEDITOR.NODE_ELEMENT && k.getName() in r))) || (k = v(g, t, b));
+            (k && (!k || (k.type == CKEDITOR.NODE_ELEMENT && k.getName() in r))) ||
+              (k = v(g, t, b));
             k && q(k, a, f, h);
             var m = new CKEDITOR.dom.walker(g),
               n = e[l].startNode,
               p = e[l++].endNode;
-            m.evaluator = function (a) {
+            m.evaluator = (a) => {
               var c = b == CKEDITOR.ENTER_P ? "p" : "div",
                 d;
               if ((d = (a ? a.type == CKEDITOR.NODE_ELEMENT : !1) && a.getName() in t)) {
@@ -92,9 +113,12 @@
                   CKEDITOR.POSITION_PRECEDING
               );
             };
-            for (; (k = m.next()); ) q(k, a, f, h);
+            while ((k = m.next())) q(k, a, f, h);
             g = g.createIterator();
-            for (g.enlargeBr = b != CKEDITOR.ENTER_BR; (k = g.getNextParagraph(b == CKEDITOR.ENTER_P ? "p" : "div")); )
+            for (
+              g.enlargeBr = b != CKEDITOR.ENTER_BR;
+              (k = g.getNextParagraph(b == CKEDITOR.ENTER_P ? "p" : "div"));
+            )
               q(k, a, f, h);
           }
           CKEDITOR.dom.element.clearAllMarkers(h);
@@ -126,7 +150,10 @@
           }
           e = !e;
         }
-        if (e && ((e = this.getDirection(1)), (g = a.apply(this, arguments)), e != this.getDirection(1)))
+        if (
+          e &&
+          ((e = this.getDirection(1)), (g = a.apply(this, arguments)), e != this.getDirection(1))
+        )
           return this.getDocument().fire("dirChanged", this), g;
       }
       return a.apply(this, arguments);
@@ -141,7 +168,7 @@
     lang: "af,ar,az,bg,bn,bs,ca,cs,cy,da,de,de-ch,el,en,en-au,en-ca,en-gb,eo,es,es-mx,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,oc,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn",
     icons: "bidiltr,bidirtl",
     hidpi: !0,
-    init: function (a) {
+    init: (a) => {
       function f(b, c, d, e, f) {
         a.addCommand(d, new CKEDITOR.command(a, e));
         a.ui.addButton && a.ui.addButton(b, { label: c, command: d, toolbar: "bidi," + f });
@@ -150,12 +177,12 @@
         var d = a.lang.bidi;
         f("BidiLtr", d.ltr, "bidiltr", p("ltr"), 10);
         f("BidiRtl", d.rtl, "bidirtl", p("rtl"), 20);
-        a.on("contentDom", function () {
-          a.document.on("dirChanged", function (b) {
+        a.on("contentDom", () => {
+          a.document.on("dirChanged", (b) => {
             a.fire("dirChanged", { node: b.data, dir: b.data.getDirection(1) });
           });
         });
-        a.on("contentDirChanged", function (b) {
+        a.on("contentDirChanged", (b) => {
           b = (a.lang.dir != b.data ? "add" : "remove") + "Class";
           var c = a.ui.space(a.config.toolbarLocation);
           if (c) c[b]("cke_mixed_dir_content");
@@ -164,7 +191,9 @@
     },
   });
   for (
-    var l = CKEDITOR.dom.element.prototype, n = ["setStyle", "removeStyle", "setAttribute", "removeAttribute"], m = 0;
+    var l = CKEDITOR.dom.element.prototype,
+      n = ["setStyle", "removeStyle", "setAttribute", "removeAttribute"],
+      m = 0;
     m < n.length;
     m++
   )

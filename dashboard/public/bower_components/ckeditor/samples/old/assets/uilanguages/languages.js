@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-var CKEDITOR_LANGS = (function () {
+var CKEDITOR_LANGS = (() => {
   var c = {
       af: "Afrikaans",
       ar: "Arabic",
@@ -78,8 +78,6 @@ var CKEDITOR_LANGS = (function () {
     b = [],
     a;
   for (a in CKEDITOR.lang.languages) b.push({ code: a, name: c[a] || a });
-  b.sort(function (a, b) {
-    return a.name < b.name ? -1 : 1;
-  });
+  b.sort((a, b) => (a.name < b.name ? -1 : 1));
   return b;
 })();

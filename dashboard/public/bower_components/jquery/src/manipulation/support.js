@@ -1,7 +1,5 @@
-define(["../var/document", "../var/support"], function (document, support) {
-  "use strict";
-
-  (function () {
+define(["../var/document", "../var/support"], (document, support) => {
+  (() => {
     var fragment = document.createDocumentFragment(),
       div = fragment.appendChild(document.createElement("div")),
       input = document.createElement("input");

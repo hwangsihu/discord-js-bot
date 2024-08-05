@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-CKEDITOR.dialog.add("colordialog", function (x) {
+CKEDITOR.dialog.add("colordialog", (x) => {
   function m() {
     e.getById(n).removeStyle("background-color");
     p.getContentElement("picker", "selectedColor").setValue("");
@@ -20,11 +20,12 @@ CKEDITOR.dialog.add("colordialog", function (x) {
       p.getContentElement("picker", "selectedColor").setValue(c));
   }
   function y() {
-    f && (f.removeClass("cke_colordialog_selected"), f.removeAttribute("aria-selected"), (f = null));
+    f &&
+      (f.removeClass("cke_colordialog_selected"), f.removeAttribute("aria-selected"), (f = null));
   }
   function D(a) {
     a = a.replace(/^#/, "");
-    for (var c = 0, b = []; 2 >= c; c++) b[c] = parseInt(a.substr(2 * c, 2), 16);
+    for (var c = 0, b = []; 2 >= c; c++) b[c] = Number.parseInt(a.substr(2 * c, 2), 16);
     return 165 <= 0.2126 * b[0] + 0.7152 * b[1] + 0.0722 * b[2];
   }
   function A(a) {
@@ -60,7 +61,10 @@ CKEDITOR.dialog.add("colordialog", function (x) {
         c.preventDefault();
         break;
       case 40:
-        (a = b.getParent().getNext()) && (a = a.getChild([b.getIndex()])) && 1 == a.type && a.focus();
+        (a = b.getParent().getNext()) &&
+          (a = a.getChild([b.getIndex()])) &&
+          1 == a.type &&
+          a.focus();
         c.preventDefault();
         break;
       case 32:
@@ -71,11 +75,15 @@ CKEDITOR.dialog.add("colordialog", function (x) {
       case d ? 37 : 39:
         (a = b.getNext())
           ? 1 == a.type && (a.focus(), c.preventDefault(!0))
-          : (a = b.getParent().getNext()) && (a = a.getChild([0])) && 1 == a.type && (a.focus(), c.preventDefault(!0));
+          : (a = b.getParent().getNext()) &&
+            (a = a.getChild([0])) &&
+            1 == a.type &&
+            (a.focus(), c.preventDefault(!0));
         break;
       case d ? 39 : 37:
         if ((a = b.getPrevious())) a.focus(), c.preventDefault(!0);
-        else if ((a = b.getParent().getPrevious())) (a = a.getLast()), a.focus(), c.preventDefault(!0);
+        else if ((a = b.getParent().getPrevious()))
+          (a = a.getLast()), a.focus(), c.preventDefault(!0);
     }
   }
   var v = CKEDITOR.dom.element,
@@ -84,21 +92,20 @@ CKEDITOR.dialog.add("colordialog", function (x) {
     p,
     f,
     C = { type: "html", html: "\x26nbsp;" },
-    l = function (a) {
-      return CKEDITOR.tools.getNextId() + "_" + a;
-    },
+    l = (a) => CKEDITOR.tools.getNextId() + "_" + a,
     t = l("hicolor"),
     u = l("hicolortext"),
     n = l("selhicolor"),
     h,
     d,
     B;
-  (function () {
+  (() => {
     function a(a, d) {
       for (var w = a; w < a + 3; w++) {
         var e = new v(h.$.insertRow(-1));
         e.setAttribute("role", "row");
-        for (var f = d; f < d + 3; f++) for (var g = 0; 6 > g; g++) c(e.$, "#" + b[f] + b[g] + b[w]);
+        for (var f = d; f < d + 3; f++)
+          for (var g = 0; 6 > g; g++) c(e.$, "#" + b[f] + b[g] + b[w]);
       }
     }
     function c(a, c) {
@@ -153,9 +160,11 @@ CKEDITOR.dialog.add("colordialog", function (x) {
     onLoad: function () {
       p = this;
     },
-    onHide: function () {
+    onHide: () => {
       m();
-      d && (d.removeClass("cke_colordialog_focused_light"), d.removeClass("cke_colordialog_focused_dark"));
+      d &&
+        (d.removeClass("cke_colordialog_focused_light"),
+        d.removeClass("cke_colordialog_focused_dark"));
       r(!1);
       d = null;
     },

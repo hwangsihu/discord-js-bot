@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var suffixes = {
     0: "-ум",
     1: "-ум",
@@ -72,7 +70,7 @@
       yy: "%d сол",
     },
     meridiemParse: /шаб|субҳ|рӯз|бегоҳ/,
-    meridiemHour: function (hour, meridiem) {
+    meridiemHour: (hour, meridiem) => {
       if (hour === 12) {
         hour = 0;
       }
@@ -86,7 +84,7 @@
         return hour + 12;
       }
     },
-    meridiem: function (hour, minute, isLower) {
+    meridiem: (hour, minute, isLower) => {
       if (hour < 4) {
         return "шаб";
       } else if (hour < 11) {
@@ -100,7 +98,7 @@
       }
     },
     dayOfMonthOrdinalParse: /\d{1,2}-(ум|юм)/,
-    ordinal: function (number) {
+    ordinal: (number) => {
       var a = number % 10,
         b = number >= 100 ? 100 : null;
       return number + (suffixes[number] || suffixes[a] || suffixes[b]);

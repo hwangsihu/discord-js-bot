@@ -1,5 +1,12 @@
 ﻿CKEDITOR.plugins.setLang("forms", "zh-cn", {
-  button: { title: "按钮属性", text: "标签(值)", type: "类型", typeBtn: "按钮", typeSbm: "提交", typeRst: "重设" },
+  button: {
+    title: "按钮属性",
+    text: "标签(值)",
+    type: "类型",
+    typeBtn: "按钮",
+    typeSbm: "提交",
+    typeRst: "重设",
+  },
   checkboxAndRadio: {
     checkboxTitle: "复选框属性",
     radioTitle: "单选按钮属性",
@@ -7,7 +14,13 @@
     selected: "已勾选",
     required: "必选项",
   },
-  form: { title: "表单属性", menu: "表单属性", action: "动作", method: "方法", encoding: "表单编码" },
+  form: {
+    title: "表单属性",
+    menu: "表单属性",
+    action: "动作",
+    method: "方法",
+    encoding: "表单编码",
+  },
   hidden: { title: "隐藏域属性", name: "名称", value: "初始值" },
   select: {
     title: "菜单/列表属性",

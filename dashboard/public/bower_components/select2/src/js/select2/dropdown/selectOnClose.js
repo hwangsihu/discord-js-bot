@@ -1,13 +1,11 @@
-define(["../utils"], function (Utils) {
+define(["../utils"], (Utils) => {
   function SelectOnClose() {}
 
   SelectOnClose.prototype.bind = function (decorated, container, $container) {
-    var self = this;
-
     decorated.call(this, container, $container);
 
-    container.on("close", function (params) {
-      self._handleSelectOnClose(params);
+    container.on("close", (params) => {
+      this._handleSelectOnClose(params);
     });
   };
 
@@ -32,7 +30,10 @@ define(["../utils"], function (Utils) {
     var data = Utils.GetData($highlightedResults[0], "data");
 
     // Don't re-select already selected resulte
-    if ((data.element != null && data.element.selected) || (data.element == null && data.selected)) {
+    if (
+      (data.element != null && data.element.selected) ||
+      (data.element == null && data.selected)
+    ) {
       return;
     }
 

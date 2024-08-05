@@ -2,7 +2,7 @@
  * Serbian cyrillic translation for bootstrap-datepicker
  * Bojan Milosavlević <milboj@gmail.com>
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["sr"] = {
     days: ["Недеља", "Понедељак", "Уторак", "Среда", "Четвртак", "Петак", "Субота"],
     daysShort: ["Нед", "Пон", "Уто", "Сре", "Чет", "Пет", "Суб"],
@@ -21,7 +21,20 @@
       "Новембар",
       "Децембар",
     ],
-    monthsShort: ["Јан", "Феб", "Мар", "Апр", "Мај", "Јун", "Јул", "Авг", "Сеп", "Окт", "Нов", "Дец"],
+    monthsShort: [
+      "Јан",
+      "Феб",
+      "Мар",
+      "Апр",
+      "Мај",
+      "Јун",
+      "Јул",
+      "Авг",
+      "Сеп",
+      "Окт",
+      "Нов",
+      "Дец",
+    ],
     today: "Данас",
     weekStart: 1,
     format: "dd.mm.yyyy",

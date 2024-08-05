@@ -10,7 +10,7 @@
  * Requires: 1.2.2+
  */
 
-(function ($) {
+(($) => {
   var types = ["DOMMouseScroll", "mousewheel"];
 
   if ($.event.fixHooks) {

@@ -30,7 +30,9 @@ $.fn.sparkline.pie = pie = createClass($.fn.sparkline._base, {
 
   getRegion: function (el, x, y) {
     var shapeid = this.target.getShapeAt(el, x, y);
-    return shapeid !== undefined && this.shapes[shapeid] !== undefined ? this.shapes[shapeid] : undefined;
+    return shapeid !== undefined && this.shapes[shapeid] !== undefined
+      ? this.shapes[shapeid]
+      : undefined;
   },
 
   getCurrentRegionFields: function () {
@@ -39,7 +41,8 @@ $.fn.sparkline.pie = pie = createClass($.fn.sparkline._base, {
       isNull: this.values[currentRegion] === undefined,
       value: this.values[currentRegion],
       percent: (this.values[currentRegion] / this.total) * 100,
-      color: this.options.get("sliceColors")[currentRegion % this.options.get("sliceColors").length],
+      color:
+        this.options.get("sliceColors")[currentRegion % this.options.get("sliceColors").length],
       offset: currentRegion,
     };
   },
@@ -84,7 +87,15 @@ $.fn.sparkline.pie = pie = createClass($.fn.sparkline._base, {
           color = this.calcHighlightColor(color, options);
         }
 
-        return target.drawPieSlice(radius, radius, radius - borderWidth, start, end, undefined, color);
+        return target.drawPieSlice(
+          radius,
+          radius,
+          radius - borderWidth,
+          start,
+          end,
+          undefined,
+          color
+        );
       }
       next = end;
     }

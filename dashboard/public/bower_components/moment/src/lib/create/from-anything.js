@@ -71,9 +71,7 @@ function configFromInput(config) {
   } else if (typeof input === "string") {
     configFromString(config);
   } else if (isArray(input)) {
-    config._a = map(input.slice(0), function (obj) {
-      return parseInt(obj, 10);
-    });
+    config._a = map(input.slice(0), (obj) => Number.parseInt(obj, 10));
     configFromArray(config);
   } else if (isObject(input)) {
     configFromObject(config);
@@ -85,7 +83,7 @@ function configFromInput(config) {
   }
 }
 
-export function createLocalOrUTC(input, format, locale, strict, isUTC) {
+export function createLocalOrUTC(input, format, locale, strict, isUtc) {
   var c = {};
 
   if (locale === true || locale === false) {
@@ -99,7 +97,7 @@ export function createLocalOrUTC(input, format, locale, strict, isUTC) {
   // object construction must be done this way.
   // https://github.com/moment/moment/issues/1423
   c._isAMomentObject = true;
-  c._useUTC = c._isUTC = isUTC;
+  c._useUTC = c._isUTC = isUtc;
   c._l = locale;
   c._i = input;
   c._f = format;

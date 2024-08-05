@@ -6,7 +6,24 @@ const { GOOGLE_TRANSLATE } = require("@src/data.json");
 // Discord limits to a maximum of 25 choices for slash command
 // Add any 25 language codes from here: https://cloud.google.com/translate/docs/languages
 
-const choices = ["ar", "cs", "de", "en", "fa", "fr", "hi", "hr", "it", "ja", "ko", "la", "nl", "pl", "ta", "te"];
+const choices = [
+  "ar",
+  "cs",
+  "de",
+  "en",
+  "fa",
+  "fr",
+  "hi",
+  "hr",
+  "it",
+  "ja",
+  "ko",
+  "la",
+  "nl",
+  "pl",
+  "ta",
+  "te",
+];
 
 /**
  * @type {import("@structures/Command")}
@@ -43,7 +60,7 @@ module.exports = {
   },
 
   async messageRun(message, args) {
-    let embed = new EmbedBuilder();
+    const embed = new EmbedBuilder();
     const outputCode = args.shift();
 
     if (!GOOGLE_TRANSLATE[outputCode]) {
@@ -81,7 +98,9 @@ async function getTranslation(author, input, outputCode) {
     })
     .setColor(EMBED_COLORS.BOT_EMBED)
     .setDescription(data.output)
-    .setFooter({ text: `${data.inputLang} (${data.inputCode}) ⟶ ${data.outputLang} (${data.outputCode})` });
+    .setFooter({
+      text: `${data.inputLang} (${data.inputCode}) ⟶ ${data.outputLang} (${data.outputCode})`,
+    });
 
   return { embeds: [embed] };
 }

@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(r) {
       if (n[r]) return n[r].exports;
       var a = (n[r] = { i: r, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = n),
-      (t.d = function (e, n, r) {
+      (t.d = (e, n, r) => {
         t.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: r });
       }),
-      (t.n = function (e) {
-        var n =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var n = e && e.__esModule ? () => e.default : () => e;
         return t.d(n, "a", n), n;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 207))
     );
   })({
-    0: function (t, n) {
+    0: (t, n) => {
       t.exports = e;
     },
-    1: function (e, n) {
+    1: (e, n) => {
       e.exports = t;
     },
-    207: function (e, t, n) {
+    207: (e, t, n) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), n(208);
       var r = n(1);
       r.datepickerLocale("uk", "uk", {
@@ -66,7 +57,20 @@
           "Листопад",
           "Грудень",
         ],
-        monthNamesShort: ["Січ", "Лют", "Бер", "Кві", "Тра", "Чер", "Лип", "Сер", "Вер", "Жов", "Лис", "Гру"],
+        monthNamesShort: [
+          "Січ",
+          "Лют",
+          "Бер",
+          "Кві",
+          "Тра",
+          "Чер",
+          "Лип",
+          "Сер",
+          "Вер",
+          "Жов",
+          "Лис",
+          "Гру",
+        ],
         dayNames: ["неділя", "понеділок", "вівторок", "середа", "четвер", "п’ятниця", "субота"],
         dayNamesShort: ["нед", "пнд", "вів", "срд", "чтв", "птн", "сбт"],
         dayNamesMin: ["Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
@@ -80,16 +84,14 @@
         r.locale("uk", {
           buttonText: { month: "Місяць", week: "Тиждень", day: "День", list: "Порядок денний" },
           allDayText: "Увесь день",
-          eventLimitText: function (e) {
-            return "+ще " + e + "...";
-          },
+          eventLimitText: (e) => "+ще " + e + "...",
           noEventsMessage: "Немає подій для відображення",
         });
     },
-    208: function (e, t, n) {
-      !(function (e, t) {
+    208: (e, t, n) => {
+      !((e, t) => {
         t(n(0));
-      })(0, function (e) {
+      })(0, (e) => {
         function t(e, t) {
           var n = e.split("_");
           return t % 10 == 1 && t % 100 != 11
@@ -140,7 +142,10 @@
         }
         return e.defineLocale("uk", {
           months: {
-            format: "січня_лютого_березня_квітня_травня_червня_липня_серпня_вересня_жовтня_листопада_грудня".split("_"),
+            format:
+              "січня_лютого_березня_квітня_травня_червня_липня_серпня_вересня_жовтня_листопада_грудня".split(
+                "_"
+              ),
             standalone:
               "січень_лютий_березень_квітень_травень_червень_липень_серпень_вересень_жовтень_листопад_грудень".split(
                 "_"
@@ -195,14 +200,10 @@
             yy: n,
           },
           meridiemParse: /ночі|ранку|дня|вечора/,
-          isPM: function (e) {
-            return /^(дня|вечора)$/.test(e);
-          },
-          meridiem: function (e, t, n) {
-            return e < 4 ? "ночі" : e < 12 ? "ранку" : e < 17 ? "дня" : "вечора";
-          },
+          isPM: (e) => /^(дня|вечора)$/.test(e),
+          meridiem: (e, t, n) => (e < 4 ? "ночі" : e < 12 ? "ранку" : e < 17 ? "дня" : "вечора"),
           dayOfMonthOrdinalParse: /\d{1,2}-(й|го)/,
-          ordinal: function (e, t) {
+          ordinal: (e, t) => {
             switch (t) {
               case "M":
               case "d":
@@ -220,5 +221,5 @@
         });
       });
     },
-  });
-});
+  })
+);

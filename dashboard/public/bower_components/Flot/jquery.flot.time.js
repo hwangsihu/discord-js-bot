@@ -8,7 +8,7 @@ API.txt for details.
 
 */
 
-(function ($) {
+(($) => {
   var options = {
     xaxis: {
       timezone: null, // "browser" for local to the client or timezone for timezone-js
@@ -32,7 +32,7 @@ API.txt for details.
       return d.strftime(fmt);
     }
 
-    var leftPad = function (n, pad) {
+    var leftPad = (n, pad) => {
       n = "" + n;
       pad = "" + (pad == null ? "0" : pad);
       return n.length == 1 ? pad + n : n;
@@ -41,10 +41,23 @@ API.txt for details.
     var r = [];
     var escape = false;
     var hours = d.getHours();
-    var isAM = hours < 12;
+    var isAm = hours < 12;
 
     if (monthNames == null) {
-      monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      monthNames = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
     }
 
     if (dayNames == null) {
@@ -108,10 +121,10 @@ API.txt for details.
             c = "" + d.getFullYear();
             break;
           case "p":
-            c = isAM ? "" + "am" : "" + "pm";
+            c = isAm ? "" + "am" : "" + "pm";
             break;
           case "P":
-            c = isAM ? "" + "AM" : "" + "PM";
+            c = isAm ? "" + "AM" : "" + "PM";
             break;
           case "w":
             c = "" + d.getDay();
@@ -119,12 +132,10 @@ API.txt for details.
         }
         r.push(c);
         escape = false;
+      } else if (c == "%") {
+        escape = true;
       } else {
-        if (c == "%") {
-          escape = true;
-        } else {
-          r.push(c);
-        }
+        r.push(c);
       }
     }
 
@@ -138,9 +149,7 @@ API.txt for details.
 
   function makeUtcWrapper(d) {
     function addProxyMethod(sourceObj, sourceMethod, targetObj, targetMethod) {
-      sourceObj[sourceMethod] = function () {
-        return targetObj[targetMethod].apply(targetObj, arguments);
-      };
+      sourceObj[sourceMethod] = () => targetObj[targetMethod].apply(targetObj, arguments);
     }
 
     var utc = {
@@ -241,12 +250,12 @@ API.txt for details.
   ]);
 
   function init(plot) {
-    plot.hooks.processOptions.push(function (plot, options) {
-      $.each(plot.getAxes(), function (axisName, axis) {
+    plot.hooks.processOptions.push((plot, options) => {
+      $.each(plot.getAxes(), (axisName, axis) => {
         var opts = axis.options;
 
         if (opts.mode == "time") {
-          axis.tickGenerator = function (axis) {
+          axis.tickGenerator = (axis) => {
             var ticks = [];
             var d = dateGenerator(axis.min, opts);
             var minSize = 0;
@@ -271,7 +280,9 @@ API.txt for details.
             for (var i = 0; i < spec.length - 1; ++i) {
               if (
                 axis.delta <
-                  (spec[i][0] * timeUnitSize[spec[i][1]] + spec[i + 1][0] * timeUnitSize[spec[i + 1][1]]) / 2 &&
+                  (spec[i][0] * timeUnitSize[spec[i][1]] +
+                    spec[i + 1][0] * timeUnitSize[spec[i + 1][1]]) /
+                    2 &&
                 spec[i][0] * timeUnitSize[spec[i][1]] >= minSize
               ) {
                 break;
@@ -290,7 +301,10 @@ API.txt for details.
               if (opts.minTickSize != null && opts.minTickSize[1] == "year") {
                 size = Math.floor(opts.minTickSize[0]);
               } else {
-                var magn = Math.pow(10, Math.floor(Math.log(axis.delta / timeUnitSize.year) / Math.LN10));
+                var magn = Math.pow(
+                  10,
+                  Math.floor(Math.log(axis.delta / timeUnitSize.year) / Math.LN10)
+                );
                 var norm = axis.delta / timeUnitSize.year / magn;
 
                 if (norm < 1.5) {
@@ -395,7 +409,7 @@ API.txt for details.
             return ticks;
           };
 
-          axis.tickFormatter = function (v, axis) {
+          axis.tickFormatter = (v, axis) => {
             var d = dateGenerator(v, axis.options);
 
             // first check global format
@@ -427,7 +441,10 @@ API.txt for details.
               }
             } else if (t < timeUnitSize.month) {
               fmt = "%b %d";
-            } else if ((useQuarters && t < timeUnitSize.quarter) || (!useQuarters && t < timeUnitSize.year)) {
+            } else if (
+              (useQuarters && t < timeUnitSize.quarter) ||
+              (!useQuarters && t < timeUnitSize.year)
+            ) {
               if (span < timeUnitSize.year) {
                 fmt = "%b";
               } else {

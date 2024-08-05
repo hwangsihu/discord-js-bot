@@ -1,4 +1,4 @@
-define(["jquery", "../utils"], function ($, Utils) {
+define(["jquery", "../utils"], ($, Utils) => {
   function InputData(decorated, $element, options) {
     this._currentData = [];
     this._valueSeparator = options.get("valueSeparator") || ",";
@@ -39,37 +39,38 @@ define(["jquery", "../utils"], function ($, Utils) {
     for (var d = 0; d < this._currentData.length; d++) {
       var data = this._currentData[d];
 
-      selected.push.apply(selected, getSelected(data, this.$element.val().split(this._valueSeparator)));
+      selected.push.apply(
+        selected,
+        getSelected(data, this.$element.val().split(this._valueSeparator))
+      );
     }
 
     callback(selected);
   };
 
   InputData.prototype.select = function (_, data) {
-    if (!this.options.get("multiple")) {
-      this.current(function (allData) {
-        $.map(allData, function (data) {
+    if (this.options.get("multiple")) {
+      var value = this.$element.val();
+      value += this._valueSeparator + data.id;
+
+      this.$element.val(value);
+      this.$element.trigger("change");
+    } else {
+      this.current((allData) => {
+        $.map(allData, (data) => {
           data.selected = false;
         });
       });
 
       this.$element.val(data.id);
       this.$element.trigger("change");
-    } else {
-      var value = this.$element.val();
-      value += this._valueSeparator + data.id;
-
-      this.$element.val(value);
-      this.$element.trigger("change");
     }
   };
 
   InputData.prototype.unselect = function (_, data) {
-    var self = this;
-
     data.selected = false;
 
-    this.current(function (allData) {
+    this.current((allData) => {
       var values = [];
 
       for (var d = 0; d < allData.length; d++) {
@@ -82,8 +83,8 @@ define(["jquery", "../utils"], function ($, Utils) {
         values.push(item.id);
       }
 
-      self.$element.val(values.join(self._valueSeparator));
-      self.$element.trigger("change");
+      this.$element.val(values.join(this._valueSeparator));
+      this.$element.trigger("change");
     });
   };
 
@@ -106,9 +107,7 @@ define(["jquery", "../utils"], function ($, Utils) {
   };
 
   InputData.prototype.addOptions = function (_, $options) {
-    var options = $.map($options, function ($option) {
-      return Utils.GetData($option[0], "data");
-    });
+    var options = $.map($options, ($option) => Utils.GetData($option[0], "data"));
 
     this._currentData.push.apply(this._currentData, options);
   };

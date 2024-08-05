@@ -43,7 +43,7 @@ as "categories" on the axis object, e.g. plot.getAxes().xaxis.categories.
 
 */
 
-(function ($) {
+(($) => {
   var options = {
     xaxis: {
       categories: null,
@@ -74,7 +74,13 @@ as "categories" on the axis object, e.g. plot.getAxes().xaxis.categories.
 
       if (s.bars.show || (s.lines.show && s.lines.fill)) {
         var autoscale = !!((s.bars.show && s.bars.zero) || (s.lines.show && s.lines.zero));
-        format.push({ y: true, number: true, required: false, defaultValue: 0, autoscale: autoscale });
+        format.push({
+          y: true,
+          number: true,
+          required: false,
+          defaultValue: 0,
+          autoscale: autoscale,
+        });
         if (s.bars.horizontal) {
           delete format[format.length - 1].y;
           format[format.length - 1].x = true;
@@ -106,9 +112,7 @@ as "categories" on the axis object, e.g. plot.getAxes().xaxis.categories.
       if (v >= axis.min && v <= axis.max) res.push([v, label]);
     }
 
-    res.sort(function (a, b) {
-      return a[0] - b[0];
-    });
+    res.sort((a, b) => a[0] - b[0]);
 
     return res;
   }

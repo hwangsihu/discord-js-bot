@@ -127,7 +127,11 @@ CKEDITOR.lang["sl"] = {
     panelTitle2: "Slogi besedila",
     panelTitle3: "Slogi objektov",
   },
-  specialchar: { options: "Možnosti posebnih znakov", title: "Izberi posebni znak", toolbar: "Vstavi posebni znak" },
+  specialchar: {
+    options: "Možnosti posebnih znakov",
+    title: "Izberi posebni znak",
+    toolbar: "Vstavi posebni znak",
+  },
   sourcearea: { toolbar: "Izvorna koda" },
   scayt: {
     btn_about: "O storitvi SCAYT",
@@ -155,7 +159,10 @@ CKEDITOR.lang["sl"] = {
   notification: { closed: "Notification closed." },
   maximize: { maximize: "Maksimiraj", minimize: "Minimiraj" },
   magicline: { title: "Vstavite odstavek tukaj" },
-  list: { bulletedlist: "Vstavi/odstrani neoštevilčen seznam", numberedlist: "Vstavi/odstrani oštevilčen seznam" },
+  list: {
+    bulletedlist: "Vstavi/odstrani neoštevilčen seznam",
+    numberedlist: "Vstavi/odstrani oštevilčen seznam",
+  },
   link: {
     acccessKey: "Tipka za dostop",
     advanced: "Napredno",
@@ -343,7 +350,8 @@ CKEDITOR.lang["sl"] = {
     generalTab: "Splošno",
     advancedTab: "Napredno",
     validateNumberFailed: "Vrednost ni število.",
-    confirmNewPage: "Vse neshranjene spremembe vsebine bodo izgubljene. Ali res želite naložiti novo stran?",
+    confirmNewPage:
+      "Vse neshranjene spremembe vsebine bodo izgubljene. Ali res želite naložiti novo stran?",
     confirmCancel: "Spremenili ste nekaj možnosti. Ali res želite zapreti okno?",
     options: "Možnosti",
     target: "Cilj",

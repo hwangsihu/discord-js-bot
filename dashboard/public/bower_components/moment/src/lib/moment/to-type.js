@@ -11,20 +11,26 @@ export function toDate() {
 }
 
 export function toArray() {
-  var m = this;
-  return [m.year(), m.month(), m.date(), m.hour(), m.minute(), m.second(), m.millisecond()];
+  return [
+    this.year(),
+    this.month(),
+    this.date(),
+    this.hour(),
+    this.minute(),
+    this.second(),
+    this.millisecond(),
+  ];
 }
 
 export function toObject() {
-  var m = this;
   return {
-    years: m.year(),
-    months: m.month(),
-    date: m.date(),
-    hours: m.hours(),
-    minutes: m.minutes(),
-    seconds: m.seconds(),
-    milliseconds: m.milliseconds(),
+    years: this.year(),
+    months: this.month(),
+    date: this.date(),
+    hours: this.hours(),
+    minutes: this.minutes(),
+    seconds: this.seconds(),
+    milliseconds: this.milliseconds(),
   };
 }
 

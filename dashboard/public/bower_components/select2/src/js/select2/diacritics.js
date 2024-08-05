@@ -1,4 +1,4 @@
-define([], function () {
+define([], () => {
   var diacritics = {
     "\u24B6": "A",
     "\uFF21": "A",

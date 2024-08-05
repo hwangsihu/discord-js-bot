@@ -14,7 +14,7 @@ This script will migrate your database from v4 to v5. This script is still a wor
 Please make sure you have a backup of your database before proceeding.
 Do you want to continue? (y/n): `;
 
-rl.question(warningMsg, async function (name) {
+rl.question(warningMsg, async (name) => {
   try {
     if (name.toLowerCase() === "y") {
       console.log("🚀 Starting migration (v4 to v5)");
@@ -135,7 +135,9 @@ const migrateModLogs = async (collections) => {
     const stats = await modLogs.updateMany({}, { $unset: { expires: "" } });
     await modLogs.updateMany({ type: "MUTE" }, { $set: { type: "TIMEOUT" } });
     await modLogs.updateMany({ type: "UNMUTE" }, { $set: { type: "UNTIMEOUT" } });
-    console.log(`| ✅ ${stats.modifiedCount > 0 ? `Updated: ${stats.modifiedCount}` : "No updates required"}`);
+    console.log(
+      `| ✅ ${stats.modifiedCount > 0 ? `Updated: ${stats.modifiedCount}` : "No updates required"}`
+    );
   } catch (ex) {
     clearAndLog("📦 Migrating 'mod-logs' collection | ❌ Error occurred");
     console.log(ex);
@@ -209,7 +211,9 @@ const migrateMemberStats = async (collections) => {
   process.stdout.write("📦 Migrating 'member-stats' collection ");
   try {
     const membersC = collections.find((c) => c.collectionName === "members");
-    if (!collections.find((c) => c.collectionName === "member-stats")) {
+    if (collections.find((c) => c.collectionName === "member-stats")) {
+      clearAndLog("📦 Migrating 'member-stats' collection | ✅ No updates required");
+    } else {
       const memberStatsC = await mongoose.connection.db.createCollection("member-stats");
 
       const toUpdate = await membersC
@@ -236,8 +240,6 @@ const migrateMemberStats = async (collections) => {
       } else {
         clearAndLog("📦 Migrating 'member-stats' collection | ✅ No updates required");
       }
-    } else {
-      clearAndLog("📦 Migrating 'member-stats' collection | ✅ No updates required");
     }
   } catch (ex) {
     clearAndLog("📦 Migrating 'member-stats' collection | ❌ Error occurred");
@@ -253,7 +255,9 @@ const migrateMembers = async (collections) => {
   process.stdout.write("📦 Migrating 'members' collection ");
   try {
     const membersC = collections.find((c) => c.collectionName === "members");
-    const toUpdate = await membersC.find({ $or: [{ xp: { $exists: true } }, { level: { $exists: true } }] }).toArray();
+    const toUpdate = await membersC
+      .find({ $or: [{ xp: { $exists: true } }, { level: { $exists: true } }] })
+      .toArray();
     if (toUpdate.length > 0) {
       const stats = await membersC.updateMany({}, { $unset: { xp: "", level: "", mute: "" } });
       clearAndLog(`📦 Migrating 'members' collection | ✅ Updated: ${stats.modifiedCount}`);
@@ -308,7 +312,9 @@ const migrateUsers = async (collections) => {
         );
       }
 
-      clearAndLog(`📦 Migrating 'users' collection | ✅ Updated: ${success} | ❌ Failed: ${failed}`);
+      clearAndLog(
+        `📦 Migrating 'users' collection | ✅ Updated: ${success} | ❌ Failed: ${failed}`
+      );
     } else {
       clearAndLog("📦 Migrating 'users' collection | ✅ No updates required");
     }

@@ -2,13 +2,13 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
-  var u = function (d, k) {
+(() => {
+  var u = (d, k) => {
     function u() {
       var a = arguments,
         b = this.getContentElement("advanced", "txtdlgGenStyle");
       b && b.commit.apply(b, a);
-      this.foreach(function (b) {
+      this.foreach((b) => {
         b.commit && "txtdlgGenStyle" != b.id && b.commit.apply(b, a);
       });
     }
@@ -44,13 +44,13 @@
                 isNaN(a) || b.setValueOf("info", "txtHeight", a))));
         e(b);
       },
-      e = function (a) {
+      e = (a) => {
         if (!a.originalElement || !a.preview) return 1;
         a.commitContent(4, a.preview);
         return 0;
       },
       v,
-      m = function (a, b) {
+      m = (a, b) => {
         if (!a.getContentElement("info", "ratioLock")) return null;
         var c = a.originalElement;
         if (!c) return null;
@@ -61,17 +61,22 @@
               c = c.$.width / c.$.height,
               e = d / h;
             a.lockRatio = !1;
-            d || h ? 1 == Math.round((c / e) * 100) / 100 && (a.lockRatio = !0) : (a.lockRatio = !0);
+            d || h
+              ? 1 == Math.round((c / e) * 100) / 100 && (a.lockRatio = !0)
+              : (a.lockRatio = !0);
           }
-        } else void 0 !== b ? (a.lockRatio = b) : ((a.userlockRatio = 1), (a.lockRatio = !a.lockRatio));
+        } else
+          void 0 !== b ? (a.lockRatio = b) : ((a.userlockRatio = 1), (a.lockRatio = !a.lockRatio));
         d = CKEDITOR.document.getById(r);
         a.lockRatio ? d.removeClass("cke_btn_unlocked") : d.addClass("cke_btn_unlocked");
         d.setAttribute("aria-checked", a.lockRatio);
         CKEDITOR.env.hc &&
-          d.getChild(0).setHtml(a.lockRatio ? (CKEDITOR.env.ie ? "■" : "▣") : CKEDITOR.env.ie ? "□" : "▢");
+          d
+            .getChild(0)
+            .setHtml(a.lockRatio ? (CKEDITOR.env.ie ? "■" : "▣") : CKEDITOR.env.ie ? "□" : "▢");
         return a.lockRatio;
       },
-      A = function (a, b) {
+      A = (a, b) => {
         var c = a.originalElement;
         if ("true" == c.getCustomData("isReady")) {
           var d = a.getContentElement("info", "txtWidth"),
@@ -130,9 +135,7 @@
         b && b.setStyle("display", "none");
         m(this, !1);
       },
-      p = function (a) {
-        return CKEDITOR.tools.getNextId() + "_" + a;
-      },
+      p = (a) => CKEDITOR.tools.getNextId() + "_" + a,
       r = p("btnLockSizes"),
       x = p("btnResetSize"),
       n = p("ImagePreviewLoader"),
@@ -173,7 +176,9 @@
                 : this.imageElement.is("input") && (this.imageEditMode = "input"))),
           "image" == k && this.setupContent(2, c));
         if (this.customImageElement)
-          (this.imageEditMode = "img"), (this.imageElement = this.customImageElement), delete this.customImageElement;
+          (this.imageEditMode = "img"),
+            (this.imageElement = this.customImageElement),
+            delete this.customImageElement;
         else if (
           (b && "img" == b.getName() && !b.data("cke-realelement")) ||
           (b && "input" == b.getName() && "image" == b.getAttribute("type"))
@@ -275,8 +280,14 @@
                           c.on("error", f, a);
                           c.on("abort", f, a);
                           c.setAttribute("src", b);
-                          a.preview && (w.setAttribute("src", b), a.preview.setAttribute("src", w.$.src), e(a));
-                        } else a.preview && (a.preview.removeAttribute("src"), a.preview.setStyle("display", "none"));
+                          a.preview &&
+                            (w.setAttribute("src", b),
+                            a.preview.setAttribute("src", w.$.src),
+                            e(a));
+                        } else
+                          a.preview &&
+                            (a.preview.removeAttribute("src"),
+                            a.preview.setStyle("display", "none"));
                       },
                       setup: function (a, b) {
                         if (1 == a) {
@@ -288,7 +299,8 @@
                       },
                       commit: function (a, b) {
                         1 == a && (this.getValue() || this.isChanged())
-                          ? (b.data("cke-saved-src", this.getValue()), b.setAttribute("src", this.getValue()))
+                          ? (b.data("cke-saved-src", this.getValue()),
+                            b.setAttribute("src", this.getValue()))
                           : 8 == a && (b.setAttribute("src", ""), b.removeAttribute("src"));
                       },
                       validate: CKEDITOR.dialog.validate.notEmpty(d.lang.image.urlMissing),
@@ -353,7 +365,7 @@
                               },
                               validate: function () {
                                 var a = this.getValue().match(y);
-                                (a = !(!a || 0 === parseInt(a[1], 10))) ||
+                                (a = !(!a || 0 === Number.parseInt(a[1], 10))) ||
                                   alert(
                                     d.lang.common.invalidLength
                                       .replace("%1", d.lang.common.width)
@@ -373,8 +385,10 @@
                                     ? c.match(l)
                                       ? b.setStyle("width", CKEDITOR.tools.cssLength(c))
                                       : ((c = this.getDialog().originalElement),
-                                        "true" == c.getCustomData("isReady") && b.setStyle("width", c.$.width + "px"))
-                                    : 8 == a && (b.removeAttribute("width"), b.removeStyle("width"));
+                                        "true" == c.getCustomData("isReady") &&
+                                          b.setStyle("width", c.$.width + "px"))
+                                    : 8 == a &&
+                                      (b.removeAttribute("width"), b.removeStyle("width"));
                               },
                             },
                             {
@@ -388,7 +402,7 @@
                               },
                               validate: function () {
                                 var a = this.getValue().match(y);
-                                (a = !(!a || 0 === parseInt(a[1], 10))) ||
+                                (a = !(!a || 0 === Number.parseInt(a[1], 10))) ||
                                   alert(
                                     d.lang.common.invalidLength
                                       .replace("%1", d.lang.common.height)
@@ -408,8 +422,10 @@
                                     ? c.match(l)
                                       ? b.setStyle("height", CKEDITOR.tools.cssLength(c))
                                       : ((c = this.getDialog().originalElement),
-                                        "true" == c.getCustomData("isReady") && b.setStyle("height", c.$.height + "px"))
-                                    : 8 == a && (b.removeAttribute("height"), b.removeStyle("height"));
+                                        "true" == c.getCustomData("isReady") &&
+                                          b.setStyle("height", c.$.height + "px"))
+                                    : 8 == a &&
+                                      (b.removeAttribute("height"), b.removeStyle("height"));
                               },
                             },
                           ],
@@ -455,7 +471,9 @@
                                   "true" == b.getCustomData("isReady") &&
                                     d &&
                                     ((b = (b.$.height / b.$.width) * d),
-                                    isNaN(b) || (this.setValueOf("info", "txtHeight", Math.round(b)), e(this)));
+                                    isNaN(b) ||
+                                      (this.setValueOf("info", "txtHeight", Math.round(b)),
+                                      e(this)));
                                   a.data && a.data.preventDefault();
                                 },
                                 this.getDialog()
@@ -514,14 +532,15 @@
                             if (1 == a) {
                               var c;
                               c =
-                                (c = (c = b.getStyle("border-width")) && c.match(/^(\d+px)(?: \1 \1 \1)?$/)) &&
-                                parseInt(c[1], 10);
-                              isNaN(parseInt(c, 10)) && (c = b.getAttribute("border"));
+                                (c =
+                                  (c = b.getStyle("border-width")) &&
+                                  c.match(/^(\d+px)(?: \1 \1 \1)?$/)) && Number.parseInt(c[1], 10);
+                              isNaN(Number.parseInt(c, 10)) && (c = b.getAttribute("border"));
                               this.setValue(c);
                             }
                           },
                           commit: function (a, b) {
-                            var c = parseInt(this.getValue(), 10);
+                            var c = Number.parseInt(this.getValue(), 10);
                             1 == a || 4 == a
                               ? (isNaN(c)
                                   ? !c && this.isChanged() && b.removeStyle("border")
@@ -556,15 +575,15 @@
                               d = b.getStyle("margin-right");
                               c = c && c.match(q);
                               d = d && d.match(q);
-                              c = parseInt(c, 10);
-                              d = parseInt(d, 10);
+                              c = Number.parseInt(c, 10);
+                              d = Number.parseInt(d, 10);
                               c = c == d && c;
-                              isNaN(parseInt(c, 10)) && (c = b.getAttribute("hspace"));
+                              isNaN(Number.parseInt(c, 10)) && (c = b.getAttribute("hspace"));
                               this.setValue(c);
                             }
                           },
                           commit: function (a, b) {
-                            var c = parseInt(this.getValue(), 10);
+                            var c = Number.parseInt(this.getValue(), 10);
                             1 == a || 4 == a
                               ? (isNaN(c)
                                   ? !c &&
@@ -600,15 +619,15 @@
                               d = b.getStyle("margin-bottom");
                               c = c && c.match(q);
                               d = d && d.match(q);
-                              c = parseInt(c, 10);
-                              d = parseInt(d, 10);
+                              c = Number.parseInt(c, 10);
+                              d = Number.parseInt(d, 10);
                               c = c == d && c;
-                              isNaN(parseInt(c, 10)) && (c = b.getAttribute("vspace"));
+                              isNaN(Number.parseInt(c, 10)) && (c = b.getAttribute("vspace"));
                               this.setValue(c);
                             }
                           },
                           commit: function (a, b) {
-                            var c = parseInt(this.getValue(), 10);
+                            var c = Number.parseInt(this.getValue(), 10);
                             1 == a || 4 == a
                               ? (isNaN(c)
                                   ? !c &&
@@ -730,7 +749,11 @@
               type: "button",
               id: "browse",
               className: "cke_dialog_image_browse",
-              filebrowser: { action: "Browse", target: "Link:txtUrl", url: d.config.filebrowserImageBrowseLinkUrl },
+              filebrowser: {
+                action: "Browse",
+                target: "Link:txtUrl",
+                url: d.config.filebrowserImageBrowseLinkUrl,
+              },
               style: "float:right",
               hidden: !0,
               label: d.lang.common.browseServer,
@@ -752,7 +775,9 @@
                 2 == a && this.setValue(b.getAttribute("target") || "");
               },
               commit: function (a, b) {
-                2 == a && (this.getValue() || this.isChanged()) && b.setAttribute("target", this.getValue());
+                2 == a &&
+                  (this.getValue() || this.isChanged()) &&
+                  b.setAttribute("target", this.getValue());
               },
             },
           ],
@@ -763,7 +788,13 @@
           filebrowser: "uploadButton",
           label: d.lang.image.upload,
           elements: [
-            { type: "file", id: "upload", label: d.lang.image.btnUpload, style: "height:40px", size: 38 },
+            {
+              type: "file",
+              id: "upload",
+              label: d.lang.image.btnUpload,
+              style: "height:40px",
+              size: 38,
+            },
             {
               type: "fileButton",
               id: "uploadButton",
@@ -790,7 +821,9 @@
                     1 == a && this.setValue(b.getAttribute("id"));
                   },
                   commit: function (a, b) {
-                    1 == a && (this.getValue() || this.isChanged()) && b.setAttribute("id", this.getValue());
+                    1 == a &&
+                      (this.getValue() || this.isChanged()) &&
+                      b.setAttribute("id", this.getValue());
                   },
                 },
                 {
@@ -809,7 +842,9 @@
                     1 == a && this.setValue(b.getAttribute("dir"));
                   },
                   commit: function (a, b) {
-                    1 == a && (this.getValue() || this.isChanged()) && b.setAttribute("dir", this.getValue());
+                    1 == a &&
+                      (this.getValue() || this.isChanged()) &&
+                      b.setAttribute("dir", this.getValue());
                   },
                 },
                 {
@@ -822,7 +857,9 @@
                     1 == a && this.setValue(b.getAttribute("lang"));
                   },
                   commit: function (a, b) {
-                    1 == a && (this.getValue() || this.isChanged()) && b.setAttribute("lang", this.getValue());
+                    1 == a &&
+                      (this.getValue() || this.isChanged()) &&
+                      b.setAttribute("lang", this.getValue());
                   },
                 },
               ],
@@ -836,7 +873,9 @@
                 1 == a && this.setValue(b.getAttribute("longDesc"));
               },
               commit: function (a, b) {
-                1 == a && (this.getValue() || this.isChanged()) && b.setAttribute("longDesc", this.getValue());
+                1 == a &&
+                  (this.getValue() || this.isChanged()) &&
+                  b.setAttribute("longDesc", this.getValue());
               },
             },
             {
@@ -853,7 +892,9 @@
                     1 == a && this.setValue(b.getAttribute("class"));
                   },
                   commit: function (a, b) {
-                    1 == a && (this.getValue() || this.isChanged()) && b.setAttribute("class", this.getValue());
+                    1 == a &&
+                      (this.getValue() || this.isChanged()) &&
+                      b.setAttribute("class", this.getValue());
                   },
                 },
                 {
@@ -870,7 +911,8 @@
                   },
                   commit: function (a, b) {
                     1 == a
-                      ? (this.getValue() || this.isChanged()) && b.setAttribute("title", this.getValue())
+                      ? (this.getValue() || this.isChanged()) &&
+                        b.setAttribute("title", this.getValue())
                       : 4 == a
                         ? b.setAttribute("title", this.getValue())
                         : 8 == a && b.removeAttribute("title");
@@ -907,7 +949,9 @@
                 e(this);
               },
               commit: function (a, b) {
-                1 == a && (this.getValue() || this.isChanged()) && b.setAttribute("style", this.getValue());
+                1 == a &&
+                  (this.getValue() || this.isChanged()) &&
+                  b.setAttribute("style", this.getValue());
               },
             },
           ],
@@ -915,10 +959,6 @@
       ],
     };
   };
-  CKEDITOR.dialog.add("image", function (d) {
-    return u(d, "image");
-  });
-  CKEDITOR.dialog.add("imagebutton", function (d) {
-    return u(d, "imagebutton");
-  });
+  CKEDITOR.dialog.add("image", (d) => u(d, "image"));
+  CKEDITOR.dialog.add("imagebutton", (d) => u(d, "imagebutton"));
 })();

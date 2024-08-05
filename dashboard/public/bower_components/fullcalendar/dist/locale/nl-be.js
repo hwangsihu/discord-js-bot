@@ -1,4 +1,4 @@
-!(function (e, n) {
+!((e, n) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = n(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? n(require("moment"), require("fullcalendar"))
         : n(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, n) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, n) =>
+  ((e) => {
     function n(t) {
       if (a[t]) return a[t].exports;
       var r = (a[t] = { i: t, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (n.m = e),
       (n.c = a),
-      (n.d = function (e, a, t) {
+      (n.d = (e, a, t) => {
         n.o(e, a) || Object.defineProperty(e, a, { configurable: !1, enumerable: !0, get: t });
       }),
-      (n.n = function (e) {
-        var a =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (n.n = (e) => {
+        var a = e && e.__esModule ? () => e.default : () => e;
         return n.d(a, "a", a), a;
       }),
-      (n.o = function (e, n) {
-        return Object.prototype.hasOwnProperty.call(e, n);
-      }),
+      (n.o = (e, n) => Object.prototype.hasOwnProperty.call(e, n)),
       (n.p = ""),
       n((n.s = 175))
     );
   })({
-    0: function (n, a) {
+    0: (n, a) => {
       n.exports = e;
     },
-    1: function (e, a) {
+    1: (e, a) => {
       e.exports = n;
     },
-    175: function (e, n, a) {
+    175: (e, n, a) => {
       Object.defineProperty(n, "__esModule", { value: !0 }), a(176);
       var t = a(1);
       t.datepickerLocale("nl-be", "nl-BE", {
@@ -66,7 +57,20 @@
           "november",
           "december",
         ],
-        monthNamesShort: ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"],
+        monthNamesShort: [
+          "jan",
+          "feb",
+          "mrt",
+          "apr",
+          "mei",
+          "jun",
+          "jul",
+          "aug",
+          "sep",
+          "okt",
+          "nov",
+          "dec",
+        ],
         dayNames: ["zondag", "maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag"],
         dayNamesShort: ["zon", "maa", "din", "woe", "don", "vri", "zat"],
         dayNamesMin: ["zo", "ma", "di", "wo", "do", "vr", "za"],
@@ -84,10 +88,10 @@
           noEventsMessage: "Geen evenementen om te laten zien",
         });
     },
-    176: function (e, n, a) {
-      !(function (e, n) {
+    176: (e, n, a) => {
+      !((e, n) => {
         n(a(0));
-      })(0, function (e) {
+      })(0, (e) => {
         var n = "jan._feb._mrt._apr._mei_jun._jul._aug._sep._okt._nov._dec.".split("_"),
           a = "jan_feb_mrt_apr_mei_jun_jul_aug_sep_okt_nov_dec".split("_"),
           t = [
@@ -107,15 +111,17 @@
           r =
             /^(januari|februari|maart|april|mei|ju[nl]i|augustus|september|oktober|november|december|jan\.?|feb\.?|mrt\.?|apr\.?|ju[nl]\.?|aug\.?|sep\.?|okt\.?|nov\.?|dec\.?)/i;
         return e.defineLocale("nl-be", {
-          months: "januari_februari_maart_april_mei_juni_juli_augustus_september_oktober_november_december".split("_"),
-          monthsShort: function (e, t) {
-            return e ? (/-MMM-/.test(t) ? a[e.month()] : n[e.month()]) : n;
-          },
+          months:
+            "januari_februari_maart_april_mei_juni_juli_augustus_september_oktober_november_december".split(
+              "_"
+            ),
+          monthsShort: (e, t) => (e ? (/-MMM-/.test(t) ? a[e.month()] : n[e.month()]) : n),
           monthsRegex: r,
           monthsShortRegex: r,
           monthsStrictRegex:
             /^(januari|februari|maart|april|mei|ju[nl]i|augustus|september|oktober|november|december)/i,
-          monthsShortStrictRegex: /^(jan\.?|feb\.?|mrt\.?|apr\.?|mei|ju[nl]\.?|aug\.?|sep\.?|okt\.?|nov\.?|dec\.?)/i,
+          monthsShortStrictRegex:
+            /^(jan\.?|feb\.?|mrt\.?|apr\.?|mei|ju[nl]\.?|aug\.?|sep\.?|okt\.?|nov\.?|dec\.?)/i,
           monthsParse: t,
           longMonthsParse: t,
           shortMonthsParse: t,
@@ -156,12 +162,10 @@
             yy: "%d jaar",
           },
           dayOfMonthOrdinalParse: /\d{1,2}(ste|de)/,
-          ordinal: function (e) {
-            return e + (1 === e || 8 === e || e >= 20 ? "ste" : "de");
-          },
+          ordinal: (e) => e + (1 === e || 8 === e || e >= 20 ? "ste" : "de"),
           week: { dow: 1, doy: 4 },
         });
       });
     },
-  });
-});
+  })
+);

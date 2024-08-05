@@ -2,7 +2,7 @@
  * Esperanto translation for bootstrap-datepicker
  * Emmanuel Debanne <https://github.com/debanne>
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["eo"] = {
     days: ["dimanĉo", "lundo", "mardo", "merkredo", "ĵaŭdo", "vendredo", "sabato"],
     daysShort: ["dim.", "lun.", "mar.", "mer.", "ĵaŭ.", "ven.", "sam."],
@@ -21,7 +21,20 @@
       "novembro",
       "decembro",
     ],
-    monthsShort: ["jan.", "feb.", "mar.", "apr.", "majo", "jun.", "jul.", "aŭg.", "sep.", "okt.", "nov.", "dec."],
+    monthsShort: [
+      "jan.",
+      "feb.",
+      "mar.",
+      "apr.",
+      "majo",
+      "jun.",
+      "jul.",
+      "aŭg.",
+      "sep.",
+      "okt.",
+      "nov.",
+      "dec.",
+    ],
     today: "Hodiaŭ",
     clear: "Nuligi",
     weekStart: 1,

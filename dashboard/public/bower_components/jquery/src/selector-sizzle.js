@@ -1,6 +1,4 @@
-define(["./core", "../external/sizzle/dist/sizzle"], function (jQuery, Sizzle) {
-  "use strict";
-
+define(["./core", "../external/sizzle/dist/sizzle"], (jQuery, Sizzle) => {
   jQuery.find = Sizzle;
   jQuery.expr = Sizzle.selectors;
 

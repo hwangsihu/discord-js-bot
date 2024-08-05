@@ -85,7 +85,12 @@ CKEDITOR.lang["ar"] = {
     },
     cellPad: "المسافة البادئة",
     cellSpace: "تباعد الخلايا",
-    column: { menu: "عمود", insertBefore: "إدراج عمود قبل", insertAfter: "إدراج عمود بعد", deleteColumn: "حذف أعمدة" },
+    column: {
+      menu: "عمود",
+      insertBefore: "إدراج عمود قبل",
+      insertAfter: "إدراج عمود بعد",
+      deleteColumn: "حذف أعمدة",
+    },
     columns: "أعمدة",
     deleteTable: "حذف الجدول",
     headers: "العناوين",
@@ -101,7 +106,12 @@ CKEDITOR.lang["ar"] = {
     invalidRows: "عدد الصفوف يجب أن يكون عدداً أكبر من صفر.",
     invalidWidth: "عرض الجدول يجب أن يكون عدداً.",
     menu: "خصائص الجدول",
-    row: { menu: "صف", insertBefore: "إدراج صف قبل", insertAfter: "إدراج صف بعد", deleteRow: "حذف صفوف" },
+    row: {
+      menu: "صف",
+      insertBefore: "إدراج صف قبل",
+      insertAfter: "إدراج صف بعد",
+      deleteRow: "حذف صفوف",
+    },
     rows: "صفوف",
     summary: "الخلاصة",
     title: "خصائص الجدول",
@@ -117,7 +127,11 @@ CKEDITOR.lang["ar"] = {
     panelTitle2: "أنماط مضمنة",
     panelTitle3: "أنماط الكائن",
   },
-  specialchar: { options: "خيارات الأحرف الخاصة", title: "اختر حرف خاص", toolbar: "إدراج  حرف خاص" },
+  specialchar: {
+    options: "خيارات الأحرف الخاصة",
+    title: "اختر حرف خاص",
+    toolbar: "إدراج  حرف خاص",
+  },
   sourcearea: { toolbar: "المصدر" },
   scayt: {
     btn_about: "عن SCAYT",
@@ -136,7 +150,8 @@ CKEDITOR.lang["ar"] = {
     title: "لصق كنص بسيط",
   },
   pastefromword: {
-    confirmCleanup: "يبدو أن النص المراد لصقه منسوخ من برنامج وورد. هل تود تنظيفه قبل الشروع في عملية اللصق؟",
+    confirmCleanup:
+      "يبدو أن النص المراد لصقه منسوخ من برنامج وورد. هل تود تنظيفه قبل الشروع في عملية اللصق؟",
     error: "لم يتم مسح المعلومات الملصقة لخلل داخلي",
     title: "لصق من وورد",
     toolbar: "لصق من وورد",
@@ -369,7 +384,8 @@ CKEDITOR.lang["ar"] = {
       'قيمة الخانة المخصصة لـ "%1" يجب أن تكون رقما موجبا، باستخدام أو من غير استخدام وحدة HTML قياس مقبولة (px or %).',
     invalidInlineStyle:
       'قيمة الخانة المخصصة لـ  Inline Style يجب أن تختوي على مجموع واحد أو أكثر بالشكل التالي: "name : value", مفصولة بفاصلة منقزطة.',
-    cssLengthTooltip: "أدخل رقما للقيمة بالبكسل أو رقما بوحدة CSS مقبولة (px, %, in, cm, mm, em, ex, pt, or pc).",
+    cssLengthTooltip:
+      "أدخل رقما للقيمة بالبكسل أو رقما بوحدة CSS مقبولة (px, %, in, cm, mm, em, ex, pt, or pc).",
     unavailable: '%1<span class="cke_accessibility">, غير متاح</span>',
     keyboard: {
       8: "Backspace",

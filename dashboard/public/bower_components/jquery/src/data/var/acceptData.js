@@ -1,10 +1,8 @@
-define(function () {
-  "use strict";
-
+define(() => {
   /**
    * Determines whether an object can have data
    */
-  return function (owner) {
+  return (owner) => {
     // Accepts only:
     //  - Node
     //    - Node.ELEMENT_NODE

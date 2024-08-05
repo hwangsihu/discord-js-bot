@@ -61,78 +61,82 @@
  */
 window["PR_SHOULD_USE_CONTINUATION"] = true;
 
-(function () {
+(() => {
   // Keyword lists for various languages.
   // We use things that coerce to strings to make them compact when minified
   // and to defeat aggressive optimizers that fold large string constants.
-  var FLOW_CONTROL_KEYWORDS = ["break,continue,do,else,for,if,return,while"];
-  var C_KEYWORDS = [
-    FLOW_CONTROL_KEYWORDS,
+  var flowControlKeywords = ["break,continue,do,else,for,if,return,while"];
+  var cKeywords = [
+    flowControlKeywords,
     "auto,case,char,const,default," +
       "double,enum,extern,float,goto,int,long,register,short,signed,sizeof," +
       "static,struct,switch,typedef,union,unsigned,void,volatile",
   ];
-  var COMMON_KEYWORDS = [
-    C_KEYWORDS,
-    "catch,class,delete,false,import," + "new,operator,private,protected,public,this,throw,true,try,typeof",
+  var commonKeywords = [
+    cKeywords,
+    "catch,class,delete,false,import," +
+      "new,operator,private,protected,public,this,throw,true,try,typeof",
   ];
-  var CPP_KEYWORDS = [
-    COMMON_KEYWORDS,
+  var cppKeywords = [
+    commonKeywords,
     "alignof,align_union,asm,axiom,bool," +
       "concept,concept_map,const_cast,constexpr,decltype," +
       "dynamic_cast,explicit,export,friend,inline,late_check," +
       "mutable,namespace,nullptr,reinterpret_cast,static_assert,static_cast," +
       "template,typeid,typename,using,virtual,where",
   ];
-  var JAVA_KEYWORDS = [
-    COMMON_KEYWORDS,
+  var javaKeywords = [
+    commonKeywords,
     "abstract,boolean,byte,extends,final,finally,implements,import," +
       "instanceof,null,native,package,strictfp,super,synchronized,throws," +
       "transient",
   ];
-  var CSHARP_KEYWORDS = [
-    JAVA_KEYWORDS,
+  var csharpKeywords = [
+    javaKeywords,
     "as,base,by,checked,decimal,delegate,descending,dynamic,event," +
       "fixed,foreach,from,group,implicit,in,interface,internal,into,is,lock," +
       "object,out,override,orderby,params,partial,readonly,ref,sbyte,sealed," +
       "stackalloc,string,select,uint,ulong,unchecked,unsafe,ushort,var",
   ];
-  var COFFEE_KEYWORDS =
+  var coffeeKeywords =
     "all,and,by,catch,class,else,extends,false,finally," +
     "for,if,in,is,isnt,loop,new,no,not,null,of,off,on,or,return,super,then," +
     "true,try,unless,until,when,while,yes";
-  var JSCRIPT_KEYWORDS = [
-    COMMON_KEYWORDS,
+  var jscriptKeywords = [
+    commonKeywords,
     "debugger,eval,export,function,get,null,set,undefined,var,with," + "Infinity,NaN",
   ];
-  var PERL_KEYWORDS =
+  var perlKeywords =
     "caller,delete,die,do,dump,elsif,eval,exit,foreach,for," +
     "goto,if,import,last,local,my,next,no,our,print,package,redo,require," +
     "sub,undef,unless,until,use,wantarray,while,BEGIN,END";
-  var PYTHON_KEYWORDS = [
-    FLOW_CONTROL_KEYWORDS,
+  var pythonKeywords = [
+    flowControlKeywords,
     "and,as,assert,class,def,del," +
       "elif,except,exec,finally,from,global,import,in,is,lambda," +
       "nonlocal,not,or,pass,print,raise,try,with,yield," +
       "False,True,None",
   ];
-  var RUBY_KEYWORDS = [
-    FLOW_CONTROL_KEYWORDS,
+  var rubyKeywords = [
+    flowControlKeywords,
     "alias,and,begin,case,class," +
       "def,defined,elsif,end,ensure,false,in,module,next,nil,not,or,redo," +
       "rescue,retry,self,super,then,true,undef,unless,until,when,yield," +
       "BEGIN,END",
   ];
-  var SH_KEYWORDS = [FLOW_CONTROL_KEYWORDS, "case,done,elif,esac,eval,fi," + "function,in,local,set,then,until"];
-  var ALL_KEYWORDS = [
-    CPP_KEYWORDS,
-    CSHARP_KEYWORDS,
-    JSCRIPT_KEYWORDS,
-    PERL_KEYWORDS + PYTHON_KEYWORDS,
-    RUBY_KEYWORDS,
-    SH_KEYWORDS,
+  var shKeywords = [
+    flowControlKeywords,
+    "case,done,elif,esac,eval,fi," + "function,in,local,set,then,until",
   ];
-  var C_TYPES =
+  var allKeywords = [
+    cppKeywords,
+    csharpKeywords,
+    jscriptKeywords,
+    perlKeywords + pythonKeywords,
+    rubyKeywords,
+    shKeywords,
+  ];
+  var cTypes =
     /^(DIR|FILE|vector|(de|priority_)?queue|list|stack|(const_)?iterator|(multi)?(set|map)|bitset|u?(int|float)\d*)/;
 
   // token style names.  correspond to css classes
@@ -140,70 +144,70 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
    * token style for a string literal
    * @const
    */
-  var PR_STRING = "str";
+  var prString = "str";
   /**
    * token style for a keyword
    * @const
    */
-  var PR_KEYWORD = "kwd";
+  var prKeyword = "kwd";
   /**
    * token style for a comment
    * @const
    */
-  var PR_COMMENT = "com";
+  var prComment = "com";
   /**
    * token style for a type
    * @const
    */
-  var PR_TYPE = "typ";
+  var prType = "typ";
   /**
    * token style for a literal value.  e.g. 1, null, true.
    * @const
    */
-  var PR_LITERAL = "lit";
+  var prLiteral = "lit";
   /**
    * token style for a punctuation string.
    * @const
    */
-  var PR_PUNCTUATION = "pun";
+  var prPunctuation = "pun";
   /**
    * token style for a punctuation string.
    * @const
    */
-  var PR_PLAIN = "pln";
+  var prPlain = "pln";
 
   /**
    * token style for an sgml tag.
    * @const
    */
-  var PR_TAG = "tag";
+  var prTag = "tag";
   /**
    * token style for a markup declaration such as a DOCTYPE.
    * @const
    */
-  var PR_DECLARATION = "dec";
+  var prDeclaration = "dec";
   /**
    * token style for embedded source.
    * @const
    */
-  var PR_SOURCE = "src";
+  var prSource = "src";
   /**
    * token style for an sgml attribute name.
    * @const
    */
-  var PR_ATTRIB_NAME = "atn";
+  var prAttribName = "atn";
   /**
    * token style for an sgml attribute value.
    * @const
    */
-  var PR_ATTRIB_VALUE = "atv";
+  var prAttribValue = "atv";
 
   /**
    * A class that indicates a section of markup that is not code, e.g. to allow
    * embedding of line numbers within code listings.
    * @const
    */
-  var PR_NOCODE = "nocode";
+  var prNocode = "nocode";
 
   /**
    * A set of tokens that can precede a regular expression literal in
@@ -224,7 +228,7 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
    * @private
    * @const
    */
-  var REGEXP_PRECEDER_PATTERN =
+  var regexpPrecederPattern =
     "(?:^^\\.?|[+-]|\\!|\\!=|\\!==|\\#|\\%|\\%=|&|&&|&&=|&=|\\(|\\*|\\*=|\\+=|\\,|\\-=|\\->|\\/|\\/=|:|::|\\;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\@|\\[|\\^|\\^=|\\^\\^|\\^\\^=|\\{|\\||\\|=|\\|\\||\\|\\|=|\\~|break|case|continue|delete|do|else|finally|instanceof|return|throw|try|typeof)\\s*";
 
   // CAVEAT: this does not properly handle the case where a regular
@@ -250,7 +254,9 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
       var regex = regexs[i];
       if (regex.ignoreCase) {
         ignoreCase = true;
-      } else if (/[a-z]/i.test(regex.source.replace(/\\u[0-9a-f]{4}|\\x[0-9a-f]{2}|\\[^ux]/gi, ""))) {
+      } else if (
+        /[a-z]/i.test(regex.source.replace(/\\u[0-9a-f]{4}|\\x[0-9a-f]{2}|\\[^ux]/gi, ""))
+      ) {
         needToFoldCase = true;
         ignoreCase = false;
         break;
@@ -276,9 +282,9 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
       if (cc0) {
         return cc0;
       } else if ("0" <= c1 && c1 <= "7") {
-        return parseInt(charsetPart.substring(1), 8);
+        return Number.parseInt(charsetPart.substring(1), 8);
       } else if (c1 === "u" || c1 === "x") {
-        return parseInt(charsetPart.substring(2), 16);
+        return Number.parseInt(charsetPart.substring(2), 16);
       } else {
         return charsetPart.charCodeAt(1);
       }
@@ -345,11 +351,9 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
 
       // [[1, 10], [3, 4], [8, 12], [14, 14], [16, 16], [17, 17]]
       // -> [[1, 12], [14, 14], [16, 17]]
-      ranges.sort(function (a, b) {
-        return a[0] - b[0] || b[1] - a[1];
-      });
+      ranges.sort((a, b) => a[0] - b[0] || b[1] - a[1]);
       var consolidatedRanges = [];
-      var lastRange = [NaN, NaN];
+      var lastRange = [Number.NaN, Number.NaN];
       for (var i = 0; i < ranges.length; ++i) {
         var range = ranges[i];
         if (range[0] <= lastRange[1] + 1) {
@@ -459,7 +463,7 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
             parts[i] = caseFoldCharset(p);
           } else if (ch0 !== "\\") {
             // TODO: handle letters in numeric escapes.
-            parts[i] = p.replace(/[a-zA-Z]/g, function (ch) {
+            parts[i] = p.replace(/[a-zA-Z]/g, (ch) => {
               var cc = ch.charCodeAt(0);
               return "[" + String.fromCharCode(cc & ~32, cc | 32) + "]";
             });
@@ -537,7 +541,9 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
     if (node.currentStyle) {
       whitespace = node.currentStyle.whiteSpace;
     } else if (window.getComputedStyle) {
-      whitespace = document.defaultView.getComputedStyle(node, null).getPropertyValue("white-space");
+      whitespace = document.defaultView
+        .getComputedStyle(node, null)
+        .getPropertyValue("white-space");
     }
     var isPreformatted = whitespace && "pre" === whitespace.substring(0, 3);
 
@@ -561,10 +567,10 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
         case 4: // Text
           var text = node.nodeValue;
           if (text.length) {
-            if (!isPreformatted) {
-              text = text.replace(/[ \t\r\n]+/g, " ");
-            } else {
+            if (isPreformatted) {
               text = text.replace(/\r\n?/g, "\n"); // Normalize newlines.
+            } else {
+              text = text.replace(/[ \t\r\n]+/g, " ");
             }
             // TODO: handle tabs here?
             chunks[k] = text;
@@ -682,7 +688,7 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
   function createSimpleLexer(shortcutStylePatterns, fallthroughStylePatterns) {
     var shortcuts = {};
     var tokenizer;
-    (function () {
+    (() => {
       var allPatterns = shortcutStylePatterns.concat(fallthroughStylePatterns);
       var allRegexs = [];
       var regexKeys = {};
@@ -718,7 +724,7 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
      *        sourceCode.
      * }</pre>
      */
-    var decorate = function (job) {
+    var decorate = (job) => {
       var sourceCode = job.sourceCode,
         basePos = job.basePos;
       /** Even entries are positions in source in ascending order.  Odd enties
@@ -726,7 +732,7 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
        * the end.
        * @type {Array.<number|string>}
        */
-      var decorations = [basePos, PR_PLAIN];
+      var decorations = [basePos, prPlain];
       var pos = 0; // index into sourceCode
       var tokens = sourceCode.match(tokenizer) || [];
       var styleCache = {};
@@ -756,14 +762,14 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
 
             if (!match) {
               // make sure that we make progress
-              style = PR_PLAIN;
+              style = prPlain;
             }
           }
 
           isEmbedded = style.length >= 5 && "lang-" === style.substring(0, 5);
           if (isEmbedded && !(match && typeof match[1] === "string")) {
             isEmbedded = false;
-            style = PR_SOURCE;
+            style = prSource;
           }
 
           if (!isEmbedded) {
@@ -774,9 +780,7 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
         var tokenStart = pos;
         pos += token.length;
 
-        if (!isEmbedded) {
-          decorations.push(basePos + tokenStart, style);
-        } else {
+        if (isEmbedded) {
           // Treat group 1 as an embedded block of source code.
           var embeddedSource = match[1];
           var embeddedSourceStart = token.indexOf(embeddedSource);
@@ -790,7 +794,12 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
           }
           var lang = style.substring(5);
           // Decorate the left of the embedded source
-          appendDecorations(basePos + tokenStart, token.substring(0, embeddedSourceStart), decorate, decorations);
+          appendDecorations(
+            basePos + tokenStart,
+            token.substring(0, embeddedSourceStart),
+            decorate,
+            decorations
+          );
           // Decorate the embedded source
           appendDecorations(
             basePos + tokenStart + embeddedSourceStart,
@@ -805,6 +814,8 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
             decorate,
             decorations
           );
+        } else {
+          decorations.push(basePos + tokenStart, style);
         }
       }
       job.decorations = decorations;
@@ -833,7 +844,7 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
     if (options["tripleQuotedStrings"]) {
       // '''multi-line-string''', 'single-line-string', and double-quoted
       shortcutStylePatterns.push([
-        PR_STRING,
+        prString,
         /^(?:\'\'\'(?:[^\'\\]|\\[\s\S]|\'{1,2}(?=[^\']))*(?:\'\'\'|$)|\"\"\"(?:[^\"\\]|\\[\s\S]|\"{1,2}(?=[^\"]))*(?:\"\"\"|$)|\'(?:[^\\\']|\\[\s\S])*(?:\'|$)|\"(?:[^\\\"]|\\[\s\S])*(?:\"|$))/,
         null,
         "'\"",
@@ -841,7 +852,7 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
     } else if (options["multiLineStrings"]) {
       // 'multi-line-string', "multi-line-string"
       shortcutStylePatterns.push([
-        PR_STRING,
+        prString,
         /^(?:\'(?:[^\\\']|\\[\s\S])*(?:\'|$)|\"(?:[^\\\"]|\\[\s\S])*(?:\"|$)|\`(?:[^\\\`]|\\[\s\S])*(?:\`|$))/,
         null,
         "'\"`",
@@ -849,7 +860,7 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
     } else {
       // 'single-line-string', "single-line-string"
       shortcutStylePatterns.push([
-        PR_STRING,
+        prString,
         /^(?:\'(?:[^\\\'\r\n]|\\.)*(?:\'|$)|\"(?:[^\\\"\r\n]|\\.)*(?:\"|$))/,
         null,
         "\"'",
@@ -857,41 +868,46 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
     }
     if (options["verbatimStrings"]) {
       // verbatim-string-literal production from the C# grammar.  See issue 93.
-      fallthroughStylePatterns.push([PR_STRING, /^@\"(?:[^\"]|\"\")*(?:\"|$)/, null]);
+      fallthroughStylePatterns.push([prString, /^@\"(?:[^\"]|\"\")*(?:\"|$)/, null]);
     }
     var hc = options["hashComments"];
     if (hc) {
       if (options["cStyleComments"]) {
         if (hc > 1) {
           // multiline hash comments
-          shortcutStylePatterns.push([PR_COMMENT, /^#(?:##(?:[^#]|#(?!##))*(?:###|$)|.*)/, null, "#"]);
+          shortcutStylePatterns.push([
+            prComment,
+            /^#(?:##(?:[^#]|#(?!##))*(?:###|$)|.*)/,
+            null,
+            "#",
+          ]);
         } else {
           // Stop C preprocessor declarations at an unclosed open comment
           shortcutStylePatterns.push([
-            PR_COMMENT,
+            prComment,
             /^#(?:(?:define|elif|else|endif|error|ifdef|include|ifndef|line|pragma|undef|warning)\b|[^\r\n]*)/,
             null,
             "#",
           ]);
         }
         fallthroughStylePatterns.push([
-          PR_STRING,
+          prString,
           /^<(?:(?:(?:\.\.\/)*|\/?)(?:[\w-]+(?:\/[\w-]+)+)?[\w-]+\.h|[a-z]\w*)>/,
           null,
         ]);
       } else {
-        shortcutStylePatterns.push([PR_COMMENT, /^#[^\r\n]*/, null, "#"]);
+        shortcutStylePatterns.push([prComment, /^#[^\r\n]*/, null, "#"]);
       }
     }
     if (options["cStyleComments"]) {
-      fallthroughStylePatterns.push([PR_COMMENT, /^\/\/[^\r\n]*/, null]);
-      fallthroughStylePatterns.push([PR_COMMENT, /^\/\*[\s\S]*?(?:\*\/|$)/, null]);
+      fallthroughStylePatterns.push([prComment, /^\/\/[^\r\n]*/, null]);
+      fallthroughStylePatterns.push([prComment, /^\/\*[\s\S]*?(?:\*\/|$)/, null]);
     }
     if (options["regexLiterals"]) {
       /**
        * @const
        */
-      var REGEX_LITERAL =
+      var regexLiteral =
         // A regular expression literal starts with a slash that is
         // not followed by * or / so that it is not confused with
         // comments.
@@ -906,28 +922,32 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
         "/";
       fallthroughStylePatterns.push([
         "lang-regex",
-        new RegExp("^" + REGEXP_PRECEDER_PATTERN + "(" + REGEX_LITERAL + ")"),
+        new RegExp("^" + regexpPrecederPattern + "(" + regexLiteral + ")"),
       ]);
     }
 
     var types = options["types"];
     if (types) {
-      fallthroughStylePatterns.push([PR_TYPE, types]);
+      fallthroughStylePatterns.push([prType, types]);
     }
 
     var keywords = ("" + options["keywords"]).replace(/^ | $/g, "");
     if (keywords.length) {
-      fallthroughStylePatterns.push([PR_KEYWORD, new RegExp("^(?:" + keywords.replace(/[\s,]+/g, "|") + ")\\b"), null]);
+      fallthroughStylePatterns.push([
+        prKeyword,
+        new RegExp("^(?:" + keywords.replace(/[\s,]+/g, "|") + ")\\b"),
+        null,
+      ]);
     }
 
-    shortcutStylePatterns.push([PR_PLAIN, /^\s+/, null, " \r\n\t\xA0"]);
+    shortcutStylePatterns.push([prPlain, /^\s+/, null, " \r\n\t\xA0"]);
     fallthroughStylePatterns.push(
       // TODO(mikesamuel): recognize non-latin letters and numerals in idents
-      [PR_LITERAL, /^@[a-z_$][a-z_$@0-9]*/i, null],
-      [PR_TYPE, /^(?:[@_]?[A-Z]+[a-z][A-Za-z_$@0-9]*|\w+_t\b)/, null],
-      [PR_PLAIN, /^[a-z_$][a-z_$@0-9]*/i, null],
+      [prLiteral, /^@[a-z_$][a-z_$@0-9]*/i, null],
+      [prType, /^(?:[@_]?[A-Z]+[a-z][A-Za-z_$@0-9]*|\w+_t\b)/, null],
+      [prPlain, /^[a-z_$][a-z_$@0-9]*/i, null],
       [
-        PR_LITERAL,
+        prLiteral,
         new RegExp(
           "^(?:" +
             // A hex number
@@ -945,15 +965,15 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
         "0123456789",
       ],
       // Don't treat escaped quotes in bash as starting strings.  See issue 144.
-      [PR_PLAIN, /^\\[\s\S]?/, null],
-      [PR_PUNCTUATION, /^.[^\s\w\.$@\'\"\`\/\#\\]*/, null]
+      [prPlain, /^\\[\s\S]?/, null],
+      [prPunctuation, /^.[^\s\w\.$@\'\"\`\/\#\\]*/, null]
     );
 
     return createSimpleLexer(shortcutStylePatterns, fallthroughStylePatterns);
   }
 
   var decorateSource = sourceDecorator({
-    keywords: ALL_KEYWORDS,
+    keywords: allKeywords,
     hashComments: true,
     cStyleComments: true,
     multiLineStrings: true,
@@ -969,7 +989,7 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
    *     This requires cloning elements, so the input might not have unique
    *     IDs after numbering.
    */
-  function numberLines(node, opt_startLineNum) {
+  function numberLines(node, optStartLineNum) {
     var nocode = /(?:^|\s)nocode(?:\s|$)/;
     var lineBreak = /\r\n?|\n/;
 
@@ -979,7 +999,9 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
     if (node.currentStyle) {
       whitespace = node.currentStyle.whiteSpace;
     } else if (window.getComputedStyle) {
-      whitespace = document.defaultView.getComputedStyle(node, null).getPropertyValue("white-space");
+      whitespace = document.defaultView
+        .getComputedStyle(node, null)
+        .getPropertyValue("white-space");
     }
     // If it's preformatted, then we need to split lines on line breaks
     // in addition to <BR>s.
@@ -1093,13 +1115,13 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
     }
 
     // Make sure numeric indices show correctly.
-    if (opt_startLineNum === (opt_startLineNum | 0)) {
-      listItems[0].setAttribute("value", opt_startLineNum);
+    if (optStartLineNum === (optStartLineNum | 0)) {
+      listItems[0].setAttribute("value", optStartLineNum);
     }
 
     var ol = document.createElement("OL");
     ol.className = "linenums";
-    var offset = Math.max(0, (opt_startLineNum - 1) /* zero index */ | 0) || 0;
+    var offset = Math.max(0, (optStartLineNum - 1) /* zero index */ | 0) || 0;
     for (var i = 0, n = listItems.length; i < n; ++i) {
       li = listItems[i];
       // Stick a class on the LIs so that stylesheets can
@@ -1129,7 +1151,7 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
    * @private
    */
   function recombineTagsAndDecorations(job) {
-    var isIE = /\bMSIE\b/.test(navigator.userAgent);
+    var isIe = /\bMSIE\b/.test(navigator.userAgent);
     var newlineRe = /\n/g;
 
     var source = job.sourceCode;
@@ -1199,7 +1221,7 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
         // Emitting Windows standard issue linebreaks (CRLF) causes a blank
         // space to appear at the beginning of every line but the first.
         // Emitting an old Mac OS 9 line separator makes everything spiffy.
-        if (isIE) {
+        if (isIe) {
           styledText = styledText.replace(newlineRe, "\r");
         }
         textNode.nodeValue = styledText;
@@ -1270,13 +1292,13 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
     createSimpleLexer(
       [],
       [
-        [PR_PLAIN, /^[^<?]+/],
-        [PR_DECLARATION, /^<!\w[^>]*(?:>|$)/],
-        [PR_COMMENT, /^<\!--[\s\S]*?(?:-\->|$)/],
+        [prPlain, /^[^<?]+/],
+        [prDeclaration, /^<!\w[^>]*(?:>|$)/],
+        [prComment, /^<\!--[\s\S]*?(?:-\->|$)/],
         // Unescaped content in an unknown language
         ["lang-", /^<\?([\s\S]+?)(?:\?>|$)/],
         ["lang-", /^<%([\s\S]+?)(?:%>|$)/],
-        [PR_PUNCTUATION, /^(?:<[%?]|[%?]>)/],
+        [prPunctuation, /^(?:<[%?]|[%?]>)/],
         ["lang-", /^<xmp\b[^>]*>([\s\S]+?)<\/xmp\b[^>]*>/i],
         // Unescaped content in javascript.  (Or possibly vbscript).
         ["lang-js", /^<script\b[^>]*>([\s\S]*?)(<\/script\b[^>]*>)/i],
@@ -1290,14 +1312,14 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
   registerLangHandler(
     createSimpleLexer(
       [
-        [PR_PLAIN, /^[\s]+/, null, " \t\r\n"],
-        [PR_ATTRIB_VALUE, /^(?:\"[^\"]*\"?|\'[^\']*\'?)/, null, "\"'"],
+        [prPlain, /^[\s]+/, null, " \t\r\n"],
+        [prAttribValue, /^(?:\"[^\"]*\"?|\'[^\']*\'?)/, null, "\"'"],
       ],
       [
-        [PR_TAG, /^^<\/?[a-z](?:[\w.:-]*\w)?|\/?>$/i],
-        [PR_ATTRIB_NAME, /^(?!style[\s=]|on)[a-z](?:[\w:-]*\w)?/i],
+        [prTag, /^^<\/?[a-z](?:[\w.:-]*\w)?|\/?>$/i],
+        [prAttribName, /^(?!style[\s=]|on)[a-z](?:[\w:-]*\w)?/i],
         ["lang-uq.val", /^=\s*([^>\'\"\s]*(?:[^>\'\"\s\/]|\/(?=\s)))/],
-        [PR_PUNCTUATION, /^[=<>\/]+/],
+        [prPunctuation, /^[=<>\/]+/],
         ["lang-js", /^on\w+\s*=\s*\"([^\"]+)\"/i],
         ["lang-js", /^on\w+\s*=\s*\'([^\']+)\'/i],
         ["lang-js", /^on\w+\s*=\s*([^\"\'>\s]+)/i],
@@ -1308,13 +1330,13 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
     ),
     ["in.tag"]
   );
-  registerLangHandler(createSimpleLexer([], [[PR_ATTRIB_VALUE, /^[\s\S]+/]]), ["uq.val"]);
+  registerLangHandler(createSimpleLexer([], [[prAttribValue, /^[\s\S]+/]]), ["uq.val"]);
   registerLangHandler(
     sourceDecorator({
-      keywords: CPP_KEYWORDS,
+      keywords: cppKeywords,
       hashComments: true,
       cStyleComments: true,
-      types: C_TYPES,
+      types: cTypes,
     }),
     ["c", "cc", "cpp", "cxx", "cyc", "m"]
   );
@@ -1326,24 +1348,24 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
   );
   registerLangHandler(
     sourceDecorator({
-      keywords: CSHARP_KEYWORDS,
+      keywords: csharpKeywords,
       hashComments: true,
       cStyleComments: true,
       verbatimStrings: true,
-      types: C_TYPES,
+      types: cTypes,
     }),
     ["cs"]
   );
   registerLangHandler(
     sourceDecorator({
-      keywords: JAVA_KEYWORDS,
+      keywords: javaKeywords,
       cStyleComments: true,
     }),
     ["java"]
   );
   registerLangHandler(
     sourceDecorator({
-      keywords: SH_KEYWORDS,
+      keywords: shKeywords,
       hashComments: true,
       multiLineStrings: true,
     }),
@@ -1351,7 +1373,7 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
   );
   registerLangHandler(
     sourceDecorator({
-      keywords: PYTHON_KEYWORDS,
+      keywords: pythonKeywords,
       hashComments: true,
       multiLineStrings: true,
       tripleQuotedStrings: true,
@@ -1360,7 +1382,7 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
   );
   registerLangHandler(
     sourceDecorator({
-      keywords: PERL_KEYWORDS,
+      keywords: perlKeywords,
       hashComments: true,
       multiLineStrings: true,
       regexLiterals: true,
@@ -1369,7 +1391,7 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
   );
   registerLangHandler(
     sourceDecorator({
-      keywords: RUBY_KEYWORDS,
+      keywords: rubyKeywords,
       hashComments: true,
       multiLineStrings: true,
       regexLiterals: true,
@@ -1378,7 +1400,7 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
   );
   registerLangHandler(
     sourceDecorator({
-      keywords: JSCRIPT_KEYWORDS,
+      keywords: jscriptKeywords,
       cStyleComments: true,
       regexLiterals: true,
     }),
@@ -1386,7 +1408,7 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
   );
   registerLangHandler(
     sourceDecorator({
-      keywords: COFFEE_KEYWORDS,
+      keywords: coffeeKeywords,
       hashComments: 3, // ### style block comments
       cStyleComments: true,
       multilineStrings: true,
@@ -1395,10 +1417,10 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
     }),
     ["coffee"]
   );
-  registerLangHandler(createSimpleLexer([], [[PR_STRING, /^[\s\S]+/]]), ["regex"]);
+  registerLangHandler(createSimpleLexer([], [[prString, /^[\s\S]+/]]), ["regex"]);
 
   function applyDecorator(job) {
-    var opt_langExtension = job.langExtension;
+    var optLangExtension = job.langExtension;
 
     try {
       // Extract tags, and convert the source code to plain text.
@@ -1410,7 +1432,7 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
       job.basePos = 0;
 
       // Apply the appropriate language handler
-      langHandlerForExtension(opt_langExtension, source)(job);
+      langHandlerForExtension(optLangExtension, source)(job);
 
       // Integrate the decorations and tags back into the source code,
       // modifying the sourceNode in place.
@@ -1429,26 +1451,26 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
    * @param opt_numberLines {number|boolean} True to number lines,
    *     or the 1-indexed number of the first line in sourceCodeHtml.
    */
-  function prettyPrintOne(sourceCodeHtml, opt_langExtension, opt_numberLines) {
+  function prettyPrintOne(sourceCodeHtml, optLangExtension, optNumberLines) {
     var container = document.createElement("PRE");
     // This could cause images to load and onload listeners to fire.
     // E.g. <img onerror="alert(1337)" src="nosuchimage.png">.
     // We assume that the inner HTML is from a trusted source.
     container.innerHTML = sourceCodeHtml;
-    if (opt_numberLines) {
-      numberLines(container, opt_numberLines);
+    if (optNumberLines) {
+      numberLines(container, optNumberLines);
     }
 
     var job = {
-      langExtension: opt_langExtension,
-      numberLines: opt_numberLines,
+      langExtension: optLangExtension,
+      numberLines: optNumberLines,
       sourceNode: container,
     };
     applyDecorator(job);
     return container.innerHTML;
   }
 
-  function prettyPrint(opt_whenDone) {
+  function prettyPrint(optWhenDone) {
     function byTagName(tn) {
       return document.getElementsByTagName(tn);
     }
@@ -1465,9 +1487,7 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
     var clock = Date;
     if (!clock["now"]) {
       clock = {
-        now: function () {
-          return +new Date();
-        },
+        now: () => +new Date(),
       };
     }
 
@@ -1480,7 +1500,9 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
     var prettyPrintRe = /\bprettyprint\b/;
 
     function doWork() {
-      var endTime = window["PR_SHOULD_USE_CONTINUATION"] ? clock["now"]() + 250 /* ms */ : Infinity;
+      var endTime = window["PR_SHOULD_USE_CONTINUATION"]
+        ? clock["now"]() + 250 /* ms */
+        : Number.POSITIVE_INFINITY;
       for (; k < elements.length && clock["now"]() < endTime; k++) {
         var cs = elements[k];
         var className = cs.className;
@@ -1538,8 +1560,8 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
       if (k < elements.length) {
         // finish up in a continuation
         setTimeout(doWork, 250);
-      } else if (opt_whenDone) {
-        opt_whenDone();
+      } else if (optWhenDone) {
+        optWhenDone();
       }
     }
 
@@ -1569,18 +1591,18 @@ window["PR_SHOULD_USE_CONTINUATION"] = true;
     createSimpleLexer: createSimpleLexer,
     registerLangHandler: registerLangHandler,
     sourceDecorator: sourceDecorator,
-    PR_ATTRIB_NAME: PR_ATTRIB_NAME,
-    PR_ATTRIB_VALUE: PR_ATTRIB_VALUE,
-    PR_COMMENT: PR_COMMENT,
-    PR_DECLARATION: PR_DECLARATION,
-    PR_KEYWORD: PR_KEYWORD,
-    PR_LITERAL: PR_LITERAL,
-    PR_NOCODE: PR_NOCODE,
-    PR_PLAIN: PR_PLAIN,
-    PR_PUNCTUATION: PR_PUNCTUATION,
-    PR_SOURCE: PR_SOURCE,
-    PR_STRING: PR_STRING,
-    PR_TAG: PR_TAG,
-    PR_TYPE: PR_TYPE,
+    PR_ATTRIB_NAME: prAttribName,
+    PR_ATTRIB_VALUE: prAttribValue,
+    PR_COMMENT: prComment,
+    PR_DECLARATION: prDeclaration,
+    PR_KEYWORD: prKeyword,
+    PR_LITERAL: prLiteral,
+    PR_NOCODE: prNocode,
+    PR_PLAIN: prPlain,
+    PR_PUNCTUATION: prPunctuation,
+    PR_SOURCE: prSource,
+    PR_STRING: prString,
+    PR_TAG: prTag,
+    PR_TYPE: prType,
   };
 })();

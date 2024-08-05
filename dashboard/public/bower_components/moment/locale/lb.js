@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   function processRelativeTime(number, withoutSuffix, key, isFuture) {
     var format = {
       m: ["eng Minutt", "enger Minutt"],
@@ -41,7 +39,7 @@
    * @returns {boolean}
    */
   function eifelerRegelAppliesToNumber(number) {
-    number = parseInt(number, 10);
+    number = Number.parseInt(number, 10);
     if (isNaN(number)) {
       return false;
     }
@@ -76,7 +74,10 @@
   }
 
   var lb = moment.defineLocale("lb", {
-    months: "Januar_Februar_Mäerz_Abrëll_Mee_Juni_Juli_August_September_Oktober_November_Dezember".split("_"),
+    months:
+      "Januar_Februar_Mäerz_Abrëll_Mee_Juni_Juli_August_September_Oktober_November_Dezember".split(
+        "_"
+      ),
     monthsShort: "Jan._Febr._Mrz._Abr._Mee_Jun._Jul._Aug._Sept._Okt._Nov._Dez.".split("_"),
     monthsParseExact: true,
     weekdays: "Sonndeg_Méindeg_Dënschdeg_Mëttwoch_Donneschdeg_Freideg_Samschdeg".split("_"),

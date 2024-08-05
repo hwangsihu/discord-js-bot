@@ -1,6 +1,5 @@
 import compareArrays from "../utils/compare-arrays";
 import { deprecateSimple } from "../utils/deprecate";
-import hasOwnProp from "../utils/has-own-prop";
 import isArray from "../utils/is-array";
 import isUndefined from "../utils/is-undefined";
 import keys from "../utils/keys";
@@ -78,11 +77,9 @@ export function getSetGlobalLocale(key, values) {
     if (data) {
       // moment.duration._locale = moment._locale = data;
       globalLocale = data;
-    } else {
-      if (typeof console !== "undefined" && console.warn) {
-        //warn user if arguments are passed but the locale could not be set
-        console.warn("Locale " + key + " not found. Did you forget to load it?");
-      }
+    } else if (typeof console !== "undefined" && console.warn) {
+      //warn user if arguments are passed but the locale could not be set
+      console.warn("Locale " + key + " not found. Did you forget to load it?");
     }
   }
 
@@ -125,7 +122,7 @@ export function defineLocale(name, config) {
     locales[name] = new Locale(mergeConfigs(parentConfig, config));
 
     if (localeFamilies[name]) {
-      localeFamilies[name].forEach(function (x) {
+      localeFamilies[name].forEach((x) => {
         defineLocale(x.name, x.config);
       });
     }

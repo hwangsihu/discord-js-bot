@@ -6,9 +6,7 @@ define([
   "./wrapMap",
   "./getAll",
   "./setGlobalEval",
-], function (jQuery, toType, rtagName, rscriptType, wrapMap, getAll, setGlobalEval) {
-  "use strict";
-
+], (jQuery, toType, rtagName, rscriptType, wrapMap, getAll, setGlobalEval) => {
   var rhtml = /<|&#?\w+;/;
 
   function buildFragment(elems, context, scripts, selection, ignored) {
@@ -34,11 +32,7 @@ define([
           jQuery.merge(nodes, elem.nodeType ? [elem] : elem);
 
           // Convert non-html into a text node
-        } else if (!rhtml.test(elem)) {
-          nodes.push(context.createTextNode(elem));
-
-          // Convert html into DOM nodes
-        } else {
+        } else if (rhtml.test(elem)) {
           tmp = tmp || fragment.appendChild(context.createElement("div"));
 
           // Deserialize a standard representation
@@ -61,6 +55,10 @@ define([
 
           // Ensure the created nodes are orphaned (#12392)
           tmp.textContent = "";
+        } else {
+          nodes.push(context.createTextNode(elem));
+
+          // Convert html into DOM nodes
         }
       }
     }

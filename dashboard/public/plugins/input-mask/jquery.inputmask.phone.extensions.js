@@ -17,16 +17,14 @@ When using this extension make sure you specify the correct url to get the masks
 
 
 */
-(function ($) {
+(($) => {
   $.extend($.inputmask.defaults.aliases, {
     phone: {
       url: "phone-codes/phone-codes.json",
-      mask: function (opts) {
+      mask: (opts) => {
         opts.definitions = {
           p: {
-            validator: function () {
-              return false;
-            },
+            validator: () => false,
             cardinality: 1,
           },
           "#": {
@@ -39,7 +37,7 @@ When using this extension make sure you specify the correct url to get the masks
           url: opts.url,
           async: false,
           dataType: "json",
-          success: function (response) {
+          success: (response) => {
             maskList = response;
           },
         });

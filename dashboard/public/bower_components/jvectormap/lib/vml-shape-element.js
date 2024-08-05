@@ -33,7 +33,7 @@ jvm.VMLShapeElement.prototype.applyAttr = function (attr, value) {
       this.strokeElement.node.opacity = Math.round(value * 100) + "%";
       break;
     case "stroke-width":
-      if (parseInt(value, 10) === 0) {
+      if (Number.parseInt(value, 10) === 0) {
         this.node.stroked = false;
       } else {
         this.node.stroked = true;

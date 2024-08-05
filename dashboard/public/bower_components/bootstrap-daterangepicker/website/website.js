@@ -1,9 +1,9 @@
-$(document).ready(function () {
+$(document).ready(() => {
   $("#config-text").keyup(function () {
     eval($(this).val());
   });
 
-  $(".configurator input, .configurator select").change(function () {
+  $(".configurator input, .configurator select").change(() => {
     updateConfig();
   });
 
@@ -39,7 +39,7 @@ $(document).ready(function () {
     if ($("#timePicker24Hour").is(":checked")) options.timePicker24Hour = true;
 
     if ($("#timePickerIncrement").val().length && $("#timePickerIncrement").val() != 1)
-      options.timePickerIncrement = parseInt($("#timePickerIncrement").val(), 10);
+      options.timePickerIncrement = Number.parseInt($("#timePickerIncrement").val(), 10);
 
     if ($("#timePickerSeconds").is(":checked")) options.timePickerSeconds = true;
 
@@ -54,7 +54,10 @@ $(document).ready(function () {
         "Last 7 Days": [moment().subtract(6, "days"), moment()],
         "Last 30 Days": [moment().subtract(29, "days"), moment()],
         "This Month": [moment().startOf("month"), moment().endOf("month")],
-        "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")],
+        "Last Month": [
+          moment().subtract(1, "month").startOf("month"),
+          moment().subtract(1, "month").endOf("month"),
+        ],
       };
     }
 
@@ -124,7 +127,7 @@ $(document).ready(function () {
         ", function(start, end, label) {\n  console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');\n});"
     );
 
-    $("#config-demo").daterangepicker(options, function (start, end, label) {
+    $("#config-demo").daterangepicker(options, (start, end, label) => {
       console.log(
         "New date range selected: " +
           start.format("YYYY-MM-DD") +

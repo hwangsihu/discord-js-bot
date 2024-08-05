@@ -1,6 +1,6 @@
 module("Results - highlighting results");
 
-test("results:all with no data skips results:focus", function (assert) {
+test("results:all with no data skips results:focus", (assert) => {
   assert.expect(0);
 
   var $ = require("jquery");
@@ -23,7 +23,7 @@ test("results:all with no data skips results:focus", function (assert) {
 
   // Fake the data adapter for the `setClasses` method
   results.data = {};
-  results.data.current = function (callback) {
+  results.data.current = (callback) => {
     callback([{ id: "test" }]);
   };
 
@@ -31,7 +31,7 @@ test("results:all with no data skips results:focus", function (assert) {
 
   results.bind(container, $container);
 
-  results.on("results:focus", function (params) {
+  results.on("results:focus", (params) => {
     assert.ok(false, "The results:focus event was triggered");
   });
 
@@ -42,7 +42,7 @@ test("results:all with no data skips results:focus", function (assert) {
   });
 });
 
-test("results:all triggers results:focus on the first item", function (assert) {
+test("results:all triggers results:focus on the first item", (assert) => {
   assert.expect(2);
 
   var $ = require("jquery");
@@ -65,7 +65,7 @@ test("results:all triggers results:focus on the first item", function (assert) {
 
   // Fake the data adapter for the `setClasses` method
   results.data = {};
-  results.data.current = function (callback) {
+  results.data.current = (callback) => {
     callback([{ id: "test" }]);
   };
 
@@ -73,7 +73,7 @@ test("results:all triggers results:focus on the first item", function (assert) {
 
   results.bind(container, $container);
 
-  results.on("results:focus", function (params) {
+  results.on("results:focus", (params) => {
     assert.equal(params.data.id, "test");
     assert.equal(params.data.text, "Test");
   });
@@ -90,7 +90,7 @@ test("results:all triggers results:focus on the first item", function (assert) {
   });
 });
 
-test("results:append does not trigger results:focus", function (assert) {
+test("results:append does not trigger results:focus", (assert) => {
   assert.expect(0);
 
   var $ = require("jquery");
@@ -113,7 +113,7 @@ test("results:append does not trigger results:focus", function (assert) {
 
   // Fake the data adapter for the `setClasses` method
   results.data = {};
-  results.data.current = function (callback) {
+  results.data.current = (callback) => {
     callback([{ id: "test" }]);
   };
 
@@ -121,7 +121,7 @@ test("results:append does not trigger results:focus", function (assert) {
 
   results.bind(container, $container);
 
-  results.on("results:focus", function () {
+  results.on("results:focus", () => {
     assert.ok(false, "The results:focus event was triggered");
   });
 
@@ -137,7 +137,7 @@ test("results:append does not trigger results:focus", function (assert) {
   });
 });
 
-test("scrollAfterSelect triggers results:focus", function (assert) {
+test("scrollAfterSelect triggers results:focus", (assert) => {
   assert.expect(3);
 
   var $ = require("jquery");
@@ -161,7 +161,7 @@ test("scrollAfterSelect triggers results:focus", function (assert) {
 
   // Fake the data adapter for the `setClasses` method
   results.data = {};
-  results.data.current = function (callback) {
+  results.data.current = (callback) => {
     callback([{ id: "test" }]);
   };
 
@@ -181,7 +181,7 @@ test("scrollAfterSelect triggers results:focus", function (assert) {
     ],
   });
 
-  results.on("results:focus", function (params) {
+  results.on("results:focus", (params) => {
     assert.equal(params.data.id, "test");
     assert.equal(params.data.text, "Test");
   });
@@ -189,7 +189,7 @@ test("scrollAfterSelect triggers results:focus", function (assert) {
   container.trigger("select", {});
 });
 
-test("!scrollAfterSelect does not trigger results:focus", function (assert) {
+test("!scrollAfterSelect does not trigger results:focus", (assert) => {
   assert.expect(1);
 
   var $ = require("jquery");
@@ -213,7 +213,7 @@ test("!scrollAfterSelect does not trigger results:focus", function (assert) {
 
   // Fake the data adapter for the `setClasses` method
   results.data = {};
-  results.data.current = function (callback) {
+  results.data.current = (callback) => {
     callback([{ id: "test" }]);
   };
 
@@ -233,7 +233,7 @@ test("!scrollAfterSelect does not trigger results:focus", function (assert) {
     ],
   });
 
-  results.on("results:focus", function () {
+  results.on("results:focus", () => {
     assert.ok(false, "The results:focus event was triggered");
   });
 

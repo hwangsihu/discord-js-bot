@@ -1,4 +1,4 @@
-define(function () {
+define(() => {
   // Ukranian
   function ending(count, one, couple, more) {
     if (count % 100 > 10 && count % 100 < 15) {
@@ -14,31 +14,28 @@ define(function () {
   }
 
   return {
-    errorLoading: function () {
-      return "Неможливо завантажити результати";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "Неможливо завантажити результати",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
-      return "Будь ласка, видаліть " + overChars + " " + ending(args.maximum, "літеру", "літери", "літер");
+      return (
+        "Будь ласка, видаліть " +
+        overChars +
+        " " +
+        ending(args.maximum, "літеру", "літери", "літер")
+      );
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
       return "Будь ласка, введіть " + remainingChars + " або більше літер";
     },
-    loadingMore: function () {
-      return "Завантаження інших результатів…";
-    },
-    maximumSelected: function (args) {
-      return "Ви можете вибрати лише " + args.maximum + " " + ending(args.maximum, "пункт", "пункти", "пунктів");
-    },
-    noResults: function () {
-      return "Нічого не знайдено";
-    },
-    searching: function () {
-      return "Пошук…";
-    },
-    removeAllItems: function () {
-      return "Видалити всі елементи";
-    },
+    loadingMore: () => "Завантаження інших результатів…",
+    maximumSelected: (args) =>
+      "Ви можете вибрати лише " +
+      args.maximum +
+      " " +
+      ending(args.maximum, "пункт", "пункти", "пунктів"),
+    noResults: () => "Нічого не знайдено",
+    searching: () => "Пошук…",
+    removeAllItems: () => "Видалити всі елементи",
   };
 });

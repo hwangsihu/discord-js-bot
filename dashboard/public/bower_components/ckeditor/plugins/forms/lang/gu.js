@@ -1,5 +1,12 @@
 ﻿CKEDITOR.plugins.setLang("forms", "gu", {
-  button: { title: "બટનના ગુણ", text: "ટેક્સ્ટ (વૅલ્યૂ)", type: "પ્રકાર", typeBtn: "બટન", typeSbm: "સબ્મિટ", typeRst: "રિસેટ" },
+  button: {
+    title: "બટનના ગુણ",
+    text: "ટેક્સ્ટ (વૅલ્યૂ)",
+    type: "પ્રકાર",
+    typeBtn: "બટન",
+    typeSbm: "સબ્મિટ",
+    typeRst: "રિસેટ",
+  },
   checkboxAndRadio: {
     checkboxTitle: "ચેક બોક્સ ગુણ",
     radioTitle: "રેડિઓ બટનના ગુણ",
@@ -7,7 +14,13 @@
     selected: "સિલેક્ટેડ",
     required: "Required",
   },
-  form: { title: "ફૉર્મ/પત્રકના ગુણ", menu: "ફૉર્મ/પત્રકના ગુણ", action: "ક્રિયા", method: "પદ્ધતિ", encoding: "અન્કોડીન્ગ" },
+  form: {
+    title: "ફૉર્મ/પત્રકના ગુણ",
+    menu: "ફૉર્મ/પત્રકના ગુણ",
+    action: "ક્રિયા",
+    method: "પદ્ધતિ",
+    encoding: "અન્કોડીન્ગ",
+  },
   hidden: { title: "ગુપ્ત ક્ષેત્રના ગુણ", name: "નામ", value: "વૅલ્યૂ" },
   select: {
     title: "પસંદગી ક્ષેત્રના ગુણ",

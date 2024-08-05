@@ -14,7 +14,13 @@
     selected: "Сайланган",
     required: "Мәҗбүри",
   },
-  form: { title: "Форма үзлекләре", menu: "Форма үзлекләре", action: "Гамәл", method: "Ысул", encoding: "Кодировка" },
+  form: {
+    title: "Форма үзлекләре",
+    menu: "Форма үзлекләре",
+    action: "Гамәл",
+    method: "Ысул",
+    encoding: "Кодировка",
+  },
   hidden: { title: "Яшерен кыр үзлекләре", name: "Исем", value: "Күләм" },
   select: {
     title: "Selection Field Properties",

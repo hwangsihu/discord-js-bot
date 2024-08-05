@@ -5,7 +5,10 @@
 import moment from "../moment";
 
 export default moment.defineLocale("mk", {
-  months: "јануари_февруари_март_април_мај_јуни_јули_август_септември_октомври_ноември_декември".split("_"),
+  months:
+    "јануари_февруари_март_април_мај_јуни_јули_август_септември_октомври_ноември_декември".split(
+      "_"
+    ),
   monthsShort: "јан_фев_мар_апр_мај_јун_јул_авг_сеп_окт_ное_дек".split("_"),
   weekdays: "недела_понеделник_вторник_среда_четврток_петок_сабота".split("_"),
   weekdaysShort: "нед_пон_вто_сре_чет_пет_саб".split("_"),
@@ -55,7 +58,7 @@ export default moment.defineLocale("mk", {
     yy: "%d години",
   },
   dayOfMonthOrdinalParse: /\d{1,2}-(ев|ен|ти|ви|ри|ми)/,
-  ordinal: function (number) {
+  ordinal: (number) => {
     var lastDigit = number % 10,
       last2Digits = number % 100;
     if (number === 0) {

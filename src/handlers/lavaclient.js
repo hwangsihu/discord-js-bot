@@ -14,7 +14,12 @@ module.exports = (client) => {
       secret: process.env.SPOTIFY_CLIENT_SECRET,
     },
     autoResolveYoutubeTracks: false,
-    loaders: [SpotifyItemType.Album, SpotifyItemType.Artist, SpotifyItemType.Playlist, SpotifyItemType.Track],
+    loaders: [
+      SpotifyItemType.Album,
+      SpotifyItemType.Artist,
+      SpotifyItemType.Playlist,
+      SpotifyItemType.Track,
+    ],
   });
 
   const lavaclient = new Cluster({

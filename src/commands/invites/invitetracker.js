@@ -39,7 +39,8 @@ module.exports = {
 
   async messageRun(message, args, data) {
     const status = args[0].toLowerCase();
-    if (!["on", "off"].includes(status)) return message.safeReply("Invalid status. Value must be `on/off`");
+    if (!["on", "off"].includes(status))
+      return message.safeReply("Invalid status. Value must be `on/off`");
     const response = await setStatus(message, status, data.settings);
     await message.safeReply(response);
   },
@@ -60,7 +61,11 @@ async function setStatus({ guild }, input, settings) {
     }
 
     const channelMissing = guild.channels.cache
-      .filter((ch) => ch.type === ChannelType.GuildText && !ch.permissionsFor(guild.members.me).has("ManageChannels"))
+      .filter(
+        (ch) =>
+          ch.type === ChannelType.GuildText &&
+          !ch.permissionsFor(guild.members.me).has("ManageChannels")
+      )
       .map((ch) => ch.name);
 
     if (channelMissing.length > 1) {

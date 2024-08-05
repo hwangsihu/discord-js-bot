@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-CKEDITOR.dialog.add("uicolor", function (f) {
+CKEDITOR.dialog.add("uicolor", (f) => {
   function B(a) {
     a = a.data.getTarget();
     var c;
@@ -12,7 +12,8 @@ CKEDITOR.dialog.add("uicolor", function (f) {
     a && ((g = a), g.setAttribute("aria-selected", !0), g.addClass("cke_colordialog_selected"));
   }
   function n() {
-    g && (g.removeClass("cke_colordialog_selected"), g.removeAttribute("aria-selected"), (g = null));
+    g &&
+      (g.removeClass("cke_colordialog_selected"), g.removeAttribute("aria-selected"), (g = null));
   }
   function m(a) {
     k.getContentElement("picker", "selectedColor").setValue(a);
@@ -42,7 +43,7 @@ CKEDITOR.dialog.add("uicolor", function (f) {
   }
   function G(a) {
     a = a.replace(/^#/, "");
-    for (var c = 0, b = []; 2 >= c; c++) b[c] = parseInt(a.substr(2 * c, 2), 16);
+    for (var c = 0, b = []; 2 >= c; c++) b[c] = Number.parseInt(a.substr(2 * c, 2), 16);
     return 165 <= 0.2126 * b[0] + 0.7152 * b[1] + 0.0722 * b[2];
   }
   function H(a) {
@@ -56,7 +57,10 @@ CKEDITOR.dialog.add("uicolor", function (f) {
         c.preventDefault();
         break;
       case 40:
-        (a = b.getParent().getNext()) && (a = a.getChild([b.getIndex()])) && 1 == a.type && a.focus();
+        (a = b.getParent().getNext()) &&
+          (a = a.getChild([b.getIndex()])) &&
+          1 == a.type &&
+          a.focus();
         c.preventDefault();
         break;
       case 32:
@@ -67,11 +71,15 @@ CKEDITOR.dialog.add("uicolor", function (f) {
       case d ? 37 : 39:
         (a = b.getNext())
           ? 1 == a.type && (a.focus(), c.preventDefault(!0))
-          : (a = b.getParent().getNext()) && (a = a.getChild([0])) && 1 == a.type && (a.focus(), c.preventDefault(!0));
+          : (a = b.getParent().getNext()) &&
+            (a = a.getChild([0])) &&
+            1 == a.type &&
+            (a.focus(), c.preventDefault(!0));
         break;
       case d ? 39 : 37:
         if ((a = b.getPrevious())) a.focus(), c.preventDefault(!0);
-        else if ((a = b.getParent().getPrevious())) (a = a.getLast()), a.focus(), c.preventDefault(!0);
+        else if ((a = b.getParent().getPrevious()))
+          (a = a.getLast()), a.focus(), c.preventDefault(!0);
     }
   }
   function p(a) {
@@ -108,12 +116,13 @@ CKEDITOR.dialog.add("uicolor", function (f) {
     g,
     e,
     D;
-  q = (function () {
+  q = (() => {
     function a(a, d) {
       for (var A = a; A < a + 3; A++) {
         var f = new z(b.$.insertRow(-1));
         f.setAttribute("role", "row");
-        for (var e = d; e < d + 3; e++) for (var g = 0; 6 > g; g++) c(f.$, "#" + h[e] + h[g] + h[A]);
+        for (var e = d; e < d + 3; e++)
+          for (var g = 0; 6 > g; g++) c(f.$, "#" + h[e] + h[g] + h[A]);
       }
     }
     function c(a, c) {
@@ -160,7 +169,9 @@ CKEDITOR.dialog.add("uicolor", function (f) {
     c(e.$, "#ffffff");
     return b;
   })();
-  CKEDITOR.document.appendStyleSheet(CKEDITOR.getUrl(CKEDITOR.plugins.get("uicolor").path + "dialogs/uicolor.css"));
+  CKEDITOR.document.appendStyleSheet(
+    CKEDITOR.getUrl(CKEDITOR.plugins.get("uicolor").path + "dialogs/uicolor.css")
+  );
   return {
     title: d.title,
     minWidth: 360,
@@ -169,7 +180,7 @@ CKEDITOR.dialog.add("uicolor", function (f) {
     onLoad: function () {
       k = this;
     },
-    onHide: function () {
+    onHide: () => {
       n();
       m(null);
       e &&

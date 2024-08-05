@@ -1,4 +1,4 @@
-module.exports = function (grunt) {
+module.exports = (grunt) => {
   require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
 
   grunt.initConfig({
@@ -65,7 +65,12 @@ module.exports = function (grunt) {
     },
     watch: {
       all: {
-        files: ["lib/**/*.coffee", "spec/lib/**/*.coffee", "spec/support/**/*.coffee", "less/**/*.less"],
+        files: [
+          "lib/**/*.coffee",
+          "spec/lib/**/*.coffee",
+          "spec/support/**/*.coffee",
+          "less/**/*.less",
+        ],
         tasks: "default",
       },
       dev: {
@@ -87,5 +92,12 @@ module.exports = function (grunt) {
     },
   });
 
-  grunt.registerTask("default", ["concat", "coffee", "less", "uglify", "mocha", "shell:visual_spec"]);
+  grunt.registerTask("default", [
+    "concat",
+    "coffee",
+    "less",
+    "uglify",
+    "mocha",
+    "shell:visual_spec",
+  ]);
 };

@@ -6,13 +6,16 @@
  * Version: 3.3.11
  */
 
-!(function (factory) {
+!((factory) => {
   "function" == typeof define && define.amd
     ? define(["./dependencyLibs/inputmask.dependencyLib", "./inputmask"], factory)
     : "object" == typeof exports
-      ? (module.exports = factory(require("./dependencyLibs/inputmask.dependencyLib"), require("./inputmask")))
+      ? (module.exports = factory(
+          require("./dependencyLibs/inputmask.dependencyLib"),
+          require("./inputmask")
+        ))
       : factory(window.dependencyLib || jQuery, window.Inputmask);
-})(function ($, Inputmask) {
+})(($, Inputmask) => {
   function maskSort(a, b) {
     var maska = (a.mask || a)
         .replace(/#/g, "9")
@@ -24,7 +27,11 @@
         .replace(/[+()#-]/g, ""),
       maskas = (a.mask || a).split("#")[0],
       maskbs = (b.mask || b).split("#")[0];
-    return 0 === maskbs.indexOf(maskas) ? -1 : 0 === maskas.indexOf(maskbs) ? 1 : maska.localeCompare(maskb);
+    return 0 === maskbs.indexOf(maskas)
+      ? -1
+      : 0 === maskas.indexOf(maskbs)
+        ? 1
+        : maska.localeCompare(maskb);
   }
   var analyseMaskBase = Inputmask.prototype.analyseMask;
   return (
@@ -40,7 +47,8 @@
           i >= 0;
           i--
         )
-          (maskGroup[(variation = (mask = masks[i].mask || masks[i]).substr(0, 1))] = maskGroup[variation] || []),
+          (maskGroup[(variation = (mask = masks[i].mask || masks[i]).substr(0, 1))] =
+            maskGroup[variation] || []),
             maskGroup[variation].unshift(mask.substr(1)),
             masks.splice(i, 1);
         for (var ndx in maskGroup)
@@ -56,7 +64,9 @@
               : submasks.push(
                   ndx +
                     opts.groupmarker.start +
-                    maskGroup[ndx].join(opts.groupmarker.end + opts.alternatormarker + opts.groupmarker.start) +
+                    maskGroup[ndx].join(
+                      opts.groupmarker.end + opts.alternatormarker + opts.groupmarker.start
+                    ) +
                     opts.groupmarker.end
                 )
             : submasks.push(ndx + rebuild(maskGroup[ndx]));
@@ -65,7 +75,9 @@
             ? (mask += submasks[0])
             : (mask +=
                 opts.groupmarker.start +
-                submasks.join(opts.groupmarker.end + opts.alternatormarker + opts.groupmarker.start) +
+                submasks.join(
+                  opts.groupmarker.end + opts.alternatormarker + opts.groupmarker.start
+                ) +
                 opts.groupmarker.end),
           mask
         );
@@ -93,26 +105,23 @@
         },
         countrycode: "",
         phoneCodes: [],
-        mask: function (opts) {
-          return (
-            (opts.definitions = {
-              "#": Inputmask.prototype.definitions[9],
-            }),
-            opts.phoneCodes.sort(maskSort)
-          );
-        },
+        mask: (opts) => (
+          (opts.definitions = {
+            "#": Inputmask.prototype.definitions[9],
+          }),
+          opts.phoneCodes.sort(maskSort)
+        ),
         keepStatic: !0,
-        onBeforeMask: function (value, opts) {
+        onBeforeMask: (value, opts) => {
           var processedValue = value.replace(/^0{1,2}/, "").replace(/[\s]/g, "");
           return (
-            (processedValue.indexOf(opts.countrycode) > 1 || -1 === processedValue.indexOf(opts.countrycode)) &&
+            (processedValue.indexOf(opts.countrycode) > 1 ||
+              -1 === processedValue.indexOf(opts.countrycode)) &&
               (processedValue = "+" + opts.countrycode + processedValue),
             processedValue
           );
         },
-        onUnMask: function (maskedValue, unmaskedValue, opts) {
-          return maskedValue.replace(/[()#-]/g, "");
-        },
+        onUnMask: (maskedValue, unmaskedValue, opts) => maskedValue.replace(/[()#-]/g, ""),
         inputmode: "tel",
       },
     }),

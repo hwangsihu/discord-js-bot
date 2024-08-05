@@ -35,7 +35,7 @@ jvm.VMLElement.VMLInitialized = false;
 // The following method of VML handling is borrowed from the
 // Raphael library by Dmitry Baranovsky.
 
-jvm.VMLElement.initializeVML = function () {
+jvm.VMLElement.initializeVML = () => {
   try {
     if (!document.namespaces.rvml) {
       document.namespaces.add("rvml", "urn:schemas-microsoft-com:vml");
@@ -46,16 +46,16 @@ jvm.VMLElement.initializeVML = function () {
      * @private
      * @returns DOMElement
      */
-    jvm.VMLElement.prototype.createElement = function (tagName) {
-      return document.createElement("<rvml:" + tagName + ' class="rvml">');
-    };
+    jvm.VMLElement.prototype.createElement = (tagName) =>
+      document.createElement("<rvml:" + tagName + ' class="rvml">');
   } catch (e) {
     /**
      * @private
      */
-    jvm.VMLElement.prototype.createElement = function (tagName) {
-      return document.createElement("<" + tagName + ' xmlns="urn:schemas-microsoft.com:vml" class="rvml">');
-    };
+    jvm.VMLElement.prototype.createElement = (tagName) =>
+      document.createElement(
+        "<" + tagName + ' xmlns="urn:schemas-microsoft.com:vml" class="rvml">'
+      );
   }
   document.createStyleSheet().addRule(".rvml", "behavior:url(#default#VML)");
   jvm.VMLElement.VMLInitialized = true;
@@ -68,9 +68,7 @@ jvm.VMLElement.initializeVML = function () {
  * @returns Function
  * @private
  */
-jvm.VMLElement.prototype.getElementCtr = function (ctr) {
-  return jvm["VML" + ctr];
-};
+jvm.VMLElement.prototype.getElementCtr = (ctr) => jvm["VML" + ctr];
 
 /**
  * Adds CSS class for underlying DOM element.

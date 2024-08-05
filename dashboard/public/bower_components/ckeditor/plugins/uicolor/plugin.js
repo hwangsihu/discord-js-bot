@@ -13,6 +13,10 @@ CKEDITOR.plugins.add("uicolor", {
     CKEDITOR.dialog.add("uicolor", this.path + "dialogs/uicolor.js");
     a.addCommand("uicolor", b);
     a.ui.addButton &&
-      a.ui.addButton("UIColor", { label: a.lang.uicolor.title, command: "uicolor", toolbar: "tools,1" });
+      a.ui.addButton("UIColor", {
+        label: a.lang.uicolor.title,
+        command: "uicolor",
+        toolbar: "tools,1",
+      });
   },
 });

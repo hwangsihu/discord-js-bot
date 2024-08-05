@@ -26,8 +26,11 @@ var monthsRegex =
   /^(januari|februari|maart|april|mei|ju[nl]i|augustus|september|oktober|november|december|jan\.?|feb\.?|mrt\.?|apr\.?|ju[nl]\.?|aug\.?|sep\.?|okt\.?|nov\.?|dec\.?)/i;
 
 export default moment.defineLocale("nl", {
-  months: "januari_februari_maart_april_mei_juni_juli_augustus_september_oktober_november_december".split("_"),
-  monthsShort: function (m, format) {
+  months:
+    "januari_februari_maart_april_mei_juni_juli_augustus_september_oktober_november_december".split(
+      "_"
+    ),
+  monthsShort: (m, format) => {
     if (!m) {
       return monthsShortWithDots;
     } else if (/-MMM-/.test(format)) {
@@ -39,8 +42,10 @@ export default moment.defineLocale("nl", {
 
   monthsRegex: monthsRegex,
   monthsShortRegex: monthsRegex,
-  monthsStrictRegex: /^(januari|februari|maart|april|mei|ju[nl]i|augustus|september|oktober|november|december)/i,
-  monthsShortStrictRegex: /^(jan\.?|feb\.?|mrt\.?|apr\.?|mei|ju[nl]\.?|aug\.?|sep\.?|okt\.?|nov\.?|dec\.?)/i,
+  monthsStrictRegex:
+    /^(januari|februari|maart|april|mei|ju[nl]i|augustus|september|oktober|november|december)/i,
+  monthsShortStrictRegex:
+    /^(jan\.?|feb\.?|mrt\.?|apr\.?|mei|ju[nl]\.?|aug\.?|sep\.?|okt\.?|nov\.?|dec\.?)/i,
 
   monthsParse: monthsParse,
   longMonthsParse: monthsParse,
@@ -83,9 +88,7 @@ export default moment.defineLocale("nl", {
     yy: "%d jaar",
   },
   dayOfMonthOrdinalParse: /\d{1,2}(ste|de)/,
-  ordinal: function (number) {
-    return number + (number === 1 || number === 8 || number >= 20 ? "ste" : "de");
-  },
+  ordinal: (number) => number + (number === 1 || number === 8 || number >= 20 ? "ste" : "de"),
   week: {
     dow: 1, // Monday is the first day of the week.
     doy: 4, // The week that contains Jan 4th is the first week of the year.

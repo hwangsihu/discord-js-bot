@@ -1,12 +1,12 @@
-define(["jquery", "./utils"], function ($, CompatUtils) {
+define(["jquery", "./utils"], ($, CompatUtils) => {
   // No-op CSS adapter that discards all classes by default
   function _containerAdapter(clazz) {
     return null;
   }
 
-  function ContainerCSS() {}
+  function containerCss() {}
 
-  ContainerCSS.prototype.render = function (decorated) {
+  containerCss.prototype.render = function (decorated) {
     var $container = decorated.call(this);
 
     var containerCssClass = this.options.get("containerCssClass") || "";
@@ -23,7 +23,7 @@ define(["jquery", "./utils"], function ($, CompatUtils) {
 
       var _cssAdapter = containerCssAdapter;
 
-      containerCssAdapter = function (clazz) {
+      containerCssAdapter = (clazz) => {
         var adapted = _cssAdapter(clazz);
 
         if (adapted != null) {
@@ -49,5 +49,5 @@ define(["jquery", "./utils"], function ($, CompatUtils) {
     return $container;
   };
 
-  return ContainerCSS;
+  return containerCss;
 });

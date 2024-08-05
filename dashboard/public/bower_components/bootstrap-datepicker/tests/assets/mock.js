@@ -1,4 +1,4 @@
-(function () {
+(() => {
   window.patch_date = function patch(f) {
     var NativeDate = window.Date;
     var date = function date(y, m, d, h, i, s, j) {

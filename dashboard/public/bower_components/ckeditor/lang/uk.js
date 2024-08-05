@@ -127,7 +127,11 @@ CKEDITOR.lang["uk"] = {
     panelTitle2: "Рядкові стилі",
     panelTitle3: "Об'єктні стилі",
   },
-  specialchar: { options: "Опції", title: "Оберіть спеціальний символ", toolbar: "Спеціальний символ" },
+  specialchar: {
+    options: "Опції",
+    title: "Оберіть спеціальний символ",
+    toolbar: "Спеціальний символ",
+  },
   sourcearea: { toolbar: "Джерело" },
   scayt: {
     btn_about: "Про SCAYT",
@@ -343,7 +347,8 @@ CKEDITOR.lang["uk"] = {
     generalTab: "Основне",
     advancedTab: "Додаткове",
     validateNumberFailed: "Значення не є цілим числом.",
-    confirmNewPage: "Всі незбережені зміни будуть втрачені. Ви впевнені, що хочете завантажити нову сторінку?",
+    confirmNewPage:
+      "Всі незбережені зміни будуть втрачені. Ви впевнені, що хочете завантажити нову сторінку?",
     confirmCancel: "Деякі опції змінено. Закрити вікно без збереження змін?",
     options: "Опції",
     target: "Ціль",

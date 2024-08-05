@@ -1,7 +1,7 @@
-define(function () {
+define(() => {
   // Macedonian
   return {
-    inputTooLong: function (args) {
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "Ве молиме внесете " + args.maximum + " помалку карактер";
@@ -12,7 +12,7 @@ define(function () {
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "Ве молиме внесете уште " + args.maximum + " карактер";
@@ -23,10 +23,8 @@ define(function () {
 
       return message;
     },
-    loadingMore: function () {
-      return "Вчитување резултати…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Вчитување резултати…",
+    maximumSelected: (args) => {
       var message = "Можете да изберете само " + args.maximum + " ставк";
 
       if (args.maximum === 1) {
@@ -37,14 +35,8 @@ define(function () {
 
       return message;
     },
-    noResults: function () {
-      return "Нема пронајдено совпаѓања";
-    },
-    searching: function () {
-      return "Пребарување…";
-    },
-    removeAllItems: function () {
-      return "Отстрани ги сите предмети";
-    },
+    noResults: () => "Нема пронајдено совпаѓања",
+    searching: () => "Пребарување…",
+    removeAllItems: () => "Отстрани ги сите предмети",
   };
 });

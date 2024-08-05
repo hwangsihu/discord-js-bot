@@ -2,10 +2,10 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   CKEDITOR.plugins.add("cloudservices", {
     requires: "filetools,ajax",
-    onLoad: function () {
+    onLoad: () => {
       function a(a, b, f, d) {
         c.call(this, a, b, f);
         this.customToken = d;
@@ -19,20 +19,20 @@
       };
       CKEDITOR.plugins.cloudservices.cloudServicesLoader = a;
     },
-    beforeInit: function (a) {
+    beforeInit: (a) => {
       var c = a.config.cloudServices_tokenUrl,
         e = {
           token: null,
           REFRESH_INTERVAL: a.CLOUD_SERVICES_TOKEN_INTERVAL || 36e5,
-          refreshToken: function () {
-            CKEDITOR.ajax.load(c, function (b) {
+          refreshToken: () => {
+            CKEDITOR.ajax.load(c, (b) => {
               b && (e.token = b);
             });
           },
           init: function () {
             this.refreshToken();
             var b = window.setInterval(this.refreshToken, this.REFRESH_INTERVAL);
-            a.once("destroy", function () {
+            a.once("destroy", () => {
               window.clearInterval(b);
             });
           },
@@ -40,7 +40,7 @@
       c ? e.init() : CKEDITOR.error("cloudservices-no-token-url");
       a.on(
         "fileUploadRequest",
-        function (b) {
+        (b) => {
           var a = b.data.fileLoader,
             d = b.data.requestData,
             c = a.customToken || e.token;
@@ -55,7 +55,7 @@
         null,
         6
       );
-      a.on("fileUploadResponse", function (a) {
+      a.on("fileUploadResponse", (a) => {
         var c = a.data.fileLoader,
           d = c.xhr,
           e;

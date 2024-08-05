@@ -10,7 +10,7 @@ CKEDITOR.plugins.colordialog = {
     d.editorFocus = !1;
     b.addCommand("colordialog", d);
     CKEDITOR.dialog.add("colordialog", this.path + "dialogs/colordialog.js");
-    b.getColorFromDialog = function (d, g) {
+    b.getColorFromDialog = (d, g) => {
       var c, f, e;
       c = function (a) {
         f(this);
@@ -18,28 +18,30 @@ CKEDITOR.plugins.colordialog = {
         /^[0-9a-f]{3}([0-9a-f]{3})?$/i.test(a) && (a = "#" + a);
         d.call(g, a);
       };
-      f = function (a) {
+      f = (a) => {
         a.removeListener("ok", c);
         a.removeListener("cancel", c);
       };
-      e = function (a) {
+      e = (a) => {
         a.on("ok", c);
         a.on("cancel", c);
       };
       b.execCommand("colordialog");
       if (b._.storedDialogs && b._.storedDialogs.colordialog) e(b._.storedDialogs.colordialog);
       else
-        CKEDITOR.on("dialogDefinition", function (a) {
+        CKEDITOR.on("dialogDefinition", (a) => {
           if ("colordialog" == a.data.name) {
             var b = a.data.definition;
             a.removeListener();
-            b.onLoad = CKEDITOR.tools.override(b.onLoad, function (a) {
-              return function () {
-                e(this);
-                b.onLoad = a;
-                "function" == typeof a && a.call(this);
-              };
-            });
+            b.onLoad = CKEDITOR.tools.override(
+              b.onLoad,
+              (a) =>
+                function () {
+                  e(this);
+                  b.onLoad = a;
+                  "function" == typeof a && a.call(this);
+                }
+            );
           }
         });
     };

@@ -1,4 +1,4 @@
-!(function (e, r) {
+!((e, r) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = r(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? r(require("moment"), require("fullcalendar"))
         : r(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, r) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, r) =>
+  ((e) => {
     function r(t) {
       if (n[t]) return n[t].exports;
       var a = (n[t] = { i: t, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (r.m = e),
       (r.c = n),
-      (r.d = function (e, n, t) {
+      (r.d = (e, n, t) => {
         r.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: t });
       }),
-      (r.n = function (e) {
-        var n =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (r.n = (e) => {
+        var n = e && e.__esModule ? () => e.default : () => e;
         return r.d(n, "a", n), n;
       }),
-      (r.o = function (e, r) {
-        return Object.prototype.hasOwnProperty.call(e, r);
-      }),
+      (r.o = (e, r) => Object.prototype.hasOwnProperty.call(e, r)),
       (r.p = ""),
       r((r.s = 149))
     );
   })({
-    0: function (r, n) {
+    0: (r, n) => {
       r.exports = e;
     },
-    1: function (e, n) {
+    1: (e, n) => {
       e.exports = r;
     },
-    149: function (e, r, n) {
+    149: (e, r, n) => {
       Object.defineProperty(r, "__esModule", { value: !0 }), n(150);
       var t = n(1);
       t.datepickerLocale("is", "is", {
@@ -66,7 +57,20 @@
           "Nóvember",
           "Desember",
         ],
-        monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "Maí", "Jún", "Júl", "Ágú", "Sep", "Okt", "Nóv", "Des"],
+        monthNamesShort: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "Maí",
+          "Jún",
+          "Júl",
+          "Ágú",
+          "Sep",
+          "Okt",
+          "Nóv",
+          "Des",
+        ],
         dayNames: [
           "Sunnudagur",
           "Mánudagur",
@@ -92,10 +96,10 @@
           noEventsMessage: "Engir viðburðir til að sýna",
         });
     },
-    150: function (e, r, n) {
-      !(function (e, r) {
+    150: (e, r, n) => {
+      !((e, r) => {
         r(n(0));
-      })(0, function (e) {
+      })(0, (e) => {
         function r(e) {
           return e % 100 == 11 || e % 10 != 1;
         }
@@ -115,7 +119,13 @@
             case "d":
               return n ? "dagur" : a ? "dag" : "degi";
             case "dd":
-              return r(e) ? (n ? u + "dagar" : u + (a ? "daga" : "dögum")) : n ? u + "dagur" : u + (a ? "dag" : "degi");
+              return r(e)
+                ? n
+                  ? u + "dagar"
+                  : u + (a ? "daga" : "dögum")
+                : n
+                  ? u + "dagur"
+                  : u + (a ? "dag" : "degi");
             case "M":
               return n ? "mánuður" : a ? "mánuð" : "mánuði";
             case "MM":
@@ -133,9 +143,15 @@
           }
         }
         return e.defineLocale("is", {
-          months: "janúar_febrúar_mars_apríl_maí_júní_júlí_ágúst_september_október_nóvember_desember".split("_"),
+          months:
+            "janúar_febrúar_mars_apríl_maí_júní_júlí_ágúst_september_október_nóvember_desember".split(
+              "_"
+            ),
           monthsShort: "jan_feb_mar_apr_maí_jún_júl_ágú_sep_okt_nóv_des".split("_"),
-          weekdays: "sunnudagur_mánudagur_þriðjudagur_miðvikudagur_fimmtudagur_föstudagur_laugardagur".split("_"),
+          weekdays:
+            "sunnudagur_mánudagur_þriðjudagur_miðvikudagur_fimmtudagur_föstudagur_laugardagur".split(
+              "_"
+            ),
           weekdaysShort: "sun_mán_þri_mið_fim_fös_lau".split("_"),
           weekdaysMin: "Su_Má_Þr_Mi_Fi_Fö_La".split("_"),
           longDateFormat: {
@@ -176,5 +192,5 @@
         });
       });
     },
-  });
-});
+  })
+);

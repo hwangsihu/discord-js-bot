@@ -5,8 +5,8 @@ $.fn.sparkline.tristate = tristate = createClass($.fn.sparkline._base, barHighli
   type: "tristate",
 
   init: function (el, values, options, width, height) {
-    var barWidth = parseInt(options.get("barWidth"), 10),
-      barSpacing = parseInt(options.get("barSpacing"), 10);
+    var barWidth = Number.parseInt(options.get("barWidth"), 10),
+      barSpacing = Number.parseInt(options.get("barSpacing"), 10);
     tristate._super.init.call(this, el, values, options, width, height);
 
     this.regionShapes = {};

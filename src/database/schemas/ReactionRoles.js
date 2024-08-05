@@ -58,7 +58,8 @@ module.exports = {
     }
   },
 
-  getReactionRoles: (guildId, channelId, messageId) => rrCache.get(getKey(guildId, channelId, messageId)) || [],
+  getReactionRoles: (guildId, channelId, messageId) =>
+    rrCache.get(getKey(guildId, channelId, messageId)) || [],
 
   addReactionRole: async (guildId, channelId, messageId, emote, roleId) => {
     const filter = { guild_id: guildId, channel_id: channelId, message_id: messageId };

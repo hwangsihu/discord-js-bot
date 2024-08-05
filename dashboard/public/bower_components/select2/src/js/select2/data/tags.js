@@ -1,4 +1,4 @@
-define(["jquery"], function ($) {
+define(["jquery"], ($) => {
   function Tags(decorated, $element, options) {
     var tags = options.get("tags");
 
@@ -93,7 +93,7 @@ define(["jquery"], function ($) {
     decorated.call(this, params, wrapper);
   };
 
-  Tags.prototype.createTag = function (decorated, params) {
+  Tags.prototype.createTag = (decorated, params) => {
     var term = $.trim(params.term);
 
     if (term === "") {
@@ -106,7 +106,7 @@ define(["jquery"], function ($) {
     };
   };
 
-  Tags.prototype.insertTag = function (_, data, tag) {
+  Tags.prototype.insertTag = (_, data, tag) => {
     data.unshift(tag);
   };
 

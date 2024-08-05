@@ -14,7 +14,13 @@
     selected: "Märgitud",
     required: "Nõutud",
   },
-  form: { title: "Vormi omadused", menu: "Vormi omadused", action: "Toiming", method: "Meetod", encoding: "Kodeering" },
+  form: {
+    title: "Vormi omadused",
+    menu: "Vormi omadused",
+    action: "Toiming",
+    method: "Meetod",
+    encoding: "Kodeering",
+  },
   hidden: { title: "Varjatud lahtri omadused", name: "Nimi", value: "Väärtus" },
   select: {
     title: "Valiklahtri omadused",

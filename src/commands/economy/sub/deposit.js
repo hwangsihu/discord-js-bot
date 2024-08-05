@@ -6,7 +6,8 @@ module.exports = async (user, coins) => {
   if (isNaN(coins) || coins <= 0) return "Please enter a valid amount of coins to deposit";
   const userDb = await getUser(user);
 
-  if (coins > userDb.coins) return `You only have ${userDb.coins}${ECONOMY.CURRENCY} coins in your wallet`;
+  if (coins > userDb.coins)
+    return `You only have ${userDb.coins}${ECONOMY.CURRENCY} coins in your wallet`;
 
   userDb.coins -= coins;
   userDb.bank += coins;

@@ -24,7 +24,7 @@ export default moment.defineLocale("zh-tw", {
     llll: "YYYY年M月D日dddd HH:mm",
   },
   meridiemParse: /凌晨|早上|上午|中午|下午|晚上/,
-  meridiemHour: function (hour, meridiem) {
+  meridiemHour: (hour, meridiem) => {
     if (hour === 12) {
       hour = 0;
     }
@@ -36,7 +36,7 @@ export default moment.defineLocale("zh-tw", {
       return hour + 12;
     }
   },
-  meridiem: function (hour, minute, isLower) {
+  meridiem: (hour, minute, isLower) => {
     var hm = hour * 100 + minute;
     if (hm < 600) {
       return "凌晨";
@@ -61,7 +61,7 @@ export default moment.defineLocale("zh-tw", {
     sameElse: "L",
   },
   dayOfMonthOrdinalParse: /\d{1,2}(日|月|週)/,
-  ordinal: function (number, period) {
+  ordinal: (number, period) => {
     switch (period) {
       case "d":
       case "D":

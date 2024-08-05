@@ -37,12 +37,12 @@ module.exports = {
 
   async messageRun(message, args) {
     const target = await message.guild.resolveMember(args[0], true);
-    const amount = parseInt(args[1]);
+    const amount = Number.parseInt(args[1]);
 
     if (!target) return message.safeReply("Incorrect syntax. You must mention a target");
     if (isNaN(amount)) return message.safeReply("Invite amount must be a number");
 
-    const response = await addInvites(message, target.user, parseInt(amount));
+    const response = await addInvites(message, target.user, Number.parseInt(amount));
     await message.safeReply(response);
   },
 
@@ -65,7 +65,9 @@ async function addInvites({ guild }, user, amount) {
     .setAuthor({ name: `Added invites to ${user.username}` })
     .setThumbnail(user.displayAvatarURL())
     .setColor(EMBED_COLORS.BOT_EMBED)
-    .setDescription(`${user.username} now has ${getEffectiveInvites(memberDb.invite_data)} invites`);
+    .setDescription(
+      `${user.username} now has ${getEffectiveInvites(memberDb.invite_data)} invites`
+    );
 
   checkInviteRewards(guild, memberDb, true);
   return { embeds: [embed] };

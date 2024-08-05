@@ -1,4 +1,4 @@
-define([], function () {
+define([], () => {
   function StopPropagation() {}
 
   StopPropagation.prototype.bind = function (decorated, container, $container) {
@@ -27,7 +27,7 @@ define([], function () {
       "touchstart",
     ];
 
-    this.$selection.on(stoppedEvents.join(" "), function (evt) {
+    this.$selection.on(stoppedEvents.join(" "), (evt) => {
       evt.stopPropagation();
     });
   };

@@ -10,9 +10,10 @@ export default moment.defineLocale("hy-am", {
       "հունվարի_փետրվարի_մարտի_ապրիլի_մայիսի_հունիսի_հուլիսի_օգոստոսի_սեպտեմբերի_հոկտեմբերի_նոյեմբերի_դեկտեմբերի".split(
         "_"
       ),
-    standalone: "հունվար_փետրվար_մարտ_ապրիլ_մայիս_հունիս_հուլիս_օգոստոս_սեպտեմբեր_հոկտեմբեր_նոյեմբեր_դեկտեմբեր".split(
-      "_"
-    ),
+    standalone:
+      "հունվար_փետրվար_մարտ_ապրիլ_մայիս_հունիս_հուլիս_օգոստոս_սեպտեմբեր_հոկտեմբեր_նոյեմբեր_դեկտեմբեր".split(
+        "_"
+      ),
   },
   monthsShort: "հնվ_փտր_մրտ_ապր_մյս_հնս_հլս_օգս_սպտ_հկտ_նմբ_դկտ".split("_"),
   weekdays: "կիրակի_երկուշաբթի_երեքշաբթի_չորեքշաբթի_հինգշաբթի_ուրբաթ_շաբաթ".split("_"),
@@ -30,12 +31,8 @@ export default moment.defineLocale("hy-am", {
     sameDay: "[այսօր] LT",
     nextDay: "[վաղը] LT",
     lastDay: "[երեկ] LT",
-    nextWeek: function () {
-      return "dddd [օրը ժամը] LT";
-    },
-    lastWeek: function () {
-      return "[անցած] dddd [օրը ժամը] LT";
-    },
+    nextWeek: () => "dddd [օրը ժամը] LT",
+    lastWeek: () => "[անցած] dddd [օրը ժամը] LT",
     sameElse: "L",
   },
   relativeTime: {
@@ -55,10 +52,8 @@ export default moment.defineLocale("hy-am", {
     yy: "%d տարի",
   },
   meridiemParse: /գիշերվա|առավոտվա|ցերեկվա|երեկոյան/,
-  isPM: function (input) {
-    return /^(ցերեկվա|երեկոյան)$/.test(input);
-  },
-  meridiem: function (hour) {
+  isPM: (input) => /^(ցերեկվա|երեկոյան)$/.test(input),
+  meridiem: (hour) => {
     if (hour < 4) {
       return "գիշերվա";
     } else if (hour < 12) {
@@ -70,7 +65,7 @@ export default moment.defineLocale("hy-am", {
     }
   },
   dayOfMonthOrdinalParse: /\d{1,2}|\d{1,2}-(ին|րդ)/,
-  ordinal: function (number, period) {
+  ordinal: (number, period) => {
     switch (period) {
       case "DDD":
       case "w":

@@ -35,7 +35,7 @@ offset("ZZ", "");
 
 addRegexToken("Z", matchShortOffset);
 addRegexToken("ZZ", matchShortOffset);
-addParseToken(["Z", "ZZ"], function (input, array, config) {
+addParseToken(["Z", "ZZ"], (input, array, config) => {
   config._useUTC = true;
   config._tzm = offsetFromString(matchShortOffset, input);
 });
@@ -66,7 +66,9 @@ export function cloneWithOffset(input, model) {
   var res, diff;
   if (model._isUTC) {
     res = model.clone();
-    diff = (isMoment(input) || isDate(input) ? input.valueOf() : createLocal(input).valueOf()) - res.valueOf();
+    diff =
+      (isMoment(input) || isDate(input) ? input.valueOf() : createLocal(input).valueOf()) -
+      res.valueOf();
     // Use low-level api, because this fn is low-level api.
     res._d.setTime(res._d.valueOf() + diff);
     hooks.updateOffset(res, false);
@@ -86,7 +88,7 @@ function getDateOffset(m) {
 
 // This function will be called whenever a moment is mutated.
 // It is intended to keep the offset in sync with the timezone.
-hooks.updateOffset = function () {};
+hooks.updateOffset = () => {};
 
 // MOMENTS
 
@@ -104,7 +106,7 @@ export function getSetOffset(input, keepLocalTime, keepMinutes) {
   var offset = this._offset || 0,
     localAdjust;
   if (!this.isValid()) {
-    return input != null ? this : NaN;
+    return input != null ? this : Number.NaN;
   }
   if (input != null) {
     if (typeof input === "string") {
@@ -192,7 +194,10 @@ export function hasAlignedHourOffset(input) {
 }
 
 export function isDaylightSavingTime() {
-  return this.utcOffset() > this.clone().month(0).utcOffset() || this.utcOffset() > this.clone().month(5).utcOffset();
+  return (
+    this.utcOffset() > this.clone().month(0).utcOffset() ||
+    this.utcOffset() > this.clone().month(5).utcOffset()
+  );
 }
 
 export function isDaylightSavingTimeShifted() {

@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function f(a, b) {
     var c = a.config.autocomplete_commitKeystrokes || CKEDITOR.config.autocomplete_commitKeystrokes;
     this.editor = a;
@@ -13,7 +13,8 @@
     this.textWatcher = this.getTextWatcher(b.textTestCallback);
     this.commitKeystrokes = CKEDITOR.tools.array.isArray(c) ? c.slice() : [c];
     this._listeners = [];
-    this.outputTemplate = void 0 !== b.outputTemplate ? new CKEDITOR.template(b.outputTemplate) : null;
+    this.outputTemplate =
+      void 0 !== b.outputTemplate ? new CKEDITOR.template(b.outputTemplate) : null;
     b.itemTemplate && (this.view.itemTemplate = new CKEDITOR.template(b.itemTemplate));
     if ("ready" === this.editor.status) this.attach();
     else
@@ -37,7 +38,7 @@
   function l(a) {
     return CKEDITOR.tools.array.reduce(
       CKEDITOR.tools.objectKeys(a),
-      function (b, c) {
+      (b, c) => {
         b[c] = CKEDITOR.tools.htmlEncode(a[c]);
         return b;
       },
@@ -110,7 +111,7 @@
       this._listeners.push(
         this.view.element.on(
           "mousedown",
-          function (a) {
+          (a) => {
             a.data.preventDefault();
           },
           null,
@@ -137,7 +138,7 @@
       }
     },
     destroy: function () {
-      CKEDITOR.tools.array.forEach(this._listeners, function (a) {
+      CKEDITOR.tools.array.forEach(this._listeners, (a) => {
         a.removeListener();
       });
       this._listeners = [];
@@ -218,7 +219,8 @@
       this.element.on(
         "click",
         function (a) {
-          (a = a.data.getTarget().getAscendant(this.isItemElement, !0)) && this.fire("click-item", a.data("id"));
+          (a = a.data.getTarget().getAscendant(this.isItemElement, !0)) &&
+            this.fire("click-item", a.data("id"));
         },
         this
       );
@@ -227,9 +229,7 @@
         function (a) {
           a = a.data.getTarget();
           this.element.contains(a) &&
-            (a = a.getAscendant(function (a) {
-              return a.hasAttribute("data-id");
-            }, !0)) &&
+            (a = a.getAscendant((a) => a.hasAttribute("data-id"), !0)) &&
             ((a = a.data("id")), this.fire("change-selectedItemId", a));
         },
         this
@@ -266,14 +266,13 @@
     getItemById: function (a) {
       return this.element.findOne('li[data-id\x3d"' + a + '"]');
     },
-    isItemElement: function (a) {
-      return a.type == CKEDITOR.NODE_ELEMENT && Boolean(a.data("id"));
-    },
+    isItemElement: (a) => a.type == CKEDITOR.NODE_ELEMENT && Boolean(a.data("id")),
     open: function () {
       this.element.addClass("cke_autocomplete_opened");
     },
     selectItem: function (a) {
-      null != this.selectedItemId && this.getItemById(this.selectedItemId).removeClass("cke_autocomplete_selected");
+      null != this.selectedItemId &&
+        this.getItemById(this.selectedItemId).removeClass("cke_autocomplete_selected");
       var b = this.getItemById(a);
       b.addClass("cke_autocomplete_selected");
       this.selectedItemId = a;
@@ -358,14 +357,15 @@
       this.fire("change-isActive", a);
     },
     setQuery: function (a, b) {
-      var c = this,
-        d = CKEDITOR.tools.getNextId();
+      var d = CKEDITOR.tools.getNextId();
       this.lastRequestId = d;
       this.query = a;
       this.range = b;
       this.selectedItemId = this.data = null;
-      this.dataCallback({ query: a, range: b }, function (a) {
-        d == c.lastRequestId && ((c.data = c.itemsLimit ? a.slice(0, c.itemsLimit) : a), c.fire("change-data", c.data));
+      this.dataCallback({ query: a, range: b }, (a) => {
+        d == this.lastRequestId &&
+          ((this.data = this.itemsLimit ? a.slice(0, this.itemsLimit) : a),
+          this.fire("change-data", this.data));
       });
     },
   };

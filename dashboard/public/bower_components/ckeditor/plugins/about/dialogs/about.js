@@ -2,10 +2,13 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-CKEDITOR.dialog.add("about", function (a) {
+CKEDITOR.dialog.add("about", (a) => {
   a = a.lang.about;
   var b = CKEDITOR.getUrl(
-    CKEDITOR.plugins.get("about").path + "dialogs/" + (CKEDITOR.env.hidpi ? "hidpi/" : "") + "logo_ckeditor.png"
+    CKEDITOR.plugins.get("about").path +
+      "dialogs/" +
+      (CKEDITOR.env.hidpi ? "hidpi/" : "") +
+      "logo_ckeditor.png"
   );
   return {
     title: a.dlgTitle,

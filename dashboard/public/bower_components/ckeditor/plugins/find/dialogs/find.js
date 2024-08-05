@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function C(c) {
     return c.type == CKEDITOR.NODE_TEXT && 0 < c.getLength() && (!m || !c.isReadOnly());
   }
@@ -28,14 +28,13 @@
       ["txtFindWordChk", "txtReplaceWordChk"],
       ["txtFindCyclic", "txtReplaceCyclic"],
     ];
-  CKEDITOR.dialog.add("find", function (c) {
+  CKEDITOR.dialog.add("find", (c) => {
     function n(a, b) {
-      var d = this,
-        c = new CKEDITOR.dom.walker(a);
+      var c = new CKEDITOR.dom.walker(a);
       c.guard = b
         ? v
-        : function (a) {
-            !v(a) && (d._.matchBoundary = !0);
+        : (a) => {
+            !v(a) && (this._.matchBoundary = !0);
           };
       c.evaluator = C;
       c.breakOnFalse = 1;
@@ -64,9 +63,7 @@
           attributes: { "data-cke-highlight": 1 },
           fullMatch: 1,
           ignoreReadonly: 1,
-          childRule: function () {
-            return 0;
-          },
+          childRule: () => 0,
         },
         c.config.find_highlight,
         !0
@@ -108,7 +105,11 @@
           var d = this._.walker.textNode;
           if (d) a.setStartAfter(d);
           else return null;
-        } else (d = b[0]), (b = b[b.length - 1]), a.setStart(d.textNode, d.offset), a.setEnd(b.textNode, b.offset + 1);
+        } else
+          (d = b[0]),
+            (b = b[b.length - 1]),
+            a.setStart(d.textNode, d.offset),
+            a.setEnd(b.textNode, b.offset + 1);
         return a;
       },
       updateFromDomRange: function (a) {
@@ -187,14 +188,17 @@
       var d = [-1];
       b && (a = a.toLowerCase());
       for (var c = 0; c < a.length; c++)
-        for (d.push(d[c] + 1); 0 < d[c + 1] && a.charAt(c) != a.charAt(d[c + 1] - 1); ) d[c + 1] = d[d[c + 1] - 1] + 1;
+        for (d.push(d[c] + 1); 0 < d[c + 1] && a.charAt(c) != a.charAt(d[c + 1] - 1); )
+          d[c + 1] = d[d[c + 1] - 1] + 1;
       this._ = { overlap: d, state: 0, ignoreCase: !!b, pattern: a };
     };
     A.prototype = {
       feedCharacter: function (a) {
         for (this._.ignoreCase && (a = a.toLowerCase()); ; ) {
           if (a == this._.pattern.charAt(this._.state))
-            return this._.state++, this._.state == this._.pattern.length ? ((this._.state = 0), 2) : 1;
+            return (
+              this._.state++, this._.state == this._.pattern.length ? ((this._.state = 0), 2) : 1
+            );
           if (this._.state) this._.state = this._.overlap[this._.state];
           else return 0;
         }
@@ -204,7 +208,7 @@
       },
     };
     var D = /[.,"'?!;: \u0085\u00a0\u1680\u280e\u2028\u2029\u202f\u205f\u3000]/,
-      B = function (a) {
+      B = (a) => {
         if (!a) return !0;
         var b = a.charCodeAt(0);
         return (9 <= b && 13 >= b) || (8192 <= b && 8202 >= b) || D.test(a);
@@ -214,7 +218,8 @@
         matchRange: null,
         find: function (a, b, d, e, f, u) {
           this.matchRange
-            ? (this.matchRange.removeHighlight(), (this.matchRange = this.matchRange.getNextCharacterRange(a.length)))
+            ? (this.matchRange.removeHighlight(),
+              (this.matchRange = this.matchRange.getNextCharacterRange(a.length)))
             : (this.matchRange = new t(new n(this.searchRange), a.length));
           for (var h = new A(a, !b), k = 0, l = "%"; null !== l; ) {
             for (this.matchRange.moveNext(); (l = this.matchRange.getEndCharacter()); ) {
@@ -265,7 +270,9 @@
           )
             a &&
               this.matchRange &&
-              (this.matchRange.clearMatched(), this.matchRange.removeHighlight(), (this.matchRange = null)),
+              (this.matchRange.clearMatched(),
+              this.matchRange.removeHighlight(),
+              (this.matchRange = null)),
               (a = this.find(b, e, f, u, !h));
           else {
             this.matchRange.removeHighlight();
@@ -352,7 +359,13 @@
                   children: [
                     { type: "checkbox", id: "txtFindCaseChk", isChanged: !1, label: e.matchCase },
                     { type: "checkbox", id: "txtFindWordChk", isChanged: !1, label: e.matchWord },
-                    { type: "checkbox", id: "txtFindCyclic", isChanged: !1, default: !0, label: e.matchCyclic },
+                    {
+                      type: "checkbox",
+                      id: "txtFindCyclic",
+                      isChanged: !1,
+                      default: !0,
+                      label: e.matchCyclic,
+                    },
                   ],
                 },
               ],
@@ -433,7 +446,8 @@
                       );
                     );
                     f.replaceCounter
-                      ? (alert(e.replaceSuccessMsg.replace(/%1/, f.replaceCounter)), c.fire("saveSnapshot"))
+                      ? (alert(e.replaceSuccessMsg.replace(/%1/, f.replaceCounter)),
+                        c.fire("saveSnapshot"))
                       : alert(e.notFoundMsg);
                   },
                 },
@@ -447,9 +461,25 @@
                   type: "vbox",
                   padding: 0,
                   children: [
-                    { type: "checkbox", id: "txtReplaceCaseChk", isChanged: !1, label: e.matchCase },
-                    { type: "checkbox", id: "txtReplaceWordChk", isChanged: !1, label: e.matchWord },
-                    { type: "checkbox", id: "txtReplaceCyclic", isChanged: !1, default: !0, label: e.matchCyclic },
+                    {
+                      type: "checkbox",
+                      id: "txtReplaceCaseChk",
+                      isChanged: !1,
+                      label: e.matchCase,
+                    },
+                    {
+                      type: "checkbox",
+                      id: "txtReplaceWordChk",
+                      isChanged: !1,
+                      label: e.matchWord,
+                    },
+                    {
+                      type: "checkbox",
+                      id: "txtReplaceCyclic",
+                      isChanged: !1,
+                      default: !0,
+                      label: e.matchCyclic,
+                    },
                   ],
                 },
               ],
@@ -461,34 +491,36 @@
         var a = this,
           b,
           d = 0;
-        this.on("hide", function () {
+        this.on("hide", () => {
           d = 0;
         });
-        this.on("show", function () {
+        this.on("show", () => {
           d = 1;
         });
-        this.selectPage = CKEDITOR.tools.override(this.selectPage, function (c) {
-          return function (e) {
-            c.call(a, e);
-            var f = a._.tabs[e],
-              h;
-            h = "find" === e ? "txtFindWordChk" : "txtReplaceWordChk";
-            b = a.getContentElement(e, "find" === e ? "txtFindFind" : "txtFindReplace");
-            a.getContentElement(e, h);
-            f.initialized || (CKEDITOR.document.getById(b._.inputId), (f.initialized = !0));
-            if (d) {
-              var k;
-              e = "find" === e ? 1 : 0;
-              var f = 1 - e,
-                l,
-                g = q.length;
-              for (l = 0; l < g; l++)
-                (h = this.getContentElement(x[e], q[l][e])),
-                  (k = this.getContentElement(x[f], q[l][f])),
-                  k.setValue(h.getValue());
+        this.selectPage = CKEDITOR.tools.override(
+          this.selectPage,
+          (c) =>
+            function (e) {
+              c.call(a, e);
+              var f = a._.tabs[e],
+                h;
+              h = "find" === e ? "txtFindWordChk" : "txtReplaceWordChk";
+              b = a.getContentElement(e, "find" === e ? "txtFindFind" : "txtFindReplace");
+              a.getContentElement(e, h);
+              f.initialized || (CKEDITOR.document.getById(b._.inputId), (f.initialized = !0));
+              if (d) {
+                var k;
+                e = "find" === e ? 1 : 0;
+                var f = 1 - e,
+                  l,
+                  g = q.length;
+                for (l = 0; l < g; l++)
+                  (h = this.getContentElement(x[e], q[l][e])),
+                    (k = this.getContentElement(x[f], q[l][f])),
+                    k.setValue(h.getValue());
+              }
             }
-          };
-        });
+        );
       },
       onShow: function () {
         f.searchRange = r();
@@ -499,7 +531,7 @@
         c.select();
         this[("find" == a && this._.editor.readOnly ? "hide" : "show") + "Page"]("replace");
       },
-      onHide: function () {
+      onHide: () => {
         var a;
         f.matchRange &&
           f.matchRange.isMatched() &&

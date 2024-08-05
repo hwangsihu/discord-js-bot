@@ -55,6 +55,7 @@ async function softban(issuer, target, reason) {
   const response = await softbanTarget(issuer, target, reason);
   if (typeof response === "boolean") return `${target.user.username} is soft-banned!`;
   if (response === "BOT_PERM") return `I do not have permission to softban ${target.user.username}`;
-  else if (response === "MEMBER_PERM") return `You do not have permission to softban ${target.user.username}`;
+  else if (response === "MEMBER_PERM")
+    return `You do not have permission to softban ${target.user.username}`;
   else return `Failed to softban ${target.user.username}`;
 }

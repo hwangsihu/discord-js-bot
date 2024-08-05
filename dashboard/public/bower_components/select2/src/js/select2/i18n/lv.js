@@ -1,4 +1,4 @@
-define(function () {
+define(() => {
   // Latvian
   function ending(count, eleven, singular, other) {
     if (count === 11) {
@@ -13,7 +13,7 @@ define(function () {
   }
 
   return {
-    inputTooLong: function (args) {
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "Lūdzu ievadiet par  " + overChars;
@@ -22,7 +22,7 @@ define(function () {
 
       return message + " mazāk";
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "Lūdzu ievadiet vēl " + remainingChars;
@@ -31,24 +31,16 @@ define(function () {
 
       return message;
     },
-    loadingMore: function () {
-      return "Datu ielāde…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Datu ielāde…",
+    maximumSelected: (args) => {
       var message = "Jūs varat izvēlēties ne vairāk kā " + args.maximum;
 
       message += " element" + ending(args.maximum, "us", "u", "us");
 
       return message;
     },
-    noResults: function () {
-      return "Sakritību nav";
-    },
-    searching: function () {
-      return "Meklēšana…";
-    },
-    removeAllItems: function () {
-      return "Noņemt visus vienumus";
-    },
+    noResults: () => "Sakritību nav",
+    searching: () => "Meklēšana…",
+    removeAllItems: () => "Noņemt visus vienumus",
   };
 });

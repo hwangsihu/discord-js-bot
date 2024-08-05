@@ -1,4 +1,4 @@
-define(function () {
+define(() => {
   // Lower Sorbian
   var charsWords = ["znamuško", "znamušce", "znamuška", "znamuškow"];
   var itemsWords = ["zapisk", "zapiska", "zapiski", "zapiskow"];
@@ -16,32 +16,28 @@ define(function () {
   };
 
   return {
-    errorLoading: function () {
-      return "Wuslědki njejsu se dali zacytaś.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "Wuslědki njejsu se dali zacytaś.",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       return "Pšosym lašuj " + overChars + " " + pluralWord(overChars, charsWords);
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
-      return "Pšosym zapódaj nanejmjenjej " + remainingChars + " " + pluralWord(remainingChars, charsWords);
+      return (
+        "Pšosym zapódaj nanejmjenjej " +
+        remainingChars +
+        " " +
+        pluralWord(remainingChars, charsWords)
+      );
     },
-    loadingMore: function () {
-      return "Dalšne wuslědki se zacytaju…";
-    },
-    maximumSelected: function (args) {
-      return "Móžoš jano " + args.maximum + " " + pluralWord(args.maximum, itemsWords) + "wubraś.";
-    },
-    noResults: function () {
-      return "Žedne wuslědki namakane";
-    },
-    searching: function () {
-      return "Pyta se…";
-    },
-    removeAllItems: function () {
+    loadingMore: () => "Dalšne wuslědki se zacytaju…",
+    maximumSelected: (args) =>
+      "Móžoš jano " + args.maximum + " " + pluralWord(args.maximum, itemsWords) + "wubraś.",
+    noResults: () => "Žedne wuslědki namakane",
+    searching: () => "Pyta se…",
+    removeAllItems: () => {
       // To DO : in Lower Sorbian.
       return "Remove all items";
     },

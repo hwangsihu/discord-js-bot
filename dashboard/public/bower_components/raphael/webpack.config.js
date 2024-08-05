@@ -1,12 +1,15 @@
-"use strict";
-
 const webpack = require("webpack");
 const fs = require("fs");
 
 const args = process.argv;
 
-let plugins = [new webpack.BannerPlugin(fs.readFileSync("./dev/banner.txt", "utf8"), { raw: true, entryOnly: true })];
-let externals = [];
+const plugins = [
+  new webpack.BannerPlugin(fs.readFileSync("./dev/banner.txt", "utf8"), {
+    raw: true,
+    entryOnly: true,
+  }),
+];
+const externals = [];
 let filename = "raphael";
 
 if (args.indexOf("--no-deps") !== -1) {

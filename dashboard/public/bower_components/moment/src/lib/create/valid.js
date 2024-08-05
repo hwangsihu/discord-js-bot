@@ -6,9 +6,7 @@ import { createUTC } from "./utc";
 export function isValid(m) {
   if (m._isValid == null) {
     var flags = getParsingFlags(m);
-    var parsedParts = some.call(flags.parsedDateParts, function (i) {
-      return i != null;
-    });
+    var parsedParts = some.call(flags.parsedDateParts, (i) => i != null);
     var isNowValid =
       !isNaN(m._d.getTime()) &&
       flags.overflow < 0 &&
@@ -23,7 +21,10 @@ export function isValid(m) {
 
     if (m._strict) {
       isNowValid =
-        isNowValid && flags.charsLeftOver === 0 && flags.unusedTokens.length === 0 && flags.bigHour === undefined;
+        isNowValid &&
+        flags.charsLeftOver === 0 &&
+        flags.unusedTokens.length === 0 &&
+        flags.bigHour === undefined;
     }
 
     if (Object.isFrozen == null || !Object.isFrozen(m)) {
@@ -36,7 +37,7 @@ export function isValid(m) {
 }
 
 export function createInvalid(flags) {
-  var m = createUTC(NaN);
+  var m = createUTC(Number.NaN);
   if (flags != null) {
     extend(getParsingFlags(m), flags);
   } else {

@@ -3,7 +3,7 @@ module("Options - Deprecated - initSelection");
 var $ = require("jquery");
 var Options = require("select2/options");
 
-test("converted into dataAdapter.current", function (assert) {
+test("converted into dataAdapter.current", (assert) => {
   assert.expect(5);
 
   var $test = $("<select></select>");
@@ -11,7 +11,7 @@ test("converted into dataAdapter.current", function (assert) {
 
   var options = new Options(
     {
-      initSelection: function ($element, callback) {
+      initSelection: ($element, callback) => {
         called = true;
 
         callback([
@@ -30,7 +30,7 @@ test("converted into dataAdapter.current", function (assert) {
   var DataAdapter = options.get("dataAdapter");
   var data = new DataAdapter($test, options);
 
-  data.current(function (data) {
+  data.current((data) => {
     assert.equal(data.length, 1, "There should have only been one object selected");
 
     var item = data[0];
@@ -43,7 +43,7 @@ test("converted into dataAdapter.current", function (assert) {
   assert.ok(called, "initSelection should have been called");
 });
 
-test("single option converted to array automatically", function (assert) {
+test("single option converted to array automatically", (assert) => {
   assert.expect(2);
 
   var $test = $("<select></select>");
@@ -51,7 +51,7 @@ test("single option converted to array automatically", function (assert) {
 
   var options = new Options(
     {
-      initSelection: function ($element, callback) {
+      initSelection: ($element, callback) => {
         called = true;
 
         callback({
@@ -66,14 +66,14 @@ test("single option converted to array automatically", function (assert) {
   var DataAdapter = options.get("dataAdapter");
   var data = new DataAdapter($test, options);
 
-  data.current(function (data) {
+  data.current((data) => {
     assert.ok($.isArray(data), "The data should have been converted to an array");
   });
 
   assert.ok(called, "initSelection should have been called");
 });
 
-test("only called once", function (assert) {
+test("only called once", (assert) => {
   assert.expect(8);
 
   var $test = $('<select><option value="3" selected>4</option></select>');
@@ -81,7 +81,7 @@ test("only called once", function (assert) {
 
   var options = new Options(
     {
-      initSelection: function ($element, callback) {
+      initSelection: ($element, callback) => {
         called++;
 
         callback([
@@ -98,7 +98,7 @@ test("only called once", function (assert) {
   var DataAdapter = options.get("dataAdapter");
   var data = new DataAdapter($test, options);
 
-  data.current(function (data) {
+  data.current((data) => {
     assert.equal(data.length, 1, "There should have only been a single option");
 
     var item = data[0];
@@ -110,7 +110,7 @@ test("only called once", function (assert) {
 
   assert.equal(called, 1, "initSelection should have been called");
 
-  data.current(function (data) {
+  data.current((data) => {
     assert.equal(data.length, 1, "There should have only been a single option");
 
     var item = data[0];
@@ -125,7 +125,7 @@ test("only called once", function (assert) {
 
 module("Options - Deprecated - query");
 
-test("converted into dataAdapter.query automatically", function (assert) {
+test("converted into dataAdapter.query automatically", (assert) => {
   assert.expect(6);
 
   var $test = $("<select></select>");
@@ -133,7 +133,7 @@ test("converted into dataAdapter.query automatically", function (assert) {
 
   var options = new Options(
     {
-      query: function (params) {
+      query: (params) => {
         called = true;
 
         params.callback({
@@ -158,7 +158,7 @@ test("converted into dataAdapter.query automatically", function (assert) {
     {
       term: "term",
     },
-    function (data) {
+    (data) => {
       assert.ok("results" in data, "It should have included the results key");
 
       assert.equal(data.results.length, 1, "There should have only been a single result returned");
@@ -176,7 +176,7 @@ test("converted into dataAdapter.query automatically", function (assert) {
 
 module("Options - deprecated - data-ajax-url");
 
-test("converted ajax-url to ajax--url automatically", function (assert) {
+test("converted ajax-url to ajax--url automatically", (assert) => {
   var $test = $('<select data-ajax-url="test://url"></select>');
   var options = new Options({}, $test);
 
@@ -188,10 +188,14 @@ test("converted ajax-url to ajax--url automatically", function (assert) {
   );
 });
 
-test("converted select2-tags to data/tags automatically", function (assert) {
+test("converted select2-tags to data/tags automatically", (assert) => {
   var $test = $('<select data-select2-tags="original data"></select>');
   var options = new Options({}, $test);
 
   assert.ok(options.get("tags"), "The `tags` key is automatically set to true");
-  assert.equal(options.get("data"), "original data", "The `data` key is created with the original data");
+  assert.equal(
+    options.get("data"),
+    "original data",
+    "The `data` key is created with the original data"
+  );
 });

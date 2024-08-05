@@ -5,7 +5,7 @@
  * Licensed under the MIT license.
  *
  */
-(function ($) {
+(($) => {
   var apiParams = {
     set: {
       colors: 1,

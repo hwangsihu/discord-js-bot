@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(r) {
       if (n[r]) return n[r].exports;
       var o = (n[r] = { i: r, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = n),
-      (t.d = function (e, n, r) {
+      (t.d = (e, n, r) => {
         t.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: r });
       }),
-      (t.n = function (e) {
-        var n =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var n = e && e.__esModule ? () => e.default : () => e;
         return t.d(n, "a", n), n;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 139))
     );
   })({
-    0: function (t, n) {
+    0: (t, n) => {
       t.exports = e;
     },
-    1: function (e, n) {
+    1: (e, n) => {
       e.exports = t;
     },
-    139: function (e, t, n) {
+    139: (e, t, n) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), n(140);
       var r = n(1);
       r.datepickerLocale("he", "he", {
@@ -66,7 +57,20 @@
           "נובמבר",
           "דצמבר",
         ],
-        monthNamesShort: ["ינו", "פבר", "מרץ", "אפר", "מאי", "יוני", "יולי", "אוג", "ספט", "אוק", "נוב", "דצמ"],
+        monthNamesShort: [
+          "ינו",
+          "פבר",
+          "מרץ",
+          "אפר",
+          "מאי",
+          "יוני",
+          "יולי",
+          "אוג",
+          "ספט",
+          "אוק",
+          "נוב",
+          "דצמ",
+        ],
         dayNames: ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"],
         dayNamesShort: ["א'", "ב'", "ג'", "ד'", "ה'", "ו'", "שבת"],
         dayNamesMin: ["א'", "ב'", "ג'", "ד'", "ה'", "ו'", "שבת"],
@@ -85,12 +89,14 @@
           weekNumberTitle: "שבוע",
         });
     },
-    140: function (e, t, n) {
-      !(function (e, t) {
+    140: (e, t, n) => {
+      !((e, t) => {
         t(n(0));
-      })(0, function (e) {
-        return e.defineLocale("he", {
-          months: "ינואר_פברואר_מרץ_אפריל_מאי_יוני_יולי_אוגוסט_ספטמבר_אוקטובר_נובמבר_דצמבר".split("_"),
+      })(0, (e) =>
+        e.defineLocale("he", {
+          months: "ינואר_פברואר_מרץ_אפריל_מאי_יוני_יולי_אוגוסט_ספטמבר_אוקטובר_נובמבר_דצמבר".split(
+            "_"
+          ),
           monthsShort: "ינו׳_פבר׳_מרץ_אפר׳_מאי_יוני_יולי_אוג׳_ספט׳_אוק׳_נוב׳_דצמ׳".split("_"),
           weekdays: "ראשון_שני_שלישי_רביעי_חמישי_שישי_שבת".split("_"),
           weekdaysShort: "א׳_ב׳_ג׳_ד׳_ה׳_ו׳_ש׳".split("_"),
@@ -123,28 +129,18 @@
             m: "דקה",
             mm: "%d דקות",
             h: "שעה",
-            hh: function (e) {
-              return 2 === e ? "שעתיים" : e + " שעות";
-            },
+            hh: (e) => (2 === e ? "שעתיים" : e + " שעות"),
             d: "יום",
-            dd: function (e) {
-              return 2 === e ? "יומיים" : e + " ימים";
-            },
+            dd: (e) => (2 === e ? "יומיים" : e + " ימים"),
             M: "חודש",
-            MM: function (e) {
-              return 2 === e ? "חודשיים" : e + " חודשים";
-            },
+            MM: (e) => (2 === e ? "חודשיים" : e + " חודשים"),
             y: "שנה",
-            yy: function (e) {
-              return 2 === e ? "שנתיים" : e % 10 == 0 && 10 !== e ? e + " שנה" : e + " שנים";
-            },
+            yy: (e) => (2 === e ? "שנתיים" : e % 10 == 0 && 10 !== e ? e + " שנה" : e + " שנים"),
           },
           meridiemParse: /אחה"צ|לפנה"צ|אחרי הצהריים|לפני הצהריים|לפנות בוקר|בבוקר|בערב/i,
-          isPM: function (e) {
-            return /^(אחה"צ|אחרי הצהריים|בערב)$/.test(e);
-          },
-          meridiem: function (e, t, n) {
-            return e < 5
+          isPM: (e) => /^(אחה"צ|אחרי הצהריים|בערב)$/.test(e),
+          meridiem: (e, t, n) =>
+            e < 5
               ? "לפנות בוקר"
               : e < 10
                 ? "בבוקר"
@@ -156,10 +152,9 @@
                     ? n
                       ? 'אחה"צ'
                       : "אחרי הצהריים"
-                    : "בערב";
-          },
-        });
-      });
+                    : "בערב",
+        })
+      );
     },
-  });
-});
+  })
+);

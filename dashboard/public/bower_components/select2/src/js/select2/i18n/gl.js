@@ -1,10 +1,8 @@
-define(function () {
+define(() => {
   // Galician
   return {
-    errorLoading: function () {
-      return "Non foi posíbel cargar os resultados.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "Non foi posíbel cargar os resultados.",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       if (overChars === 1) {
@@ -12,7 +10,7 @@ define(function () {
       }
       return "Elimine " + overChars + " caracteres";
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       if (remainingChars === 1) {
@@ -20,23 +18,15 @@ define(function () {
       }
       return "Engada " + remainingChars + " caracteres";
     },
-    loadingMore: function () {
-      return "Cargando máis resultados…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Cargando máis resultados…",
+    maximumSelected: (args) => {
       if (args.maximum === 1) {
         return "Só pode seleccionar un elemento";
       }
       return "Só pode seleccionar " + args.maximum + " elementos";
     },
-    noResults: function () {
-      return "Non se atoparon resultados";
-    },
-    searching: function () {
-      return "Buscando…";
-    },
-    removeAllItems: function () {
-      return "Elimina todos os elementos";
-    },
+    noResults: () => "Non se atoparon resultados",
+    searching: () => "Buscando…",
+    removeAllItems: () => "Elimina todos os elementos",
   };
 });

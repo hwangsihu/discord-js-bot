@@ -6,9 +6,7 @@ define([
   "../var/isFunction",
 
   "../core/init",
-], function (jQuery, stripAndCollapse, support, nodeName, isFunction) {
-  "use strict";
-
+], (jQuery, stripAndCollapse, support, nodeName, isFunction) => {
   var rreturn = /\r/g;
 
   jQuery.fn.extend({
@@ -61,9 +59,7 @@ define([
         } else if (typeof val === "number") {
           val += "";
         } else if (Array.isArray(val)) {
-          val = jQuery.map(val, function (value) {
-            return value == null ? "" : value + "";
-          });
+          val = jQuery.map(val, (value) => (value == null ? "" : value + ""));
         }
 
         hooks = jQuery.valHooks[this.type] || jQuery.valHooks[this.nodeName.toLowerCase()];
@@ -79,7 +75,7 @@ define([
   jQuery.extend({
     valHooks: {
       option: {
-        get: function (elem) {
+        get: (elem) => {
           var val = jQuery.find.attr(elem, "value");
           return val != null
             ? val
@@ -91,7 +87,7 @@ define([
         },
       },
       select: {
-        get: function (elem) {
+        get: (elem) => {
           var value,
             option,
             i,
@@ -135,7 +131,7 @@ define([
           return values;
         },
 
-        set: function (elem, value) {
+        set: (elem, value) => {
           var optionSet,
             option,
             options = elem.options,
@@ -147,7 +143,9 @@ define([
 
             /* eslint-disable no-cond-assign */
 
-            if ((option.selected = jQuery.inArray(jQuery.valHooks.option.get(option), values) > -1)) {
+            if (
+              (option.selected = jQuery.inArray(jQuery.valHooks.option.get(option), values) > -1)
+            ) {
               optionSet = true;
             }
 
@@ -167,16 +165,15 @@ define([
   // Radios and checkboxes getter/setter
   jQuery.each(["radio", "checkbox"], function () {
     jQuery.valHooks[this] = {
-      set: function (elem, value) {
+      set: (elem, value) => {
         if (Array.isArray(value)) {
           return (elem.checked = jQuery.inArray(jQuery(elem).val(), value) > -1);
         }
       },
     };
     if (!support.checkOn) {
-      jQuery.valHooks[this].get = function (elem) {
-        return elem.getAttribute("value") === null ? "on" : elem.value;
-      };
+      jQuery.valHooks[this].get = (elem) =>
+        elem.getAttribute("value") === null ? "on" : elem.value;
     }
   });
 });

@@ -6,7 +6,12 @@ VCanvas_canvas = createClass(VCanvas_base, {
       target = target[0];
     }
     $.data(target, "_jqs_vcanvas", this);
-    $(this.canvas).css({ display: "inline-block", width: width, height: height, verticalAlign: "top" });
+    $(this.canvas).css({
+      display: "inline-block",
+      width: width,
+      height: height,
+      verticalAlign: "top",
+    });
     this._insert(this.canvas, target);
     this._calculatePixelDims(width, height, this.canvas);
     this.canvas.width = this.pixelWidth;
@@ -53,7 +58,11 @@ VCanvas_canvas = createClass(VCanvas_base, {
     if (fillColor !== undefined) {
       context.fill();
     }
-    if (this.targetX !== undefined && this.targetY !== undefined && context.isPointInPath(this.targetX, this.targetY)) {
+    if (
+      this.targetX !== undefined &&
+      this.targetY !== undefined &&
+      context.isPointInPath(this.targetX, this.targetY)
+    ) {
       this.currentTargetShapeId = shapeid;
     }
   },
@@ -62,7 +71,11 @@ VCanvas_canvas = createClass(VCanvas_base, {
     var context = this._getContext(lineColor, fillColor, lineWidth);
     context.beginPath();
     context.arc(x, y, radius, 0, 2 * Math.PI, false);
-    if (this.targetX !== undefined && this.targetY !== undefined && context.isPointInPath(this.targetX, this.targetY)) {
+    if (
+      this.targetX !== undefined &&
+      this.targetY !== undefined &&
+      context.isPointInPath(this.targetX, this.targetY)
+    ) {
       this.currentTargetShapeId = shapeid;
     }
     if (lineColor !== undefined) {
@@ -86,7 +99,11 @@ VCanvas_canvas = createClass(VCanvas_base, {
     if (fillColor) {
       context.fill();
     }
-    if (this.targetX !== undefined && this.targetY !== undefined && context.isPointInPath(this.targetX, this.targetY)) {
+    if (
+      this.targetX !== undefined &&
+      this.targetY !== undefined &&
+      context.isPointInPath(this.targetX, this.targetY)
+    ) {
       this.currentTargetShapeId = shapeid;
     }
   },

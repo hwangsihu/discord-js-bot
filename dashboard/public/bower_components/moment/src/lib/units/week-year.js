@@ -1,7 +1,15 @@
 import { createUTCDate } from "../create/date-from-array";
-import { createLocal } from "../create/local";
 import { addFormatToken } from "../format/format";
-import { addRegexToken, match1to2, match1to4, match1to6, match2, match4, match6, matchSigned } from "../parse/regex";
+import {
+  addRegexToken,
+  match1to2,
+  match1to4,
+  match1to6,
+  match2,
+  match4,
+  match6,
+  matchSigned,
+} from "../parse/regex";
 import { addWeekParseToken } from "../parse/token";
 import { hooks } from "../utils/hooks";
 import toInt from "../utils/to-int";
@@ -49,11 +57,11 @@ addRegexToken("gggg", match1to4, match4);
 addRegexToken("GGGGG", match1to6, match6);
 addRegexToken("ggggg", match1to6, match6);
 
-addWeekParseToken(["gggg", "ggggg", "GGGG", "GGGGG"], function (input, week, config, token) {
+addWeekParseToken(["gggg", "ggggg", "GGGG", "GGGGG"], (input, week, config, token) => {
   week[token.substr(0, 2)] = toInt(input);
 });
 
-addWeekParseToken(["gg", "GG"], function (input, week, config, token) {
+addWeekParseToken(["gg", "GG"], (input, week, config, token) => {
   week[token] = hooks.parseTwoDigitYear(input);
 });
 

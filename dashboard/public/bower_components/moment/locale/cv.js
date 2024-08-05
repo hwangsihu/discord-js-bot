@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var cv = moment.defineLocale("cv", {
     months: "кӑрлач_нарӑс_пуш_ака_май_ҫӗртме_утӑ_ҫурла_авӑн_юпа_чӳк_раштав".split("_"),
     monthsShort: "кӑр_нар_пуш_ака_май_ҫӗр_утӑ_ҫур_авн_юпа_чӳк_раш".split("_"),
@@ -32,7 +30,7 @@
       sameElse: "L",
     },
     relativeTime: {
-      future: function (output) {
+      future: (output) => {
         var affix = /сехет$/i.exec(output) ? "рен" : /ҫул$/i.exec(output) ? "тан" : "ран";
         return output + affix;
       },

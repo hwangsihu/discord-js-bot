@@ -5,9 +5,13 @@
 import moment from "../moment";
 
 var monthsNominative =
-    "styczeń_luty_marzec_kwiecień_maj_czerwiec_lipiec_sierpień_wrzesień_październik_listopad_grudzień".split("_"),
+    "styczeń_luty_marzec_kwiecień_maj_czerwiec_lipiec_sierpień_wrzesień_październik_listopad_grudzień".split(
+      "_"
+    ),
   monthsSubjective =
-    "stycznia_lutego_marca_kwietnia_maja_czerwca_lipca_sierpnia_września_października_listopada_grudnia".split("_");
+    "stycznia_lutego_marca_kwietnia_maja_czerwca_lipca_sierpnia_września_października_listopada_grudnia".split(
+      "_"
+    );
 function plural(n) {
   return n % 10 < 5 && n % 10 > 1 && ~~(n / 10) % 10 !== 1;
 }
@@ -32,14 +36,20 @@ function translate(number, withoutSuffix, key) {
 }
 
 export default moment.defineLocale("pl", {
-  months: function (momentToFormat, format) {
+  months: (momentToFormat, format) => {
     if (!momentToFormat) {
       return monthsNominative;
     } else if (format === "") {
       // Hack: if format empty we know this is used to generate
       // RegExp by moment. Give then back both valid forms of months
       // in RegExp ready format.
-      return "(" + monthsSubjective[momentToFormat.month()] + "|" + monthsNominative[momentToFormat.month()] + ")";
+      return (
+        "(" +
+        monthsSubjective[momentToFormat.month()] +
+        "|" +
+        monthsNominative[momentToFormat.month()] +
+        ")"
+      );
     } else if (/D MMMM/.test(format)) {
       return monthsSubjective[momentToFormat.month()];
     } else {

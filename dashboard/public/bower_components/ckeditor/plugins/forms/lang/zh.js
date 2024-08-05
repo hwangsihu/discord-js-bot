@@ -1,5 +1,12 @@
 ﻿CKEDITOR.plugins.setLang("forms", "zh", {
-  button: { title: "按鈕內容", text: "顯示文字 (值)", type: "類型", typeBtn: "按鈕", typeSbm: "送出", typeRst: "重設" },
+  button: {
+    title: "按鈕內容",
+    text: "顯示文字 (值)",
+    type: "類型",
+    typeBtn: "按鈕",
+    typeSbm: "送出",
+    typeRst: "重設",
+  },
   checkboxAndRadio: {
     checkboxTitle: "核取方塊內容",
     radioTitle: "選項按鈕內容",

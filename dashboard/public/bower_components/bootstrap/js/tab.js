@@ -6,9 +6,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
-+(function ($) {
-  "use strict";
-
++(($) => {
   // TAB CLASS DEFINITION
   // ====================
 
@@ -50,7 +48,7 @@
     var $target = $(document).find(selector);
 
     this.activate($this.closest("li"), $ul);
-    this.activate($target, $target.parent(), function () {
+    this.activate($target, $target.parent(), () => {
       $previous.trigger({
         type: "hidden.bs.tab",
         relatedTarget: $this[0],
@@ -62,7 +60,7 @@
     });
   };
 
-  Tab.prototype.activate = function (element, container, callback) {
+  Tab.prototype.activate = (element, container, callback) => {
     var $active = container.find("> .active");
     var transition =
       callback &&
@@ -88,7 +86,12 @@
       }
 
       if (element.parent(".dropdown-menu").length) {
-        element.closest("li.dropdown").addClass("active").end().find('[data-toggle="tab"]').attr("aria-expanded", true);
+        element
+          .closest("li.dropdown")
+          .addClass("active")
+          .end()
+          .find('[data-toggle="tab"]')
+          .attr("aria-expanded", true);
       }
 
       callback && callback();

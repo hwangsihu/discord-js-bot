@@ -75,7 +75,8 @@ async function timeout(issuer, target, ms, reason) {
   const response = await timeoutTarget(issuer, target, ms, reason);
   if (typeof response === "boolean") return `${target.user.username} is timed out!`;
   if (response === "BOT_PERM") return `I do not have permission to timeout ${target.user.username}`;
-  else if (response === "MEMBER_PERM") return `You do not have permission to timeout ${target.user.username}`;
+  else if (response === "MEMBER_PERM")
+    return `You do not have permission to timeout ${target.user.username}`;
   else if (response === "ALREADY_TIMEOUT") return `${target.user.username} is already timed out!`;
   else return `Failed to timeout ${target.user.username}`;
 }

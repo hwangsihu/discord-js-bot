@@ -29,7 +29,7 @@ jquery.flot.stack.js plugin, possibly some code could be shared.
 
 */
 
-(function ($) {
+(($) => {
   var options = {
     series: {
       fillBetween: null, // or number
@@ -173,7 +173,9 @@ jquery.flot.stack.js plugin, possibly some code could be shared.
             // this can give us a better y
 
             if (withlines && j > 0 && otherpoints[j - otherps] != null) {
-              bottom = qy + ((otherpoints[j - otherps + 1] - qy) * (px - qx)) / (otherpoints[j - otherps] - qx);
+              bottom =
+                qy +
+                ((otherpoints[j - otherps + 1] - qy) * (px - qx)) / (otherpoints[j - otherps] - qx);
             }
 
             //newpoints[l + 1] += bottom;

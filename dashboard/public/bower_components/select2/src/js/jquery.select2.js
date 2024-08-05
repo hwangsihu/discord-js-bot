@@ -5,7 +5,7 @@ define([
   "./select2/core",
   "./select2/defaults",
   "./select2/utils",
-], function ($, _, Select2, Defaults, Utils) {
+], ($, _, Select2, Defaults, Utils) => {
   if ($.fn.select2 == null) {
     // All methods that should return the element
     var thisMethods = ["open", "close", "destroy"];
@@ -30,7 +30,10 @@ define([
 
           if (instance == null && window.console && console.error) {
             console.error(
-              "The select2('" + options + "') method was called on an " + "element that is not using Select2."
+              "The select2('" +
+                options +
+                "') method was called on an " +
+                "element that is not using Select2."
             );
           }
 

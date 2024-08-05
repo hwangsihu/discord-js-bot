@@ -1,8 +1,6 @@
-define(["../ajax"], function (jQuery) {
-  "use strict";
-
-  jQuery._evalUrl = function (url) {
-    return jQuery.ajax({
+define(["../ajax"], (jQuery) => {
+  jQuery._evalUrl = (url) =>
+    jQuery.ajax({
       url: url,
 
       // Make this explicit, since user can override this through ajaxSetup (#11264)
@@ -13,7 +11,6 @@ define(["../ajax"], function (jQuery) {
       global: false,
       throws: true,
     });
-  };
 
   return jQuery._evalUrl;
 });

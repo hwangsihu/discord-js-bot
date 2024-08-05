@@ -5,26 +5,22 @@
 CKEDITOR.skin.name = "moono";
 CKEDITOR.skin.ua_editor = "ie,iequirks,ie7,ie8,gecko";
 CKEDITOR.skin.ua_dialog = "ie,iequirks,ie7,ie8";
-CKEDITOR.skin.chameleon = (function () {
-  var b = (function () {
-      return function (b, e) {
-        for (var a = b.match(/[^#]./g), c = 0; 3 > c; c++) {
-          var f = c,
-            d;
-          d = parseInt(a[c], 16);
-          d = ("0" + (0 > e ? 0 | (d * (1 + e)) : 0 | (d + (255 - d) * e)).toString(16)).slice(-2);
-          a[f] = d;
-        }
-        return "#" + a.join("");
-      };
+CKEDITOR.skin.chameleon = (() => {
+  var b = (() => (b, e) => {
+      for (var a = b.match(/[^#]./g), c = 0; 3 > c; c++) {
+        var f = c,
+          d;
+        d = Number.parseInt(a[c], 16);
+        d = ("0" + (0 > e ? 0 | (d * (1 + e)) : 0 | (d + (255 - d) * e)).toString(16)).slice(-2);
+        a[f] = d;
+      }
+      return "#" + a.join("");
     })(),
-    c = (function () {
+    c = (() => {
       var b = new CKEDITOR.template(
         "background:#{to};background-image:linear-gradient(to bottom,{from},{to});filter:progid:DXImageTransform.Microsoft.gradient(gradientType\x3d0,startColorstr\x3d'{from}',endColorstr\x3d'{to}');"
       );
-      return function (c, a) {
-        return b.output({ from: c, to: a });
-      };
+      return (c, a) => b.output({ from: c, to: a });
     })(),
     f = {
       editor: new CKEDITOR.template(
@@ -34,7 +30,7 @@ CKEDITOR.skin.chameleon = (function () {
         ".cke_panel_grouptitle [{lightGradient}border-color:{defaultBorder};] .cke_menubutton_icon [background-color:{menubuttonIcon};] .cke_menubutton:hover .cke_menubutton_icon, .cke_menubutton:focus .cke_menubutton_icon, .cke_menubutton:active .cke_menubutton_icon [background-color:{menubuttonIconHover};] .cke_menuseparator [background-color:{menubuttonIcon};] a:hover.cke_colorbox, a:focus.cke_colorbox, a:active.cke_colorbox [border-color:{defaultBorder};] a:hover.cke_colorauto, a:hover.cke_colormore, a:focus.cke_colorauto, a:focus.cke_colormore, a:active.cke_colorauto, a:active.cke_colormore [background-color:{ckeColorauto};border-color:{defaultBorder};] "
       ),
     };
-  return function (g, e) {
+  return (g, e) => {
     var a = g.uiColor,
       a = {
         id: "." + g.id,

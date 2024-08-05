@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   CKEDITOR.plugins.add("embedsemantic", {
     icons: "embedsemantic",
     hidpi: !0,
@@ -10,7 +10,7 @@
     onLoad: function () {
       this.registerOembedTag();
     },
-    init: function (a) {
+    init: (a) => {
       var b = CKEDITOR.plugins.embedBase.createWidgetBaseDefinition(a),
         d = b.init;
       CKEDITOR.tools.extend(
@@ -22,7 +22,8 @@
           requiredContent: "oembed",
           styleableElements: "oembed",
           providerUrl: new CKEDITOR.template(
-            a.config.embed_provider || "//ckeditor.iframe.ly/api/oembed?url\x3d{url}\x26callback\x3d{callback}"
+            a.config.embed_provider ||
+              "//ckeditor.iframe.ly/api/oembed?url\x3d{url}\x26callback\x3d{callback}"
           ),
           init: function () {
             var e = this;
@@ -30,14 +31,14 @@
             this.once("ready", function () {
               this.data.loadOnReady &&
                 this.loadContent(this.data.url, {
-                  callback: function () {
+                  callback: () => {
                     e.setData("loadOnReady", !1);
                     a.fire("updateSnapshot");
                   },
                 });
             });
           },
-          upcast: function (a, b) {
+          upcast: (a, b) => {
             if ("oembed" == a.name) {
               var c = a.children[0];
               if (c && c.type == CKEDITOR.NODE_TEXT && c.value)
@@ -62,7 +63,7 @@
       );
       a.widgets.add("embedSemantic", b);
     },
-    registerOembedTag: function () {
+    registerOembedTag: () => {
       var a = CKEDITOR.dtd,
         b;
       a.oembed = { "#": 1 };

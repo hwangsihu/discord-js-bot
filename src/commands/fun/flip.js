@@ -107,14 +107,18 @@ module.exports = {
 };
 
 const firstEmbed = (user) =>
-  new EmbedBuilder().setColor(EMBED_COLORS.TRANSPARENT).setDescription(`${user.username}, started a coin toss`);
+  new EmbedBuilder()
+    .setColor(EMBED_COLORS.TRANSPARENT)
+    .setDescription(`${user.username}, started a coin toss`);
 
 const secondEmbed = () => new EmbedBuilder().setDescription("The coin is in the air");
 
 const resultEmbed = (toss) =>
   new EmbedBuilder()
     .setDescription(`>> **${toss} Wins** <<`)
-    .setImage(toss === "HEAD" ? "https://i.imgur.com/HavOS7J.png" : "https://i.imgur.com/u1pmQMV.png");
+    .setImage(
+      toss === "HEAD" ? "https://i.imgur.com/HavOS7J.png" : "https://i.imgur.com/u1pmQMV.png"
+    );
 
 async function flipText(text) {
   let builder = "";

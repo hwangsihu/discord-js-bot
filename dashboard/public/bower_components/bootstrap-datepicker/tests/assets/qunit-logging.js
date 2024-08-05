@@ -1,28 +1,36 @@
 // Dummy logging calls (ie, if tests are run in IE)
 window.console = window.console || {};
-window.console.log = window.console.log || function () {};
-window.console.debug = window.console.debug || function () {};
-window.console.info = window.console.info || function () {};
-window.console.warn = window.console.warn || function () {};
-window.console.error = window.console.error || function () {};
+window.console.log = window.console.log || (() => {});
+window.console.debug = window.console.debug || (() => {});
+window.console.info = window.console.info || (() => {});
+window.console.warn = window.console.warn || (() => {});
+window.console.error = window.console.error || (() => {});
 
-(function () {
+(() => {
   var modName, testName;
 
   //arg: { name }
-  QUnit.testStart = function (t) {
+  QUnit.testStart = (t) => {
     modName = t.module;
     testName = t.name;
   };
 
   //arg: { name, failed, passed, total }
-  QUnit.testDone = function (t) {
+  QUnit.testDone = (t) => {
     if (t.failed)
-      console.log('Test "' + t.module + ": " + t.name + '" completed: ' + (0 === t.failed ? "pass" : "FAIL") + "\n");
+      console.log(
+        'Test "' +
+          t.module +
+          ": " +
+          t.name +
+          '" completed: ' +
+          (0 === t.failed ? "pass" : "FAIL") +
+          "\n"
+      );
   };
 
   //{ result, actual, expected, message }
-  QUnit.log = function (t) {
+  QUnit.log = (t) => {
     if (!t.result)
       console.log(
         'Test "' +

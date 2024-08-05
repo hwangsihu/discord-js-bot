@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var months = [
     "Eanáir",
     "Feabhra",
@@ -24,9 +22,30 @@
     "Nollaig",
   ];
 
-  var monthsShort = ["Eaná", "Feab", "Márt", "Aibr", "Beal", "Méit", "Iúil", "Lúna", "Meán", "Deai", "Samh", "Noll"];
+  var monthsShort = [
+    "Eaná",
+    "Feab",
+    "Márt",
+    "Aibr",
+    "Beal",
+    "Méit",
+    "Iúil",
+    "Lúna",
+    "Meán",
+    "Deai",
+    "Samh",
+    "Noll",
+  ];
 
-  var weekdays = ["Dé Domhnaigh", "Dé Luain", "Dé Máirt", "Dé Céadaoin", "Déardaoin", "Dé hAoine", "Dé Satharn"];
+  var weekdays = [
+    "Dé Domhnaigh",
+    "Dé Luain",
+    "Dé Máirt",
+    "Dé Céadaoin",
+    "Déardaoin",
+    "Dé hAoine",
+    "Dé Satharn",
+  ];
 
   var weekdaysShort = ["Dom", "Lua", "Mái", "Céa", "Déa", "hAo", "Sat"];
 
@@ -72,7 +91,7 @@
       yy: "%d bliain",
     },
     dayOfMonthOrdinalParse: /\d{1,2}(d|na|mh)/,
-    ordinal: function (number) {
+    ordinal: (number) => {
       var output = number === 1 ? "d" : number % 10 === 2 ? "na" : "mh";
       return number + output;
     },

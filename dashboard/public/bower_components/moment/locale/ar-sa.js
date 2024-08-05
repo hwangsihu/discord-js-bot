@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var symbolMap = {
       1: "١",
       2: "٢",
@@ -36,7 +34,9 @@
 
   var arSa = moment.defineLocale("ar-sa", {
     months: "يناير_فبراير_مارس_أبريل_مايو_يونيو_يوليو_أغسطس_سبتمبر_أكتوبر_نوفمبر_ديسمبر".split("_"),
-    monthsShort: "يناير_فبراير_مارس_أبريل_مايو_يونيو_يوليو_أغسطس_سبتمبر_أكتوبر_نوفمبر_ديسمبر".split("_"),
+    monthsShort: "يناير_فبراير_مارس_أبريل_مايو_يونيو_يوليو_أغسطس_سبتمبر_أكتوبر_نوفمبر_ديسمبر".split(
+      "_"
+    ),
     weekdays: "الأحد_الإثنين_الثلاثاء_الأربعاء_الخميس_الجمعة_السبت".split("_"),
     weekdaysShort: "أحد_إثنين_ثلاثاء_أربعاء_خميس_جمعة_سبت".split("_"),
     weekdaysMin: "ح_ن_ث_ر_خ_ج_س".split("_"),
@@ -50,10 +50,8 @@
       LLLL: "dddd D MMMM YYYY HH:mm",
     },
     meridiemParse: /ص|م/,
-    isPM: function (input) {
-      return "م" === input;
-    },
-    meridiem: function (hour, minute, isLower) {
+    isPM: (input) => "م" === input,
+    meridiem: (hour, minute, isLower) => {
       if (hour < 12) {
         return "ص";
       } else {
@@ -84,20 +82,9 @@
       y: "سنة",
       yy: "%d سنوات",
     },
-    preparse: function (string) {
-      return string
-        .replace(/[١٢٣٤٥٦٧٨٩٠]/g, function (match) {
-          return numberMap[match];
-        })
-        .replace(/،/g, ",");
-    },
-    postformat: function (string) {
-      return string
-        .replace(/\d/g, function (match) {
-          return symbolMap[match];
-        })
-        .replace(/,/g, "،");
-    },
+    preparse: (string) =>
+      string.replace(/[١٢٣٤٥٦٧٨٩٠]/g, (match) => numberMap[match]).replace(/،/g, ","),
+    postformat: (string) => string.replace(/\d/g, (match) => symbolMap[match]).replace(/,/g, "،"),
     week: {
       dow: 0, // Sunday is the first day of the week.
       doy: 6, // The week that contains Jan 6th is the first week of the year.

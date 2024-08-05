@@ -44,7 +44,7 @@ export default moment.defineLocale("ml", {
     yy: "%d വർഷം",
   },
   meridiemParse: /രാത്രി|രാവിലെ|ഉച്ച കഴിഞ്ഞ്|വൈകുന്നേരം|രാത്രി/i,
-  meridiemHour: function (hour, meridiem) {
+  meridiemHour: (hour, meridiem) => {
     if (hour === 12) {
       hour = 0;
     }
@@ -54,7 +54,7 @@ export default moment.defineLocale("ml", {
       return hour;
     }
   },
-  meridiem: function (hour, minute, isLower) {
+  meridiem: (hour, minute, isLower) => {
     if (hour < 4) {
       return "രാത്രി";
     } else if (hour < 12) {

@@ -20,10 +20,8 @@ export default moment.defineLocale("lo", {
     LLLL: "ວັນdddd D MMMM YYYY HH:mm",
   },
   meridiemParse: /ຕອນເຊົ້າ|ຕອນແລງ/,
-  isPM: function (input) {
-    return input === "ຕອນແລງ";
-  },
-  meridiem: function (hour, minute, isLower) {
+  isPM: (input) => input === "ຕອນແລງ",
+  meridiem: (hour, minute, isLower) => {
     if (hour < 12) {
       return "ຕອນເຊົ້າ";
     } else {
@@ -55,7 +53,5 @@ export default moment.defineLocale("lo", {
     yy: "%d ປີ",
   },
   dayOfMonthOrdinalParse: /(ທີ່)\d{1,2}/,
-  ordinal: function (number) {
-    return "ທີ່" + number;
-  },
+  ordinal: (number) => "ທີ່" + number,
 });

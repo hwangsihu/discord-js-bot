@@ -2,13 +2,13 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   var h,
     k = {
       modes: { wysiwyg: 1, source: 1 },
       canUndo: !1,
       readOnly: 1,
-      exec: function (a) {
+      exec: (a) => {
         var g,
           b = a.config,
           f = b.baseHref ? '\x3cbase href\x3d"' + b.baseHref + '"/\x3e' : "";
@@ -55,10 +55,13 @@
           ((window._cke_htmlToLoad = a.dataValue),
           (e =
             "javascript:void( (function(){document.open();" +
-            ("(" + CKEDITOR.tools.fixDomain + ")();").replace(/\/\/.*?\n/g, "").replace(/parent\./g, "window.opener.") +
+            ("(" + CKEDITOR.tools.fixDomain + ")();")
+              .replace(/\/\/.*?\n/g, "")
+              .replace(/parent\./g, "window.opener.") +
             "document.write( window.opener._cke_htmlToLoad );document.close();window.opener._cke_htmlToLoad \x3d null;})() )"),
           (c = ""));
-        CKEDITOR.env.gecko && ((window._cke_htmlToLoad = a.dataValue), (c = CKEDITOR.getUrl(h + "preview.html")));
+        CKEDITOR.env.gecko &&
+          ((window._cke_htmlToLoad = a.dataValue), (c = CKEDITOR.getUrl(h + "preview.html")));
         c = window.open(
           c,
           null,
@@ -70,7 +73,9 @@
             d
         );
         CKEDITOR.env.ie && c && (c.location = e);
-        CKEDITOR.env.ie || CKEDITOR.env.gecko || ((e = c.document), e.open(), e.write(a.dataValue), e.close());
+        CKEDITOR.env.ie ||
+          CKEDITOR.env.gecko ||
+          ((e = c.document), e.open(), e.write(a.dataValue), e.close());
         return !0;
       },
     };
@@ -83,7 +88,11 @@
         ((h = this.path),
         a.addCommand("preview", k),
         a.ui.addButton &&
-          a.ui.addButton("Preview", { label: a.lang.preview.preview, command: "preview", toolbar: "document,40" }));
+          a.ui.addButton("Preview", {
+            label: a.lang.preview.preview,
+            command: "preview",
+            toolbar: "document,40",
+          }));
     },
   });
 })();

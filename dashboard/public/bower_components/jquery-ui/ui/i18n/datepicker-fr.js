@@ -2,7 +2,7 @@
 /* Written by Keith Wood (kbwood{at}iinet.com.au),
 			  Stéphane Nahmani (sholby@sholby.net),
 			  Stéphane Raimbault <stephane.raimbault@gmail.com> */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -10,7 +10,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["fr"] = {
     closeText: "Fermer",
     prevText: "Précédent",

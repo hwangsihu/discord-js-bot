@@ -1,15 +1,16 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
-  var months = "január_február_marec_apríl_máj_jún_júl_august_september_október_november_december".split("_"),
+})(this, (moment) => {
+  var months =
+      "január_február_marec_apríl_máj_jún_júl_august_september_október_november_december".split(
+        "_"
+      ),
     monthsShort = "jan_feb_mar_apr_máj_jún_júl_aug_sep_okt_nov_dec".split("_");
   function plural(n) {
     return n > 1 && n < 5;

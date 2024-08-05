@@ -1,4 +1,4 @@
-!(function (e, n) {
+!((e, n) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = n(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? n(require("moment"), require("fullcalendar"))
         : n(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, n) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, n) =>
+  ((e) => {
     function n(r) {
       if (t[r]) return t[r].exports;
       var o = (t[r] = { i: r, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (n.m = e),
       (n.c = t),
-      (n.d = function (e, t, r) {
+      (n.d = (e, t, r) => {
         n.o(e, t) || Object.defineProperty(e, t, { configurable: !1, enumerable: !0, get: r });
       }),
-      (n.n = function (e) {
-        var t =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (n.n = (e) => {
+        var t = e && e.__esModule ? () => e.default : () => e;
         return n.d(t, "a", t), t;
       }),
-      (n.o = function (e, n) {
-        return Object.prototype.hasOwnProperty.call(e, n);
-      }),
+      (n.o = (e, n) => Object.prototype.hasOwnProperty.call(e, n)),
       (n.p = ""),
       n((n.s = 161))
     );
   })({
-    0: function (n, t) {
+    0: (n, t) => {
       n.exports = e;
     },
-    1: function (e, t) {
+    1: (e, t) => {
       e.exports = n;
     },
-    161: function (e, n, t) {
+    161: (e, n, t) => {
       Object.defineProperty(n, "__esModule", { value: !0 }), t(162);
       var r = t(1);
       r.datepickerLocale("lb", "lb", {
@@ -66,8 +57,29 @@
           "November",
           "Dezember",
         ],
-        monthNamesShort: ["Jan", "Feb", "Mäe", "Abr", "Mee", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
-        dayNames: ["Sonndeg", "Méindeg", "Dënschdeg", "Mëttwoch", "Donneschdeg", "Freideg", "Samschdeg"],
+        monthNamesShort: [
+          "Jan",
+          "Feb",
+          "Mäe",
+          "Abr",
+          "Mee",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Okt",
+          "Nov",
+          "Dez",
+        ],
+        dayNames: [
+          "Sonndeg",
+          "Méindeg",
+          "Dënschdeg",
+          "Mëttwoch",
+          "Donneschdeg",
+          "Freideg",
+          "Samschdeg",
+        ],
         dayNamesShort: ["Son", "Méi", "Dën", "Mët", "Don", "Fre", "Sam"],
         dayNamesMin: ["So", "Mé", "Dë", "Më", "Do", "Fr", "Sa"],
         weekHeader: "W",
@@ -84,10 +96,10 @@
           noEventsMessage: "Nee Evenementer ze affichéieren",
         });
     },
-    162: function (e, n, t) {
-      !(function (e, n) {
+    162: (e, n, t) => {
+      !((e, n) => {
         n(t(0));
-      })(0, function (e) {
+      })(0, (e) => {
         function n(e, n, t, r) {
           var o = {
             m: ["eng Minutt", "enger Minutt"],
@@ -105,7 +117,7 @@
           return o(e.substr(0, e.indexOf(" "))) ? "viru " + e : "virun " + e;
         }
         function o(e) {
-          if (((e = parseInt(e, 10)), isNaN(e))) return !1;
+          if (((e = Number.parseInt(e, 10)), isNaN(e))) return !1;
           if (e < 0) return !0;
           if (e < 10) return 4 <= e && e <= 7;
           if (e < 100) {
@@ -114,13 +126,16 @@
             return o(0 === n ? t : n);
           }
           if (e < 1e4) {
-            for (; e >= 10; ) e /= 10;
+            while (e >= 10) e /= 10;
             return o(e);
           }
           return (e /= 1e3), o(e);
         }
         return e.defineLocale("lb", {
-          months: "Januar_Februar_Mäerz_Abrëll_Mee_Juni_Juli_August_September_Oktober_November_Dezember".split("_"),
+          months:
+            "Januar_Februar_Mäerz_Abrëll_Mee_Juni_Juli_August_September_Oktober_November_Dezember".split(
+              "_"
+            ),
           monthsShort: "Jan._Febr._Mrz._Abr._Mee_Jun._Jul._Aug._Sept._Okt._Nov._Dez.".split("_"),
           monthsParseExact: !0,
           weekdays: "Sonndeg_Méindeg_Dënschdeg_Mëttwoch_Donneschdeg_Freideg_Samschdeg".split("_"),
@@ -173,5 +188,5 @@
         });
       });
     },
-  });
-});
+  })
+);

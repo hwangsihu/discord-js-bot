@@ -3,9 +3,17 @@
  * Artis Avotins <artis@apit.lv>
  */
 
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["lv"] = {
-    days: ["Svētdiena", "Pirmdiena", "Otrdiena", "Trešdiena", "Ceturtdiena", "Piektdiena", "Sestdiena"],
+    days: [
+      "Svētdiena",
+      "Pirmdiena",
+      "Otrdiena",
+      "Trešdiena",
+      "Ceturtdiena",
+      "Piektdiena",
+      "Sestdiena",
+    ],
     daysShort: ["Sv", "P", "O", "T", "C", "Pk", "S"],
     daysMin: ["Sv", "Pr", "Ot", "Tr", "Ce", "Pk", "Se"],
     months: [
@@ -22,7 +30,20 @@
       "Novembris",
       "Decembris",
     ],
-    monthsShort: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jūn", "Jūl", "Aug", "Sep", "Okt", "Nov", "Dec"],
+    monthsShort: [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Mai",
+      "Jūn",
+      "Jūl",
+      "Aug",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Dec",
+    ],
     monthsTitle: "Mēneši",
     today: "Šodien",
     clear: "Nodzēst",

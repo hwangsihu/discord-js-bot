@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(r) {
       if (n[r]) return n[r].exports;
       var o = (n[r] = { i: r, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = n),
-      (t.d = function (e, n, r) {
+      (t.d = (e, n, r) => {
         t.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: r });
       }),
-      (t.n = function (e) {
-        var n =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var n = e && e.__esModule ? () => e.default : () => e;
         return t.d(n, "a", n), n;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 215))
     );
   })({
-    0: function (t, n) {
+    0: (t, n) => {
       t.exports = e;
     },
-    1: function (e, n) {
+    1: (e, n) => {
       e.exports = t;
     },
-    215: function (e, t, n) {
+    215: (e, t, n) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), n(216);
       var r = n(1);
       r.datepickerLocale("zh-tw", "zh-TW", {
@@ -97,11 +88,11 @@
           noEventsMessage: "没有任何活動",
         });
     },
-    216: function (e, t, n) {
-      !(function (e, t) {
+    216: (e, t, n) => {
+      !((e, t) => {
         t(n(0));
-      })(0, function (e) {
-        return e.defineLocale("zh-tw", {
+      })(0, (e) =>
+        e.defineLocale("zh-tw", {
           months: "一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月".split("_"),
           monthsShort: "1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月".split("_"),
           weekdays: "星期日_星期一_星期二_星期三_星期四_星期五_星期六".split("_"),
@@ -120,21 +111,19 @@
             llll: "YYYY年M月D日dddd HH:mm",
           },
           meridiemParse: /凌晨|早上|上午|中午|下午|晚上/,
-          meridiemHour: function (e, t) {
-            return (
-              12 === e && (e = 0),
-              "凌晨" === t || "早上" === t || "上午" === t
-                ? e
-                : "中午" === t
-                  ? e >= 11
-                    ? e
-                    : e + 12
-                  : "下午" === t || "晚上" === t
-                    ? e + 12
-                    : void 0
-            );
-          },
-          meridiem: function (e, t, n) {
+          meridiemHour: (e, t) => (
+            12 === e && (e = 0),
+            "凌晨" === t || "早上" === t || "上午" === t
+              ? e
+              : "中午" === t
+                ? e >= 11
+                  ? e
+                  : e + 12
+                : "下午" === t || "晚上" === t
+                  ? e + 12
+                  : void 0
+          ),
+          meridiem: (e, t, n) => {
             var r = 100 * e + t;
             return r < 600
               ? "凌晨"
@@ -157,7 +146,7 @@
             sameElse: "L",
           },
           dayOfMonthOrdinalParse: /\d{1,2}(日|月|週)/,
-          ordinal: function (e, t) {
+          ordinal: (e, t) => {
             switch (t) {
               case "d":
               case "D":
@@ -188,8 +177,8 @@
             y: "1 年",
             yy: "%d 年",
           },
-        });
-      });
+        })
+      );
     },
-  });
-});
+  })
+);

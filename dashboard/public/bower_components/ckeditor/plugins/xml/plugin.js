@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   CKEDITOR.plugins.add("xml", {});
   CKEDITOR.xml = function (c) {
     var a = null;
@@ -33,7 +33,8 @@
         d = [];
       if (a || (a = b)) {
         if ("selectNodes" in a) return a.selectNodes(c);
-        if (b.evaluate && (b = b.evaluate(c, a, null, 5, null))) for (var e; (e = b.iterateNext()); ) d.push(e);
+        if (b.evaluate && (b = b.evaluate(c, a, null, 5, null)))
+          for (var e; (e = b.iterateNext()); ) d.push(e);
       }
       return d;
     },
@@ -42,7 +43,9 @@
         d = [];
       if (b)
         for (b = b.firstChild; b; )
-          b.xml ? d.push(b.xml) : window.XMLSerializer && d.push(new XMLSerializer().serializeToString(b)),
+          b.xml
+            ? d.push(b.xml)
+            : window.XMLSerializer && d.push(new XMLSerializer().serializeToString(b)),
             (b = b.nextSibling);
       return d.length ? d.join("") : null;
     },

@@ -56,7 +56,7 @@ function makeFormatFunction(format) {
     }
   }
 
-  return function (mom) {
+  return (mom) => {
     var output = "",
       i;
     for (i = 0; i < length; i++) {

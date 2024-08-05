@@ -4,7 +4,11 @@ const { GuildChannel, ChannelType } = require("discord.js");
  * Check if bot has permission to send embeds
  */
 GuildChannel.prototype.canSendEmbeds = function () {
-  return this.permissionsFor(this.guild.members.me).has(["ViewChannel", "SendMessages", "EmbedLinks"]);
+  return this.permissionsFor(this.guild.members.me).has([
+    "ViewChannel",
+    "SendMessages",
+    "EmbedLinks",
+  ]);
 };
 
 /**

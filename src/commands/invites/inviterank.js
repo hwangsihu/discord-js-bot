@@ -69,7 +69,8 @@ module.exports = {
       const query = args[1];
       const invites = args[2];
 
-      if (isNaN(invites)) return message.safeReply(`\`${invites}\` is not a valid number of invites?`);
+      if (isNaN(invites))
+        return message.safeReply(`\`${invites}\` is not a valid number of invites?`);
       const role = message.guild.findMatchingRoles(query)[0];
       if (!role) return message.safeReply(`No roles found matching \`${query}\``);
 

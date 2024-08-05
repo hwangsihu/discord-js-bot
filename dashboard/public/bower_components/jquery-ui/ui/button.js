@@ -8,7 +8,7 @@
  *
  * http://api.jqueryui.com/button/
  */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["jquery", "./core", "./widget"], factory);
@@ -16,18 +16,18 @@
     // Browser globals
     factory(jQuery);
   }
-})(function ($) {
+})(($) => {
   var lastActive,
     baseClasses = "ui-button ui-widget ui-state-default ui-corner-all",
     typeClasses =
       "ui-button-icons-only ui-button-icon-only ui-button-text-icons ui-button-text-icon-primary ui-button-text-icon-secondary ui-button-text-only",
     formResetHandler = function () {
       var form = $(this);
-      setTimeout(function () {
+      setTimeout(() => {
         form.find(":ui-button").button("refresh");
       }, 1);
     },
-    radioGroup = function (radio) {
+    radioGroup = (radio) => {
       var name = radio.name,
         form = radio.form,
         radios = $([]);
@@ -74,10 +74,11 @@
       var that = this,
         options = this.options,
         toggleButton = this.type === "checkbox" || this.type === "radio",
-        activeClass = !toggleButton ? "ui-state-active" : "";
+        activeClass = toggleButton ? "" : "ui-state-active";
 
       if (options.label === null) {
-        options.label = this.type === "input" ? this.buttonElement.val() : this.buttonElement.html();
+        options.label =
+          this.type === "input" ? this.buttonElement.val() : this.buttonElement.html();
       }
 
       this._hoverable(this.buttonElement);
@@ -99,7 +100,7 @@
           }
           $(this).removeClass(activeClass);
         })
-        .bind("click" + this.eventNamespace, function (event) {
+        .bind("click" + this.eventNamespace, (event) => {
           if (options.disabled) {
             event.preventDefault();
             event.stopImmediatePropagation();
@@ -118,13 +119,13 @@
       });
 
       if (toggleButton) {
-        this.element.bind("change" + this.eventNamespace, function () {
+        this.element.bind("change" + this.eventNamespace, () => {
           that.refresh();
         });
       }
 
       if (this.type === "checkbox") {
-        this.buttonElement.bind("click" + this.eventNamespace, function () {
+        this.buttonElement.bind("click" + this.eventNamespace, () => {
           if (options.disabled) {
             return false;
           }
@@ -154,7 +155,7 @@
             }
             $(this).addClass("ui-state-active");
             lastActive = this;
-            that.document.one("mouseup", function () {
+            that.document.one("mouseup", () => {
               lastActive = null;
             });
           })
@@ -309,15 +310,22 @@
 
       if (icons.primary || icons.secondary) {
         if (this.options.text) {
-          buttonClasses.push("ui-button-text-icon" + (multipleIcons ? "s" : icons.primary ? "-primary" : "-secondary"));
+          buttonClasses.push(
+            "ui-button-text-icon" +
+              (multipleIcons ? "s" : icons.primary ? "-primary" : "-secondary")
+          );
         }
 
         if (icons.primary) {
-          buttonElement.prepend("<span class='ui-button-icon-primary ui-icon " + icons.primary + "'></span>");
+          buttonElement.prepend(
+            "<span class='ui-button-icon-primary ui-icon " + icons.primary + "'></span>"
+          );
         }
 
         if (icons.secondary) {
-          buttonElement.append("<span class='ui-button-icon-secondary ui-icon " + icons.secondary + "'></span>");
+          buttonElement.append(
+            "<span class='ui-button-icon-secondary ui-icon " + icons.secondary + "'></span>"
+          );
         }
 
         if (!this.options.text) {

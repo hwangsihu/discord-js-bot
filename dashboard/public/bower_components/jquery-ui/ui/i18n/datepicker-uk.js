@@ -1,7 +1,7 @@
 /* Ukrainian (UTF-8) initialisation for the jQuery UI date picker plugin. */
 /* Written by Maxim Drogobitskiy (maxdao@gmail.com). */
 /* Corrected by Igor Milla (igor.fsp.milla@gmail.com). */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -9,7 +9,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["uk"] = {
     closeText: "Закрити",
     prevText: "&#x3C;",
@@ -29,7 +29,20 @@
       "Листопад",
       "Грудень",
     ],
-    monthNamesShort: ["Січ", "Лют", "Бер", "Кві", "Тра", "Чер", "Лип", "Сер", "Вер", "Жов", "Лис", "Гру"],
+    monthNamesShort: [
+      "Січ",
+      "Лют",
+      "Бер",
+      "Кві",
+      "Тра",
+      "Чер",
+      "Лип",
+      "Сер",
+      "Вер",
+      "Жов",
+      "Лис",
+      "Гру",
+    ],
     dayNames: ["неділя", "понеділок", "вівторок", "середа", "четвер", "п’ятниця", "субота"],
     dayNamesShort: ["нед", "пнд", "вів", "срд", "чтв", "птн", "сбт"],
     dayNamesMin: ["Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],

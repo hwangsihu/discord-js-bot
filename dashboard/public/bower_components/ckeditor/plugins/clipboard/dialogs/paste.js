@@ -2,19 +2,19 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-CKEDITOR.dialog.add("paste", function (c) {
+CKEDITOR.dialog.add("paste", (c) => {
   function k(a) {
     var b = new CKEDITOR.dom.document(a.document),
       g = b.getBody(),
       d = b.getById("cke_actscrpt");
     d && d.remove();
     g.setAttribute("contenteditable", !0);
-    g.on(e.mainPasteEvent, function (a) {
+    g.on(e.mainPasteEvent, (a) => {
       a = e.initPasteDataTransfer(a);
       f ? a != f && (f = e.initPasteDataTransfer()) : (f = a);
     });
     if (CKEDITOR.env.ie && 8 > CKEDITOR.env.version)
-      b.getWindow().on("blur", function () {
+      b.getWindow().on("blur", () => {
         b.$.selection.empty();
       });
     b.on(
@@ -43,7 +43,7 @@ CKEDITOR.dialog.add("paste", function (c) {
     f;
   c.on(
     "pasteDialogCommit",
-    function (a) {
+    (a) => {
       a.data &&
         c.fire("paste", {
           type: "auto",
@@ -81,7 +81,8 @@ CKEDITOR.dialog.add("paste", function (c) {
           {
             type: "html",
             id: "pasteMsg",
-            html: '\x3cdiv style\x3d"white-space:normal;width:340px"\x3e' + h.pasteMsg + "\x3c/div\x3e",
+            html:
+              '\x3cdiv style\x3d"white-space:normal;width:340px"\x3e' + h.pasteMsg + "\x3c/div\x3e",
           },
           {
             type: "html",
@@ -107,7 +108,9 @@ CKEDITOR.dialog.add("paste", function (c) {
                   ? "javascript:void(0)"
                   : CKEDITOR.env.ie && !CKEDITOR.env.edge
                     ? "javascript:void((function(){" +
-                      encodeURIComponent("document.open();(" + CKEDITOR.tools.fixDomain + ")();document.close();") +
+                      encodeURIComponent(
+                        "document.open();(" + CKEDITOR.tools.fixDomain + ")();document.close();"
+                      ) +
                       '})())"'
                     : "",
                 d = CKEDITOR.dom.element.createFromHtml(
@@ -139,8 +142,8 @@ CKEDITOR.dialog.add("paste", function (c) {
                 var e = CKEDITOR.dom.element.createFromHtml(
                   '\x3cspan tabindex\x3d"-1" style\x3d"position:absolute" role\x3d"presentation"\x3e\x3c/span\x3e'
                 );
-                e.on("focus", function () {
-                  setTimeout(function () {
+                e.on("focus", () => {
+                  setTimeout(() => {
                     d.$.contentWindow.focus();
                   });
                 });
@@ -150,10 +153,9 @@ CKEDITOR.dialog.add("paste", function (c) {
                   this.fire("focus");
                 };
               }
-              this.getInputElement = function () {
-                return d;
-              };
-              CKEDITOR.env.ie && (a.setStyle("display", "block"), a.setStyle("height", d.$.offsetHeight + 2 + "px"));
+              this.getInputElement = () => d;
+              CKEDITOR.env.ie &&
+                (a.setStyle("display", "block"), a.setStyle("height", d.$.offsetHeight + 2 + "px"));
             },
             commit: function () {
               var a = this.getDialog().getParentEditor(),
@@ -162,7 +164,10 @@ CKEDITOR.dialog.add("paste", function (c) {
               c && c.remove();
               b = b.getHtml();
               this.getDialog()._.committed = !0;
-              a.fire("pasteDialogCommit", { dataValue: b, dataTransfer: f || e.initPasteDataTransfer() });
+              a.fire("pasteDialogCommit", {
+                dataValue: b,
+                dataTransfer: f || e.initPasteDataTransfer(),
+              });
             },
           },
         ],

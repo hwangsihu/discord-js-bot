@@ -1,6 +1,6 @@
 /* Lithuanian (UTF-8) initialisation for the jQuery UI date picker plugin. */
 /* @author Arturas Paleicikas <arturas@avalon.lt> */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["lt"] = {
     closeText: "Uždaryti",
     prevText: "&#x3C;Atgal",
@@ -28,7 +28,20 @@
       "Lapkritis",
       "Gruodis",
     ],
-    monthNamesShort: ["Sau", "Vas", "Kov", "Bal", "Geg", "Bir", "Lie", "Rugp", "Rugs", "Spa", "Lap", "Gru"],
+    monthNamesShort: [
+      "Sau",
+      "Vas",
+      "Kov",
+      "Bal",
+      "Geg",
+      "Bir",
+      "Lie",
+      "Rugp",
+      "Rugs",
+      "Spa",
+      "Lap",
+      "Gru",
+    ],
     dayNames: [
       "sekmadienis",
       "pirmadienis",

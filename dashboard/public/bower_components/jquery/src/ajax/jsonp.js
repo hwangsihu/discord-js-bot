@@ -1,11 +1,9 @@
-define(["../core", "../var/isFunction", "./var/nonce", "./var/rquery", "../ajax"], function (
+define(["../core", "../var/isFunction", "./var/nonce", "./var/rquery", "../ajax"], (
   jQuery,
   isFunction,
   nonce,
   rquery
-) {
-  "use strict";
-
+) => {
   var oldCallbacks = [],
     rjsonp = /(=)\?(?=&|$)|\?\?/;
 
@@ -20,7 +18,7 @@ define(["../core", "../var/isFunction", "./var/nonce", "./var/rquery", "../ajax"
   });
 
   // Detect, normalize options and install callbacks for jsonp requests
-  jQuery.ajaxPrefilter("json jsonp", function (s, originalSettings, jqXHR) {
+  jQuery.ajaxPrefilter("json jsonp", (s, originalSettings, jqXhr) => {
     var callbackName,
       overwritten,
       responseContainer,
@@ -36,7 +34,9 @@ define(["../core", "../var/isFunction", "./var/nonce", "./var/rquery", "../ajax"
     // Handle iff the expected data type is "jsonp" or we have a parameter to set
     if (jsonProp || s.dataTypes[0] === "jsonp") {
       // Get callback name, remembering preexisting value associated with it
-      callbackName = s.jsonpCallback = isFunction(s.jsonpCallback) ? s.jsonpCallback() : s.jsonpCallback;
+      callbackName = s.jsonpCallback = isFunction(s.jsonpCallback)
+        ? s.jsonpCallback()
+        : s.jsonpCallback;
 
       // Insert callback into url or form data
       if (jsonProp) {
@@ -46,7 +46,7 @@ define(["../core", "../var/isFunction", "./var/nonce", "./var/rquery", "../ajax"
       }
 
       // Use data converter to retrieve json after script execution
-      s.converters["script json"] = function () {
+      s.converters["script json"] = () => {
         if (!responseContainer) {
           jQuery.error(callbackName + " was not called");
         }
@@ -58,12 +58,12 @@ define(["../core", "../var/isFunction", "./var/nonce", "./var/rquery", "../ajax"
 
       // Install callback
       overwritten = window[callbackName];
-      window[callbackName] = function () {
+      window[callbackName] = () => {
         responseContainer = arguments;
       };
 
       // Clean-up function (fires after converters)
-      jqXHR.always(function () {
+      jqXhr.always(() => {
         // If previous value didn't exist - remove it
         if (overwritten === undefined) {
           jQuery(window).removeProp(callbackName);

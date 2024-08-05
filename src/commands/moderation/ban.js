@@ -60,6 +60,7 @@ async function ban(issuer, target, reason) {
   const response = await banTarget(issuer, target, reason);
   if (typeof response === "boolean") return `${target.username} is banned!`;
   if (response === "BOT_PERM") return `I do not have permission to ban ${target.username}`;
-  else if (response === "MEMBER_PERM") return `You do not have permission to ban ${target.username}`;
+  else if (response === "MEMBER_PERM")
+    return `You do not have permission to ban ${target.username}`;
   else return `Failed to ban ${target.username}`;
 }

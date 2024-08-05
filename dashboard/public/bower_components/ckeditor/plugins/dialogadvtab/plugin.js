@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function f(c) {
     var a = this.att;
     c = (c && c.hasAttribute(a) && c.getAttribute(a)) || "";
@@ -23,7 +23,7 @@
   var k = { id: 1, dir: 1, classes: 1, styles: 1 };
   CKEDITOR.plugins.add("dialogadvtab", {
     requires: "dialog",
-    allowedContent: function (c) {
+    allowedContent: (c) => {
       c || (c = k);
       var a = [];
       c.id && a.push("id");
@@ -34,7 +34,7 @@
       c.styles && (b += "{*}");
       return b;
     },
-    createAdvancedTab: function (c, a, b) {
+    createAdvancedTab: (c, a, b) => {
       a || (a = k);
       var d = c.lang.common,
         h = {
@@ -72,7 +72,11 @@
               setup: f,
               commit: g,
             }),
-          h.elements[0].children.push({ type: "hbox", widths: ["50%", "50%"], children: [].concat(e) });
+          h.elements[0].children.push({
+            type: "hbox",
+            widths: ["50%", "50%"],
+            children: [].concat(e),
+          });
       if (a.styles || a.classes)
         (e = []),
           a.styles &&
@@ -84,9 +88,11 @@
               label: d.styles,
               default: "",
               validate: CKEDITOR.dialog.validate.inlineStyle(d.invalidInlineStyle),
-              onChange: function () {},
+              onChange: () => {},
               getStyle: function (a, c) {
-                var b = this.getValue().match(new RegExp("(?:^|;)\\s*" + a + "\\s*:\\s*([^;]*)", "i"));
+                var b = this.getValue().match(
+                  new RegExp("(?:^|;)\\s*" + a + "\\s*:\\s*([^;]*)", "i")
+                );
                 return b ? b[1] : c;
               },
               updateStyle: function (a, b) {
@@ -117,7 +123,11 @@
                 },
               ],
             }),
-          h.elements[0].children.push({ type: "hbox", widths: ["50%", "50%"], children: [].concat(e) });
+          h.elements[0].children.push({
+            type: "hbox",
+            widths: ["50%", "50%"],
+            children: [].concat(e),
+          });
       return h;
     },
   });

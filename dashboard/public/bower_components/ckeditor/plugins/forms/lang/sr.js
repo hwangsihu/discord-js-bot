@@ -14,7 +14,13 @@
     selected: "Означено",
     required: "Required",
   },
-  form: { title: "Особине форме", menu: "Особине форме", action: "Aкција", method: "Mетода", encoding: "Encoding" },
+  form: {
+    title: "Особине форме",
+    menu: "Особине форме",
+    action: "Aкција",
+    method: "Mетода",
+    encoding: "Encoding",
+  },
   hidden: { title: "Особине скривеног поља", name: "Назив", value: "Вредност" },
   select: {
     title: "Особине изборног поља",

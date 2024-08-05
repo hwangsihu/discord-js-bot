@@ -5,10 +5,8 @@ define([
   "./var/getStyles",
   "./support",
   "../selector", // Get jQuery.contains
-], function (jQuery, rboxStyle, rnumnonpx, getStyles, support) {
-  "use strict";
-
-  function curCSS(elem, name, computed) {
+], (jQuery, rboxStyle, rnumnonpx, getStyles, support) => {
+  function curCss(elem, name, computed) {
     var width,
       minWidth,
       maxWidth,
@@ -60,5 +58,5 @@ define([
       : ret;
   }
 
-  return curCSS;
+  return curCss;
 });

@@ -6,18 +6,12 @@
  *         or add [data-widget="todo-list"] to the ul element
  *         Pass any option as data-option="value"
  */
-+(function ($) {
-  "use strict";
-
++(($) => {
   var DataKey = "lte.todolist";
 
   var Default = {
-    onCheck: function (item) {
-      return item;
-    },
-    onUnCheck: function (item) {
-      return item;
-    },
+    onCheck: (item) => item,
+    onUnCheck: (item) => item,
   };
 
   var Selector = {
@@ -99,7 +93,7 @@
 
   // TodoList Data API
   // =================
-  $(window).on("load", function () {
+  $(window).on("load", () => {
     $(Selector.data).each(function () {
       Plugin.call($(this));
     });

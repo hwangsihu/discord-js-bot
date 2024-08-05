@@ -11,7 +11,7 @@ var CustomDropdown = Utils.Decorate(Dropdown, StopPropagation);
 
 var options = new Options();
 
-test("click event does not propagate", function (assert) {
+test("click event does not propagate", (assert) => {
   assert.expect(1);
 
   var $container = $("#qunit-fixture .event-container");
@@ -23,7 +23,7 @@ test("click event does not propagate", function (assert) {
   dropdown.bind(container, $container);
 
   $container.append($dropdown);
-  $container.on("click", function () {
+  $container.on("click", () => {
     assert.ok(false, "The click event should have been stopped");
   });
 

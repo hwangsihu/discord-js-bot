@@ -8,7 +8,7 @@ Version: 0.0.0
 Regex extensions on the jquery.inputmask base
 Allows for using regular expressions as a mask
 */
-(function ($) {
+(($) => {
   $.extend($.inputmask.defaults.aliases, {
     // $(selector).inputmask("Regex", { regex: "[0-9]*"}
     Regex: {
@@ -23,7 +23,7 @@ Allows for using regular expressions as a mask
       quantifierFilter: /[0-9]+[^,]/,
       definitions: {
         r: {
-          validator: function (chrs, buffer, pos, strict, opts) {
+          validator: (chrs, buffer, pos, strict, opts) => {
             function regexToken() {
               this.matches = [];
               this.isGroup = false;
@@ -51,7 +51,8 @@ Allows for using regular expressions as a mask
                     }
                     break;
                   case "(": // Group opening
-                    if (!currentToken.isGroup && currentToken.matches.length > 0) opts.regexTokens.push(currentToken);
+                    if (!currentToken.isGroup && currentToken.matches.length > 0)
+                      opts.regexTokens.push(currentToken);
                     currentToken = new regexToken();
                     currentToken.isGroup = true;
                     opengroups.push(currentToken);

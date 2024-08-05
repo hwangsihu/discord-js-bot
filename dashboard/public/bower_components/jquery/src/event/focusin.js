@@ -5,9 +5,7 @@ define([
 
   "../event",
   "./trigger",
-], function (jQuery, dataPriv, support) {
-  "use strict";
-
+], (jQuery, dataPriv, support) => {
   // Support: Firefox <=44
   // Firefox doesn't have focus(in | out) events
   // Related ticket - https://bugzilla.mozilla.org/show_bug.cgi?id=687787
@@ -17,9 +15,9 @@ define([
   // which is spec violation - http://www.w3.org/TR/DOM-Level-3-Events/#events-focusevent-event-order
   // Related ticket - https://bugs.chromium.org/p/chromium/issues/detail?id=449857
   if (!support.focusin) {
-    jQuery.each({ focus: "focusin", blur: "focusout" }, function (orig, fix) {
+    jQuery.each({ focus: "focusin", blur: "focusout" }, (orig, fix) => {
       // Attach a single capturing handler on the document while someone wants focusin/focusout
-      var handler = function (event) {
+      var handler = (event) => {
         jQuery.event.simulate(fix, event.target, jQuery.event.fix(event));
       };
 
@@ -37,11 +35,11 @@ define([
           var doc = this.ownerDocument || this,
             attaches = dataPriv.access(doc, fix) - 1;
 
-          if (!attaches) {
+          if (attaches) {
+            dataPriv.access(doc, fix, attaches);
+          } else {
             doc.removeEventListener(orig, handler, true);
             dataPriv.remove(doc, fix);
-          } else {
-            dataPriv.access(doc, fix, attaches);
           }
         },
       };

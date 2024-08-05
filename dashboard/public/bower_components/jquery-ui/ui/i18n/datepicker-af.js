@@ -1,6 +1,6 @@
 /* Afrikaans initialisation for the jQuery UI date picker plugin. */
 /* Written by Renier Pretorius. */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["af"] = {
     closeText: "Selekteer",
     prevText: "Vorige",
@@ -28,7 +28,20 @@
       "November",
       "Desember",
     ],
-    monthNamesShort: ["Jan", "Feb", "Mrt", "Apr", "Mei", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Des"],
+    monthNamesShort: [
+      "Jan",
+      "Feb",
+      "Mrt",
+      "Apr",
+      "Mei",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Des",
+    ],
     dayNames: ["Sondag", "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrydag", "Saterdag"],
     dayNamesShort: ["Son", "Maa", "Din", "Woe", "Don", "Vry", "Sat"],
     dayNamesMin: ["So", "Ma", "Di", "Wo", "Do", "Vr", "Sa"],

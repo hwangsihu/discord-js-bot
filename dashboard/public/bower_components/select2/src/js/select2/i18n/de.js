@@ -1,23 +1,19 @@
-define(function () {
+define(() => {
   // German
   return {
-    errorLoading: function () {
-      return "Die Ergebnisse konnten nicht geladen werden.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "Die Ergebnisse konnten nicht geladen werden.",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       return "Bitte " + overChars + " Zeichen weniger eingeben";
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       return "Bitte " + remainingChars + " Zeichen mehr eingeben";
     },
-    loadingMore: function () {
-      return "Lade mehr Ergebnisse…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Lade mehr Ergebnisse…",
+    maximumSelected: (args) => {
       var message = "Sie können nur " + args.maximum + " Eintr";
 
       if (args.maximum === 1) {
@@ -30,14 +26,8 @@ define(function () {
 
       return message;
     },
-    noResults: function () {
-      return "Keine Übereinstimmungen gefunden";
-    },
-    searching: function () {
-      return "Suche…";
-    },
-    removeAllItems: function () {
-      return "Entferne alle Gegenstände";
-    },
+    noResults: () => "Keine Übereinstimmungen gefunden",
+    searching: () => "Suche…",
+    removeAllItems: () => "Entferne alle Gegenstände",
   };
 });

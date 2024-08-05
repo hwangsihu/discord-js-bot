@@ -2,7 +2,13 @@ const { approveSuggestion, rejectSuggestion } = require("@handlers/suggestion");
 const { parsePermissions } = require("@helpers/Utils");
 const { ApplicationCommandOptionType, ChannelType } = require("discord.js");
 
-const CHANNEL_PERMS = ["ViewChannel", "SendMessages", "EmbedLinks", "ManageMessages", "ReadMessageHistory"];
+const CHANNEL_PERMS = [
+  "ViewChannel",
+  "SendMessages",
+  "EmbedLinks",
+  "ManageMessages",
+  "ReadMessageHistory",
+];
 
 /**
  * @type {import("@structures/Command")}
@@ -215,36 +221,40 @@ module.exports = {
     // channel
     else if (sub == "channel") {
       const input = args[1];
-      let matched = message.guild.findMatchingChannels(input);
+      const matched = message.guild.findMatchingChannels(input);
       if (matched.length == 0) response = `No matching channels found for ${input}`;
-      else if (matched.length > 1) response = `Multiple channels found for ${input}. Please be more specific.`;
+      else if (matched.length > 1)
+        response = `Multiple channels found for ${input}. Please be more specific.`;
       else response = await setChannel(data.settings, matched[0]);
     }
 
     // appch
     else if (sub == "appch") {
       const input = args[1];
-      let matched = message.guild.findMatchingChannels(input);
+      const matched = message.guild.findMatchingChannels(input);
       if (matched.length == 0) response = `No matching channels found for ${input}`;
-      else if (matched.length > 1) response = `Multiple channels found for ${input}. Please be more specific.`;
+      else if (matched.length > 1)
+        response = `Multiple channels found for ${input}. Please be more specific.`;
       else response = await setApprovedChannel(data.settings, matched[0]);
     }
 
     // appch
     else if (sub == "rejch") {
       const input = args[1];
-      let matched = message.guild.findMatchingChannels(input);
+      const matched = message.guild.findMatchingChannels(input);
       if (matched.length == 0) response = `No matching channels found for ${input}`;
-      else if (matched.length > 1) response = `Multiple channels found for ${input}. Please be more specific.`;
+      else if (matched.length > 1)
+        response = `Multiple channels found for ${input}. Please be more specific.`;
       else response = await setRejectedChannel(data.settings, matched[0]);
     }
 
     // approve
     else if (sub == "approve") {
       const input = args[1];
-      let matched = message.guild.findMatchingChannels(input);
+      const matched = message.guild.findMatchingChannels(input);
       if (matched.length == 0) response = `No matching channels found for ${input}`;
-      else if (matched.length > 1) response = `Multiple channels found for ${input}. Please be more specific.`;
+      else if (matched.length > 1)
+        response = `Multiple channels found for ${input}. Please be more specific.`;
       else {
         const messageId = args[2];
         const reason = args.slice(3).join(" ");
@@ -255,9 +265,10 @@ module.exports = {
     // reject
     else if (sub == "reject") {
       const input = args[1];
-      let matched = message.guild.findMatchingChannels(input);
+      const matched = message.guild.findMatchingChannels(input);
       if (matched.length == 0) response = `No matching channels found for ${input}`;
-      else if (matched.length > 1) response = `Multiple channels found for ${input}. Please be more specific.`;
+      else if (matched.length > 1)
+        response = `Multiple channels found for ${input}. Please be more specific.`;
       else {
         const messageId = args[2];
         const reason = args.slice(3).join(" ");
@@ -268,18 +279,20 @@ module.exports = {
     // staffadd
     else if (sub == "staffadd") {
       const input = args[1];
-      let matched = message.guild.findMatchingRoles(input);
+      const matched = message.guild.findMatchingRoles(input);
       if (matched.length == 0) response = `No matching roles found for ${input}`;
-      else if (matched.length > 1) response = `Multiple roles found for ${input}. Please be more specific.`;
+      else if (matched.length > 1)
+        response = `Multiple roles found for ${input}. Please be more specific.`;
       else response = await addStaffRole(data.settings, matched[0]);
     }
 
     // staffremove
     else if (sub == "staffremove") {
       const input = args[1];
-      let matched = message.guild.findMatchingRoles(input);
+      const matched = message.guild.findMatchingRoles(input);
       if (matched.length == 0) response = `No matching roles found for ${input}`;
-      else if (matched.length > 1) response = `Multiple roles found for ${input}. Please be more specific.`;
+      else if (matched.length > 1)
+        response = `Multiple roles found for ${input}. Please be more specific.`;
       else response = await removeStaffRole(data.settings, matched[0]);
     }
 

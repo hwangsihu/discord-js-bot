@@ -1,6 +1,6 @@
 /* Romansh initialisation for the jQuery UI date picker plugin. */
 /* Written by Yvonne Gienal (yvonne.gienal@educa.ch). */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["rm"] = {
     closeText: "Serrar",
     prevText: "&#x3C;Suandant",
@@ -28,7 +28,20 @@
       "November",
       "December",
     ],
-    monthNamesShort: ["Scha", "Fev", "Mar", "Avr", "Matg", "Zer", "Fan", "Avu", "Sett", "Oct", "Nov", "Dec"],
+    monthNamesShort: [
+      "Scha",
+      "Fev",
+      "Mar",
+      "Avr",
+      "Matg",
+      "Zer",
+      "Fan",
+      "Avu",
+      "Sett",
+      "Oct",
+      "Nov",
+      "Dec",
+    ],
     dayNames: ["Dumengia", "Glindesdi", "Mardi", "Mesemna", "Gievgia", "Venderdi", "Sonda"],
     dayNamesShort: ["Dum", "Gli", "Mar", "Mes", "Gie", "Ven", "Som"],
     dayNamesMin: ["Du", "Gl", "Ma", "Me", "Gi", "Ve", "So"],

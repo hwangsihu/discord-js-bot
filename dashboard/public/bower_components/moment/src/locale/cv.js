@@ -27,7 +27,7 @@ export default moment.defineLocale("cv", {
     sameElse: "L",
   },
   relativeTime: {
-    future: function (output) {
+    future: (output) => {
       var affix = /сехет$/i.exec(output) ? "рен" : /ҫул$/i.exec(output) ? "тан" : "ран";
       return output + affix;
     },

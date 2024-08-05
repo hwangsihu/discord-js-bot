@@ -6,9 +6,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
-+(function ($) {
-  "use strict";
-
++(($) => {
   // POPOVER PUBLIC CLASS DEFINITION
   // ===============================
 
@@ -35,9 +33,7 @@
 
   Popover.prototype.constructor = Popover;
 
-  Popover.prototype.getDefaults = function () {
-    return Popover.DEFAULTS;
-  };
+  Popover.prototype.getDefaults = () => Popover.DEFAULTS;
 
   Popover.prototype.setContent = function () {
     var $tip = this.tip();
@@ -56,7 +52,12 @@
       }
 
       $tip.find(".popover-title").html(title);
-      $tip.find(".popover-content").children().detach().end()[typeContent === "string" ? "html" : "append"](content);
+      $tip
+        .find(".popover-content")
+        .children()
+        .detach()
+        .end()
+        [typeContent === "string" ? "html" : "append"](content);
     } else {
       $tip.find(".popover-title").text(title);
       $tip.find(".popover-content").children().detach().end().text(content);
@@ -77,7 +78,10 @@
     var $e = this.$element;
     var o = this.options;
 
-    return $e.attr("data-content") || (typeof o.content == "function" ? o.content.call($e[0]) : o.content);
+    return (
+      $e.attr("data-content") ||
+      (typeof o.content == "function" ? o.content.call($e[0]) : o.content)
+    );
   };
 
   Popover.prototype.arrow = function () {

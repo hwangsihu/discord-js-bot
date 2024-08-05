@@ -11,7 +11,8 @@ CKEDITOR.lang["fr"] = {
     btnUndo: "Annuler",
     changeTo: "Modifier pour",
     errorLoading: "Erreur du chargement du service depuis l'hôte : %s.",
-    ieSpellDownload: "La vérification d'orthographe n'est pas installée. Voulez-vous la télécharger maintenant?",
+    ieSpellDownload:
+      "La vérification d'orthographe n'est pas installée. Voulez-vous la télécharger maintenant?",
     manyChanges: "Vérification de l'orthographe terminée : %1 mots corrigés.",
     noChanges: "Vérification de l'orthographe terminée : Aucun mot corrigé.",
     noMispell: "Vérification de l'orthographe terminée : aucune erreur trouvée.",
@@ -29,7 +30,8 @@ CKEDITOR.lang["fr"] = {
     doneOne: "Fichier téléversé avec succès.",
     doneMany: "%1 fichiers téléversés avec succès.",
     uploadOne: "Téléversement du fichier en cours ({percentage} %)…",
-    uploadMany: "Téléversement des fichiers en cours, {current} sur {max} effectués ({percentage} %)…",
+    uploadMany:
+      "Téléversement des fichiers en cours, {current} sur {max} effectués ({percentage} %)…",
   },
   undo: { redo: "Rétablir", undo: "Annuler" },
   toolbar: {
@@ -150,7 +152,8 @@ CKEDITOR.lang["fr"] = {
     title: "Coller comme texte brut",
   },
   pastefromword: {
-    confirmCleanup: "Le texte à coller semble provenir de Word. Désirez-vous le nettoyer avant de coller ?",
+    confirmCleanup:
+      "Le texte à coller semble provenir de Word. Désirez-vous le nettoyer avant de coller ?",
     error: "Les données collées n'ont pas pu être nettoyées à cause d'une erreur interne",
     title: "Coller depuis Word",
     toolbar: "Coller depuis Word",
@@ -158,7 +161,10 @@ CKEDITOR.lang["fr"] = {
   notification: { closed: "Notification fermée." },
   maximize: { maximize: "Agrandir", minimize: "Réduire" },
   magicline: { title: "Insérer un paragraphe ici" },
-  list: { bulletedlist: "Insérer/Supprimer une liste à puces", numberedlist: "Insérer/Supprimer une liste numérotée" },
+  list: {
+    bulletedlist: "Insérer/Supprimer une liste à puces",
+    numberedlist: "Insérer/Supprimer une liste numérotée",
+  },
   link: {
     acccessKey: "Touche d'accessibilité",
     advanced: "Avancé",
@@ -265,8 +271,10 @@ CKEDITOR.lang["fr"] = {
   filetools: {
     loadError: "Une erreur est survenue lors de la lecture du fichier.",
     networkError: "Une erreur réseau est survenue lors du téléversement du fichier.",
-    httpError404: "Une erreur HTTP est survenue durant le téléversement du fichier (404 : fichier non trouvé).",
-    httpError403: "Une erreur HTTP est survenue durant le téléversement du fichier (403 : accès refusé).",
+    httpError404:
+      "Une erreur HTTP est survenue durant le téléversement du fichier (404 : fichier non trouvé).",
+    httpError403:
+      "Une erreur HTTP est survenue durant le téléversement du fichier (403 : accès refusé).",
     httpError: "Une erreur HTTP est survenue durant le téléversement du fichier (erreur : %1).",
     noUrlError: "L'URL de téléversement n'est pas spécifiée.",
     responseError: "Réponse du serveur incorrecte.",
@@ -376,7 +384,8 @@ CKEDITOR.lang["fr"] = {
     invalidValue: "Valeur invalide.",
     invalidHeight: "La hauteur doit être un nombre.",
     invalidWidth: "La largeur doit être un nombre.",
-    invalidLength: 'La valeur de "%1" doit être un nombre positif avec ou sans unité de mesure (%2).',
+    invalidLength:
+      'La valeur de "%1" doit être un nombre positif avec ou sans unité de mesure (%2).',
     invalidCssLength:
       "La valeur spécifiée pour le champ « %1 » doit être un nombre positif avec ou sans unité de mesure CSS valide (px, %, in, cm, mm, em, ex, pt, ou pc).",
     invalidHtmlLength:

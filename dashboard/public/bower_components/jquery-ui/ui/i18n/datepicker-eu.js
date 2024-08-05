@@ -1,5 +1,5 @@
 /* Karrikas-ek itzulia (karrikas@karrikas.com) */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -7,7 +7,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["eu"] = {
     closeText: "Egina",
     prevText: "&#x3C;Aur",
@@ -27,8 +27,29 @@
       "azaroa",
       "abendua",
     ],
-    monthNamesShort: ["urt.", "ots.", "mar.", "api.", "mai.", "eka.", "uzt.", "abu.", "ira.", "urr.", "aza.", "abe."],
-    dayNames: ["igandea", "astelehena", "asteartea", "asteazkena", "osteguna", "ostirala", "larunbata"],
+    monthNamesShort: [
+      "urt.",
+      "ots.",
+      "mar.",
+      "api.",
+      "mai.",
+      "eka.",
+      "uzt.",
+      "abu.",
+      "ira.",
+      "urr.",
+      "aza.",
+      "abe.",
+    ],
+    dayNames: [
+      "igandea",
+      "astelehena",
+      "asteartea",
+      "asteazkena",
+      "osteguna",
+      "ostirala",
+      "larunbata",
+    ],
     dayNamesShort: ["ig.", "al.", "ar.", "az.", "og.", "ol.", "lr."],
     dayNamesMin: ["ig", "al", "ar", "az", "og", "ol", "lr"],
     weekHeader: "As",

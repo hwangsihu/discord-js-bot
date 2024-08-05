@@ -18,7 +18,11 @@ module.exports = async (client, member) => {
   }
 
   // Check for counter channel
-  if (settings.counters.find((doc) => ["MEMBERS", "BOTS", "USERS"].includes(doc.counter_type.toUpperCase()))) {
+  if (
+    settings.counters.find((doc) =>
+      ["MEMBERS", "BOTS", "USERS"].includes(doc.counter_type.toUpperCase())
+    )
+  ) {
     if (member.user.bot) {
       settings.data.bots += 1;
       await settings.save();

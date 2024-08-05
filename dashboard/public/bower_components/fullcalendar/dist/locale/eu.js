@@ -1,4 +1,4 @@
-!(function (a, e) {
+!((a, e) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = e(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? e(require("moment"), require("fullcalendar"))
         : e(a.moment, a.FullCalendar);
-})("undefined" != typeof self ? self : this, function (a, e) {
-  return (function (a) {
+})("undefined" != typeof self ? self : this, (a, e) =>
+  ((a) => {
     function e(r) {
       if (t[r]) return t[r].exports;
       var n = (t[r] = { i: r, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (e.m = a),
       (e.c = t),
-      (e.d = function (a, t, r) {
+      (e.d = (a, t, r) => {
         e.o(a, t) || Object.defineProperty(a, t, { configurable: !1, enumerable: !0, get: r });
       }),
-      (e.n = function (a) {
-        var t =
-          a && a.__esModule
-            ? function () {
-                return a.default;
-              }
-            : function () {
-                return a;
-              };
+      (e.n = (a) => {
+        var t = a && a.__esModule ? () => a.default : () => a;
         return e.d(t, "a", t), t;
       }),
-      (e.o = function (a, e) {
-        return Object.prototype.hasOwnProperty.call(a, e);
-      }),
+      (e.o = (a, e) => Object.prototype.hasOwnProperty.call(a, e)),
       (e.p = ""),
       e((e.s = 125))
     );
   })({
-    0: function (e, t) {
+    0: (e, t) => {
       e.exports = a;
     },
-    1: function (a, t) {
+    1: (a, t) => {
       a.exports = e;
     },
-    125: function (a, e, t) {
+    125: (a, e, t) => {
       Object.defineProperty(e, "__esModule", { value: !0 }), t(126);
       var r = t(1);
       r.datepickerLocale("eu", "eu", {
@@ -80,7 +71,15 @@
           "aza.",
           "abe.",
         ],
-        dayNames: ["igandea", "astelehena", "asteartea", "asteazkena", "osteguna", "ostirala", "larunbata"],
+        dayNames: [
+          "igandea",
+          "astelehena",
+          "asteartea",
+          "asteazkena",
+          "osteguna",
+          "ostirala",
+          "larunbata",
+        ],
         dayNamesShort: ["ig.", "al.", "ar.", "az.", "og.", "ol.", "lr."],
         dayNamesMin: ["ig", "al", "ar", "az", "og", "ol", "lr"],
         weekHeader: "As",
@@ -97,17 +96,20 @@
           noEventsMessage: "Ez dago ekitaldirik erakusteko",
         });
     },
-    126: function (a, e, t) {
-      !(function (a, e) {
+    126: (a, e, t) => {
+      !((a, e) => {
         e(t(0));
-      })(0, function (a) {
-        return a.defineLocale("eu", {
-          months: "urtarrila_otsaila_martxoa_apirila_maiatza_ekaina_uztaila_abuztua_iraila_urria_azaroa_abendua".split(
-            "_"
-          ),
+      })(0, (a) =>
+        a.defineLocale("eu", {
+          months:
+            "urtarrila_otsaila_martxoa_apirila_maiatza_ekaina_uztaila_abuztua_iraila_urria_azaroa_abendua".split(
+              "_"
+            ),
           monthsShort: "urt._ots._mar._api._mai._eka._uzt._abu._ira._urr._aza._abe.".split("_"),
           monthsParseExact: !0,
-          weekdays: "igandea_astelehena_asteartea_asteazkena_osteguna_ostirala_larunbata".split("_"),
+          weekdays: "igandea_astelehena_asteartea_asteazkena_osteguna_ostirala_larunbata".split(
+            "_"
+          ),
           weekdaysShort: "ig._al._ar._az._og._ol._lr.".split("_"),
           weekdaysMin: "ig_al_ar_az_og_ol_lr".split("_"),
           weekdaysParseExact: !0,
@@ -150,8 +152,8 @@
           dayOfMonthOrdinalParse: /\d{1,2}\./,
           ordinal: "%d.",
           week: { dow: 1, doy: 7 },
-        });
-      });
+        })
+      );
     },
-  });
-});
+  })
+);

@@ -11,7 +11,8 @@ CKEDITOR.lang["pt-br"] = {
     btnUndo: "Desfazer",
     changeTo: "Alterar para",
     errorLoading: "Erro carregando servidor de aplicação: %s.",
-    ieSpellDownload: "A verificação ortográfica não foi instalada. Você gostaria de realizar o download agora?",
+    ieSpellDownload:
+      "A verificação ortográfica não foi instalada. Você gostaria de realizar o download agora?",
     manyChanges: "Verificação ortográfica encerrada: %1 palavras foram alteradas",
     noChanges: "Verificação ortográfica encerrada: Não houve alterações",
     noMispell: "Verificação encerrada: Não foram encontrados erros de ortografia",
@@ -347,8 +348,10 @@ CKEDITOR.lang["pt-br"] = {
     generalTab: "Geral",
     advancedTab: "Avançado",
     validateNumberFailed: "Este valor não é um número.",
-    confirmNewPage: "Todas as mudanças não salvas serão perdidas. Tem certeza de que quer abrir uma nova página?",
-    confirmCancel: "Algumas opções foram alteradas. Tem certeza de que quer fechar a caixa de diálogo?",
+    confirmNewPage:
+      "Todas as mudanças não salvas serão perdidas. Tem certeza de que quer abrir uma nova página?",
+    confirmCancel:
+      "Algumas opções foram alteradas. Tem certeza de que quer fechar a caixa de diálogo?",
     options: "Opções",
     target: "Destino",
     targetNew: "Nova Janela (_blank)",

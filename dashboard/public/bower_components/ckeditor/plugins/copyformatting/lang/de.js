@@ -4,6 +4,7 @@
     copied: "Formatierung kopiert",
     applied: "Formatierung angewendet",
     canceled: "Formatierung abgebrochen",
-    failed: "Formatierung fehlgeschlagen. Sie können Stile nicht anwenden, ohne sie zuerst zu kopieren.",
+    failed:
+      "Formatierung fehlgeschlagen. Sie können Stile nicht anwenden, ohne sie zuerst zu kopieren.",
   },
 });

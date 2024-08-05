@@ -1,6 +1,4 @@
-module.exports = function (grunt) {
-  "use strict";
-
+module.exports = (grunt) => {
   // Force use of Unix newlines
   grunt.util.linefeed = "\n";
 
@@ -83,9 +81,7 @@ module.exports = function (grunt) {
             cwd: "js/locales/",
             src: "*.js",
             dest: "dist/locales/",
-            rename: function (dest, name) {
-              return dest + name.replace(/\.js$/, ".min.js");
-            },
+            rename: (dest, name) => dest + name.replace(/\.js$/, ".min.js"),
           },
         ],
       },
@@ -146,7 +142,8 @@ module.exports = function (grunt) {
       standalone: {
         files: {
           "dist/css/<%= pkg.name %>.standalone.min.css": "dist/css/<%= pkg.name %>.standalone.css",
-          "dist/css/<%= pkg.name %>3.standalone.min.css": "dist/css/<%= pkg.name %>3.standalone.css",
+          "dist/css/<%= pkg.name %>3.standalone.min.css":
+            "dist/css/<%= pkg.name %>3.standalone.css",
         },
       },
     },
@@ -223,7 +220,12 @@ module.exports = function (grunt) {
 
   // CSS distribution task.
   grunt.registerTask("less-compile", "less");
-  grunt.registerTask("dist-css", ["less-compile", "cssmin:main", "cssmin:standalone", "usebanner:css"]);
+  grunt.registerTask("dist-css", [
+    "less-compile",
+    "cssmin:main",
+    "cssmin:standalone",
+    "usebanner:css",
+  ]);
 
   // Full distribution task.
   grunt.registerTask("dist", ["clean:dist", "dist-js", "dist-css"]);
@@ -232,21 +234,24 @@ module.exports = function (grunt) {
   grunt.registerTask("lint-js", "Lint all js files with jshint and jscs", ["jshint", "jscs"]);
   grunt.registerTask("lint-css", "Lint all css files", ["dist-css", "csslint:dist"]);
   grunt.registerTask("qunit-all", "Run qunit tests", ["qunit:main", "qunit-timezone"]);
-  grunt.registerTask("test", "Lint files and run unit tests", ["lint-js", /*'lint-css',*/ "qunit-all"]);
+  grunt.registerTask("test", "Lint files and run unit tests", [
+    "lint-js",
+    /*'lint-css',*/ "qunit-all",
+  ]);
 
   // Version numbering task.
   // grunt bump-version --newver=X.Y.Z
   grunt.registerTask("bump-version", "string-replace");
 
   // Docs task.
-  grunt.registerTask("screenshots", "Rebuilds automated docs screenshots", function () {
+  grunt.registerTask("screenshots", "Rebuilds automated docs screenshots", () => {
     var phantomjs = require("phantomjs-prebuilt").path;
 
-    grunt.file.recurse("docs/_static/screenshots/", function (abspath) {
+    grunt.file.recurse("docs/_static/screenshots/", (abspath) => {
       grunt.file.delete(abspath);
     });
 
-    grunt.file.recurse("docs/_screenshots/", function (abspath, root, subdir, filename) {
+    grunt.file.recurse("docs/_screenshots/", (abspath, root, subdir, filename) => {
       if (!/.html$/.test(filename)) return;
       subdir = subdir || "";
 
@@ -263,7 +268,7 @@ module.exports = function (grunt) {
     });
   });
 
-  grunt.registerTask("qunit-timezone", "Run timezone tests", function () {
+  grunt.registerTask("qunit-timezone", "Run timezone tests", () => {
     process.env.TZ = "Europe/Moscow";
     grunt.task.run("qunit:timezone");
   });

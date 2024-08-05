@@ -6,8 +6,8 @@ $.RangeMapClass = RangeMap = createClass({
     for (key in map) {
       if (map.hasOwnProperty(key) && typeof key === "string" && key.indexOf(":") > -1) {
         range = key.split(":");
-        range[0] = range[0].length === 0 ? -Infinity : parseFloat(range[0]);
-        range[1] = range[1].length === 0 ? Infinity : parseFloat(range[1]);
+        range[0] = range[0].length === 0 ? Number.NEGATIVE_INFINITY : Number.parseFloat(range[0]);
+        range[1] = range[1].length === 0 ? Number.POSITIVE_INFINITY : Number.parseFloat(range[1]);
         range[2] = map[key];
         rangelist.push(range);
       }
@@ -37,6 +37,4 @@ $.RangeMapClass = RangeMap = createClass({
 });
 
 // Convenience function
-$.range_map = function (map) {
-  return new RangeMap(map);
-};
+$.range_map = (map) => new RangeMap(map);

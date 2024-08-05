@@ -1,6 +1,6 @@
 /* Hebrew initialisation for the UI Datepicker extension. */
 /* Written by Amir Hardon (ahardon at gmail dot com). */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["he"] = {
     closeText: "סגור",
     prevText: "&#x3C;הקודם",
@@ -28,7 +28,20 @@
       "נובמבר",
       "דצמבר",
     ],
-    monthNamesShort: ["ינו", "פבר", "מרץ", "אפר", "מאי", "יוני", "יולי", "אוג", "ספט", "אוק", "נוב", "דצמ"],
+    monthNamesShort: [
+      "ינו",
+      "פבר",
+      "מרץ",
+      "אפר",
+      "מאי",
+      "יוני",
+      "יולי",
+      "אוג",
+      "ספט",
+      "אוק",
+      "נוב",
+      "דצמ",
+    ],
     dayNames: ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"],
     dayNamesShort: ["א'", "ב'", "ג'", "ד'", "ה'", "ו'", "שבת"],
     dayNamesMin: ["א'", "ב'", "ג'", "ד'", "ה'", "ו'", "שבת"],

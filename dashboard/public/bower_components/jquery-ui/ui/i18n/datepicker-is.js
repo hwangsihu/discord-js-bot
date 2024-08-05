@@ -1,6 +1,6 @@
 /* Icelandic initialisation for the jQuery UI date picker plugin. */
 /* Written by Haukur H. Thorsson (haukur@eskill.is). */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["is"] = {
     closeText: "Loka",
     prevText: "&#x3C; Fyrri",
@@ -28,8 +28,29 @@
       "Nóvember",
       "Desember",
     ],
-    monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "Maí", "Jún", "Júl", "Ágú", "Sep", "Okt", "Nóv", "Des"],
-    dayNames: ["Sunnudagur", "Mánudagur", "Þriðjudagur", "Miðvikudagur", "Fimmtudagur", "Föstudagur", "Laugardagur"],
+    monthNamesShort: [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Maí",
+      "Jún",
+      "Júl",
+      "Ágú",
+      "Sep",
+      "Okt",
+      "Nóv",
+      "Des",
+    ],
+    dayNames: [
+      "Sunnudagur",
+      "Mánudagur",
+      "Þriðjudagur",
+      "Miðvikudagur",
+      "Fimmtudagur",
+      "Föstudagur",
+      "Laugardagur",
+    ],
     dayNamesShort: ["Sun", "Mán", "Þri", "Mið", "Fim", "Fös", "Lau"],
     dayNamesMin: ["Su", "Má", "Þr", "Mi", "Fi", "Fö", "La"],
     weekHeader: "Vika",

@@ -47,7 +47,9 @@ function getQueue({ client, guild }, pgNo) {
   if (!player) return "🚫 There is no music playing in this guild.";
 
   const queue = player.queue;
-  const embed = new EmbedBuilder().setColor(EMBED_COLORS.BOT_EMBED).setAuthor({ name: `Queue for ${guild.name}` });
+  const embed = new EmbedBuilder()
+    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setAuthor({ name: `Queue for ${guild.name}` });
 
   // change for the amount of tracks per page
   const multiple = 10;
@@ -58,9 +60,13 @@ function getQueue({ client, guild }, pgNo) {
 
   const tracks = queue.tracks.slice(start, end);
 
-  if (queue.current) embed.addFields({ name: "Current", value: `[${queue.current.title}](${queue.current.uri})` });
-  if (!tracks.length) embed.setDescription(`No tracks in ${page > 1 ? `page ${page}` : "the queue"}.`);
-  else embed.setDescription(tracks.map((track, i) => `${start + ++i} - [${track.title}](${track.uri})`).join("\n"));
+  if (queue.current)
+    embed.addFields({ name: "Current", value: `[${queue.current.title}](${queue.current.uri})` });
+  if (tracks.length)
+    embed.setDescription(
+      tracks.map((track, i) => `${start + ++i} - [${track.title}](${track.uri})`).join("\n")
+    );
+  else embed.setDescription(`No tracks in ${page > 1 ? `page ${page}` : "the queue"}.`);
 
   const maxPages = Math.ceil(queue.tracks.length / multiple);
 

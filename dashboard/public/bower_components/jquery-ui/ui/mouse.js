@@ -8,7 +8,7 @@
  *
  * http://api.jqueryui.com/mouse/
  */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["jquery", "./widget"], factory);
@@ -16,9 +16,9 @@
     // Browser globals
     factory(jQuery);
   }
-})(function ($) {
+})(($) => {
   var mouseHandled = false;
-  $(document).mouseup(function () {
+  $(document).mouseup(() => {
     mouseHandled = false;
   });
 
@@ -30,15 +30,11 @@
       delay: 0,
     },
     _mouseInit: function () {
-      var that = this;
-
       this.element
-        .bind("mousedown." + this.widgetName, function (event) {
-          return that._mouseDown(event);
-        })
-        .bind("click." + this.widgetName, function (event) {
-          if (true === $.data(event.target, that.widgetName + ".preventClickEvent")) {
-            $.removeData(event.target, that.widgetName + ".preventClickEvent");
+        .bind("mousedown." + this.widgetName, (event) => this._mouseDown(event))
+        .bind("click." + this.widgetName, (event) => {
+          if (true === $.data(event.target, this.widgetName + ".preventClickEvent")) {
+            $.removeData(event.target, this.widgetName + ".preventClickEvent");
             event.stopImmediatePropagation();
             return false;
           }
@@ -71,8 +67,7 @@
 
       this._mouseDownEvent = event;
 
-      var that = this,
-        btnIsLeft = event.which === 1,
+      var btnIsLeft = event.which === 1,
         // event.target.nodeName works around a bug in IE 8 with
         // disabled inputs (#7620)
         elIsCancel =
@@ -85,8 +80,8 @@
 
       this.mouseDelayMet = !this.options.delay;
       if (!this.mouseDelayMet) {
-        this._mouseDelayTimer = setTimeout(function () {
-          that.mouseDelayMet = true;
+        this._mouseDelayTimer = setTimeout(() => {
+          this.mouseDelayMet = true;
         }, this.options.delay);
       }
 
@@ -104,12 +99,8 @@
       }
 
       // these delegates are required to keep context
-      this._mouseMoveDelegate = function (event) {
-        return that._mouseMove(event);
-      };
-      this._mouseUpDelegate = function (event) {
-        return that._mouseUp(event);
-      };
+      this._mouseMoveDelegate = (event) => this._mouseMove(event);
+      this._mouseUpDelegate = (event) => this._mouseUp(event);
 
       this.document
         .bind("mousemove." + this.widgetName, this._mouseMoveDelegate)
@@ -187,11 +178,9 @@
     },
 
     // These are placeholder methods, to be overriden by extending plugin
-    _mouseStart: function (/* event */) {},
-    _mouseDrag: function (/* event */) {},
-    _mouseStop: function (/* event */) {},
-    _mouseCapture: function (/* event */) {
-      return true;
-    },
+    _mouseStart: (/* event */) => {},
+    _mouseDrag: (/* event */) => {},
+    _mouseStop: (/* event */) => {},
+    _mouseCapture: (/* event */) => true,
   });
 });

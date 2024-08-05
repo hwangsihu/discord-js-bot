@@ -8,7 +8,7 @@
  *
  * http://api.jqueryui.com/resizable/
  */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["jquery", "./core", "./mouse", "./widget"], factory);
@@ -16,7 +16,7 @@
     // Browser globals
     factory(jQuery);
   }
-})(function ($) {
+})(($) => {
   $.widget("ui.resizable", $.ui.mouse, {
     version: "1.11.4",
     widgetEventPrefix: "resize",
@@ -45,15 +45,11 @@
       stop: null,
     },
 
-    _num: function (value) {
-      return parseInt(value, 10) || 0;
-    },
+    _num: (value) => Number.parseInt(value, 10) || 0,
 
-    _isNumber: function (value) {
-      return !isNaN(parseInt(value, 10));
-    },
+    _isNumber: (value) => !isNaN(Number.parseInt(value, 10)),
 
-    _hasScroll: function (el, a) {
+    _hasScroll: (el, a) => {
       if ($(el).css("overflow") === "hidden") {
         return false;
       }
@@ -104,7 +100,9 @@
           })
         );
 
-        this.element = this.element.parent().data("ui-resizable", this.element.resizable("instance"));
+        this.element = this.element
+          .parent()
+          .data("ui-resizable", this.element.resizable("instance"));
 
         this.elementIsWrapper = true;
 
@@ -142,9 +140,8 @@
 
       this.handles =
         o.handles ||
-        (!$(".ui-resizable-handle", this.element).length
-          ? "e,s,se"
-          : {
+        ($(".ui-resizable-handle", this.element).length
+          ? {
               n: ".ui-resizable-n",
               e: ".ui-resizable-e",
               s: ".ui-resizable-s",
@@ -153,7 +150,8 @@
               sw: ".ui-resizable-sw",
               ne: ".ui-resizable-ne",
               nw: ".ui-resizable-nw",
-            });
+            }
+          : "e,s,se");
 
       this._handles = $();
       if (this.handles.constructor === String) {
@@ -194,14 +192,23 @@
             this._on(this.handles[i], { mousedown: that._mouseDown });
           }
 
-          if (this.elementIsWrapper && this.originalElement[0].nodeName.match(/^(textarea|input|select|button)$/i)) {
+          if (
+            this.elementIsWrapper &&
+            this.originalElement[0].nodeName.match(/^(textarea|input|select|button)$/i)
+          ) {
             axis = $(this.handles[i], this.element);
 
             padWrapper = /sw|ne|nw|se|n|s/.test(i) ? axis.outerHeight() : axis.outerWidth();
 
             padPos = [
               "padding",
-              /ne|nw|n/.test(i) ? "Top" : /se|sw|s/.test(i) ? "Bottom" : /^e$/.test(i) ? "Right" : "Left",
+              /ne|nw|n/.test(i)
+                ? "Top"
+                : /se|sw|s/.test(i)
+                  ? "Bottom"
+                  : /^e$/.test(i)
+                    ? "Right"
+                    : "Left",
             ].join("");
 
             target.css(padPos, padWrapper);
@@ -257,7 +264,7 @@
       this._mouseDestroy();
 
       var wrapper,
-        _destroy = function (exp) {
+        _destroy = (exp) => {
           $(exp)
             .removeClass("ui-resizable ui-resizable-disabled ui-resizable-resizing")
             .removeData("resizable")
@@ -355,7 +362,9 @@
       this.originalMousePosition = { left: event.pageX, top: event.pageY };
 
       this.aspectRatio =
-        typeof o.aspectRatio === "number" ? o.aspectRatio : this.originalSize.width / this.originalSize.height || 1;
+        typeof o.aspectRatio === "number"
+          ? o.aspectRatio
+          : this.originalSize.width / this.originalSize.height || 1;
 
       cursor = $(".ui-resizable-" + this.axis).css("cursor");
       $("body").css("cursor", cursor === "auto" ? this.axis + "-resize" : cursor);
@@ -417,28 +426,31 @@
         s,
         left,
         top,
-        o = this.options,
-        that = this;
+        o = this.options;
 
       if (this._helper) {
         pr = this._proportionallyResizeElements;
         ista = pr.length && /textarea/i.test(pr[0].nodeName);
-        soffseth = ista && this._hasScroll(pr[0], "left") ? 0 : that.sizeDiff.height;
-        soffsetw = ista ? 0 : that.sizeDiff.width;
+        soffseth = ista && this._hasScroll(pr[0], "left") ? 0 : this.sizeDiff.height;
+        soffsetw = ista ? 0 : this.sizeDiff.width;
 
         s = {
-          width: that.helper.width() - soffsetw,
-          height: that.helper.height() - soffseth,
+          width: this.helper.width() - soffsetw,
+          height: this.helper.height() - soffseth,
         };
-        left = parseInt(that.element.css("left"), 10) + (that.position.left - that.originalPosition.left) || null;
-        top = parseInt(that.element.css("top"), 10) + (that.position.top - that.originalPosition.top) || null;
+        left =
+          Number.parseInt(this.element.css("left"), 10) +
+            (this.position.left - this.originalPosition.left) || null;
+        top =
+          Number.parseInt(this.element.css("top"), 10) +
+            (this.position.top - this.originalPosition.top) || null;
 
         if (!o.animate) {
           this.element.css($.extend(s, { top: top, left: left }));
         }
 
-        that.helper.height(that.size.height);
-        that.helper.width(that.size.width);
+        this.helper.height(this.size.height);
+        this.helper.width(this.size.width);
 
         if (this._helper && !o.animate) {
           this._proportionallyResize();
@@ -500,9 +512,9 @@
 
       b = {
         minWidth: this._isNumber(o.minWidth) ? o.minWidth : 0,
-        maxWidth: this._isNumber(o.maxWidth) ? o.maxWidth : Infinity,
+        maxWidth: this._isNumber(o.maxWidth) ? o.maxWidth : Number.POSITIVE_INFINITY,
         minHeight: this._isNumber(o.minHeight) ? o.minHeight : 0,
-        maxHeight: this._isNumber(o.maxHeight) ? o.maxHeight : Infinity,
+        maxHeight: this._isNumber(o.maxHeight) ? o.maxHeight : Number.POSITIVE_INFINITY,
       };
 
       if (this._aspectRatio || forceAspectRatio) {
@@ -613,7 +625,7 @@
       return data;
     },
 
-    _getPaddingPlusBorderDimensions: function (element) {
+    _getPaddingPlusBorderDimensions: (element) => {
       var i = 0,
         widths = [],
         borders = [
@@ -630,8 +642,8 @@
         ];
 
       for (; i < 4; i++) {
-        widths[i] = parseInt(borders[i], 10) || 0;
-        widths[i] += parseInt(paddings[i], 10) || 0;
+        widths[i] = Number.parseInt(borders[i], 10) || 0;
+        widths[i] += Number.parseInt(paddings[i], 10) || 0;
       }
 
       return {
@@ -706,16 +718,28 @@
         return { height: this.originalSize.height + dy };
       },
       se: function (event, dx, dy) {
-        return $.extend(this._change.s.apply(this, arguments), this._change.e.apply(this, [event, dx, dy]));
+        return $.extend(
+          this._change.s.apply(this, arguments),
+          this._change.e.apply(this, [event, dx, dy])
+        );
       },
       sw: function (event, dx, dy) {
-        return $.extend(this._change.s.apply(this, arguments), this._change.w.apply(this, [event, dx, dy]));
+        return $.extend(
+          this._change.s.apply(this, arguments),
+          this._change.w.apply(this, [event, dx, dy])
+        );
       },
       ne: function (event, dx, dy) {
-        return $.extend(this._change.n.apply(this, arguments), this._change.e.apply(this, [event, dx, dy]));
+        return $.extend(
+          this._change.n.apply(this, arguments),
+          this._change.e.apply(this, [event, dx, dy])
+        );
       },
       nw: function (event, dx, dy) {
-        return $.extend(this._change.n.apply(this, arguments), this._change.w.apply(this, [event, dx, dy]));
+        return $.extend(
+          this._change.n.apply(this, arguments),
+          this._change.w.apply(this, [event, dx, dy])
+        );
       },
     },
 
@@ -752,18 +776,22 @@
         soffseth = ista && that._hasScroll(pr[0], "left") ? 0 : that.sizeDiff.height,
         soffsetw = ista ? 0 : that.sizeDiff.width,
         style = { width: that.size.width - soffsetw, height: that.size.height - soffseth },
-        left = parseInt(that.element.css("left"), 10) + (that.position.left - that.originalPosition.left) || null,
-        top = parseInt(that.element.css("top"), 10) + (that.position.top - that.originalPosition.top) || null;
+        left =
+          Number.parseInt(that.element.css("left"), 10) +
+            (that.position.left - that.originalPosition.left) || null,
+        top =
+          Number.parseInt(that.element.css("top"), 10) +
+            (that.position.top - that.originalPosition.top) || null;
 
       that.element.animate($.extend(style, top && left ? { top: top, left: left } : {}), {
         duration: o.animateDuration,
         easing: o.animateEasing,
-        step: function () {
+        step: () => {
           var data = {
-            width: parseInt(that.element.css("width"), 10),
-            height: parseInt(that.element.css("height"), 10),
-            top: parseInt(that.element.css("top"), 10),
-            left: parseInt(that.element.css("left"), 10),
+            width: Number.parseInt(that.element.css("width"), 10),
+            height: Number.parseInt(that.element.css("height"), 10),
+            top: Number.parseInt(that.element.css("top"), 10),
+            left: Number.parseInt(that.element.css("left"), 10),
           };
 
           if (pr && pr.length) {
@@ -819,7 +847,7 @@
       } else {
         element = $(ce);
         p = [];
-        $(["Top", "Right", "Left", "Bottom"]).each(function (i, name) {
+        $(["Top", "Right", "Left", "Bottom"]).each((i, name) => {
           p[i] = that._num(element.css("padding" + name));
         });
 
@@ -869,7 +897,8 @@
 
       if (cp.left < (that._helper ? co.left : 0)) {
         that.size.width =
-          that.size.width + (that._helper ? that.position.left - co.left : that.position.left - cop.left);
+          that.size.width +
+          (that._helper ? that.position.left - co.left : that.position.left - cop.left);
 
         if (pRatio) {
           that.size.height = that.size.width / that.aspectRatio;
@@ -879,7 +908,8 @@
       }
 
       if (cp.top < (that._helper ? co.top : 0)) {
-        that.size.height = that.size.height + (that._helper ? that.position.top - co.top : that.position.top);
+        that.size.height =
+          that.size.height + (that._helper ? that.position.top - co.top : that.position.top);
 
         if (pRatio) {
           that.size.width = that.size.height * that.aspectRatio;
@@ -899,9 +929,14 @@
         that.offset.top = that.element.offset().top;
       }
 
-      woset = Math.abs(that.sizeDiff.width + (that._helper ? that.offset.left - cop.left : that.offset.left - co.left));
+      woset = Math.abs(
+        that.sizeDiff.width +
+          (that._helper ? that.offset.left - cop.left : that.offset.left - co.left)
+      );
 
-      hoset = Math.abs(that.sizeDiff.height + (that._helper ? that.offset.top - cop.top : that.offset.top - co.top));
+      hoset = Math.abs(
+        that.sizeDiff.height + (that._helper ? that.offset.top - cop.top : that.offset.top - co.top)
+      );
 
       if (woset + that.size.width >= that.parentData.width) {
         that.size.width = that.parentData.width - woset;
@@ -964,10 +999,10 @@
       $(o.alsoResize).each(function () {
         var el = $(this);
         el.data("ui-resizable-alsoresize", {
-          width: parseInt(el.width(), 10),
-          height: parseInt(el.height(), 10),
-          left: parseInt(el.css("left"), 10),
-          top: parseInt(el.css("top"), 10),
+          width: Number.parseInt(el.width(), 10),
+          height: Number.parseInt(el.height(), 10),
+          left: Number.parseInt(el.css("left"), 10),
+          top: Number.parseInt(el.css("top"), 10),
         });
       });
     },
@@ -988,9 +1023,11 @@
         var el = $(this),
           start = $(this).data("ui-resizable-alsoresize"),
           style = {},
-          css = el.parents(ui.originalElement[0]).length ? ["width", "height"] : ["width", "height", "top", "left"];
+          css = el.parents(ui.originalElement[0]).length
+            ? ["width", "height"]
+            : ["width", "height", "top", "left"];
 
-        $.each(css, function (i, prop) {
+        $.each(css, (i, prop) => {
           var sum = (start[prop] || 0) + (delta[prop] || 0);
           if (sum && sum >= 0) {
             style[prop] = sum || null;

@@ -10,7 +10,7 @@
  *
  * Thanks to vor, eskimoblood, spiffistan, FabrizioC
  */
-(function (factory) {
+((factory) => {
   if (typeof exports === "object") {
     // CommonJS
     module.exports = factory(require("jquery"));
@@ -21,12 +21,7 @@
     // Browser globals
     factory(jQuery);
   }
-})(function ($) {
-  /**
-   * Kontrol library
-   */
-  "use strict";
-
+})(($) => {
   /**
    * Definition of globals and core
    */
@@ -36,9 +31,7 @@
 
   k.c = {};
   k.c.d = $(document);
-  k.c.t = function (e) {
-    return e.originalEvent.touches.length - 1;
-  };
+  k.c.t = (e) => e.originalEvent.touches.length - 1;
 
   /**
    * Kontrol Object
@@ -80,7 +73,7 @@
     this.$div = null; // component div
 
     this.run = function () {
-      var cf = function (e, conf) {
+      var cf = (e, conf) => {
         var k;
         for (k in conf) {
           s.o[k] = conf[k];
@@ -103,7 +96,9 @@
 
           // UI
           cursor: (this.$.data("cursor") === true && 30) || this.$.data("cursor") || 0,
-          thickness: (this.$.data("thickness") && Math.max(Math.min(this.$.data("thickness"), 1), 0.01)) || 0.35,
+          thickness:
+            (this.$.data("thickness") && Math.max(Math.min(this.$.data("thickness"), 1), 0.01)) ||
+            0.35,
           lineCap: this.$.data("linecap") || "butt",
           width: this.$.data("width") || 200,
           height: this.$.data("height") || 200,
@@ -124,12 +119,8 @@
           release: null, // function (value) {}
 
           // Output formatting, allows to add unit: %, ms ...
-          format: function (v) {
-            return v;
-          },
-          parse: function (v) {
-            return parseFloat(v);
-          },
+          format: (v) => v,
+          parse: (v) => Number.parseFloat(v),
         },
         this.o
       );
@@ -150,7 +141,7 @@
           s.i[k] = $this;
           s.v[k] = s.o.parse($this.val());
 
-          $this.bind("change blur", function () {
+          $this.bind("change blur", () => {
             var val = {};
             val[k] = $this.val();
             s.val(s._validate(val));
@@ -162,7 +153,7 @@
         this.i = this.$;
         this.v = this.o.parse(this.$.val());
         this.v === "" && (this.v = this.o.min);
-        this.$.bind("change blur", function () {
+        this.$.bind("change blur", () => {
           s.val(s._validate(s.o.parse(s.$.val())));
         });
       }
@@ -250,10 +241,10 @@
     this._carve = function () {
       if (this.relative) {
         var w = this.relativeWidth
-            ? (this.$div.parent().width() * parseInt(this.o.width)) / 100
+            ? (this.$div.parent().width() * Number.parseInt(this.o.width)) / 100
             : this.$div.parent().width(),
           h = this.relativeHeight
-            ? (this.$div.parent().height() * parseInt(this.o.height)) / 100
+            ? (this.$div.parent().height() * Number.parseInt(this.o.height)) / 100
             : this.$div.parent().height();
 
         // apply relative
@@ -286,7 +277,7 @@
       return this;
     };
 
-    this._draw = function () {
+    this._draw = () => {
       // canvas pre-rendering
       var d = true;
 
@@ -300,7 +291,7 @@
     };
 
     this._touch = function (e) {
-      var touchMove = function (e) {
+      var touchMove = (e) => {
         var v = s.xy2val(e.originalEvent.touches[s.t].pageX, e.originalEvent.touches[s.t].pageY);
 
         if (v == s.cv) return;
@@ -318,7 +309,7 @@
       touchMove(e);
 
       // Touch events listeners
-      k.c.d.bind("touchmove.k", touchMove).bind("touchend.k", function () {
+      k.c.d.bind("touchmove.k", touchMove).bind("touchend.k", () => {
         k.c.d.unbind("touchmove.k touchend.k");
         s.val(s.cv);
       });
@@ -327,7 +318,7 @@
     };
 
     this._mouse = function (e) {
-      var mouseMove = function (e) {
+      var mouseMove = (e) => {
         var v = s.xy2val(e.pageX, e.pageY);
 
         if (v == s.cv) return;
@@ -347,7 +338,7 @@
         .bind(
           // Escape key cancel current change
           "keyup.k",
-          function (e) {
+          (e) => {
             if (e.keyCode === 27) {
               k.c.d.unbind("mouseup.k mousemove.k keyup.k");
 
@@ -357,7 +348,7 @@
             }
           }
         )
-        .bind("mouseup.k", function (e) {
+        .bind("mouseup.k", (e) => {
           k.c.d.unbind("mousemove.k mouseup.k keyup.k");
           s.val(s.cv);
         });
@@ -374,24 +365,24 @@
     };
 
     this._listen = function () {
-      if (!this.o.readOnly) {
+      if (this.o.readOnly) {
+        this.$.attr("readonly", "readonly");
+      } else {
         this.$c
-          .bind("mousedown", function (e) {
+          .bind("mousedown", (e) => {
             e.preventDefault();
             s._xy()._mouse(e);
           })
-          .bind("touchstart", function (e) {
+          .bind("touchstart", (e) => {
             e.preventDefault();
             s._xy()._touch(e);
           });
 
         this.listen();
-      } else {
-        this.$.attr("readonly", "readonly");
       }
 
       if (this.relative) {
-        $(window).resize(function () {
+        $(window).resize(() => {
           s._carve().init();
           s._draw();
         });
@@ -427,27 +418,31 @@
     };
 
     // Abstract methods
-    this.listen = function () {}; // on start, one time
-    this.extend = function () {}; // each time configure triggered
-    this.init = function () {}; // each time configure triggered
-    this.change = function (v) {}; // on change
-    this.val = function (v) {}; // on release
-    this.xy2val = function (x, y) {}; //
-    this.draw = function () {}; // on change / on release
+    this.listen = () => {}; // on start, one time
+    this.extend = () => {}; // each time configure triggered
+    this.init = () => {}; // each time configure triggered
+    this.change = (v) => {}; // on change
+    this.val = (v) => {}; // on release
+    this.xy2val = (x, y) => {}; //
+    this.draw = () => {}; // on change / on release
     this.clear = function () {
       this._clear();
     };
 
     // Utils
-    this.h2rgba = function (h, a) {
+    this.h2rgba = (h, a) => {
       var rgb;
       h = h.substring(1, 7);
-      rgb = [parseInt(h.substring(0, 2), 16), parseInt(h.substring(2, 4), 16), parseInt(h.substring(4, 6), 16)];
+      rgb = [
+        Number.parseInt(h.substring(0, 2), 16),
+        Number.parseInt(h.substring(2, 4), 16),
+        Number.parseInt(h.substring(4, 6), 16),
+      ];
 
       return "rgba(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + "," + a + ")";
     };
 
-    this.copy = function (f, t) {
+    this.copy = (f, t) => {
       for (var i in f) {
         t[i] = f[i];
       }
@@ -523,35 +518,38 @@
 
     this.listen = function () {
       // bind MouseWheel
-      var s = this,
-        mwTimerStop,
+      var mwTimerStop,
         mwTimerRelease,
-        mw = function (e) {
+        mw = (e) => {
           e.preventDefault();
 
           var ori = e.originalEvent,
             deltaX = ori.detail || ori.wheelDeltaX,
             deltaY = ori.detail || ori.wheelDeltaY,
             v =
-              s._validate(s.o.parse(s.$.val())) +
-              (deltaX > 0 || deltaY > 0 ? s.o.step : deltaX < 0 || deltaY < 0 ? -s.o.step : 0);
+              this._validate(this.o.parse(this.$.val())) +
+              (deltaX > 0 || deltaY > 0
+                ? this.o.step
+                : deltaX < 0 || deltaY < 0
+                  ? -this.o.step
+                  : 0);
 
-          v = max(min(v, s.o.max), s.o.min);
+          v = max(min(v, this.o.max), this.o.min);
 
-          s.val(v, false);
+          this.val(v, false);
 
-          if (s.rH) {
+          if (this.rH) {
             // Handle mousewheel stop
             clearTimeout(mwTimerStop);
-            mwTimerStop = setTimeout(function () {
-              s.rH(v);
+            mwTimerStop = setTimeout(() => {
+              this.rH(v);
               mwTimerStop = null;
             }, 100);
 
             // Handle mousewheel releases
             if (!mwTimerRelease) {
-              mwTimerRelease = setTimeout(function () {
-                if (mwTimerStop) s.rH(v);
+              mwTimerRelease = setTimeout(() => {
+                if (mwTimerStop) this.rH(v);
                 mwTimerRelease = null;
               }, 200);
             }
@@ -561,13 +559,13 @@
         to,
         m = 1,
         kv = {
-          37: -s.o.step,
-          38: s.o.step,
-          39: s.o.step,
-          40: -s.o.step,
+          37: -this.o.step,
+          38: this.o.step,
+          39: this.o.step,
+          40: -this.o.step,
         };
 
-      this.$.bind("keydown", function (e) {
+      this.$.bind("keydown", (e) => {
         var kc = e.keyCode;
 
         // numpad support
@@ -575,43 +573,44 @@
           kc = e.keyCode = kc - 48;
         }
 
-        kval = parseInt(String.fromCharCode(kc));
+        kval = Number.parseInt(String.fromCharCode(kc));
 
         if (isNaN(kval)) {
           kc !== 13 && // enter
             kc !== 8 && // bs
             kc !== 9 && // tab
             kc !== 189 && // -
-            (kc !== 190 || s.$.val().match(/\./)) && // . allowed once
+            (kc !== 190 || this.$.val().match(/\./)) && // . allowed once
             e.preventDefault();
 
           // arrows
           if ($.inArray(kc, [37, 38, 39, 40]) > -1) {
             e.preventDefault();
 
-            var v = s.o.parse(s.$.val()) + kv[kc] * m;
-            s.o.stopper && (v = max(min(v, s.o.max), s.o.min));
+            var v = this.o.parse(this.$.val()) + kv[kc] * m;
+            this.o.stopper && (v = max(min(v, this.o.max), this.o.min));
 
-            s.change(s._validate(v));
-            s._draw();
+            this.change(this._validate(v));
+            this._draw();
 
             // long time keydown speed-up
-            to = window.setTimeout(function () {
+            to = window.setTimeout(() => {
               m *= 2;
             }, 30);
           }
         }
-      }).bind("keyup", function (e) {
+      }).bind("keyup", (e) => {
         if (isNaN(kval)) {
           if (to) {
             window.clearTimeout(to);
             to = null;
             m = 1;
-            s.val(s.$.val());
+            this.val(this.$.val());
           }
         } else {
           // kval postcond
-          (s.$.val() > s.o.max && s.$.val(s.o.max)) || (s.$.val() < s.o.min && s.$.val(s.o.min));
+          (this.$.val() > this.o.max && this.$.val(this.o.max)) ||
+            (this.$.val() < this.o.min && this.$.val(this.o.min));
         }
       });
 
@@ -632,7 +631,8 @@
       this.lineCap = this.o.lineCap;
       this.radius = this.xy - this.lineWidth / 2;
 
-      this.o.angleOffset && (this.o.angleOffset = isNaN(this.o.angleOffset) ? 0 : this.o.angleOffset);
+      this.o.angleOffset &&
+        (this.o.angleOffset = isNaN(this.o.angleOffset) ? 0 : this.o.angleOffset);
 
       this.o.angleArc && (this.o.angleArc = isNaN(this.o.angleArc) ? this.PI2 : this.o.angleArc);
 
@@ -708,7 +708,14 @@
       if (this.o.bgColor !== "none") {
         c.beginPath();
         c.strokeStyle = this.o.bgColor;
-        c.arc(this.xy, this.xy, this.radius, this.endAngle - 0.00001, this.startAngle + 0.00001, true);
+        c.arc(
+          this.xy,
+          this.xy,
+          this.radius,
+          this.endAngle - 0.00001,
+          this.startAngle + 0.00001,
+          true
+        );
         c.stroke();
       }
 

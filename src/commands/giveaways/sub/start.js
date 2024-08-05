@@ -9,7 +9,15 @@ const { ChannelType } = require("discord.js");
  * @param {import('discord.js').User} [host]
  * @param {string[]} [allowedRoles]
  */
-module.exports = async (member, giveawayChannel, duration, prize, winners, host, allowedRoles = []) => {
+module.exports = async (
+  member,
+  giveawayChannel,
+  duration,
+  prize,
+  winners,
+  host,
+  allowedRoles = []
+) => {
   try {
     if (!host) host = member.user;
     if (!member.permissions.has("ManageMessages")) {
@@ -39,7 +47,8 @@ module.exports = async (member, giveawayChannel, duration, prize, winners, host,
     };
 
     if (allowedRoles.length > 0) {
-      options.exemptMembers = (member) => !member.roles.cache.find((role) => allowedRoles.includes(role.id));
+      options.exemptMembers = (member) =>
+        !member.roles.cache.find((role) => allowedRoles.includes(role.id));
     }
 
     await member.client.giveawaysManager.start(giveawayChannel, options);

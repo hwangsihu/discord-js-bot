@@ -115,14 +115,16 @@ module.exports = {
     let response;
     if (sub == "ghostping") {
       const status = args[1].toLowerCase();
-      if (!["on", "off"].includes(status)) return message.safeReply("Invalid status. Value must be `on/off`");
+      if (!["on", "off"].includes(status))
+        return message.safeReply("Invalid status. Value must be `on/off`");
       response = await antiGhostPing(settings, status);
     }
 
     //
     else if (sub == "spam") {
       const status = args[1].toLowerCase();
-      if (!["on", "off"].includes(status)) return message.safeReply("Invalid status. Value must be `on/off`");
+      if (!["on", "off"].includes(status))
+        return message.safeReply("Invalid status. Value must be `on/off`");
       response = await antiSpam(settings, status);
     }
 
@@ -130,7 +132,8 @@ module.exports = {
     else if (sub === "massmention") {
       const status = args[1].toLowerCase();
       const threshold = args[2] || 3;
-      if (!["on", "off"].includes(status)) return message.safeReply("Invalid status. Value must be `on/off`");
+      if (!["on", "off"].includes(status))
+        return message.safeReply("Invalid status. Value must be `on/off`");
       response = await antiMassMention(settings, status, threshold);
     }
 
@@ -144,8 +147,10 @@ module.exports = {
     const settings = data.settings;
 
     let response;
-    if (sub == "ghostping") response = await antiGhostPing(settings, interaction.options.getString("status"));
-    else if (sub == "spam") response = await antiSpam(settings, interaction.options.getString("status"));
+    if (sub == "ghostping")
+      response = await antiGhostPing(settings, interaction.options.getString("status"));
+    else if (sub == "spam")
+      response = await antiSpam(settings, interaction.options.getString("status"));
     else if (sub === "massmention") {
       response = await antiMassMention(
         settings,
@@ -174,10 +179,10 @@ async function antiSpam(settings, input) {
 
 async function antiMassMention(settings, input, threshold) {
   const status = input.toUpperCase() === "ON" ? true : false;
-  if (!status) {
-    settings.automod.anti_massmention = 0;
-  } else {
+  if (status) {
     settings.automod.anti_massmention = threshold;
+  } else {
+    settings.automod.anti_massmention = 0;
   }
   await settings.save();
   return `Mass mention detection is now ${status ? "enabled" : "disabled"}`;

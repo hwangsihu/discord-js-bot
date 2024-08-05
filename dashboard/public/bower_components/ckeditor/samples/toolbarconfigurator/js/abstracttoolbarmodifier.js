@@ -1,7 +1,7 @@
 ﻿"function" != typeof Object.create &&
-  (function () {
-    var a = function () {};
-    Object.create = function (b) {
+  (() => {
+    var a = () => {};
+    Object.create = (b) => {
       if (1 < arguments.length) throw Error("Second argument not supported");
       if (null === b) throw Error("Cannot set a null [[Prototype]]");
       if ("object" != typeof b) throw TypeError("Argument must be an object");
@@ -10,37 +10,38 @@
     };
   })();
 CKEDITOR.plugins.add("toolbarconfiguratorarea", {
-  afterInit: function (a) {
-    a.addMode("wysiwyg", function (b) {
+  afterInit: (a) => {
+    a.addMode("wysiwyg", (b) => {
       var c = CKEDITOR.dom.element.createFromHtml(
         '\x3cdiv class\x3d"cke_wysiwyg_div cke_reset" hidefocus\x3d"true"\x3e\x3c/div\x3e'
       );
       a.ui.space("contents").append(c);
       c = a.editable(c);
-      c.detach = CKEDITOR.tools.override(c.detach, function (b) {
-        return function () {
-          b.apply(this, arguments);
-          this.remove();
-        };
-      });
+      c.detach = CKEDITOR.tools.override(
+        c.detach,
+        (b) =>
+          function () {
+            b.apply(this, arguments);
+            this.remove();
+          }
+      );
       a.setData(a.getData(1), b);
       a.fire("contentDom");
     });
-    a.dataProcessor.toHtml = function (b) {
-      return b;
-    };
-    a.dataProcessor.toDataFormat = function (b) {
-      return b;
-    };
+    a.dataProcessor.toHtml = (b) => b;
+    a.dataProcessor.toDataFormat = (b) => b;
   },
 });
 Object.keys ||
-  (Object.keys = (function () {
+  (Object.keys = (() => {
     var a = Object.prototype.hasOwnProperty,
       b = !{ toString: null }.propertyIsEnumerable("toString"),
-      c = "toString toLocaleString valueOf hasOwnProperty isPrototypeOf propertyIsEnumerable constructor".split(" "),
+      c =
+        "toString toLocaleString valueOf hasOwnProperty isPrototypeOf propertyIsEnumerable constructor".split(
+          " "
+        ),
       e = c.length;
-    return function (d) {
+    return (d) => {
       if ("object" !== typeof d && ("function" !== typeof d || null === d))
         throw new TypeError("Object.keys called on non-object");
       var g = [],
@@ -50,7 +51,7 @@ Object.keys ||
       return g;
     };
   })());
-(function () {
+(() => {
   function a(b, c) {
     this.cfg = c || {};
     this.hidden = !1;
@@ -66,15 +67,15 @@ Object.keys ||
     this._onInit(void 0, b, !0);
   };
   a.prototype.init = function (b) {
-    var c = this;
     this.mainContainer = new CKEDITOR.dom.element("div");
-    if (null !== this.fullToolbarEditor.editorInstance) throw "Only one instance of ToolbarModifier is allowed";
+    if (null !== this.fullToolbarEditor.editorInstance)
+      throw "Only one instance of ToolbarModifier is allowed";
     this.editorInstance || this._createEditor(!1);
-    this.editorInstance.once("loaded", function () {
-      c.fullToolbarEditor.init(function () {
-        c._onInit(b);
-        if ("function" == typeof c.onRefresh) c.onRefresh();
-      }, c.editorInstance.config);
+    this.editorInstance.once("loaded", () => {
+      this.fullToolbarEditor.init(() => {
+        this._onInit(b);
+        if ("function" == typeof this.onRefresh) this.onRefresh();
+      }, this.editorInstance.config);
     });
     return this.mainContainer;
   };
@@ -82,9 +83,15 @@ Object.keys ||
     this.originalConfig = this.editorInstance.config;
     this.actualConfig = c ? JSON.parse(c) : JSON.parse(JSON.stringify(this.originalConfig));
     if (!this.actualConfig.toolbarGroups && !this.actualConfig.toolbar) {
-      for (var a = this.actualConfig, d = this.editorInstance.toolbar, g = [], f = d.length, k = 0; k < f; k++) {
+      for (
+        var a = this.actualConfig, d = this.editorInstance.toolbar, g = [], f = d.length, k = 0;
+        k < f;
+        k++
+      ) {
         var h = d[k];
-        "string" == typeof h ? g.push(h) : g.push({ name: h.name, groups: h.groups ? h.groups.slice() : [] });
+        "string" == typeof h
+          ? g.push(h)
+          : g.push({ name: h.name, groups: h.groups ? h.groups.slice() : [] });
       }
       a.toolbarGroups = g;
     }
@@ -127,7 +134,7 @@ Object.keys ||
         ? ((this.waitForReady = !0),
           this.editorInstance.once(
             "instanceReady",
-            function () {
+            () => {
               b();
             },
             this
@@ -136,30 +143,31 @@ Object.keys ||
   };
   a.prototype._createEditor = function (b, c) {
     function e() {}
-    var d = this;
     this.editorInstance = CKEDITOR.replace(this.editorId);
-    this.editorInstance.on("configLoaded", function () {
-      var b = d.editorInstance.config;
+    this.editorInstance.on("configLoaded", () => {
+      var b = this.editorInstance.config;
       c && CKEDITOR.tools.extend(b, c, !0);
       a.extendPluginsConfig(b);
     });
     this.editorInstance.on(
       "uiSpace",
-      function (b) {
+      (b) => {
         "top" != b.data.space && b.stop();
       },
       null,
       null,
       -999
     );
-    this.editorInstance.once("loaded", function () {
-      var c = d.editorInstance.ui.instances,
+    this.editorInstance.once("loaded", () => {
+      var c = this.editorInstance.ui.instances,
         a;
       for (a in c) c[a] && ((c[a].click = e), (c[a].onClick = e));
-      d.isEditableVisible || d._hideEditable();
-      d.currentActive && d.currentActive.name && d._highlightGroup(d.currentActive.name);
-      d.hidden ? d.hideUI() : d.showUI();
-      if (b && "function" === typeof d.onRefresh) d.onRefresh();
+      this.isEditableVisible || this._hideEditable();
+      this.currentActive &&
+        this.currentActive.name &&
+        this._highlightGroup(this.currentActive.name);
+      this.hidden ? this.hideUI() : this.showUI();
+      if (b && "function" === typeof this.onRefresh) this.onRefresh();
     });
   };
   a.prototype.getActualConfig = function () {
@@ -169,7 +177,8 @@ Object.keys ||
     if (this.toolbarButtons.length) {
       this.toolbarContainer = new CKEDITOR.dom.element("div");
       this.toolbarContainer.addClass("toolbar");
-      for (var b = this.toolbarButtons.length, c = 0; c < b; c += 1) this._createToolbarBtn(this.toolbarButtons[c]);
+      for (var b = this.toolbarButtons.length, c = 0; c < b; c += 1)
+        this._createToolbarBtn(this.toolbarButtons[c]);
     }
   };
   a.prototype._createToolbarBtn = function (b) {
@@ -194,7 +203,9 @@ Object.keys ||
     for (var c = b.length, a = 0; a < c; a += 1) {
       var d = b[a];
       "/" == d
-        ? ((d = b[a] = {}), (d.type = "separator"), (d.name = "separator" + CKEDITOR.tools.getNextNumber()))
+        ? ((d = b[a] = {}),
+          (d.type = "separator"),
+          (d.name = "separator" + CKEDITOR.tools.getNextNumber()))
         : ((d.groups = d.groups || []),
           -1 == CKEDITOR.tools.indexOf(d.groups, d.name) &&
             (this.editorInstance.ui.addToolbarGroup(d.name, d.groups[d.groups.length - 1], d.name),
@@ -208,25 +219,21 @@ Object.keys ||
       var d = b[a];
       b[a] = {
         name: d,
-        totalBtns: ToolbarConfigurator.ToolbarModifier.getTotalSubGroupButtonsNumber(d, this.fullToolbarEditor),
+        totalBtns: ToolbarConfigurator.ToolbarModifier.getTotalSubGroupButtonsNumber(
+          d,
+          this.fullToolbarEditor
+        ),
       };
     }
   };
-  a.stringifyJSONintoOneLine = function (b, a) {
+  a.stringifyJSONintoOneLine = (b, a) => {
     a = a || {};
     var e = JSON.stringify(b, null, ""),
       e = e.replace(/\n/g, "");
     a.addSpaces &&
-      ((e = e.replace(/(\{|:|,|\[|\])/g, function (a) {
-        return a + " ";
-      })),
-      (e = e.replace(/(\])/g, function (a) {
-        return " " + a;
-      })));
-    a.noQuotesOnKey &&
-      (e = e.replace(/"(\w*)":/g, function (a, b) {
-        return b + ":";
-      }));
+      ((e = e.replace(/(\{|:|,|\[|\])/g, (a) => a + " ")),
+      (e = e.replace(/(\])/g, (a) => " " + a)));
+    a.noQuotesOnKey && (e = e.replace(/"(\w*)":/g, (a, b) => b + ":"));
     a.singleQuotes && (e = e.replace(/\"/g, "'"));
     return e;
   };
@@ -240,7 +247,7 @@ Object.keys ||
     this.mainContainer.show();
     this.editorInstance.container && this.editorInstance.container.show();
   };
-  a.extendPluginsConfig = function (a) {
+  a.extendPluginsConfig = (a) => {
     var c = a.extraPlugins;
     a.extraPlugins = (c ? c + "," : "") + "toolbarconfiguratorarea";
   };

@@ -5,13 +5,13 @@ $.fn.sparkline.bar = bar = createClass($.fn.sparkline._base, barHighlightMixin, 
   type: "bar",
 
   init: function (el, values, options, width, height) {
-    var barWidth = parseInt(options.get("barWidth"), 10),
-      barSpacing = parseInt(options.get("barSpacing"), 10),
+    var barWidth = Number.parseInt(options.get("barWidth"), 10),
+      barSpacing = Number.parseInt(options.get("barSpacing"), 10),
       chartRangeMin = options.get("chartRangeMin"),
       chartRangeMax = options.get("chartRangeMax"),
       chartRangeClip = options.get("chartRangeClip"),
-      stackMin = Infinity,
-      stackMax = -Infinity,
+      stackMin = Number.POSITIVE_INFINITY,
+      stackMax = Number.NEGATIVE_INFINITY,
       isStackString,
       groupMin,
       groupMax,
@@ -68,8 +68,8 @@ $.fn.sparkline.bar = bar = createClass($.fn.sparkline._base, barHighlightMixin, 
     this.initTarget();
 
     if (chartRangeClip) {
-      clipMin = chartRangeMin === undefined ? -Infinity : chartRangeMin;
-      clipMax = chartRangeMax === undefined ? Infinity : chartRangeMax;
+      clipMin = chartRangeMin === undefined ? Number.NEGATIVE_INFINITY : chartRangeMin;
+      clipMax = chartRangeMax === undefined ? Number.POSITIVE_INFINITY : chartRangeMax;
     }
 
     numValues = [];
@@ -138,7 +138,9 @@ $.fn.sparkline.bar = bar = createClass($.fn.sparkline._base, barHighlightMixin, 
     }
     this.xaxisOffset = xaxisOffset;
 
-    range = stacked ? Math.max.apply(Math, stackRanges) + Math.max.apply(Math, stackRangesNeg) : max - min;
+    range = stacked
+      ? Math.max.apply(Math, stackRanges) + Math.max.apply(Math, stackRangesNeg)
+      : max - min;
 
     // as we plot zero/min values a single pixel line, we add a pixel to all other
     // values - Reduce the effective canvas size to suit
@@ -248,7 +250,9 @@ $.fn.sparkline.bar = bar = createClass($.fn.sparkline._base, barHighlightMixin, 
 
     if (isNull) {
       if (options.get("nullColor")) {
-        color = highlight ? options.get("nullColor") : this.calcHighlightColor(options.get("nullColor"), options);
+        color = highlight
+          ? options.get("nullColor")
+          : this.calcHighlightColor(options.get("nullColor"), options);
         y = yoffset > 0 ? yoffset - 1 : yoffset;
         return target.drawRect(x, y, this.barWidth - 1, 0, color, color);
       } else {

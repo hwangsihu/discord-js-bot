@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function f(b, c, a) {
     if (!b.getCustomData("indent_processed")) {
       var d = this.editor,
@@ -18,7 +18,7 @@
         0 < a && b.addClass(c[a - 1]);
       } else {
         c = m(b, a);
-        a = parseInt(b.getStyle(c), 10);
+        a = Number.parseInt(b.getStyle(c), 10);
         var g = d.config.indentOffset || 40;
         isNaN(a) && (a = 0);
         a += (l ? 1 : -1) * g;
@@ -40,7 +40,7 @@
     n = CKEDITOR.TRISTATE_OFF;
   CKEDITOR.plugins.add("indentblock", {
     requires: "indent",
-    init: function (b) {
+    init: (b) => {
       function c() {
         a.specificDefinition.apply(this, arguments);
         this.allowedContent = {
@@ -64,7 +64,8 @@
           ["ul: splitMarginShorthand"],
         ];
         this.enterBr && (this.allowedContent.div = !0);
-        this.requiredContent = (this.enterBr ? "div" : "p") + (d ? "(" + d.join(",") + ")" : "{margin-left}");
+        this.requiredContent =
+          (this.enterBr ? "div" : "p") + (d ? "(" + d.join(",") + ")" : "{margin-left}");
         this.jobs = {
           20: {
             refresh: function (a, b) {
@@ -84,7 +85,11 @@
                 return this.isIndent
                   ? n
                   : e
-                    ? CKEDITOR[0 >= (parseInt(e.getStyle(m(e)), 10) || 0) ? "TRISTATE_DISABLED" : "TRISTATE_OFF"]
+                    ? CKEDITOR[
+                        0 >= (Number.parseInt(e.getStyle(m(e)), 10) || 0)
+                          ? "TRISTATE_DISABLED"
+                          : "TRISTATE_OFF"
+                      ]
                     : k;
               }
               return k;
@@ -110,9 +115,26 @@
       }
       var a = CKEDITOR.plugins.indent,
         d = b.config.indentClasses;
-      a.registerCommands(b, { indentblock: new c(b, "indentblock", !0), outdentblock: new c(b, "outdentblock") });
+      a.registerCommands(b, {
+        indentblock: new c(b, "indentblock", !0),
+        outdentblock: new c(b, "outdentblock"),
+      });
       CKEDITOR.tools.extend(c.prototype, a.specificDefinition.prototype, {
-        context: { div: 1, dl: 1, h1: 1, h2: 1, h3: 1, h4: 1, h5: 1, h6: 1, ul: 1, ol: 1, p: 1, pre: 1, table: 1 },
+        context: {
+          div: 1,
+          dl: 1,
+          h1: 1,
+          h2: 1,
+          h3: 1,
+          h4: 1,
+          h5: 1,
+          h6: 1,
+          ul: 1,
+          ol: 1,
+          p: 1,
+          pre: 1,
+          table: 1,
+        },
         classNameRegex: d ? new RegExp("(?:^|\\s+)(" + d.join("|") + ")(?\x3d$|\\s)") : null,
       });
     },

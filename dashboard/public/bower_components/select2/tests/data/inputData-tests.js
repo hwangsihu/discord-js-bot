@@ -10,7 +10,7 @@ var InputData = require("select2/compat/inputData");
 
 var InputAdapter = Utils.Decorate(ArrayData, InputData);
 
-test("test that options can be selected", function (assert) {
+test("test that options can be selected", (assert) => {
   var options = new Options({
     data: [
       {
@@ -30,7 +30,7 @@ test("test that options can be selected", function (assert) {
   assert.equal($element.val(), "test", "The id of the item should be the value");
 });
 
-test("unselect the single selected option clears the value", function (assert) {
+test("unselect the single selected option clears the value", (assert) => {
   var options = new Options({
     data: [
       {
@@ -51,7 +51,7 @@ test("unselect the single selected option clears the value", function (assert) {
   assert.equal($element.val(), "", "The id should no longer be in the value");
 });
 
-test("options can be unselected individually", function (assert) {
+test("options can be unselected individually", (assert) => {
   var options = new Options({
     data: [
       {
@@ -77,10 +77,14 @@ test("options can be unselected individually", function (assert) {
     id: "test2",
   });
 
-  assert.equal($element.val(), "test,test3", "The value should contain all the still selected options");
+  assert.equal(
+    $element.val(),
+    "test,test3",
+    "The value should contain all the still selected options"
+  );
 });
 
-test("default values can be set", function (assert) {
+test("default values can be set", (assert) => {
   assert.expect(4);
 
   var options = new Options({
@@ -95,7 +99,7 @@ test("default values can be set", function (assert) {
 
   var adapter = new InputAdapter($element, options);
 
-  adapter.current(function (data) {
+  adapter.current((data) => {
     assert.equal(data.length, 1, "There should only be a single selected option");
 
     var item = data[0];
@@ -107,7 +111,7 @@ test("default values can be set", function (assert) {
   assert.equal($element.val(), "test", "The value should not have been altered");
 });
 
-test("no default value", function (assert) {
+test("no default value", (assert) => {
   assert.expect(2);
 
   var options = new Options({
@@ -122,7 +126,7 @@ test("no default value", function (assert) {
 
   var adapter = new InputAdapter($element, options);
 
-  adapter.current(function (data) {
+  adapter.current((data) => {
     assert.equal(data.length, 0, "There should be no selected options");
   });
 

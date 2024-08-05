@@ -11,7 +11,11 @@ import { defaultLocaleMonths, defaultLocaleMonthsShort } from "../units/month";
 import { defaultLocaleWeek } from "../units/week";
 
 // weekdays
-import { defaultLocaleWeekdays, defaultLocaleWeekdaysMin, defaultLocaleWeekdaysShort } from "../units/day-of-week";
+import {
+  defaultLocaleWeekdays,
+  defaultLocaleWeekdaysMin,
+  defaultLocaleWeekdaysShort,
+} from "../units/day-of-week";
 
 // meridiem
 import { defaultLocaleMeridiemParse } from "../units/hour";

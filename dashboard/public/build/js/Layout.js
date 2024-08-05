@@ -7,9 +7,7 @@
  *        Configure any options by passing data-option="value"
  *        to the body tag.
  */
-+(function ($) {
-  "use strict";
-
++(($) => {
   var DataKey = "lte.layout";
 
   var Default = {
@@ -92,7 +90,7 @@
     );
   };
 
-  Layout.prototype.fix = function () {
+  Layout.prototype.fix = () => {
     // Remove overflow from .wrapper if layout-boxed exists
     $(Selector.layoutBoxed + " > " + Selector.wrapper).css("overflow", "hidden");
 
@@ -187,7 +185,7 @@
 
   // Layout DATA-API
   // ===============
-  $(window).on("load", function () {
+  $(window).on("load", () => {
     Plugin.call($("body"));
   });
 })(jQuery);

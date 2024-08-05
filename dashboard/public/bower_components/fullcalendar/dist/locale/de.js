@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(r) {
       if (n[r]) return n[r].exports;
       var a = (n[r] = { i: r, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = n),
-      (t.d = function (e, n, r) {
+      (t.d = (e, n, r) => {
         t.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: r });
       }),
-      (t.n = function (e) {
-        var n =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var n = e && e.__esModule ? () => e.default : () => e;
         return t.d(n, "a", n), n;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 103))
     );
   })({
-    0: function (t, n) {
+    0: (t, n) => {
       t.exports = e;
     },
-    1: function (e, n) {
+    1: (e, n) => {
       e.exports = t;
     },
-    103: function (e, t, n) {
+    103: (e, t, n) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), n(104);
       var r = n(1);
       r.datepickerLocale("de", "de", {
@@ -66,7 +57,20 @@
           "November",
           "Dezember",
         ],
-        monthNamesShort: ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
+        monthNamesShort: [
+          "Jan",
+          "Feb",
+          "Mär",
+          "Apr",
+          "Mai",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Okt",
+          "Nov",
+          "Dez",
+        ],
         dayNames: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
         dayNamesShort: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
         dayNamesMin: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
@@ -78,19 +82,23 @@
         yearSuffix: "",
       }),
         r.locale("de", {
-          buttonText: { year: "Jahr", month: "Monat", week: "Woche", day: "Tag", list: "Terminübersicht" },
-          allDayText: "Ganztägig",
-          eventLimitText: function (e) {
-            return "+ weitere " + e;
+          buttonText: {
+            year: "Jahr",
+            month: "Monat",
+            week: "Woche",
+            day: "Tag",
+            list: "Terminübersicht",
           },
+          allDayText: "Ganztägig",
+          eventLimitText: (e) => "+ weitere " + e,
           noEventsMessage: "Keine Ereignisse anzuzeigen",
           dayOfMonthFormat: "ddd DD.MM.",
         });
     },
-    104: function (e, t, n) {
-      !(function (e, t) {
+    104: (e, t, n) => {
+      !((e, t) => {
         t(n(0));
-      })(0, function (e) {
+      })(0, (e) => {
         function t(e, t, n, r) {
           var a = {
             m: ["eine Minute", "einer Minute"],
@@ -105,7 +113,10 @@
           return t ? a[n][0] : a[n][1];
         }
         return e.defineLocale("de", {
-          months: "Januar_Februar_März_April_Mai_Juni_Juli_August_September_Oktober_November_Dezember".split("_"),
+          months:
+            "Januar_Februar_März_April_Mai_Juni_Juli_August_September_Oktober_November_Dezember".split(
+              "_"
+            ),
           monthsShort: "Jan._Feb._März_Apr._Mai_Juni_Juli_Aug._Sep._Okt._Nov._Dez.".split("_"),
           monthsParseExact: !0,
           weekdays: "Sonntag_Montag_Dienstag_Mittwoch_Donnerstag_Freitag_Samstag".split("_"),
@@ -150,5 +161,5 @@
         });
       });
     },
-  });
-});
+  })
+);

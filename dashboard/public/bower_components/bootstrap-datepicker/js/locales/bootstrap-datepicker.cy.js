@@ -2,7 +2,7 @@
  * Welsh translation for bootstrap-datepicker
  * S. Morris <s.morris@bangor.ac.uk>
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["cy"] = {
     days: ["Sul", "Llun", "Mawrth", "Mercher", "Iau", "Gwener", "Sadwrn"],
     daysShort: ["Sul", "Llu", "Maw", "Mer", "Iau", "Gwe", "Sad"],
@@ -21,7 +21,20 @@
       "Tachwedd",
       "Rhagfyr",
     ],
-    monthsShort: ["Ion", "Chw", "Maw", "Ebr", "Mai", "Meh", "Gor", "Aws", "Med", "Hyd", "Tach", "Rha"],
+    monthsShort: [
+      "Ion",
+      "Chw",
+      "Maw",
+      "Ebr",
+      "Mai",
+      "Meh",
+      "Gor",
+      "Aws",
+      "Med",
+      "Hyd",
+      "Tach",
+      "Rha",
+    ],
     today: "Heddiw",
   };
 })(jQuery);

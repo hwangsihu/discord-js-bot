@@ -159,7 +159,10 @@ CKEDITOR.lang["sv"] = {
   notification: { closed: "Notifiering stängd." },
   maximize: { maximize: "Maximera", minimize: "Minimera" },
   magicline: { title: "Infoga paragraf här" },
-  list: { bulletedlist: "Infoga/ta bort punktlista", numberedlist: "Infoga/ta bort numrerad lista" },
+  list: {
+    bulletedlist: "Infoga/ta bort punktlista",
+    numberedlist: "Infoga/ta bort numrerad lista",
+  },
   link: {
     acccessKey: "Behörighetsnyckel",
     advanced: "Avancerad",
@@ -283,9 +286,11 @@ CKEDITOR.lang["sv"] = {
   contextmenu: { options: "Context Menu Options" },
   clipboard: {
     copy: "Kopiera",
-    copyError: "Säkerhetsinställningar i din webbläsare tillåter inte åtgärden kopiera. Använd (Ctrl/Cmd+C) istället.",
+    copyError:
+      "Säkerhetsinställningar i din webbläsare tillåter inte åtgärden kopiera. Använd (Ctrl/Cmd+C) istället.",
     cut: "Klipp ut",
-    cutError: "Säkerhetsinställningar i din webbläsare tillåter inte åtgärden klipp ut. Använd (Ctrl/Cmd+X) istället.",
+    cutError:
+      "Säkerhetsinställningar i din webbläsare tillåter inte åtgärden klipp ut. Använd (Ctrl/Cmd+X) istället.",
     paste: "Klistra in",
     pasteNotification:
       "Tryck på %1 för att klistra in. Din webbläsare stödjer inte inklistring via verktygsfältet eller snabbmenyn.",
@@ -345,8 +350,10 @@ CKEDITOR.lang["sv"] = {
     generalTab: "Allmänt",
     advancedTab: "Avancerad",
     validateNumberFailed: "Värdet är inte ett nummer.",
-    confirmNewPage: "Alla ändringar i innehållet kommer att förloras. Är du säker på att du vill ladda en ny sida?",
-    confirmCancel: "Några av alternativen har ändrats. Är du säker på att du vill stänga dialogrutan?",
+    confirmNewPage:
+      "Alla ändringar i innehållet kommer att förloras. Är du säker på att du vill ladda en ny sida?",
+    confirmCancel:
+      "Några av alternativen har ändrats. Är du säker på att du vill stänga dialogrutan?",
     options: "Alternativ",
     target: "Mål",
     targetNew: "Nytt fönster (_blank)",
@@ -374,7 +381,8 @@ CKEDITOR.lang["sv"] = {
     invalidValue: "Felaktigt värde.",
     invalidHeight: "Höjd måste vara ett nummer.",
     invalidWidth: "Bredd måste vara ett nummer.",
-    invalidLength: 'Värdet för fältet "%1" måste vara ett positivt nummer med eller utan en giltig mätenhet (%2).',
+    invalidLength:
+      'Värdet för fältet "%1" måste vara ett positivt nummer med eller utan en giltig mätenhet (%2).',
     invalidCssLength:
       'Värdet för fältet "%1" måste vara ett positivt nummer med eller utan CSS-mätenheter (px, %, in, cm, mm, em, ex, pt, eller pc).',
     invalidHtmlLength:

@@ -85,7 +85,12 @@ CKEDITOR.lang["zh-cn"] = {
     },
     cellPad: "边距",
     cellSpace: "间距",
-    column: { menu: "列", insertBefore: "在左侧插入列", insertAfter: "在右侧插入列", deleteColumn: "删除列" },
+    column: {
+      menu: "列",
+      insertBefore: "在左侧插入列",
+      insertAfter: "在右侧插入列",
+      deleteColumn: "删除列",
+    },
     columns: "列数",
     deleteTable: "删除表格",
     headers: "标题单元格",
@@ -101,7 +106,12 @@ CKEDITOR.lang["zh-cn"] = {
     invalidRows: "指定的列数必须大于零",
     invalidWidth: "表格宽度必须为数字格式",
     menu: "表格属性",
-    row: { menu: "行", insertBefore: "在上方插入行", insertAfter: "在下方插入行", deleteRow: "删除行" },
+    row: {
+      menu: "行",
+      insertBefore: "在上方插入行",
+      insertAfter: "在下方插入行",
+      deleteRow: "删除行",
+    },
     rows: "行数",
     summary: "摘要",
     title: "表格属性",
@@ -256,14 +266,22 @@ CKEDITOR.lang["zh-cn"] = {
     noUrlError: "上传的 URL 未定义",
     responseError: "不正确的服务器响应",
   },
-  fakeobjects: { anchor: "锚点", flash: "Flash 动画", hiddenfield: "隐藏域", iframe: "IFrame", unknown: "未知对象" },
+  fakeobjects: {
+    anchor: "锚点",
+    flash: "Flash 动画",
+    hiddenfield: "隐藏域",
+    iframe: "IFrame",
+    unknown: "未知对象",
+  },
   elementspath: { eleLabel: "元素路径", eleTitle: "%1 元素" },
   contextmenu: { options: "快捷菜单选项" },
   clipboard: {
     copy: "复制",
-    copyError: "您的浏览器安全设置不允许编辑器自动执行复制操作，请使用键盘快捷键(Ctrl/Cmd+C)来完成。",
+    copyError:
+      "您的浏览器安全设置不允许编辑器自动执行复制操作，请使用键盘快捷键(Ctrl/Cmd+C)来完成。",
     cut: "剪切",
-    cutError: "您的浏览器安全设置不允许编辑器自动执行剪切操作，请使用键盘快捷键(Ctrl/Cmd+X)来完成。",
+    cutError:
+      "您的浏览器安全设置不允许编辑器自动执行剪切操作，请使用键盘快捷键(Ctrl/Cmd+X)来完成。",
     paste: "粘贴",
     pasteNotification: "您的浏览器不支持通过工具栏或右键菜单进行粘贴，请按 %1 进行粘贴。",
     pasteArea: "粘贴区域",
@@ -354,9 +372,11 @@ CKEDITOR.lang["zh-cn"] = {
     invalidLength: '为 "%1" 字段设置的值必须是一个正数或者没有一个有效的度量单位 (%2)。',
     invalidCssLength:
       "此“%1”字段的值必须为正数，可以包含或不包含一个有效的 CSS 长度单位(px, %, in, cm, mm, em, ex, pt 或 pc)",
-    invalidHtmlLength: "此“%1”字段的值必须为正数，可以包含或不包含一个有效的 HTML 长度单位(px 或 %)",
+    invalidHtmlLength:
+      "此“%1”字段的值必须为正数，可以包含或不包含一个有效的 HTML 长度单位(px 或 %)",
     invalidInlineStyle: "内联样式必须为格式是以分号分隔的一个或多个“属性名 : 属性值”。",
-    cssLengthTooltip: "输入一个表示像素值的数字，或加上一个有效的 CSS 长度单位(px, %, in, cm, mm, em, ex, pt 或 pc)。",
+    cssLengthTooltip:
+      "输入一个表示像素值的数字，或加上一个有效的 CSS 长度单位(px, %, in, cm, mm, em, ex, pt 或 pc)。",
     unavailable: '%1<span class="cke_accessibility">，不可用</span>',
     keyboard: {
       8: "退格键",

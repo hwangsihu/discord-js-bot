@@ -32,7 +32,7 @@
 
 // Only add this code if we do not already have a canvas implementation
 if (!document.createElement("canvas").getContext) {
-  (function () {
+  (() => {
     // alias some functions to make (compiled) code shorter
     var m = Math;
     var mr = m.round;
@@ -72,17 +72,15 @@ if (!document.createElement("canvas").getContext) {
      *     arguments when the function is called
      * @return {Function} A new function that has bound this
      */
-    function bind(f, obj, var_args) {
+    function bind(f, obj, varArgs) {
       var a = slice.call(arguments, 2);
-      return function () {
-        return f.apply(obj, a.concat(slice.call(arguments)));
-      };
+      return () => f.apply(obj, a.concat(slice.call(arguments)));
     }
 
-    var G_vmlCanvasManager_ = {
-      init: function (opt_doc) {
+    var gVmlCanvasManager_ = {
+      init: function (optDoc) {
         if (/MSIE/.test(navigator.userAgent) && !window.opera) {
-          var doc = opt_doc || document;
+          var doc = optDoc || document;
           // Create a dummy element so that IE will allow canvas elements to be
           // recognized.
           doc.createElement("canvas");
@@ -126,7 +124,7 @@ if (!document.createElement("canvas").getContext) {
        * @param {HTMLElement} el The canvas element to initialize.
        * @return {HTMLElement} the element that was created.
        */
-      initElement: function (el) {
+      initElement: (el) => {
         if (!el.getContext) {
           el.getContext = getContext;
 
@@ -183,7 +181,7 @@ if (!document.createElement("canvas").getContext) {
       }
     }
 
-    G_vmlCanvasManager_.init();
+    gVmlCanvasManager_.init();
 
     // precompute "00" to "FF"
     var dec2hex = [];
@@ -335,10 +333,10 @@ if (!document.createElement("canvas").getContext) {
       this.currentY_ = p.y;
     };
 
-    contextPrototype.bezierCurveTo = function (aCP1x, aCP1y, aCP2x, aCP2y, aX, aY) {
+    contextPrototype.bezierCurveTo = function (aCp1x, aCp1y, aCp2x, aCp2y, aX, aY) {
       var p = this.getCoords_(aX, aY);
-      var cp1 = this.getCoords_(aCP1x, aCP1y);
-      var cp2 = this.getCoords_(aCP2x, aCP2y);
+      var cp1 = this.getCoords_(aCp1x, aCp1y);
+      var cp2 = this.getCoords_(aCp2x, aCp2y);
       bezierCurveTo(this, cp1, cp2, p);
     };
 
@@ -444,7 +442,7 @@ if (!document.createElement("canvas").getContext) {
       this.currentPath_ = oldPath;
     };
 
-    contextPrototype.createLinearGradient = function (aX0, aY0, aX1, aY1) {
+    contextPrototype.createLinearGradient = (aX0, aY0, aX1, aY1) => {
       var gradient = new CanvasGradient_("gradient");
       gradient.x0_ = aX0;
       gradient.y0_ = aY0;
@@ -453,7 +451,7 @@ if (!document.createElement("canvas").getContext) {
       return gradient;
     };
 
-    contextPrototype.createRadialGradient = function (aX0, aY0, aR0, aX1, aY1, aR1) {
+    contextPrototype.createRadialGradient = (aX0, aY0, aR0, aX1, aY1, aR1) => {
       var gradient = new CanvasGradient_("gradientradial");
       gradient.x0_ = aX0;
       gradient.y0_ = aY0;
@@ -464,7 +462,7 @@ if (!document.createElement("canvas").getContext) {
       return gradient;
     };
 
-    contextPrototype.drawImage = function (image, var_args) {
+    contextPrototype.drawImage = function (image, varArgs) {
       var dx, dy, dw, dh, sx, sy, sw, sh;
 
       // to find the original width we overide the width and height
@@ -811,9 +809,7 @@ if (!document.createElement("canvas").getContext) {
         // We need to sort the color stops in ascending order by offset,
         // otherwise IE won't interpret it correctly.
         var stops = fillStyle.colors_;
-        stops.sort(function (cs1, cs2) {
-          return cs1.offset - cs2.offset;
-        });
+        stops.sort((cs1, cs2) => cs1.offset - cs2.offset);
 
         var length = stops.length;
         var color1 = stops[0].color;
@@ -982,17 +978,15 @@ if (!document.createElement("canvas").getContext) {
     };
 
     /******** STUBS ********/
-    contextPrototype.clip = function () {
+    contextPrototype.clip = () => {
       // TODO: Implement
     };
 
-    contextPrototype.arcTo = function () {
+    contextPrototype.arcTo = () => {
       // TODO: Implement
     };
 
-    contextPrototype.createPattern = function () {
-      return new CanvasPattern_();
-    };
+    contextPrototype.createPattern = () => new CanvasPattern_();
 
     // Gradient / Pattern Stubs
     function CanvasGradient_(aType) {
@@ -1014,7 +1008,7 @@ if (!document.createElement("canvas").getContext) {
     function CanvasPattern_() {}
 
     // set up externs
-    G_vmlCanvasManager = G_vmlCanvasManager_;
+    G_vmlCanvasManager = gVmlCanvasManager_;
     CanvasRenderingContext2D = CanvasRenderingContext2D_;
     CanvasGradient = CanvasGradient_;
     CanvasPattern = CanvasPattern_;

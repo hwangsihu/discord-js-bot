@@ -1,12 +1,10 @@
-define(["../core"], function (jQuery, noGlobal) {
-  "use strict";
-
+define(["../core"], (jQuery, noGlobal) => {
   var // Map over jQuery in case of overwrite
     _jQuery = window.jQuery,
     // Map over the $ in case of overwrite
     _$ = window.$;
 
-  jQuery.noConflict = function (deep) {
+  jQuery.noConflict = (deep) => {
     if (window.$ === jQuery) {
       window.$ = _$;
     }

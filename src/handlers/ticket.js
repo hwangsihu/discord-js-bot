@@ -78,7 +78,8 @@ async function closeTicket(channel, closedBy, reason) {
     reversed.forEach((m) => {
       content += `[${new Date(m.createdAt).toLocaleString("en-US")}] - ${m.author.username}\n`;
       if (m.cleanContent !== "") content += `${m.cleanContent}\n`;
-      if (m.attachments.size > 0) content += `${m.attachments.map((att) => att.proxyURL).join(", ")}\n`;
+      if (m.attachments.size > 0)
+        content += `${m.attachments.map((att) => att.proxyURL).join(", ")}\n`;
       content += "\n";
     });
 
@@ -89,14 +90,19 @@ async function closeTicket(channel, closedBy, reason) {
     if (logsUrl) {
       components.push(
         new ActionRowBuilder().addComponents(
-          new ButtonBuilder().setLabel("Transcript").setURL(logsUrl.short).setStyle(ButtonStyle.Link)
+          new ButtonBuilder()
+            .setLabel("Transcript")
+            .setURL(logsUrl.short)
+            .setStyle(ButtonStyle.Link)
         )
       );
     }
 
     if (channel.deletable) await channel.delete();
 
-    const embed = new EmbedBuilder().setAuthor({ name: "Ticket Closed" }).setColor(TICKET.CLOSE_EMBED);
+    const embed = new EmbedBuilder()
+      .setAuthor({ name: "Ticket Closed" })
+      .setColor(TICKET.CLOSE_EMBED);
     const fields = [];
 
     if (reason) fields.push({ name: "Reason", value: reason, inline: false });
@@ -173,7 +179,8 @@ async function handleTicketOpen(interaction) {
 
   // limit check
   const existing = getTicketChannels(guild).size;
-  if (existing > settings.ticket.limit) return interaction.followUp("There are too many open tickets. Try again later");
+  if (existing > settings.ticket.limit)
+    return interaction.followUp("There are too many open tickets. Try again later");
 
   // check categories
   let catName = null;
@@ -189,7 +196,10 @@ async function handleTicketOpen(interaction) {
         .addOptions(options)
     );
 
-    await interaction.followUp({ content: "Please choose a ticket category", components: [menuRow] });
+    await interaction.followUp({
+      content: "Please choose a ticket category",
+      components: [menuRow],
+    });
     const res = await interaction.channel
       .awaitMessageComponent({
         componentType: ComponentType.StringSelect,
@@ -250,7 +260,7 @@ async function handleTicketOpen(interaction) {
       )
       .setFooter({ text: "You may close your ticket anytime by clicking the button below" });
 
-    let buttonsRow = new ActionRowBuilder().addComponents(
+    const buttonsRow = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setLabel("Close Ticket")
         .setCustomId("TICKET_CLOSE")
@@ -258,7 +268,11 @@ async function handleTicketOpen(interaction) {
         .setStyle(ButtonStyle.Primary)
     );
 
-    const sent = await tktChannel.send({ content: user.toString(), embeds: [embed], components: [buttonsRow] });
+    const sent = await tktChannel.send({
+      content: user.toString(),
+      embeds: [embed],
+      components: [buttonsRow],
+    });
 
     const dmEmbed = new EmbedBuilder()
       .setColor(TICKET.CREATE_EMBED)
@@ -290,7 +304,9 @@ async function handleTicketClose(interaction) {
   await interaction.deferReply({ ephemeral: true });
   const status = await closeTicket(interaction.channel, interaction.user);
   if (status === "MISSING_PERMISSIONS") {
-    return interaction.followUp("Cannot close the ticket, missing permissions. Contact server manager for help!");
+    return interaction.followUp(
+      "Cannot close the ticket, missing permissions. Contact server manager for help!"
+    );
   } else if (status == "ERROR") {
     return interaction.followUp("Failed to close the ticket, an error occurred!");
   }

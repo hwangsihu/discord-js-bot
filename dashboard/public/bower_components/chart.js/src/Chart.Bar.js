@@ -1,8 +1,5 @@
 (function () {
-  "use strict";
-
-  var root = this,
-    Chart = root.Chart,
+  var Chart = this.Chart,
     helpers = Chart.helpers;
 
   var defaultConfig = {
@@ -56,14 +53,20 @@
             xAbsolute = this.calculateX(barIndex) - xWidth / 2,
             barWidth = this.calculateBarWidth(datasetCount);
 
-          return xAbsolute + barWidth * datasetIndex + datasetIndex * options.barDatasetSpacing + barWidth / 2;
+          return (
+            xAbsolute +
+            barWidth * datasetIndex +
+            datasetIndex * options.barDatasetSpacing +
+            barWidth / 2
+          );
         },
         calculateBaseWidth: function () {
           return this.calculateX(1) - this.calculateX(0) - 2 * options.barValueSpacing;
         },
         calculateBarWidth: function (datasetCount) {
           //The padding between datasets is to the right of each bar, providing that there are more than 1 dataset
-          var baseWidth = this.calculateBaseWidth() - (datasetCount - 1) * options.barDatasetSpacing;
+          var baseWidth =
+            this.calculateBaseWidth() - (datasetCount - 1) * options.barDatasetSpacing;
 
           return baseWidth / datasetCount;
         },
@@ -76,10 +79,10 @@
         helpers.bindEvents(this, this.options.tooltipEvents, function (evt) {
           var activeBars = evt.type !== "mouseout" ? this.getBarsAtEvent(evt) : [];
 
-          this.eachBars(function (bar) {
+          this.eachBars((bar) => {
             bar.restore(["fillColor", "strokeColor"]);
           });
-          helpers.each(activeBars, function (activeBar) {
+          helpers.each(activeBars, (activeBar) => {
             activeBar.fillColor = activeBar.highlightFill;
             activeBar.strokeColor = activeBar.highlightStroke;
           });
@@ -147,11 +150,11 @@
     update: function () {
       this.scale.update();
       // Reset any highlight colours before updating.
-      helpers.each(this.activeElements, function (activeElement) {
+      helpers.each(this.activeElements, (activeElement) => {
         activeElement.restore(["fillColor", "strokeColor"]);
       });
 
-      this.eachBars(function (bar) {
+      this.eachBars((bar) => {
         bar.save();
       });
       this.render();
@@ -168,14 +171,16 @@
     getBarsAtEvent: function (e) {
       var barsArray = [],
         eventPosition = helpers.getRelativePosition(e),
-        datasetIterator = function (dataset) {
+        datasetIterator = (dataset) => {
           barsArray.push(dataset.bars[barIndex]);
         },
         barIndex;
 
       for (var datasetIndex = 0; datasetIndex < this.datasets.length; datasetIndex++) {
         for (barIndex = 0; barIndex < this.datasets[datasetIndex].bars.length; barIndex++) {
-          if (this.datasets[datasetIndex].bars[barIndex].inRange(eventPosition.x, eventPosition.y)) {
+          if (
+            this.datasets[datasetIndex].bars[barIndex].inRange(eventPosition.x, eventPosition.y)
+          ) {
             helpers.each(this.datasets, datasetIterator);
             return barsArray;
           }
@@ -185,11 +190,9 @@
       return barsArray;
     },
     buildScale: function (labels) {
-      var self = this;
-
-      var dataTotal = function () {
+      var dataTotal = () => {
         var values = [];
-        self.eachBars(function (bar) {
+        this.eachBars((bar) => {
           values.push(bar.value);
         });
         return values;
@@ -218,14 +221,24 @@
           helpers.extend(this, updatedRanges);
         },
         xLabels: labels,
-        font: helpers.fontString(this.options.scaleFontSize, this.options.scaleFontStyle, this.options.scaleFontFamily),
+        font: helpers.fontString(
+          this.options.scaleFontSize,
+          this.options.scaleFontStyle,
+          this.options.scaleFontFamily
+        ),
         lineWidth: this.options.scaleLineWidth,
         lineColor: this.options.scaleLineColor,
         showHorizontalLines: this.options.scaleShowHorizontalLines,
         showVerticalLines: this.options.scaleShowVerticalLines,
         gridLineWidth: this.options.scaleShowGridLines ? this.options.scaleGridLineWidth : 0,
-        gridLineColor: this.options.scaleShowGridLines ? this.options.scaleGridLineColor : "rgba(0,0,0,0)",
-        padding: this.options.showScale ? 0 : this.options.barShowStroke ? this.options.barStrokeWidth : 0,
+        gridLineColor: this.options.scaleShowGridLines
+          ? this.options.scaleGridLineColor
+          : "rgba(0,0,0,0)",
+        padding: this.options.showScale
+          ? 0
+          : this.options.barShowStroke
+            ? this.options.barStrokeWidth
+            : 0,
         showLabels: this.options.scaleShowLabels,
         display: this.options.showScale,
       };
@@ -252,7 +265,11 @@
             new this.BarClass({
               value: value,
               label: label,
-              x: this.scale.calculateBarX(this.datasets.length, datasetIndex, this.scale.valuesCount + 1),
+              x: this.scale.calculateBarX(
+                this.datasets.length,
+                datasetIndex,
+                this.scale.valuesCount + 1
+              ),
               y: this.scale.endPoint,
               width: this.scale.calculateBarWidth(this.datasets.length),
               base: this.scale.endPoint,
@@ -273,7 +290,7 @@
       //Then re-render the chart.
       helpers.each(
         this.datasets,
-        function (dataset) {
+        (dataset) => {
           dataset.bars.shift();
         },
         this

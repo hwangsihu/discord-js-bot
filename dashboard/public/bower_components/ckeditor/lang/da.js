@@ -127,7 +127,11 @@ CKEDITOR.lang["da"] = {
     panelTitle2: "Inline typografi",
     panelTitle3: "Object typografi",
   },
-  specialchar: { options: "Muligheder for specialkarakterer", title: "Vælg symbol", toolbar: "Indsæt symbol" },
+  specialchar: {
+    options: "Muligheder for specialkarakterer",
+    title: "Vælg symbol",
+    toolbar: "Indsæt symbol",
+  },
   sourcearea: { toolbar: "Kilde" },
   scayt: {
     btn_about: "Om SCAYT",
@@ -148,7 +152,8 @@ CKEDITOR.lang["da"] = {
   pastefromword: {
     confirmCleanup:
       "Den tekst du forsøger at indsætte ser ud til at komme fra Word. Vil du rense teksten før den indsættes?",
-    error: "Det var ikke muligt at fjerne formatteringen på den indsatte tekst grundet en intern fejl",
+    error:
+      "Det var ikke muligt at fjerne formatteringen på den indsatte tekst grundet en intern fejl",
     title: "Indsæt fra Word",
     toolbar: "Indsæt fra Word",
   },
@@ -343,8 +348,10 @@ CKEDITOR.lang["da"] = {
     generalTab: "Generelt",
     advancedTab: "Avanceret",
     validateNumberFailed: "Værdien er ikke et tal.",
-    confirmNewPage: "Alt indhold, der ikke er blevet gemt, vil gå tabt. Er du sikker på, at du vil indlæse en ny side?",
-    confirmCancel: "Nogle af indstillingerne er blevet ændret. Er du sikker på, at du vil lukke vinduet?",
+    confirmNewPage:
+      "Alt indhold, der ikke er blevet gemt, vil gå tabt. Er du sikker på, at du vil indlæse en ny side?",
+    confirmCancel:
+      "Nogle af indstillingerne er blevet ændret. Er du sikker på, at du vil lukke vinduet?",
     options: "Vis muligheder",
     target: "Mål",
     targetNew: "Nyt vindue (_blank)",

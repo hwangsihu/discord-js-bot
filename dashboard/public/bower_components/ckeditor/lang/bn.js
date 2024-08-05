@@ -106,7 +106,12 @@ CKEDITOR.lang["bn"] = {
     invalidRows: "Number of rows must be a number greater than 0.",
     invalidWidth: "Table width must be a number.",
     menu: "টেবিল প্রোপার্টি",
-    row: { menu: "রো", insertBefore: "Insert Row Before", insertAfter: "Insert Row After", deleteRow: "রো মুছে দাও" },
+    row: {
+      menu: "রো",
+      insertBefore: "Insert Row Before",
+      insertAfter: "Insert Row After",
+      deleteRow: "রো মুছে দাও",
+    },
     rows: "রো",
     summary: "সারাংশ",
     title: "টেবিল প্রোপার্টি",
@@ -122,7 +127,11 @@ CKEDITOR.lang["bn"] = {
     panelTitle2: "Inline Styles",
     panelTitle3: "Object Styles",
   },
-  specialchar: { options: "Special Character Options", title: "বিশেষ ক্যারেক্টার বাছাই কর", toolbar: "বিশেষ অক্ষর যুক্ত কর" },
+  specialchar: {
+    options: "Special Character Options",
+    title: "বিশেষ ক্যারেক্টার বাছাই কর",
+    toolbar: "বিশেষ অক্ষর যুক্ত কর",
+  },
   sourcearea: { toolbar: "উৎস" },
   scayt: {
     btn_about: "About SCAYT",
@@ -141,7 +150,8 @@ CKEDITOR.lang["bn"] = {
     title: "সাদা টেক্সট হিসেবে পেস্ট কর",
   },
   pastefromword: {
-    confirmCleanup: "The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?",
+    confirmCleanup:
+      "The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?",
     error: "It was not possible to clean up the pasted data due to an internal error",
     title: "পেস্ট (শব্দ)",
     toolbar: "পেস্ট (শব্দ)",
@@ -337,8 +347,10 @@ CKEDITOR.lang["bn"] = {
     generalTab: "General",
     advancedTab: "এডভান্সড",
     validateNumberFailed: "This value is not a number.",
-    confirmNewPage: "Any unsaved changes to this content will be lost. Are you sure you want to load new page?",
-    confirmCancel: "You have changed some options. Are you sure you want to close the dialog window?",
+    confirmNewPage:
+      "Any unsaved changes to this content will be lost. Are you sure you want to load new page?",
+    confirmCancel:
+      "You have changed some options. Are you sure you want to close the dialog window?",
     options: "Options",
     target: "টার্গেট",
     targetNew: "New Window (_blank)",

@@ -109,15 +109,17 @@ module.exports = {
 
     //
     else if (sub === "deposit") {
-      const coins = args.length && parseInt(args[1]);
-      if (isNaN(coins)) return message.safeReply("Provide a valid number of coins you wish to deposit");
+      const coins = args.length && Number.parseInt(args[1]);
+      if (isNaN(coins))
+        return message.safeReply("Provide a valid number of coins you wish to deposit");
       response = await deposit(message.author, coins);
     }
 
     //
     else if (sub === "withdraw") {
-      const coins = args.length && parseInt(args[1]);
-      if (isNaN(coins)) return message.safeReply("Provide a valid number of coins you wish to withdraw");
+      const coins = args.length && Number.parseInt(args[1]);
+      if (isNaN(coins))
+        return message.safeReply("Provide a valid number of coins you wish to withdraw");
       response = await withdraw(message.author, coins);
     }
 
@@ -126,8 +128,9 @@ module.exports = {
       if (args.length < 3) return message.safeReply("Provide a valid user and coins to transfer");
       const target = await message.guild.resolveMember(args[1], true);
       if (!target) return message.safeReply("Provide a valid user to transfer coins to");
-      const coins = parseInt(args[2]);
-      if (isNaN(coins)) return message.safeReply("Provide a valid number of coins you wish to transfer");
+      const coins = Number.parseInt(args[2]);
+      if (isNaN(coins))
+        return message.safeReply("Provide a valid number of coins you wish to transfer");
       response = await transfer(message.author, target.user, coins);
     }
 

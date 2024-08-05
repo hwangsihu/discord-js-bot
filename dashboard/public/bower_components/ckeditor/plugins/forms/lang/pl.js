@@ -40,7 +40,11 @@
     btnSetValue: "Ustaw jako zaznaczoną",
     btnDelete: "Usuń",
   },
-  textarea: { title: "Właściwości obszaru tekstowego", cols: "Liczba kolumn", rows: "Liczba wierszy" },
+  textarea: {
+    title: "Właściwości obszaru tekstowego",
+    cols: "Liczba kolumn",
+    rows: "Liczba wierszy",
+  },
   textfield: {
     title: "Właściwości pola tekstowego",
     name: "Nazwa",

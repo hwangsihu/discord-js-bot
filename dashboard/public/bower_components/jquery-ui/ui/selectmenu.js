@@ -8,7 +8,7 @@
  *
  * http://api.jqueryui.com/selectmenu
  */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["jquery", "./core", "./widget", "./position", "./menu"], factory);
@@ -16,8 +16,8 @@
     // Browser globals
     factory(jQuery);
   }
-})(function ($) {
-  return $.widget("ui.selectmenu", {
+})(($) =>
+  $.widget("ui.selectmenu", {
     version: "1.11.4",
     defaultElement: "<select>",
     options: {
@@ -58,8 +58,6 @@
     },
 
     _drawButton: function () {
-      var that = this;
-
       // Associate existing label with the new button
       this.label = $("label[for='" + this.ids.element + "']").attr("for", this.ids.button);
       this._on(this.label, {
@@ -96,11 +94,11 @@
       this._resizeButton();
 
       this._on(this.button, this._buttonEvents);
-      this.button.one("focusin", function () {
+      this.button.one("focusin", () => {
         // Delay rendering the menu items until the button receives focus.
         // The menu may have already been rendered via a programmatic open.
-        if (!that.menuItems) {
-          that._refreshMenu();
+        if (!this.menuItems) {
+          this._refreshMenu();
         }
       });
       this._hoverable(this.button);
@@ -108,8 +106,6 @@
     },
 
     _drawMenu: function () {
-      var that = this;
-
       // Create menu
       this.menu = $("<ul>", {
         "aria-hidden": "true",
@@ -128,29 +124,29 @@
       this.menuInstance = this.menu
         .menu({
           role: "listbox",
-          select: function (event, ui) {
+          select: (event, ui) => {
             event.preventDefault();
 
             // support: IE8
             // If the item was selected via a click, the text selection
             // will be destroyed in IE
-            that._setSelection();
+            this._setSelection();
 
-            that._select(ui.item.data("ui-selectmenu-item"), event);
+            this._select(ui.item.data("ui-selectmenu-item"), event);
           },
-          focus: function (event, ui) {
+          focus: (event, ui) => {
             var item = ui.item.data("ui-selectmenu-item");
 
             // Prevent inital focus from firing and check if its a newly focused item
-            if (that.focusIndex != null && item.index !== that.focusIndex) {
-              that._trigger("focus", event, { item: item });
-              if (!that.isOpen) {
-                that._select(item, event);
+            if (this.focusIndex != null && item.index !== this.focusIndex) {
+              this._trigger("focus", event, { item: item });
+              if (!this.isOpen) {
+                this._select(item, event);
               }
             }
-            that.focusIndex = item.index;
+            this.focusIndex = item.index;
 
-            that.button.attr("aria-activedescendant", that.menuItems.eq(item.index).attr("id"));
+            this.button.attr("aria-activedescendant", this.menuItems.eq(item.index).attr("id"));
           },
         })
         .menu("instance");
@@ -162,14 +158,10 @@
       this.menuInstance._off(this.menu, "mouseleave");
 
       // Cancel the menu's collapseAll on document click
-      this.menuInstance._closeOnDocumentClick = function () {
-        return false;
-      };
+      this.menuInstance._closeOnDocumentClick = () => false;
 
       // Selects often contain empty items, but never contain dividers
-      this.menuInstance._isDivider = function () {
-        return false;
-      };
+      this.menuInstance._isDivider = () => false;
     },
 
     refresh: function () {
@@ -212,12 +204,12 @@
       }
 
       // If this is the first time the menu is being opened, render the items
-      if (!this.menuItems) {
-        this._refreshMenu();
-      } else {
+      if (this.menuItems) {
         // Menu clears focus on close, reset focus to selected item
         this.menu.find(".ui-state-focus").removeClass("ui-state-focus");
         this.menuInstance.focus(null, this._getSelectedItem());
+      } else {
+        this._refreshMenu();
       }
 
       this.isOpen = true;
@@ -257,10 +249,9 @@
     },
 
     _renderMenu: function (ul, items) {
-      var that = this,
-        currentOptgroup = "";
+      var currentOptgroup = "";
 
-      $.each(items, function (index, item) {
+      $.each(items, (index, item) => {
         if (item.optgroup !== currentOptgroup) {
           $("<li>", {
             class:
@@ -272,7 +263,7 @@
           currentOptgroup = item.optgroup;
         }
 
-        that._renderItemData(ul, item);
+        this._renderItemData(ul, item);
       });
     },
 
@@ -291,7 +282,7 @@
       return li.appendTo(ul);
     },
 
-    _setText: function (element, value) {
+    _setText: (element, value) => {
       if (value) {
         element.text(value);
       } else {
@@ -481,7 +472,10 @@
 
     _setOption: function (key, value) {
       if (key === "icons") {
-        this.button.find("span.ui-icon").removeClass(this.options.icons.button).addClass(value.button);
+        this.button
+          .find("span.ui-icon")
+          .removeClass(this.options.icons.button)
+          .addClass(value.button);
       }
 
       this._super(key, value);
@@ -512,7 +506,8 @@
       var element = this.options.appendTo;
 
       if (element) {
-        element = element.jquery || element.nodeType ? $(element) : this.document.find(element).eq(0);
+        element =
+          element.jquery || element.nodeType ? $(element) : this.document.find(element).eq(0);
       }
 
       if (!element || !element[0]) {
@@ -565,7 +560,7 @@
 
     _parseOptions: function (options) {
       var data = [];
-      options.each(function (index, item) {
+      options.each((index, item) => {
         var option = $(item),
           optgroup = option.parent("optgroup");
         data.push({
@@ -587,5 +582,5 @@
       this.element.removeUniqueId();
       this.label.attr("for", this.ids.element);
     },
-  });
-});
+  })
+);

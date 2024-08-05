@@ -44,7 +44,9 @@ module.exports = {
 };
 
 async function weather(place) {
-  const response = await getJson(`http://api.weatherstack.com/current?access_key=${API_KEY}&query=${place}`);
+  const response = await getJson(
+    `http://api.weatherstack.com/current?access_key=${API_KEY}&query=${place}`
+  );
   if (!response.success) return MESSAGES.API_ERROR;
 
   const json = response.data;
@@ -58,7 +60,11 @@ async function weather(place) {
       { name: "City", value: json.location?.name || "NA", inline: true },
       { name: "Region", value: json.location?.region || "NA", inline: true },
       { name: "Country", value: json.location?.country || "NA", inline: true },
-      { name: "Weather condition", value: json.current?.weather_descriptions[0] || "NA", inline: true },
+      {
+        name: "Weather condition",
+        value: json.current?.weather_descriptions[0] || "NA",
+        inline: true,
+      },
       { name: "Date", value: json.location?.localtime.slice(0, 10) || "NA", inline: true },
       { name: "Time", value: json.location?.localtime.slice(11, 16) || "NA", inline: true },
       { name: "Temperature", value: `${json.current?.temperature}°C`, inline: true },

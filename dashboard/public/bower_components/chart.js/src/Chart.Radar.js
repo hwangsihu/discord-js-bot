@@ -1,8 +1,5 @@
 (function () {
-  "use strict";
-
-  var root = this,
-    Chart = root.Chart,
+  var Chart = this.Chart,
     helpers = Chart.helpers;
 
   Chart.Type.extend({
@@ -82,10 +79,10 @@
         helpers.bindEvents(this, this.options.tooltipEvents, function (evt) {
           var activePointsCollection = evt.type !== "mouseout" ? this.getPointsAtEvent(evt) : [];
 
-          this.eachPoints(function (point) {
+          this.eachPoints((point) => {
             point.restore(["fillColor", "strokeColor"]);
           });
-          helpers.each(activePointsCollection, function (activePoint) {
+          helpers.each(activePointsCollection, (activePoint) => {
             activePoint.fillColor = activePoint.highlightFill;
             activePoint.strokeColor = activePoint.highlightStroke;
           });
@@ -115,7 +112,10 @@
               //Add a new point for each piece of data, passing any required data to draw.
               var pointPosition;
               if (!this.scale.animation) {
-                pointPosition = this.scale.getPointPosition(index, this.scale.calculateCenterOffset(dataPoint));
+                pointPosition = this.scale.getPointPosition(
+                  index,
+                  this.scale.calculateCenterOffset(dataPoint)
+                );
               }
               datasetObject.points.push(
                 new this.PointClass({
@@ -169,7 +169,7 @@
       }
 
       if (fromCenter.distance <= this.scale.drawingArea) {
-        helpers.each(this.datasets, function (dataset) {
+        helpers.each(this.datasets, (dataset) => {
           activePointsCollection.push(dataset.points[pointIndex]);
         });
       }
@@ -213,13 +213,13 @@
       this.scale.buildYLabels();
     },
     updateScaleRange: function (datasets) {
-      var valuesArray = (function () {
+      var valuesArray = (() => {
         var totalDataArray = [];
-        helpers.each(datasets, function (dataset) {
+        helpers.each(datasets, (dataset) => {
           if (dataset.data) {
             totalDataArray = totalDataArray.concat(dataset.data);
           } else {
-            helpers.each(dataset.points, function (point) {
+            helpers.each(dataset.points, (point) => {
               totalDataArray.push(point.value);
             });
           }
@@ -232,7 +232,8 @@
             steps: this.options.scaleSteps,
             stepValue: this.options.scaleStepWidth,
             min: this.options.scaleStartValue,
-            max: this.options.scaleStartValue + this.options.scaleSteps * this.options.scaleStepWidth,
+            max:
+              this.options.scaleStartValue + this.options.scaleSteps * this.options.scaleStepWidth,
           }
         : helpers.calculateScaleRange(
             valuesArray,
@@ -279,7 +280,7 @@
       this.scale.labels.shift();
       helpers.each(
         this.datasets,
-        function (dataset) {
+        (dataset) => {
           dataset.points.shift();
         },
         this
@@ -288,7 +289,7 @@
       this.update();
     },
     update: function () {
-      this.eachPoints(function (point) {
+      this.eachPoints((point) => {
         point.save();
       });
       this.reflow();
@@ -335,7 +336,7 @@
           ctx.beginPath();
           helpers.each(
             dataset.points,
-            function (point, index) {
+            (point, index) => {
               if (index === 0) {
                 ctx.moveTo(point.x, point.y);
               } else {
@@ -353,7 +354,7 @@
           //Now draw the points over the line
           //A little inefficient double looping, but better than the line
           //lagging behind the point positions
-          helpers.each(dataset.points, function (point) {
+          helpers.each(dataset.points, (point) => {
             if (point.hasValue()) {
               point.draw();
             }

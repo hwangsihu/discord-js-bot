@@ -2,16 +2,17 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-CKEDITOR.dialog.add("image2", function (f) {
+CKEDITOR.dialog.add("image2", (f) => {
   function C() {
     var a = this.getValue().match(D);
-    (a = !(!a || 0 === parseInt(a[1], 10))) || alert(c.invalidLength.replace("%1", c[this.id]).replace("%2", "px"));
+    (a = !(!a || 0 === Number.parseInt(a[1], 10))) ||
+      alert(c.invalidLength.replace("%1", c[this.id]).replace("%2", "px"));
     return a;
   }
   function N() {
     function a(a, c) {
       q.push(
-        b.once(a, function (a) {
+        b.once(a, (a) => {
           for (var b; (b = q.pop()); ) b.removeListener();
           c(a);
         })
@@ -19,15 +20,15 @@ CKEDITOR.dialog.add("image2", function (f) {
     }
     var b = r.createElement("img"),
       q = [];
-    return function (q, c, e) {
-      a("load", function () {
+    return (q, c, e) => {
+      a("load", () => {
         var a = E(b);
         c.call(e, b, a.width, a.height);
       });
-      a("error", function () {
+      a("error", () => {
         c(null);
       });
-      a("abort", function () {
+      a("abort", () => {
         c(null);
       });
       b.setAttribute("src", (w.baseHref || "") + q + "?" + Math.random().toString(16).substring(2));
@@ -37,7 +38,7 @@ CKEDITOR.dialog.add("image2", function (f) {
     var a = this.getValue();
     t(!1);
     a !== x.data.src
-      ? (G(a, function (a, b, c) {
+      ? (G(a, (a, b, c) => {
           t(!0);
           if (!a) return m(!1);
           g.setValue(!1 === f.config.image2_prefillDimensions ? 0 : b);
@@ -68,10 +69,14 @@ CKEDITOR.dialog.add("image2", function (f) {
       if ("boolean" == typeof a) {
         if (y) return;
         e = a;
-      } else (a = g.getValue()), (y = !0), (e = !e) && a && ((a *= l / k), isNaN(a) || h.setValue(Math.round(a)));
+      } else
+        (a = g.getValue()),
+          (y = !0),
+          (e = !e) && a && ((a *= l / k), isNaN(a) || h.setValue(Math.round(a)));
       d[e ? "removeClass" : "addClass"]("cke_btn_unlocked");
       d.setAttribute("aria-checked", e);
-      CKEDITOR.env.hc && d.getChild(0).setHtml(e ? (CKEDITOR.env.ie ? "■" : "▣") : CKEDITOR.env.ie ? "□" : "▢");
+      CKEDITOR.env.hc &&
+        d.getChild(0).setHtml(e ? (CKEDITOR.env.ie ? "■" : "▣") : CKEDITOR.env.ie ? "□" : "▢");
     }
   }
   function t(a) {
@@ -166,7 +171,9 @@ CKEDITOR.dialog.add("image2", function (f) {
           {
             type: "vbox",
             padding: 0,
-            children: [{ type: "hbox", widths: ["100%"], className: "cke_dialog_image_url", children: M }],
+            children: [
+              { type: "hbox", widths: ["100%"], className: "cke_dialog_image_url", children: M },
+            ],
           },
           {
             id: "alt",
@@ -178,7 +185,10 @@ CKEDITOR.dialog.add("image2", function (f) {
             commit: function (a) {
               a.setData("alt", this.getValue());
             },
-            validate: !0 === f.config.image2_altRequired ? CKEDITOR.dialog.validate.notEmpty(b.altMissing) : null,
+            validate:
+              !0 === f.config.image2_altRequired
+                ? CKEDITOR.dialog.validate.notEmpty(b.altMissing)
+                : null,
           },
           {
             type: "hbox",
@@ -247,7 +257,7 @@ CKEDITOR.dialog.add("image2", function (f) {
                     (b.addFocusable(d, 4 + z),
                     d.on(
                       "click",
-                      function (a) {
+                      (a) => {
                         m();
                         a.data && a.data.preventDefault();
                       },
@@ -258,7 +268,7 @@ CKEDITOR.dialog.add("image2", function (f) {
                     (b.addFocusable(p, 5 + z),
                     p.on(
                       "click",
-                      function (a) {
+                      (a) => {
                         n ? (g.setValue(u), h.setValue(v)) : (g.setValue(k), h.setValue(l));
                         a.data && a.data.preventDefault();
                       },
@@ -266,10 +276,10 @@ CKEDITOR.dialog.add("image2", function (f) {
                     ),
                     a(p));
                 },
-                setup: function (a) {
+                setup: (a) => {
                   m(a.data.lock);
                 },
-                commit: function (a) {
+                commit: (a) => {
                   a.setData("lock", e);
                 },
                 html: O,

@@ -31,9 +31,7 @@ var regexes = {};
 export function addRegexToken(token, regex, strictRegex) {
   regexes[token] = isFunction(regex)
     ? regex
-    : function (isStrict, localeData) {
-        return isStrict && strictRegex ? strictRegex : regex;
-      };
+    : (isStrict, localeData) => (isStrict && strictRegex ? strictRegex : regex);
 }
 
 export function getParseRegexForToken(token, config) {
@@ -47,9 +45,12 @@ export function getParseRegexForToken(token, config) {
 // Code from http://stackoverflow.com/questions/3561493/is-there-a-regexp-escape-function-in-javascript
 function unescapeFormat(s) {
   return regexEscape(
-    s.replace("\\", "").replace(/\\(\[)|\\(\])|\[([^\]\[]*)\]|\\(.)/g, function (matched, p1, p2, p3, p4) {
-      return p1 || p2 || p3 || p4;
-    })
+    s
+      .replace("\\", "")
+      .replace(
+        /\\(\[)|\\(\])|\[([^\]\[]*)\]|\\(.)/g,
+        (matched, p1, p2, p3, p4) => p1 || p2 || p3 || p4
+      )
   );
 }
 

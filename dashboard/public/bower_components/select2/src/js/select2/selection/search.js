@@ -1,4 +1,4 @@
-define(["jquery", "../utils", "../keys"], function ($, Utils, KEYS) {
+define(["jquery", "../utils", "../keys"], ($, Utils, keys) => {
   function Search(decorated, $element, options) {
     decorated.call(this, $element, options);
   }
@@ -23,62 +23,60 @@ define(["jquery", "../utils", "../keys"], function ($, Utils, KEYS) {
   };
 
   Search.prototype.bind = function (decorated, container, $container) {
-    var self = this;
-
     decorated.call(this, container, $container);
 
-    container.on("open", function () {
-      self.$search.trigger("focus");
+    container.on("open", () => {
+      this.$search.trigger("focus");
     });
 
-    container.on("close", function () {
-      self.$search.val("");
-      self.$search.removeAttr("aria-activedescendant");
-      self.$search.trigger("focus");
+    container.on("close", () => {
+      this.$search.val("");
+      this.$search.removeAttr("aria-activedescendant");
+      this.$search.trigger("focus");
     });
 
-    container.on("enable", function () {
-      self.$search.prop("disabled", false);
+    container.on("enable", () => {
+      this.$search.prop("disabled", false);
 
-      self._transferTabIndex();
+      this._transferTabIndex();
     });
 
-    container.on("disable", function () {
-      self.$search.prop("disabled", true);
+    container.on("disable", () => {
+      this.$search.prop("disabled", true);
     });
 
-    container.on("focus", function (evt) {
-      self.$search.trigger("focus");
+    container.on("focus", (evt) => {
+      this.$search.trigger("focus");
     });
 
-    container.on("results:focus", function (params) {
-      self.$search.attr("aria-activedescendant", params.id);
+    container.on("results:focus", (params) => {
+      this.$search.attr("aria-activedescendant", params.id);
     });
 
-    this.$selection.on("focusin", ".select2-search--inline", function (evt) {
-      self.trigger("focus", evt);
+    this.$selection.on("focusin", ".select2-search--inline", (evt) => {
+      this.trigger("focus", evt);
     });
 
-    this.$selection.on("focusout", ".select2-search--inline", function (evt) {
-      self._handleBlur(evt);
+    this.$selection.on("focusout", ".select2-search--inline", (evt) => {
+      this._handleBlur(evt);
     });
 
-    this.$selection.on("keydown", ".select2-search--inline", function (evt) {
+    this.$selection.on("keydown", ".select2-search--inline", (evt) => {
       evt.stopPropagation();
 
-      self.trigger("keypress", evt);
+      this.trigger("keypress", evt);
 
-      self._keyUpPrevented = evt.isDefaultPrevented();
+      this._keyUpPrevented = evt.isDefaultPrevented();
 
       var key = evt.which;
 
-      if (key === KEYS.BACKSPACE && self.$search.val() === "") {
-        var $previousChoice = self.$searchContainer.prev(".select2-selection__choice");
+      if (key === keys.BACKSPACE && this.$search.val() === "") {
+        var $previousChoice = this.$searchContainer.prev(".select2-selection__choice");
 
         if ($previousChoice.length > 0) {
           var item = Utils.GetData($previousChoice[0], "data");
 
-          self.searchRemoveChoice(item);
+          this.searchRemoveChoice(item);
 
           evt.preventDefault();
         }
@@ -96,41 +94,41 @@ define(["jquery", "../utils", "../keys"], function ($, Utils, KEYS) {
     // Workaround for browsers which do not support the `input` event
     // This will prevent double-triggering of events for browsers which support
     // both the `keyup` and `input` events.
-    this.$selection.on("input.searchcheck", ".select2-search--inline", function (evt) {
+    this.$selection.on("input.searchcheck", ".select2-search--inline", (evt) => {
       // IE will trigger the `input` event when a placeholder is used on a
       // search box. To get around this issue, we are forced to ignore all
       // `input` events in IE and keep using `keyup`.
       if (disableInputEvents) {
-        self.$selection.off("input.search input.searchcheck");
+        this.$selection.off("input.search input.searchcheck");
         return;
       }
 
       // Unbind the duplicated `keyup` event
-      self.$selection.off("keyup.search");
+      this.$selection.off("keyup.search");
     });
 
-    this.$selection.on("keyup.search input.search", ".select2-search--inline", function (evt) {
+    this.$selection.on("keyup.search input.search", ".select2-search--inline", (evt) => {
       // IE will trigger the `input` event when a placeholder is used on a
       // search box. To get around this issue, we are forced to ignore all
       // `input` events in IE and keep using `keyup`.
       if (disableInputEvents && evt.type === "input") {
-        self.$selection.off("input.search input.searchcheck");
+        this.$selection.off("input.search input.searchcheck");
         return;
       }
 
       var key = evt.which;
 
       // We can freely ignore events from modifier keys
-      if (key == KEYS.SHIFT || key == KEYS.CTRL || key == KEYS.ALT) {
+      if (key == keys.SHIFT || key == keys.CTRL || key == keys.ALT) {
         return;
       }
 
       // Tabbing will be handled during the `keydown` phase
-      if (key == KEYS.TAB) {
+      if (key == keys.TAB) {
         return;
       }
 
-      self.handleSearch(evt);
+      this.handleSearch(evt);
     });
   };
 

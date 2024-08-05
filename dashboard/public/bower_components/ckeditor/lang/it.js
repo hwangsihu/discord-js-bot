@@ -150,7 +150,8 @@ CKEDITOR.lang["it"] = {
     title: "Incolla come testo semplice",
   },
   pastefromword: {
-    confirmCleanup: "Il testo da incollare sembra provenire da Word. Desideri pulirlo prima di incollare?",
+    confirmCleanup:
+      "Il testo da incollare sembra provenire da Word. Desideri pulirlo prima di incollare?",
     error: "Non è stato possibile eliminare il testo incollato a causa di un errore interno.",
     title: "Incolla da Word",
     toolbar: "Incolla da Word",
@@ -158,7 +159,10 @@ CKEDITOR.lang["it"] = {
   notification: { closed: "Notifica chiusa." },
   maximize: { maximize: "Massimizza", minimize: "Minimizza" },
   magicline: { title: "Inserisci paragrafo qui" },
-  list: { bulletedlist: "Inserisci/Rimuovi Elenco Puntato", numberedlist: "Inserisci/Rimuovi Elenco Numerato" },
+  list: {
+    bulletedlist: "Inserisci/Rimuovi Elenco Puntato",
+    numberedlist: "Inserisci/Rimuovi Elenco Numerato",
+  },
   link: {
     acccessKey: "Scorciatoia da tastiera",
     advanced: "Avanzate",
@@ -265,9 +269,12 @@ CKEDITOR.lang["it"] = {
   filetools: {
     loadError: "Si è verificato un errore durante la lettura del file.",
     networkError: "Si è verificato un errore di rete durante il caricamento del file.",
-    httpError404: "Si è verificato un errore HTTP durante il caricamento del file (404: file non trovato).",
-    httpError403: "Si è verificato un errore HTTP durante il caricamento del file (403: accesso negato).",
-    httpError: "Si è verificato un errore HTTP durante il caricamento del file (stato dell'errore: %1).",
+    httpError404:
+      "Si è verificato un errore HTTP durante il caricamento del file (404: file non trovato).",
+    httpError403:
+      "Si è verificato un errore HTTP durante il caricamento del file (403: accesso negato).",
+    httpError:
+      "Si è verificato un errore HTTP durante il caricamento del file (stato dell'errore: %1).",
     noUrlError: "L'URL per il caricamento non è stato definito.",
     responseError: "La risposta del server non è corretta.",
   },
@@ -346,8 +353,10 @@ CKEDITOR.lang["it"] = {
     generalTab: "Generale",
     advancedTab: "Avanzate",
     validateNumberFailed: "Il valore inserito non è un numero.",
-    confirmNewPage: "Ogni modifica non salvata sarà persa. Sei sicuro di voler caricare una nuova pagina?",
-    confirmCancel: "Alcune delle opzioni sono state cambiate. Sei sicuro di voler chiudere la finestra di dialogo?",
+    confirmNewPage:
+      "Ogni modifica non salvata sarà persa. Sei sicuro di voler caricare una nuova pagina?",
+    confirmCancel:
+      "Alcune delle opzioni sono state cambiate. Sei sicuro di voler chiudere la finestra di dialogo?",
     options: "Opzioni",
     target: "Destinazione",
     targetNew: "Nuova finestra (_blank)",

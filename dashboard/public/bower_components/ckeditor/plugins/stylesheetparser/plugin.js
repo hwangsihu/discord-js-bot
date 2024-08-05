@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function h(b, e, c) {
     var k = [],
       g = [],
@@ -37,15 +37,15 @@
     return k;
   }
   CKEDITOR.plugins.add("stylesheetparser", {
-    init: function (b) {
+    init: (b) => {
       b.filter.disable();
       var e;
       b.once(
         "stylesSet",
-        function (c) {
+        (c) => {
           c.cancel();
-          b.once("contentDom", function () {
-            b.getStylesSet(function (c) {
+          b.once("contentDom", () => {
+            b.getStylesSet((c) => {
               e = c.concat(
                 h(
                   b.document.$,
@@ -53,7 +53,7 @@
                   b.config.stylesheetParser_validSelectors || /\w+\.\w+/
                 )
               );
-              b.getStylesSet = function (b) {
+              b.getStylesSet = (b) => {
                 if (e) return b(e);
               };
               b.fire("stylesSet", { styles: e });

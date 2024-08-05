@@ -14,7 +14,13 @@
     selected: "सॅलॅक्टॅड",
     required: "Required",
   },
-  form: { title: "फ़ॉर्म प्रॉपर्टीज़", menu: "फ़ॉर्म प्रॉपर्टीज़", action: "क्रिया", method: "तरीका", encoding: "Encoding" },
+  form: {
+    title: "फ़ॉर्म प्रॉपर्टीज़",
+    menu: "फ़ॉर्म प्रॉपर्टीज़",
+    action: "क्रिया",
+    method: "तरीका",
+    encoding: "Encoding",
+  },
   hidden: { title: "गुप्त फ़ील्ड प्रॉपर्टीज़", name: "नाम", value: "वैल्यू" },
   select: {
     title: "चुनाव फ़ील्ड प्रॉपर्टीज़",

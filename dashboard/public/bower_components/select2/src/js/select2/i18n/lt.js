@@ -1,4 +1,4 @@
-define(function () {
+define(() => {
   // rules from
   // http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html#lt
   function ending(count, one, few, other) {
@@ -12,7 +12,7 @@ define(function () {
   }
 
   return {
-    inputTooLong: function (args) {
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "Pašalinkite " + overChars + " simbol";
@@ -21,7 +21,7 @@ define(function () {
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "Įrašykite dar " + remainingChars + " simbol";
@@ -30,24 +30,16 @@ define(function () {
 
       return message;
     },
-    loadingMore: function () {
-      return "Kraunama daugiau rezultatų…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Kraunama daugiau rezultatų…",
+    maximumSelected: (args) => {
       var message = "Jūs galite pasirinkti tik " + args.maximum + " element";
 
       message += ending(args.maximum, "ą", "us", "ų");
 
       return message;
     },
-    noResults: function () {
-      return "Atitikmenų nerasta";
-    },
-    searching: function () {
-      return "Ieškoma…";
-    },
-    removeAllItems: function () {
-      return "Pašalinti visus elementus";
-    },
+    noResults: () => "Atitikmenų nerasta",
+    searching: () => "Ieškoma…",
+    removeAllItems: () => "Pašalinti visus elementus",
   };
 });

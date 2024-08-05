@@ -3,7 +3,13 @@ import "./prototype";
 
 import { defineLocale, getLocale, getSetGlobalLocale, listLocales, updateLocale } from "./locales";
 
-import { listMonths, listMonthsShort, listWeekdays, listWeekdaysMin, listWeekdaysShort } from "./lists";
+import {
+  listMonths,
+  listMonthsShort,
+  listWeekdays,
+  listWeekdaysMin,
+  listWeekdaysShort,
+} from "./lists";
 
 export {
   getSetGlobalLocale,
@@ -22,6 +28,9 @@ import { deprecate } from "../utils/deprecate";
 import { hooks } from "../utils/hooks";
 
 hooks.lang = deprecate("moment.lang is deprecated. Use moment.locale instead.", getSetGlobalLocale);
-hooks.langData = deprecate("moment.langData is deprecated. Use moment.localeData instead.", getLocale);
+hooks.langData = deprecate(
+  "moment.langData is deprecated. Use moment.localeData instead.",
+  getLocale
+);
 
 import "./en";

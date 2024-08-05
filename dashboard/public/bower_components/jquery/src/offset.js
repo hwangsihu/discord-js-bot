@@ -12,28 +12,26 @@ define([
   "./core/init",
   "./css",
   "./selector", // contains
-], function (
+], (
   jQuery,
   access,
   document,
   documentElement,
   isFunction,
   rnumnonpx,
-  curCSS,
+  curCss,
   addGetHookIf,
   support,
   isWindow
-) {
-  "use strict";
-
+) => {
   jQuery.offset = {
-    setOffset: function (elem, options, i) {
+    setOffset: (elem, options, i) => {
       var curPosition,
         curLeft,
-        curCSSTop,
+        curCssTop,
         curTop,
         curOffset,
-        curCSSLeft,
+        curCssLeft,
         calculatePosition,
         position = jQuery.css(elem, "position"),
         curElem = jQuery(elem),
@@ -45,10 +43,11 @@ define([
       }
 
       curOffset = curElem.offset();
-      curCSSTop = jQuery.css(elem, "top");
-      curCSSLeft = jQuery.css(elem, "left");
+      curCssTop = jQuery.css(elem, "top");
+      curCssLeft = jQuery.css(elem, "left");
       calculatePosition =
-        (position === "absolute" || position === "fixed") && (curCSSTop + curCSSLeft).indexOf("auto") > -1;
+        (position === "absolute" || position === "fixed") &&
+        (curCssTop + curCssLeft).indexOf("auto") > -1;
 
       // Need to be able to calculate position if either
       // top or left is auto and position is either absolute or fixed
@@ -57,8 +56,8 @@ define([
         curTop = curPosition.top;
         curLeft = curPosition.left;
       } else {
-        curTop = parseFloat(curCSSTop) || 0;
-        curLeft = parseFloat(curCSSLeft) || 0;
+        curTop = Number.parseFloat(curCssTop) || 0;
+        curLeft = Number.parseFloat(curCssLeft) || 0;
       }
 
       if (isFunction(options)) {
@@ -188,13 +187,13 @@ define([
   });
 
   // Create scrollLeft and scrollTop methods
-  jQuery.each({ scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function (method, prop) {
+  jQuery.each({ scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, (method, prop) => {
     var top = "pageYOffset" === prop;
 
     jQuery.fn[method] = function (val) {
       return access(
         this,
-        function (elem, method, val) {
+        (elem, method, val) => {
           // Coalesce documents and windows
           var win;
           if (isWindow(elem)) {
@@ -208,7 +207,7 @@ define([
           }
 
           if (win) {
-            win.scrollTo(!top ? val : win.pageXOffset, top ? val : win.pageYOffset);
+            win.scrollTo(top ? win.pageXOffset : val, top ? val : win.pageYOffset);
           } else {
             elem[method] = val;
           }
@@ -226,10 +225,10 @@ define([
   // Blink bug: https://bugs.chromium.org/p/chromium/issues/detail?id=589347
   // getComputedStyle returns percent when specified for top/left/bottom/right;
   // rather than make the css module depend on the offset module, just check for it here
-  jQuery.each(["top", "left"], function (i, prop) {
-    jQuery.cssHooks[prop] = addGetHookIf(support.pixelPosition, function (elem, computed) {
+  jQuery.each(["top", "left"], (i, prop) => {
+    jQuery.cssHooks[prop] = addGetHookIf(support.pixelPosition, (elem, computed) => {
       if (computed) {
-        computed = curCSS(elem, prop);
+        computed = curCss(elem, prop);
 
         // If curCSS returns percentage, fallback to offset
         return rnumnonpx.test(computed) ? jQuery(elem).position()[prop] + "px" : computed;

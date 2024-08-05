@@ -1,4 +1,4 @@
-define(["./array", "../utils", "jquery"], function (ArrayAdapter, Utils, $) {
+define(["./array", "../utils", "jquery"], (ArrayAdapter, Utils, $) => {
   function AjaxAdapter($element, options) {
     this.ajaxOptions = this._applyDefaults(options.get("ajax"));
 
@@ -11,14 +11,13 @@ define(["./array", "../utils", "jquery"], function (ArrayAdapter, Utils, $) {
 
   Utils.Extend(AjaxAdapter, ArrayAdapter);
 
-  AjaxAdapter.prototype._applyDefaults = function (options) {
+  AjaxAdapter.prototype._applyDefaults = (options) => {
     var defaults = {
-      data: function (params) {
-        return $.extend({}, params, {
+      data: (params) =>
+        $.extend({}, params, {
           q: params.term,
-        });
-      },
-      transport: function (params, success, failure) {
+        }),
+      transport: (params, success, failure) => {
         var $request = $.ajax(params);
 
         $request.then(success);
@@ -31,9 +30,7 @@ define(["./array", "../utils", "jquery"], function (ArrayAdapter, Utils, $) {
     return $.extend({}, defaults, options, true);
   };
 
-  AjaxAdapter.prototype.processResults = function (results) {
-    return results;
-  };
+  AjaxAdapter.prototype.processResults = (results) => results;
 
   AjaxAdapter.prototype.query = function (params, callback) {
     var matches = [];
@@ -66,21 +63,22 @@ define(["./array", "../utils", "jquery"], function (ArrayAdapter, Utils, $) {
     function request() {
       var $request = options.transport(
         options,
-        function (data) {
+        (data) => {
           var results = self.processResults(data, params);
 
           if (self.options.get("debug") && window.console && console.error) {
             // Check to make sure that the response included a `results` key.
             if (!results || !results.results || !$.isArray(results.results)) {
               console.error(
-                "Select2: The AJAX results did not return an array in the " + "`results` key of the response."
+                "Select2: The AJAX results did not return an array in the " +
+                  "`results` key of the response."
               );
             }
           }
 
           callback(results);
         },
-        function () {
+        () => {
           // Attempt to detect if a request was aborted
           // Only works if the transport exposes a status property
           if ("status" in $request && ($request.status === 0 || $request.status === "0")) {

@@ -150,7 +150,8 @@ CKEDITOR.lang["hr"] = {
     title: "Zalijepi kao čisti tekst",
   },
   pastefromword: {
-    confirmCleanup: "Tekst koji želite zalijepiti čini se da je kopiran iz Worda. Želite li prije očistiti tekst?",
+    confirmCleanup:
+      "Tekst koji želite zalijepiti čini se da je kopiran iz Worda. Želite li prije očistiti tekst?",
     error: "Nije moguće očistiti podatke za ljepljenje zbog interne greške",
     title: "Zalijepi iz Worda",
     toolbar: "Zalijepi iz Worda",
@@ -376,7 +377,8 @@ CKEDITOR.lang["hr"] = {
     invalidValue: "Neispravna vrijednost.",
     invalidHeight: "Visina mora biti broj.",
     invalidWidth: "Širina mora biti broj.",
-    invalidLength: 'Naznačena vrijednost polja "%1" mora biti pozitivni broj sa ili bez važeće mjerne jedinice (%2).',
+    invalidLength:
+      'Naznačena vrijednost polja "%1" mora biti pozitivni broj sa ili bez važeće mjerne jedinice (%2).',
     invalidCssLength:
       'Vrijednost određena za "%1" polje mora biti pozitivni broj sa ili bez važećih CSS mjernih jedinica (px, %, in, cm, mm, em, ex, pt ili pc).',
     invalidHtmlLength:

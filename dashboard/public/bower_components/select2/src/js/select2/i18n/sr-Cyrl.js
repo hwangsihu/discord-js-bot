@@ -1,4 +1,4 @@
-define(function () {
+define(() => {
   // Serbian Cyrilic
   function ending(count, one, some, many) {
     if (count % 10 == 1 && count % 100 != 11) {
@@ -13,10 +13,8 @@ define(function () {
   }
 
   return {
-    errorLoading: function () {
-      return "Преузимање није успело.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "Преузимање није успело.",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "Обришите " + overChars + " симбол";
@@ -25,7 +23,7 @@ define(function () {
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "Укуцајте бар још " + remainingChars + " симбол";
@@ -34,24 +32,16 @@ define(function () {
 
       return message;
     },
-    loadingMore: function () {
-      return "Преузимање још резултата…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Преузимање још резултата…",
+    maximumSelected: (args) => {
       var message = "Можете изабрати само " + args.maximum + " ставк";
 
       message += ending(args.maximum, "у", "е", "и");
 
       return message;
     },
-    noResults: function () {
-      return "Ништа није пронађено";
-    },
-    searching: function () {
-      return "Претрага…";
-    },
-    removeAllItems: function () {
-      return "Уклоните све ставке";
-    },
+    noResults: () => "Ништа није пронађено",
+    searching: () => "Претрага…",
+    removeAllItems: () => "Уклоните све ставке",
   };
 });

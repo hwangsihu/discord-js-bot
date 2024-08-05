@@ -106,7 +106,12 @@ CKEDITOR.lang["he"] = {
     invalidRows: "שדה מספר השורות חייב להיות מספר גדול מ 0.",
     invalidWidth: "שדה רוחב הטבלה חייב להיות מספר.",
     menu: "מאפייני טבלה",
-    row: { menu: "שורה", insertBefore: "הוספת שורה לפני", insertAfter: "הוספת שורה אחרי", deleteRow: "מחיקת שורות" },
+    row: {
+      menu: "שורה",
+      insertBefore: "הוספת שורה לפני",
+      insertAfter: "הוספת שורה אחרי",
+      deleteRow: "מחיקת שורות",
+    },
     rows: "שורות",
     summary: "תקציר",
     title: "מאפייני טבלה",
@@ -122,7 +127,11 @@ CKEDITOR.lang["he"] = {
     panelTitle2: "סגנונות רצף",
     panelTitle3: "סגנונות אובייקט",
   },
-  specialchar: { options: "אפשרויות תווים מיוחדים", title: "בחירת תו מיוחד", toolbar: "הוספת תו מיוחד" },
+  specialchar: {
+    options: "אפשרויות תווים מיוחדים",
+    title: "בחירת תו מיוחד",
+    toolbar: "הוספת תו מיוחד",
+  },
   sourcearea: { toolbar: "מקור" },
   scayt: {
     btn_about: "אודות SCAYT",
@@ -141,7 +150,8 @@ CKEDITOR.lang["he"] = {
     title: "הדבקה כטקסט פשוט",
   },
   pastefromword: {
-    confirmCleanup: "נראה הטקסט שבכוונתך להדביק מקורו בקובץ וורד. האם ברצונך לנקות אותו טרם ההדבקה?",
+    confirmCleanup:
+      "נראה הטקסט שבכוונתך להדביק מקורו בקובץ וורד. האם ברצונך לנקות אותו טרם ההדבקה?",
     error: "לא ניתן היה לנקות את המידע בשל תקלה פנימית.",
     title: "הדבקה מ-Word",
     toolbar: "הדבקה מ-Word",
@@ -370,7 +380,8 @@ CKEDITOR.lang["he"] = {
       'Value specified for the "%1" field must be a positive number with or without a valid measurement unit (%2).',
     invalidCssLength:
       'הערך שצוין לשדה "%1" חייב להיות מספר חיובי עם או ללא יחידת מידה חוקית של CSS (px, %, in, cm, mm, em, ex, pt, או pc).',
-    invalidHtmlLength: 'הערך שצוין לשדה "%1" חייב להיות מספר חיובי עם או ללא יחידת מידה חוקית של HTML (px או %).',
+    invalidHtmlLength:
+      'הערך שצוין לשדה "%1" חייב להיות מספר חיובי עם או ללא יחידת מידה חוקית של HTML (px או %).',
     invalidInlineStyle:
       'הערך שצויין לשדה הסגנון חייב להכיל זוג ערכים אחד או יותר בפורמט "שם : ערך", מופרדים על ידי נקודה-פסיק.',
     cssLengthTooltip:

@@ -1,4 +1,4 @@
-!(function (e, a) {
+!((e, a) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = a(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? a(require("moment"), require("fullcalendar"))
         : a(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, a) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, a) =>
+  ((e) => {
     function a(n) {
       if (t[n]) return t[n].exports;
       var r = (t[n] = { i: n, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (a.m = e),
       (a.c = t),
-      (a.d = function (e, t, n) {
+      (a.d = (e, t, n) => {
         a.o(e, t) || Object.defineProperty(e, t, { configurable: !1, enumerable: !0, get: n });
       }),
-      (a.n = function (e) {
-        var t =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (a.n = (e) => {
+        var t = e && e.__esModule ? () => e.default : () => e;
         return a.d(t, "a", t), t;
       }),
-      (a.o = function (e, a) {
-        return Object.prototype.hasOwnProperty.call(e, a);
-      }),
+      (a.o = (e, a) => Object.prototype.hasOwnProperty.call(e, a)),
       (a.p = ""),
       a((a.s = 205))
     );
   })({
-    0: function (a, t) {
+    0: (a, t) => {
       a.exports = e;
     },
-    1: function (e, t) {
+    1: (e, t) => {
       e.exports = a;
     },
-    205: function (e, a, t) {
+    205: (e, a, t) => {
       Object.defineProperty(a, "__esModule", { value: !0 }), t(206);
       var n = t(1);
       n.datepickerLocale("tr", "tr", {
@@ -66,7 +57,20 @@
           "Kasım",
           "Aralık",
         ],
-        monthNamesShort: ["Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"],
+        monthNamesShort: [
+          "Oca",
+          "Şub",
+          "Mar",
+          "Nis",
+          "May",
+          "Haz",
+          "Tem",
+          "Ağu",
+          "Eyl",
+          "Eki",
+          "Kas",
+          "Ara",
+        ],
         dayNames: ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"],
         dayNamesShort: ["Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"],
         dayNamesMin: ["Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"],
@@ -84,10 +88,10 @@
           noEventsMessage: "Gösterilecek etkinlik yok",
         });
     },
-    206: function (e, a, t) {
-      !(function (e, a) {
+    206: (e, a, t) => {
+      !((e, a) => {
         a(t(0));
-      })(0, function (e) {
+      })(0, (e) => {
         var a = {
           1: "'inci",
           5: "'inci",
@@ -109,7 +113,8 @@
           90: "'ıncı",
         };
         return e.defineLocale("tr", {
-          months: "Ocak_Şubat_Mart_Nisan_Mayıs_Haziran_Temmuz_Ağustos_Eylül_Ekim_Kasım_Aralık".split("_"),
+          months:
+            "Ocak_Şubat_Mart_Nisan_Mayıs_Haziran_Temmuz_Ağustos_Eylül_Ekim_Kasım_Aralık".split("_"),
           monthsShort: "Oca_Şub_Mar_Nis_May_Haz_Tem_Ağu_Eyl_Eki_Kas_Ara".split("_"),
           weekdays: "Pazar_Pazartesi_Salı_Çarşamba_Perşembe_Cuma_Cumartesi".split("_"),
           weekdaysShort: "Paz_Pts_Sal_Çar_Per_Cum_Cts".split("_"),
@@ -146,7 +151,7 @@
             y: "bir yıl",
             yy: "%d yıl",
           },
-          ordinal: function (e, t) {
+          ordinal: (e, t) => {
             switch (t) {
               case "d":
               case "D":
@@ -165,5 +170,5 @@
         });
       });
     },
-  });
-});
+  })
+);

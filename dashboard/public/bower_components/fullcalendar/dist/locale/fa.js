@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(r) {
       if (n[r]) return n[r].exports;
       var o = (n[r] = { i: r, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = n),
-      (t.d = function (e, n, r) {
+      (t.d = (e, n, r) => {
         t.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: r });
       }),
-      (t.n = function (e) {
-        var n =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var n = e && e.__esModule ? () => e.default : () => e;
         return t.d(n, "a", n), n;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 127))
     );
   })({
-    0: function (t, n) {
+    0: (t, n) => {
       t.exports = e;
     },
-    1: function (e, n) {
+    1: (e, n) => {
       e.exports = t;
     },
-    127: function (e, t, n) {
+    127: (e, t, n) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), n(128);
       var r = n(1);
       r.datepickerLocale("fa", "fa", {
@@ -80,21 +71,33 @@
         r.locale("fa", {
           buttonText: { month: "ماه", week: "هفته", day: "روز", list: "برنامه" },
           allDayText: "تمام روز",
-          eventLimitText: function (e) {
-            return "بیش از " + e;
-          },
+          eventLimitText: (e) => "بیش از " + e,
           noEventsMessage: "هیچ رویدادی به نمایش",
         });
     },
-    128: function (e, t, n) {
-      !(function (e, t) {
+    128: (e, t, n) => {
+      !((e, t) => {
         t(n(0));
-      })(0, function (e) {
+      })(0, (e) => {
         var t = { 1: "۱", 2: "۲", 3: "۳", 4: "۴", 5: "۵", 6: "۶", 7: "۷", 8: "۸", 9: "۹", 0: "۰" },
-          n = { "۱": "1", "۲": "2", "۳": "3", "۴": "4", "۵": "5", "۶": "6", "۷": "7", "۸": "8", "۹": "9", "۰": "0" };
+          n = {
+            "۱": "1",
+            "۲": "2",
+            "۳": "3",
+            "۴": "4",
+            "۵": "5",
+            "۶": "6",
+            "۷": "7",
+            "۸": "8",
+            "۹": "9",
+            "۰": "0",
+          };
         return e.defineLocale("fa", {
-          months: "ژانویه_فوریه_مارس_آوریل_مه_ژوئن_ژوئیه_اوت_سپتامبر_اکتبر_نوامبر_دسامبر".split("_"),
-          monthsShort: "ژانویه_فوریه_مارس_آوریل_مه_ژوئن_ژوئیه_اوت_سپتامبر_اکتبر_نوامبر_دسامبر".split("_"),
+          months: "ژانویه_فوریه_مارس_آوریل_مه_ژوئن_ژوئیه_اوت_سپتامبر_اکتبر_نوامبر_دسامبر".split(
+            "_"
+          ),
+          monthsShort:
+            "ژانویه_فوریه_مارس_آوریل_مه_ژوئن_ژوئیه_اوت_سپتامبر_اکتبر_نوامبر_دسامبر".split("_"),
           weekdays: "یک‌شنبه_دوشنبه_سه‌شنبه_چهارشنبه_پنج‌شنبه_جمعه_شنبه".split("_"),
           weekdaysShort: "یک‌شنبه_دوشنبه_سه‌شنبه_چهارشنبه_پنج‌شنبه_جمعه_شنبه".split("_"),
           weekdaysMin: "ی_د_س_چ_پ_ج_ش".split("_"),
@@ -108,12 +111,8 @@
             LLLL: "dddd, D MMMM YYYY HH:mm",
           },
           meridiemParse: /قبل از ظهر|بعد از ظهر/,
-          isPM: function (e) {
-            return /بعد از ظهر/.test(e);
-          },
-          meridiem: function (e, t, n) {
-            return e < 12 ? "قبل از ظهر" : "بعد از ظهر";
-          },
+          isPM: (e) => /بعد از ظهر/.test(e),
+          meridiem: (e, t, n) => (e < 12 ? "قبل از ظهر" : "بعد از ظهر"),
           calendar: {
             sameDay: "[امروز ساعت] LT",
             nextDay: "[فردا ساعت] LT",
@@ -138,25 +137,13 @@
             y: "یک سال",
             yy: "%d سال",
           },
-          preparse: function (e) {
-            return e
-              .replace(/[۰-۹]/g, function (e) {
-                return n[e];
-              })
-              .replace(/،/g, ",");
-          },
-          postformat: function (e) {
-            return e
-              .replace(/\d/g, function (e) {
-                return t[e];
-              })
-              .replace(/,/g, "،");
-          },
+          preparse: (e) => e.replace(/[۰-۹]/g, (e) => n[e]).replace(/،/g, ","),
+          postformat: (e) => e.replace(/\d/g, (e) => t[e]).replace(/,/g, "،"),
           dayOfMonthOrdinalParse: /\d{1,2}م/,
           ordinal: "%dم",
           week: { dow: 6, doy: 12 },
         });
       });
     },
-  });
-});
+  })
+);

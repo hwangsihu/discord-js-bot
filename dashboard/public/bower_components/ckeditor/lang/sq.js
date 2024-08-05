@@ -152,14 +152,18 @@ CKEDITOR.lang["sq"] = {
   pastefromword: {
     confirmCleanup:
       "Teksti që dëshironi të e hidhni siç duket është kopjuar nga Word-i. Dëshironi të e pastroni para se të e hidhni?",
-    error: "Nuk ishte e mundur të fshiheshin të dhënat e hedhura për shkak të një gabimi të brendshëm",
+    error:
+      "Nuk ishte e mundur të fshiheshin të dhënat e hedhura për shkak të një gabimi të brendshëm",
     title: "Hidhe nga Word-i",
     toolbar: "Hidhe nga Word-i",
   },
   notification: { closed: "Njoftimi është mbyllur." },
   maximize: { maximize: "Zmadho", minimize: "Zvogëlo" },
   magicline: { title: "Shto paragrafin këtu" },
-  list: { bulletedlist: "Vendos/Largo Listën me Pika", numberedlist: "Vendos/Largo Listën me Numra" },
+  list: {
+    bulletedlist: "Vendos/Largo Listën me Pika",
+    numberedlist: "Vendos/Largo Listën me Numra",
+  },
   link: {
     acccessKey: "Elementi i qasjes",
     advanced: "Të përparuara",
@@ -347,7 +351,8 @@ CKEDITOR.lang["sq"] = {
     generalTab: "Të përgjithshme",
     advancedTab: "Të përparuara",
     validateNumberFailed: "Kjo vlerë nuk është numër.",
-    confirmNewPage: "Çdo ndryshim që nuk është ruajtur do humbasë. Je i sigurt që dëshiron të hapsh faqe të re?",
+    confirmNewPage:
+      "Çdo ndryshim që nuk është ruajtur do humbasë. Je i sigurt që dëshiron të hapsh faqe të re?",
     confirmCancel: "Ke ndryshuar ca mundësi. Je i sigurt që dëshiron ta mbyllësh dritaren?",
     options: "Mundësitë",
     target: "Objektivi",
@@ -376,7 +381,8 @@ CKEDITOR.lang["sq"] = {
     invalidValue: "Vlerë e pavlefshme",
     invalidHeight: "Lartësia duhet të jetë një numër",
     invalidWidth: "Gjerësia duhet të jetë një numër",
-    invalidLength: 'Vlera e përcaktuar për fushën "%1" duhet të jetë pozitive me ose pa njësi matëse me vlerë (%2).',
+    invalidLength:
+      'Vlera e përcaktuar për fushën "%1" duhet të jetë pozitive me ose pa njësi matëse me vlerë (%2).',
     invalidCssLength:
       'Vlera e fushës "%1" duhet të jetë një numër pozitiv me apo pa njësi matëse të vlefshme CSS (px, %, in, cm, mm, em, ex, pt ose pc).',
     invalidHtmlLength:

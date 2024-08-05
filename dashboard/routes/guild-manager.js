@@ -104,7 +104,8 @@ router.post("/:serverID/basic", CheckAuth, async (req, res) => {
       settings.stats.xp.message = data.levelup_message;
     }
 
-    data.levelup_channel = guild.channels.cache.find((ch) => "#" + ch.name === data.levelup_channel)?.id || null;
+    data.levelup_channel =
+      guild.channels.cache.find((ch) => "#" + ch.name === data.levelup_channel)?.id || null;
     if (data.levelup_channel !== settings.stats.xp.channel) {
       settings.stats.xp.channel = data.levelup_channel;
     }
@@ -132,7 +133,8 @@ router.post("/:serverID/basic", CheckAuth, async (req, res) => {
       settings.max_warn.action = data.max_warn_action;
     }
 
-    data.modlog_channel = guild.channels.cache.find((ch) => "#" + ch.name === data.modlog_channel)?.id || null;
+    data.modlog_channel =
+      guild.channels.cache.find((ch) => "#" + ch.name === data.modlog_channel)?.id || null;
     if (data.modlog_channel !== settings.modlog_channel) {
       settings.modlog_channel = data.modlog_channel;
     }

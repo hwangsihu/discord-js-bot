@@ -8,7 +8,7 @@ const {
 const prettyMs = require("pretty-ms");
 const { EMBED_COLORS, MUSIC } = require("@root/config");
 
-const search_prefix = {
+const searchPrefix = {
   YT: "ytsearch",
   YTM: "ytmsearch",
   SC: "scsearch",
@@ -72,13 +72,13 @@ async function search({ member, guild, channel }, query) {
   let res;
   try {
     res = await guild.client.musicManager.rest.loadTracks(
-      /^https?:\/\//.test(query) ? query : `${search_prefix[MUSIC.DEFAULT_SOURCE]}:${query}`
+      /^https?:\/\//.test(query) ? query : `${searchPrefix[MUSIC.DEFAULT_SOURCE]}:${query}`
     );
   } catch (err) {
     return "🚫 There was an error while searching";
   }
 
-  let embed = new EmbedBuilder().setColor(EMBED_COLORS.BOT_EMBED);
+  const embed = new EmbedBuilder().setColor(EMBED_COLORS.BOT_EMBED);
   let tracks;
 
   const loadType = res.tracks.length > 0 ? res.loadType : "NO_MATCHES";

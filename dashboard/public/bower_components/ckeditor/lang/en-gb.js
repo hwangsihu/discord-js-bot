@@ -106,7 +106,12 @@ CKEDITOR.lang["en-gb"] = {
     invalidRows: "Number of rows must be a number greater than 0.",
     invalidWidth: "Table width must be a number.",
     menu: "Table Properties",
-    row: { menu: "Row", insertBefore: "Insert Row Before", insertAfter: "Insert Row After", deleteRow: "Delete Rows" },
+    row: {
+      menu: "Row",
+      insertBefore: "Insert Row Before",
+      insertAfter: "Insert Row After",
+      deleteRow: "Delete Rows",
+    },
     rows: "Rows",
     summary: "Summary",
     title: "Table Properties",
@@ -145,7 +150,8 @@ CKEDITOR.lang["en-gb"] = {
     title: "Paste as Plain Text",
   },
   pastefromword: {
-    confirmCleanup: "The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?",
+    confirmCleanup:
+      "The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?",
     error: "It was not possible to clean up the pasted data due to an internal error",
     title: "Paste from Word",
     toolbar: "Paste from Word",
@@ -153,7 +159,10 @@ CKEDITOR.lang["en-gb"] = {
   notification: { closed: "Notification closed." },
   maximize: { maximize: "Maximise", minimize: "Minimise" },
   magicline: { title: "Insert paragraph here" },
-  list: { bulletedlist: "Insert/Remove Bulleted List", numberedlist: "Insert/Remove Numbered List" },
+  list: {
+    bulletedlist: "Insert/Remove Bulleted List",
+    numberedlist: "Insert/Remove Numbered List",
+  },
   link: {
     acccessKey: "Access Key",
     advanced: "Advanced",
@@ -341,8 +350,10 @@ CKEDITOR.lang["en-gb"] = {
     generalTab: "General",
     advancedTab: "Advanced",
     validateNumberFailed: "This value is not a number.",
-    confirmNewPage: "Any unsaved changes to this content will be lost. Are you sure you want to load new page?",
-    confirmCancel: "You have changed some options. Are you sure you want to close the dialogue window?",
+    confirmNewPage:
+      "Any unsaved changes to this content will be lost. Are you sure you want to load new page?",
+    confirmCancel:
+      "You have changed some options. Are you sure you want to close the dialogue window?",
     options: "Options",
     target: "Target",
     targetNew: "New Window (_blank)",

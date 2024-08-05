@@ -9,10 +9,10 @@ var Utils = require("select2/utils");
 
 var options = new Options({});
 
-test("backspace will remove a choice", function (assert) {
+test("backspace will remove a choice", (assert) => {
   assert.expect(3);
 
-  var KEYS = require("select2/keys");
+  var keys = require("select2/keys");
 
   var $container = $("#qunit-fixture .event-container");
   var container = new MockContainer();
@@ -26,7 +26,7 @@ test("backspace will remove a choice", function (assert) {
   selection.bind(container, $container);
 
   // The unselect event should be triggered at some point
-  selection.on("unselect", function () {
+  selection.on("unselect", () => {
     assert.ok(true, "A choice was unselected");
   });
 
@@ -46,15 +46,15 @@ test("backspace will remove a choice", function (assert) {
 
   // Trigger the backspace on the search
   var backspace = $.Event("keydown", {
-    which: KEYS.BACKSPACE,
+    which: keys.BACKSPACE,
   });
   $search.trigger(backspace);
 });
 
-test("backspace will set the search text", function (assert) {
+test("backspace will set the search text", (assert) => {
   assert.expect(3);
 
-  var KEYS = require("select2/keys");
+  var keys = require("select2/keys");
 
   var $container = $("#qunit-fixture .event-container");
   var container = new MockContainer();
@@ -83,14 +83,14 @@ test("backspace will set the search text", function (assert) {
 
   // Trigger the backspace on the search
   var backspace = $.Event("keydown", {
-    which: KEYS.BACKSPACE,
+    which: keys.BACKSPACE,
   });
   $search.trigger(backspace);
 
   assert.equal($search.val(), "One", "The search text was set");
 });
 
-test("updating selection does not shift the focus", function (assert) {
+test("updating selection does not shift the focus", (assert) => {
   // Check for IE 8, which triggers a false negative during testing
   if (window.attachEvent && !window.addEventListener) {
     // We must expect 0 assertions or the test will fail
@@ -127,10 +127,14 @@ test("updating selection does not shift the focus", function (assert) {
 
   assert.equal($search.length, 1, "The search box disappeared");
 
-  assert.equal(document.activeElement, $search[0], "The search did not have focus after the selection was updated");
+  assert.equal(
+    document.activeElement,
+    $search[0],
+    "The search did not have focus after the selection was updated"
+  );
 });
 
-test("the focus event shifts the focus", function (assert) {
+test("the focus event shifts the focus", (assert) => {
   // Check for IE 8, which triggers a false negative during testing
   if (window.attachEvent && !window.addEventListener) {
     // We must expect 0 assertions or the test will fail

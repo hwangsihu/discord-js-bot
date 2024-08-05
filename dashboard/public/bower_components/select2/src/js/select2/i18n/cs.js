@@ -1,4 +1,4 @@
-define(function () {
+define(() => {
   // Czech
   function small(count, masc) {
     switch (count) {
@@ -12,10 +12,8 @@ define(function () {
     return "";
   }
   return {
-    errorLoading: function () {
-      return "Výsledky nemohly být načteny.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "Výsledky nemohly být načteny.",
+    inputTooLong: (args) => {
       var n = args.input.length - args.maximum;
 
       if (n == 1) {
@@ -26,7 +24,7 @@ define(function () {
         return "Prosím, zadejte o " + n + " znaků méně.";
       }
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var n = args.minimum - args.input.length;
 
       if (n == 1) {
@@ -37,10 +35,8 @@ define(function () {
         return "Prosím, zadejte ještě dalších " + n + " znaků.";
       }
     },
-    loadingMore: function () {
-      return "Načítají se další výsledky…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Načítají se další výsledky…",
+    maximumSelected: (args) => {
       var n = args.maximum;
 
       if (n == 1) {
@@ -51,14 +47,8 @@ define(function () {
         return "Můžete zvolit maximálně " + n + " položek.";
       }
     },
-    noResults: function () {
-      return "Nenalezeny žádné položky.";
-    },
-    searching: function () {
-      return "Vyhledávání…";
-    },
-    removeAllItems: function () {
-      return "Odstraňte všechny položky";
-    },
+    noResults: () => "Nenalezeny žádné položky.",
+    searching: () => "Vyhledávání…",
+    removeAllItems: () => "Odstraňte všechny položky",
   };
 });

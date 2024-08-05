@@ -5,7 +5,9 @@
 import moment from "../moment";
 
 export default moment.defineLocale("ms", {
-  months: "Januari_Februari_Mac_April_Mei_Jun_Julai_Ogos_September_Oktober_November_Disember".split("_"),
+  months: "Januari_Februari_Mac_April_Mei_Jun_Julai_Ogos_September_Oktober_November_Disember".split(
+    "_"
+  ),
   monthsShort: "Jan_Feb_Mac_Apr_Mei_Jun_Jul_Ogs_Sep_Okt_Nov_Dis".split("_"),
   weekdays: "Ahad_Isnin_Selasa_Rabu_Khamis_Jumaat_Sabtu".split("_"),
   weekdaysShort: "Ahd_Isn_Sel_Rab_Kha_Jum_Sab".split("_"),
@@ -19,7 +21,7 @@ export default moment.defineLocale("ms", {
     LLLL: "dddd, D MMMM YYYY [pukul] HH.mm",
   },
   meridiemParse: /pagi|tengahari|petang|malam/,
-  meridiemHour: function (hour, meridiem) {
+  meridiemHour: (hour, meridiem) => {
     if (hour === 12) {
       hour = 0;
     }
@@ -31,7 +33,7 @@ export default moment.defineLocale("ms", {
       return hour + 12;
     }
   },
-  meridiem: function (hours, minutes, isLower) {
+  meridiem: (hours, minutes, isLower) => {
     if (hours < 11) {
       return "pagi";
     } else if (hours < 15) {

@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   var k = {
     readOnly: 1,
     preserveState: !0,
@@ -61,7 +61,7 @@
           ".cke_show_blocks [contenteditable\x3dfalse],.cke_show_blocks .cke_show_blocks_off{border:none;padding-top:0;background-image:none}.cke_show_blocks.cke_contents_rtl [contenteditable\x3dfalse],.cke_show_blocks.cke_contents_rtl .cke_show_blocks_off{padding-right:0}.cke_show_blocks.cke_contents_ltr [contenteditable\x3dfalse],.cke_show_blocks.cke_contents_ltr .cke_show_blocks_off{padding-left:0}"
         );
     },
-    init: function (a) {
+    init: (a) => {
       function c() {
         b.refresh(a);
       }
@@ -75,11 +75,11 @@
             command: "showblocks",
             toolbar: "tools,20",
           });
-        a.on("mode", function () {
+        a.on("mode", () => {
           b.state != CKEDITOR.TRISTATE_DISABLED && b.refresh(a);
         });
         a.elementMode == CKEDITOR.ELEMENT_MODE_INLINE && (a.on("focus", c), a.on("blur", c));
-        a.on("contentDom", function () {
+        a.on("contentDom", () => {
           b.state != CKEDITOR.TRISTATE_DISABLED && b.refresh(a);
         });
       }

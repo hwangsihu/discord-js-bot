@@ -150,7 +150,8 @@ CKEDITOR.lang["ms"] = {
     title: "Tampal sebagai text biasa",
   },
   pastefromword: {
-    confirmCleanup: "The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?",
+    confirmCleanup:
+      "The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?",
     error: "It was not possible to clean up the pasted data due to an internal error",
     title: "Tampal dari Word",
     toolbar: "Tampal dari Word",
@@ -346,8 +347,10 @@ CKEDITOR.lang["ms"] = {
     generalTab: "Umum",
     advancedTab: "Advanced",
     validateNumberFailed: "This value is not a number.",
-    confirmNewPage: "Any unsaved changes to this content will be lost. Are you sure you want to load new page?",
-    confirmCancel: "You have changed some options. Are you sure you want to close the dialog window?",
+    confirmNewPage:
+      "Any unsaved changes to this content will be lost. Are you sure you want to load new page?",
+    confirmCancel:
+      "You have changed some options. Are you sure you want to close the dialog window?",
     options: "Options",
     target: "Sasaran",
     targetNew: "New Window (_blank)",

@@ -1,6 +1,6 @@
 /* Kazakh (UTF-8) initialisation for the jQuery UI date picker plugin. */
 /* Written by Dmitriy Karasyov (dmitriy.karasyov@gmail.com). */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["kk"] = {
     closeText: "Жабу",
     prevText: "&#x3C;Алдыңғы",
@@ -28,7 +28,20 @@
       "Қараша",
       "Желтоқсан",
     ],
-    monthNamesShort: ["Қаң", "Ақп", "Нау", "Сәу", "Мам", "Мау", "Шіл", "Там", "Қыр", "Қаз", "Қар", "Жел"],
+    monthNamesShort: [
+      "Қаң",
+      "Ақп",
+      "Нау",
+      "Сәу",
+      "Мам",
+      "Мау",
+      "Шіл",
+      "Там",
+      "Қыр",
+      "Қаз",
+      "Қар",
+      "Жел",
+    ],
     dayNames: ["Жексенбі", "Дүйсенбі", "Сейсенбі", "Сәрсенбі", "Бейсенбі", "Жұма", "Сенбі"],
     dayNamesShort: ["жкс", "дсн", "ссн", "срс", "бсн", "жма", "снб"],
     dayNamesMin: ["Жк", "Дс", "Сс", "Ср", "Бс", "Жм", "Сн"],

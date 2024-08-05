@@ -23,8 +23,16 @@ jvm.DataSeries = function (params, elements) {
   }
 
   if (jvm.$.isArray(params.scale)) {
-    scaleConstructor = params.attribute === "fill" || params.attribute === "stroke" ? jvm.ColorScale : jvm.NumericScale;
-    this.scale = new scaleConstructor(params.scale, params.normalizeFunction, params.min, params.max);
+    scaleConstructor =
+      params.attribute === "fill" || params.attribute === "stroke"
+        ? jvm.ColorScale
+        : jvm.NumericScale;
+    this.scale = new scaleConstructor(
+      params.scale,
+      params.normalizeFunction,
+      params.min,
+      params.max
+    );
   } else if (params.scale) {
     this.scale = new jvm.OrdinalScale(params.scale);
   } else {
@@ -67,7 +75,7 @@ jvm.DataSeries.prototype = {
     if (!(this.scale instanceof jvm.OrdinalScale) && !(this.scale instanceof jvm.SimpleScale)) {
       if (!this.params.min || !this.params.max) {
         for (cc in values) {
-          val = parseFloat(values[cc]);
+          val = Number.parseFloat(values[cc]);
           if (val > max) max = values[cc];
           if (val < min) min = val;
         }
@@ -81,11 +89,11 @@ jvm.DataSeries.prototype = {
         this.params.max = max;
       }
       for (cc in values) {
-        val = parseFloat(values[cc]);
-        if (!isNaN(val)) {
-          attrs[cc] = this.scale.getValue(val);
-        } else {
+        val = Number.parseFloat(values[cc]);
+        if (isNaN(val)) {
           attrs[cc] = this.elements[cc].element.style.initial[this.params.attribute];
+        } else {
+          attrs[cc] = this.scale.getValue(val);
         }
       }
     } else {

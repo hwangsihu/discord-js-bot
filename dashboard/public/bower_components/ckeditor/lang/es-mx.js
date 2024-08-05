@@ -150,7 +150,8 @@ CKEDITOR.lang["es-mx"] = {
     title: "Paste as Plain Text",
   },
   pastefromword: {
-    confirmCleanup: "El texto que desea pegar parece estar copiado de Word. ¿Quieres limpiarlo antes de pegarlo?",
+    confirmCleanup:
+      "El texto que desea pegar parece estar copiado de Word. ¿Quieres limpiarlo antes de pegarlo?",
     error: "No fue posible limpiar los datos pegados debido a un error interno",
     title: "Pegar desde word",
     toolbar: "Pegar desde word",
@@ -158,7 +159,10 @@ CKEDITOR.lang["es-mx"] = {
   notification: { closed: "Notificación cerrada." },
   maximize: { maximize: "Maximizar", minimize: "Minimizar" },
   magicline: { title: "Insertar un párrafo aquí" },
-  list: { bulletedlist: "Insertar/Remover Lista con viñetas", numberedlist: "Insertar/Remover Lista numerada" },
+  list: {
+    bulletedlist: "Insertar/Remover Lista con viñetas",
+    numberedlist: "Insertar/Remover Lista numerada",
+  },
   link: {
     acccessKey: "Llave de acceso",
     advanced: "Avanzada",
@@ -265,7 +269,8 @@ CKEDITOR.lang["es-mx"] = {
   filetools: {
     loadError: "Ha ocurrido un error al leer el archivo",
     networkError: "Ha ocurrido un error de red durante la carga del archivo.",
-    httpError404: "Se ha producido un error HTTP durante la subida de archivos (404: archivo no encontrado).",
+    httpError404:
+      "Se ha producido un error HTTP durante la subida de archivos (404: archivo no encontrado).",
     httpError403: "Se ha producido un error HTTP durante la subida de archivos (403: Prohibido).",
     httpError: "Se ha producido un error HTTP durante la subida de archivos (error: %1).",
     noUrlError: "La URL de subida no está definida.",
@@ -348,7 +353,8 @@ CKEDITOR.lang["es-mx"] = {
     validateNumberFailed: "Este valor no es un número.",
     confirmNewPage:
       "Se perderán todos los cambios no guardados en este contenido. ¿Seguro que quieres cargar nueva página?",
-    confirmCancel: "Ha cambiado algunas opciones. ¿Está seguro de que desea cerrar la ventana de diálogo?",
+    confirmCancel:
+      "Ha cambiado algunas opciones. ¿Está seguro de que desea cerrar la ventana de diálogo?",
     options: "Opciones",
     target: "Objetivo",
     targetNew: "Nueva ventana (_blank)",

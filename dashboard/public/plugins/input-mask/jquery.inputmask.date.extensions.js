@@ -7,7 +7,7 @@ Version: 0.0.0
 
 Optional extensions on the jquery.inputmask base
 */
-(function ($) {
+(($) => {
   //date & time aliases
   $.extend($.inputmask.defaults.definitions, {
     h: {
@@ -50,8 +50,8 @@ Optional extensions on the jquery.inputmask base
       mask: "1/2/y",
       placeholder: "dd/mm/yyyy",
       regex: {
-        val1pre: new RegExp("[0-3]"), //daypre
-        val1: new RegExp("0[1-9]|[12][0-9]|3[01]"), //day
+        val1pre: /[0-3]/, //daypre
+        val1: /0[1-9]|[12][0-9]|3[01]/, //day
         val2pre: function (separator) {
           var escapedSeparator = $.inputmask.escapeRegex.call(this, separator);
           return new RegExp("((0[1-9]|[12][0-9]|3[01])" + escapedSeparator + "[01])");
@@ -72,15 +72,15 @@ Optional extensions on the jquery.inputmask base
       leapday: "29/02/",
       separator: "/",
       yearrange: { minyear: 1900, maxyear: 2099 },
-      isInYearRange: function (chrs, minyear, maxyear) {
-        var enteredyear = parseInt(chrs.concat(minyear.toString().slice(chrs.length)));
-        var enteredyear2 = parseInt(chrs.concat(maxyear.toString().slice(chrs.length)));
+      isInYearRange: (chrs, minyear, maxyear) => {
+        var enteredyear = Number.parseInt(chrs.concat(minyear.toString().slice(chrs.length)));
+        var enteredyear2 = Number.parseInt(chrs.concat(maxyear.toString().slice(chrs.length)));
         return (
-          (enteredyear != NaN ? minyear <= enteredyear && enteredyear <= maxyear : false) ||
-          (enteredyear2 != NaN ? minyear <= enteredyear2 && enteredyear2 <= maxyear : false)
+          (enteredyear != Number.NaN ? minyear <= enteredyear && enteredyear <= maxyear : false) ||
+          (enteredyear2 != Number.NaN ? minyear <= enteredyear2 && enteredyear2 <= maxyear : false)
         );
       },
-      determinebaseyear: function (minyear, maxyear, hint) {
+      determinebaseyear: (minyear, maxyear, hint) => {
         var currentyear = new Date().getFullYear();
         if (minyear > currentyear) return minyear;
         if (maxyear < currentyear) {
@@ -99,13 +99,17 @@ Optional extensions on the jquery.inputmask base
         var $input = $(this);
         if (e.ctrlKey && e.keyCode == opts.keyCode.RIGHT) {
           var today = new Date();
-          $input.val(today.getDate().toString() + (today.getMonth() + 1).toString() + today.getFullYear().toString());
+          $input.val(
+            today.getDate().toString() +
+              (today.getMonth() + 1).toString() +
+              today.getFullYear().toString()
+          );
         }
       },
       definitions: {
         1: {
           //val1 ~ day or month
-          validator: function (chrs, buffer, pos, strict, opts) {
+          validator: (chrs, buffer, pos, strict, opts) => {
             var isValid = opts.regex.val1.test(chrs);
             if (!strict && !isValid) {
               if (chrs.charAt(1) == opts.separator || "-./".indexOf(chrs.charAt(1)) != -1) {
@@ -121,7 +125,7 @@ Optional extensions on the jquery.inputmask base
           cardinality: 2,
           prevalidator: [
             {
-              validator: function (chrs, buffer, pos, strict, opts) {
+              validator: (chrs, buffer, pos, strict, opts) => {
                 var isValid = opts.regex.val1pre.test(chrs);
                 if (!strict && !isValid) {
                   isValid = opts.regex.val1.test("0" + chrs);
@@ -139,7 +143,7 @@ Optional extensions on the jquery.inputmask base
         },
         2: {
           //val2 ~ day or month
-          validator: function (chrs, buffer, pos, strict, opts) {
+          validator: (chrs, buffer, pos, strict, opts) => {
             var frontValue = buffer.join("").substr(0, 3);
             if (frontValue.indexOf(opts.placeholder[0]) != -1) frontValue = "01" + opts.separator;
             var isValid = opts.regex.val2(opts.separator).test(frontValue + chrs);
@@ -157,9 +161,10 @@ Optional extensions on the jquery.inputmask base
           cardinality: 2,
           prevalidator: [
             {
-              validator: function (chrs, buffer, pos, strict, opts) {
+              validator: (chrs, buffer, pos, strict, opts) => {
                 var frontValue = buffer.join("").substr(0, 3);
-                if (frontValue.indexOf(opts.placeholder[0]) != -1) frontValue = "01" + opts.separator;
+                if (frontValue.indexOf(opts.placeholder[0]) != -1)
+                  frontValue = "01" + opts.separator;
                 var isValid = opts.regex.val2pre(opts.separator).test(frontValue + chrs);
                 if (!strict && !isValid) {
                   isValid = opts.regex.val2(opts.separator).test(frontValue + "0" + chrs);
@@ -177,12 +182,12 @@ Optional extensions on the jquery.inputmask base
         },
         y: {
           //year
-          validator: function (chrs, buffer, pos, strict, opts) {
+          validator: (chrs, buffer, pos, strict, opts) => {
             if (opts.isInYearRange(chrs, opts.yearrange.minyear, opts.yearrange.maxyear)) {
               var dayMonthValue = buffer.join("").substr(0, 6);
               if (dayMonthValue != opts.leapday) return true;
               else {
-                var year = parseInt(chrs, 10); //detect leap year
+                var year = Number.parseInt(chrs, 10); //detect leap year
                 if (year % 4 === 0)
                   if (year % 100 === 0)
                     if (year % 400 === 0) return true;
@@ -195,15 +200,23 @@ Optional extensions on the jquery.inputmask base
           cardinality: 4,
           prevalidator: [
             {
-              validator: function (chrs, buffer, pos, strict, opts) {
-                var isValid = opts.isInYearRange(chrs, opts.yearrange.minyear, opts.yearrange.maxyear);
+              validator: (chrs, buffer, pos, strict, opts) => {
+                var isValid = opts.isInYearRange(
+                  chrs,
+                  opts.yearrange.minyear,
+                  opts.yearrange.maxyear
+                );
                 if (!strict && !isValid) {
                   var yearPrefix = opts
                     .determinebaseyear(opts.yearrange.minyear, opts.yearrange.maxyear, chrs + "0")
                     .toString()
                     .slice(0, 1);
 
-                  isValid = opts.isInYearRange(yearPrefix + chrs, opts.yearrange.minyear, opts.yearrange.maxyear);
+                  isValid = opts.isInYearRange(
+                    yearPrefix + chrs,
+                    opts.yearrange.minyear,
+                    opts.yearrange.maxyear
+                  );
                   if (isValid) {
                     buffer[pos++] = yearPrefix[0];
                     return { pos: pos };
@@ -213,7 +226,11 @@ Optional extensions on the jquery.inputmask base
                     .toString()
                     .slice(0, 2);
 
-                  isValid = opts.isInYearRange(yearPrefix + chrs, opts.yearrange.minyear, opts.yearrange.maxyear);
+                  isValid = opts.isInYearRange(
+                    yearPrefix + chrs,
+                    opts.yearrange.minyear,
+                    opts.yearrange.maxyear
+                  );
                   if (isValid) {
                     buffer[pos++] = yearPrefix[0];
                     buffer[pos++] = yearPrefix[1];
@@ -225,8 +242,12 @@ Optional extensions on the jquery.inputmask base
               cardinality: 1,
             },
             {
-              validator: function (chrs, buffer, pos, strict, opts) {
-                var isValid = opts.isInYearRange(chrs, opts.yearrange.minyear, opts.yearrange.maxyear);
+              validator: (chrs, buffer, pos, strict, opts) => {
+                var isValid = opts.isInYearRange(
+                  chrs,
+                  opts.yearrange.minyear,
+                  opts.yearrange.maxyear
+                );
                 if (!strict && !isValid) {
                   var yearPrefix = opts
                     .determinebaseyear(opts.yearrange.minyear, opts.yearrange.maxyear, chrs)
@@ -247,11 +268,17 @@ Optional extensions on the jquery.inputmask base
                     .determinebaseyear(opts.yearrange.minyear, opts.yearrange.maxyear, chrs)
                     .toString()
                     .slice(0, 2);
-                  if (opts.isInYearRange(yearPrefix + chrs, opts.yearrange.minyear, opts.yearrange.maxyear)) {
+                  if (
+                    opts.isInYearRange(
+                      yearPrefix + chrs,
+                      opts.yearrange.minyear,
+                      opts.yearrange.maxyear
+                    )
+                  ) {
                     var dayMonthValue = buffer.join("").substr(0, 6);
                     if (dayMonthValue != opts.leapday) isValid = true;
                     else {
-                      var year = parseInt(chrs, 10); //detect leap year
+                      var year = Number.parseInt(chrs, 10); //detect leap year
                       if (year % 4 === 0)
                         if (year % 100 === 0)
                           if (year % 400 === 0) isValid = true;
@@ -272,9 +299,8 @@ Optional extensions on the jquery.inputmask base
               cardinality: 2,
             },
             {
-              validator: function (chrs, buffer, pos, strict, opts) {
-                return opts.isInYearRange(chrs, opts.yearrange.minyear, opts.yearrange.maxyear);
-              },
+              validator: (chrs, buffer, pos, strict, opts) =>
+                opts.isInYearRange(chrs, opts.yearrange.minyear, opts.yearrange.maxyear),
               cardinality: 3,
             },
           ],
@@ -289,7 +315,9 @@ Optional extensions on the jquery.inputmask base
       regex: {
         val2pre: function (separator) {
           var escapedSeparator = $.inputmask.escapeRegex.call(this, separator);
-          return new RegExp("((0[13-9]|1[012])" + escapedSeparator + "[0-3])|(02" + escapedSeparator + "[0-2])");
+          return new RegExp(
+            "((0[13-9]|1[012])" + escapedSeparator + "[0-3])|(02" + escapedSeparator + "[0-2])"
+          );
         }, //daypre
         val2: function (separator) {
           var escapedSeparator = $.inputmask.escapeRegex.call(this, separator);
@@ -303,15 +331,19 @@ Optional extensions on the jquery.inputmask base
               "31)"
           );
         }, //day
-        val1pre: new RegExp("[01]"), //monthpre
-        val1: new RegExp("0[1-9]|1[012]"), //month
+        val1pre: /[01]/, //monthpre
+        val1: /0[1-9]|1[012]/, //month
       },
       leapday: "02/29/",
       onKeyUp: function (e, buffer, opts) {
         var $input = $(this);
         if (e.ctrlKey && e.keyCode == opts.keyCode.RIGHT) {
           var today = new Date();
-          $input.val((today.getMonth() + 1).toString() + today.getDate().toString() + today.getFullYear().toString());
+          $input.val(
+            (today.getMonth() + 1).toString() +
+              today.getDate().toString() +
+              today.getFullYear().toString()
+          );
         }
       },
     },
@@ -324,13 +356,17 @@ Optional extensions on the jquery.inputmask base
         var $input = $(this);
         if (e.ctrlKey && e.keyCode == opts.keyCode.RIGHT) {
           var today = new Date();
-          $input.val(today.getFullYear().toString() + (today.getMonth() + 1).toString() + today.getDate().toString());
+          $input.val(
+            today.getFullYear().toString() +
+              (today.getMonth() + 1).toString() +
+              today.getDate().toString()
+          );
         }
       },
       definitions: {
         2: {
           //val2 ~ day or month
-          validator: function (chrs, buffer, pos, strict, opts) {
+          validator: (chrs, buffer, pos, strict, opts) => {
             var frontValue = buffer.join("").substr(5, 3);
             if (frontValue.indexOf(opts.placeholder[5]) != -1) frontValue = "01" + opts.separator;
             var isValid = opts.regex.val2(opts.separator).test(frontValue + chrs);
@@ -349,7 +385,7 @@ Optional extensions on the jquery.inputmask base
               var dayMonthValue = buffer.join("").substr(4, 4) + chrs;
               if (dayMonthValue != opts.leapday) return true;
               else {
-                var year = parseInt(buffer.join("").substr(0, 4), 10); //detect leap year
+                var year = Number.parseInt(buffer.join("").substr(0, 4), 10); //detect leap year
                 if (year % 4 === 0)
                   if (year % 100 === 0)
                     if (year % 400 === 0) return true;
@@ -364,9 +400,10 @@ Optional extensions on the jquery.inputmask base
           cardinality: 2,
           prevalidator: [
             {
-              validator: function (chrs, buffer, pos, strict, opts) {
+              validator: (chrs, buffer, pos, strict, opts) => {
                 var frontValue = buffer.join("").substr(5, 3);
-                if (frontValue.indexOf(opts.placeholder[5]) != -1) frontValue = "01" + opts.separator;
+                if (frontValue.indexOf(opts.placeholder[5]) != -1)
+                  frontValue = "01" + opts.separator;
                 var isValid = opts.regex.val2pre(opts.separator).test(frontValue + chrs);
                 if (!strict && !isValid) {
                   isValid = opts.regex.val2(opts.separator).test(frontValue + "0" + chrs);
@@ -431,17 +468,17 @@ Optional extensions on the jquery.inputmask base
       placeholder: "dd/mm/yyyy hh:mm",
       alias: "dd/mm/yyyy",
       regex: {
-        hrspre: new RegExp("[012]"), //hours pre
-        hrs24: new RegExp("2[0-9]|1[3-9]"),
-        hrs: new RegExp("[01][0-9]|2[0-3]"), //hours
-        ampm: new RegExp("^[a|p|A|P][m|M]"),
+        hrspre: /[012]/, //hours pre
+        hrs24: /2[0-9]|1[3-9]/,
+        hrs: /[01][0-9]|2[0-3]/, //hours
+        ampm: /^[a|p|A|P][m|M]/,
       },
       timeseparator: ":",
       hourFormat: "24", // or 12
       definitions: {
         h: {
           //hours
-          validator: function (chrs, buffer, pos, strict, opts) {
+          validator: (chrs, buffer, pos, strict, opts) => {
             var isValid = opts.regex.hrs.test(chrs);
             if (!strict && !isValid) {
               if (chrs.charAt(1) == opts.timeseparator || "-.:".indexOf(chrs.charAt(1)) != -1) {
@@ -456,7 +493,7 @@ Optional extensions on the jquery.inputmask base
             }
 
             if (isValid && opts.hourFormat !== "24" && opts.regex.hrs24.test(chrs)) {
-              var tmp = parseInt(chrs, 10);
+              var tmp = Number.parseInt(chrs, 10);
 
               if (tmp == 24) {
                 buffer[pos + 5] = "a";
@@ -484,7 +521,7 @@ Optional extensions on the jquery.inputmask base
           cardinality: 2,
           prevalidator: [
             {
-              validator: function (chrs, buffer, pos, strict, opts) {
+              validator: (chrs, buffer, pos, strict, opts) => {
                 var isValid = opts.regex.hrspre.test(chrs);
                 if (!strict && !isValid) {
                   isValid = opts.regex.hrs.test("0" + chrs);
@@ -502,9 +539,7 @@ Optional extensions on the jquery.inputmask base
         },
         t: {
           //am/pm
-          validator: function (chrs, buffer, pos, strict, opts) {
-            return opts.regex.ampm.test(chrs + "m");
-          },
+          validator: (chrs, buffer, pos, strict, opts) => opts.regex.ampm.test(chrs + "m"),
           casing: "lower",
           cardinality: 1,
         },

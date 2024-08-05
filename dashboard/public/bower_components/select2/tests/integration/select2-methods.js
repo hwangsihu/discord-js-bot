@@ -4,7 +4,7 @@ var $ = require("jquery");
 var Select2 = require("select2/core");
 var Options = require("select2/options");
 
-test("single default selection returned", function (assert) {
+test("single default selection returned", (assert) => {
   var $select = $(
     "<select>" +
       "<option>One</option>" +
@@ -27,7 +27,7 @@ test("single default selection returned", function (assert) {
   assert.equal(first.text, "Three", "The first option was correct");
 });
 
-test("multiple default selections returned", function (assert) {
+test("multiple default selections returned", (assert) => {
   var $select = $(
     "<select multiple>" +
       "<option selected>One</option>" +
@@ -54,7 +54,7 @@ test("multiple default selections returned", function (assert) {
 
 module("select2(val)");
 
-test("single value matches jquery value", function (assert) {
+test("single value matches jquery value", (assert) => {
   var $select = $(
     "<select>" +
       "<option>One</option>" +
@@ -73,7 +73,7 @@ test("single value matches jquery value", function (assert) {
   assert.equal(value, $select.val(), "The value should match the jquery value");
 });
 
-test("multiple value matches the jquery value", function (assert) {
+test("multiple value matches the jquery value", (assert) => {
   var $select = $(
     "<select multiple>" +
       "<option selected>One</option>" +

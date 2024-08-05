@@ -23,10 +23,8 @@ export default moment.defineLocale("ja", {
     llll: "YYYY年M月D日(ddd) HH:mm",
   },
   meridiemParse: /午前|午後/i,
-  isPM: function (input) {
-    return input === "午後";
-  },
-  meridiem: function (hour, minute, isLower) {
+  isPM: (input) => input === "午後",
+  meridiem: (hour, minute, isLower) => {
     if (hour < 12) {
       return "午前";
     } else {
@@ -54,7 +52,7 @@ export default moment.defineLocale("ja", {
     sameElse: "L",
   },
   dayOfMonthOrdinalParse: /\d{1,2}日/,
-  ordinal: function (number, period) {
+  ordinal: (number, period) => {
     switch (period) {
       case "d":
       case "D":

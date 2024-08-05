@@ -74,7 +74,8 @@ module.exports = {
       if (input === "off") channel = "off";
       else {
         const match = message.guild.findMatchingChannels(input);
-        if (match.length === 0) return message.safeReply("Invalid channel. Please provide a valid channel");
+        if (match.length === 0)
+          return message.safeReply("Invalid channel. Please provide a valid channel");
         channel = match[0];
       }
       response = await setChannel(channel, data.settings);
@@ -89,8 +90,10 @@ module.exports = {
     const sub = interaction.options.getSubcommand();
     let response;
 
-    if (sub === "message") response = await setMessage(interaction.options.getString("message"), data.settings);
-    else if (sub === "channel") response = await setChannel(interaction.options.getChannel("channel"), data.settings);
+    if (sub === "message")
+      response = await setMessage(interaction.options.getString("message"), data.settings);
+    else if (sub === "channel")
+      response = await setChannel(interaction.options.getChannel("channel"), data.settings);
     else response = "Invalid subcommand";
 
     await interaction.followUp(response);

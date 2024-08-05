@@ -6,9 +6,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
-+(function ($) {
-  "use strict";
-
++(($) => {
   // SCROLLSPY CLASS DEFINITION
   // ==========================
 
@@ -35,7 +33,8 @@
 
   ScrollSpy.prototype.getScrollHeight = function () {
     return (
-      this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+      this.$scrollElement[0].scrollHeight ||
+      Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
     );
   };
 
@@ -61,12 +60,13 @@
         var $href = /^#./.test(href) && $(href);
 
         return (
-          ($href && $href.length && $href.is(":visible") && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+          ($href &&
+            $href.length &&
+            $href.is(":visible") && [[$href[offsetMethod]().top + offsetBase, href]]) ||
+          null
         );
       })
-      .sort(function (a, b) {
-        return a[0] - b[0];
-      })
+      .sort((a, b) => a[0] - b[0])
       .each(function () {
         that.offsets.push(this[0]);
         that.targets.push(this[1]);
@@ -108,7 +108,8 @@
 
     this.clear();
 
-    var selector = this.selector + '[data-target="' + target + '"],' + this.selector + '[href="' + target + '"]';
+    var selector =
+      this.selector + '[data-target="' + target + '"],' + this.selector + '[href="' + target + '"]';
 
     var active = $(selector).parents("li").addClass("active");
 
@@ -153,7 +154,7 @@
   // SCROLLSPY DATA-API
   // ==================
 
-  $(window).on("load.bs.scrollspy.data-api", function () {
+  $(window).on("load.bs.scrollspy.data-api", () => {
     $('[data-spy="scroll"]').each(function () {
       var $spy = $(this);
       Plugin.call($spy, $spy.data());

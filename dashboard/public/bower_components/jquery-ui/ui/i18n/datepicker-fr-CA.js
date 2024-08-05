@@ -1,5 +1,5 @@
 /* Canadian-French initialisation for the jQuery UI date picker plugin. */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -7,7 +7,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["fr-CA"] = {
     closeText: "Fermer",
     prevText: "Précédent",

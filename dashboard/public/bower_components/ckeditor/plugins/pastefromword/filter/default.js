@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function u() {
     return !1;
   }
@@ -34,7 +34,7 @@
       d = CKEDITOR.tools.style.parse.margin(a[b]);
       for (c in d) {
         var e = d[c];
-        parseFloat(e) && (a["margin-" + c] = e);
+        Number.parseFloat(e) && (a["margin-" + c] = e);
       }
       delete a[b];
     }
@@ -49,7 +49,7 @@
     x = {},
     v = 0;
   CKEDITOR.plugins.pastefromword = {};
-  CKEDITOR.cleanWord = function (a, b) {
+  CKEDITOR.cleanWord = (a, b) => {
     function c(a) {
       (a.attributes["o:gfxdata"] || "v:group" === a.parent.name) && e.push(a.attributes.id);
     }
@@ -60,7 +60,7 @@
     a = a.replace(/<!\[/g, "\x3c!--[").replace(/\]>/g, "]--\x3e");
     var h = CKEDITOR.htmlParser.fragment.fromHtml(a),
       f = {
-        root: function (a) {
+        root: (a) => {
           a.filterChildren(p);
           CKEDITOR.plugins.pastefromword.lists.cleanup(g.createLists(a));
         },
@@ -70,7 +70,7 @@
           [new RegExp(z.join("|")), ""],
         ],
         elements: {
-          a: function (a) {
+          a: (a) => {
             if (a.attributes.name) {
               if ("_GoBack" == a.attributes.name) {
                 delete a.name;
@@ -87,21 +87,24 @@
             }
             a.attributes.name &&
               x[a.attributes.name] &&
-              ((a = x[a.attributes.name]), (a.attributes.href = a.attributes.href.replace(/.*#(.*)$/, "#$1")));
+              ((a = x[a.attributes.name]),
+              (a.attributes.href = a.attributes.href.replace(/.*#(.*)$/, "#$1")));
           },
-          div: function (a) {
+          div: (a) => {
             k.createStyleStack(a, p, b);
           },
-          img: function (a) {
+          img: (a) => {
             if (a.parent && a.parent.attributes) {
               var b = a.parent.attributes;
-              (b = b.style || b.STYLE) && b.match(/mso\-list:\s?Ignore/) && (a.attributes["cke-ignored"] = !0);
+              (b = b.style || b.STYLE) &&
+                b.match(/mso\-list:\s?Ignore/) &&
+                (a.attributes["cke-ignored"] = !0);
             }
             k.mapStyles(a, {
-              width: function (b) {
+              width: (b) => {
                 k.setStyle(a, "width", b + "px");
               },
-              height: function (b) {
+              height: (b) => {
                 k.setStyle(a, "height", b + "px");
               },
             });
@@ -111,12 +114,10 @@
               a.attributes.alt.match(/^https?:\/\//) &&
               (a.attributes.src = a.attributes.alt);
             var b = a.attributes["v:shapes"] ? a.attributes["v:shapes"].split(" ") : [],
-              c = CKEDITOR.tools.array.every(b, function (a) {
-                return -1 < e.indexOf(a);
-              });
+              c = CKEDITOR.tools.array.every(b, (a) => -1 < e.indexOf(a));
             if (b.length && c) return !1;
           },
-          p: function (a) {
+          p: (a) => {
             a.filterChildren(p);
             if (a.attributes.style && a.attributes.style.match(/display:\s*none/i)) return !1;
             if (g.thisIsAListItem(b, a))
@@ -124,7 +125,7 @@
                 g.convertToFakeListItem(b, a),
                 m.array.reduce(
                   a.children,
-                  function (a, b) {
+                  (a, b) => {
                     "p" === b.name &&
                       (0 < a && new CKEDITOR.htmlParser.element("br").insertBefore(b),
                       b.replaceWithChildren(),
@@ -134,56 +135,59 @@
                   0
                 );
             else {
-              var c = a.getAscendant(function (a) {
-                  return "ul" == a.name || "ol" == a.name;
-                }),
+              var c = a.getAscendant((a) => "ul" == a.name || "ol" == a.name),
                 d = m.parseCssText(a.attributes.style);
               c &&
                 !c.attributes["cke-list-level"] &&
                 d["mso-list"] &&
                 d["mso-list"].match(/level/) &&
                 (c.attributes["cke-list-level"] = d["mso-list"].match(/level(\d+)/)[1]);
-              b.config.enterMode == CKEDITOR.ENTER_BR && (delete a.name, a.add(new CKEDITOR.htmlParser.element("br")));
+              b.config.enterMode == CKEDITOR.ENTER_BR &&
+                (delete a.name, a.add(new CKEDITOR.htmlParser.element("br")));
             }
             k.createStyleStack(a, p, b);
           },
-          pre: function (a) {
+          pre: (a) => {
             g.thisIsAListItem(b, a) && g.convertToFakeListItem(b, a);
             k.createStyleStack(a, p, b);
           },
-          h1: function (a) {
+          h1: (a) => {
             g.thisIsAListItem(b, a) && g.convertToFakeListItem(b, a);
             k.createStyleStack(a, p, b);
           },
-          h2: function (a) {
+          h2: (a) => {
             g.thisIsAListItem(b, a) && g.convertToFakeListItem(b, a);
             k.createStyleStack(a, p, b);
           },
-          h3: function (a) {
+          h3: (a) => {
             g.thisIsAListItem(b, a) && g.convertToFakeListItem(b, a);
             k.createStyleStack(a, p, b);
           },
-          h4: function (a) {
+          h4: (a) => {
             g.thisIsAListItem(b, a) && g.convertToFakeListItem(b, a);
             k.createStyleStack(a, p, b);
           },
-          h5: function (a) {
+          h5: (a) => {
             g.thisIsAListItem(b, a) && g.convertToFakeListItem(b, a);
             k.createStyleStack(a, p, b);
           },
-          h6: function (a) {
+          h6: (a) => {
             g.thisIsAListItem(b, a) && g.convertToFakeListItem(b, a);
             k.createStyleStack(a, p, b);
           },
-          font: function (a) {
-            if (a.getHtml().match(/^\s*$/)) return new CKEDITOR.htmlParser.text(" ").insertAfter(a), !1;
-            b && !0 === b.config.pasteFromWordRemoveFontStyles && a.attributes.size && delete a.attributes.size;
+          font: (a) => {
+            if (a.getHtml().match(/^\s*$/))
+              return new CKEDITOR.htmlParser.text(" ").insertAfter(a), !1;
+            b &&
+              !0 === b.config.pasteFromWordRemoveFontStyles &&
+              a.attributes.size &&
+              delete a.attributes.size;
             CKEDITOR.dtd.tr[a.parent.name] &&
             CKEDITOR.tools.arrayCompare(CKEDITOR.tools.objectKeys(a.attributes), ["class", "style"])
               ? k.createStyleStack(a, p, b)
               : y(a, p);
           },
-          ul: function (a) {
+          ul: (a) => {
             if (d)
               return (
                 "li" == a.parent.name &&
@@ -193,11 +197,11 @@
                 !1
               );
           },
-          li: function (a) {
+          li: (a) => {
             t.correctLevelShift(a);
             d && ((a.attributes.style = k.normalizedStyles(a, b)), k.pushStylesLower(a));
           },
-          ol: function (a) {
+          ol: (a) => {
             if (d)
               return (
                 "li" == a.parent.name &&
@@ -207,7 +211,7 @@
                 !1
               );
           },
-          span: function (a) {
+          span: (a) => {
             a.filterChildren(p);
             a.attributes.style = k.normalizedStyles(a, b);
             if (
@@ -220,7 +224,7 @@
             }
             a.attributes.style.match(/FONT-FAMILY:\s*Symbol/i) &&
               a.forEach(
-                function (a) {
+                (a) => {
                   a.value = a.value.replace(/&nbsp;/g, "");
                 },
                 CKEDITOR.NODE_TEXT,
@@ -228,7 +232,7 @@
               );
             k.createStyleStack(a, p, b);
           },
-          table: function (a) {
+          table: (a) => {
             a._tdBorders = {};
             a.filterChildren(p);
             var b,
@@ -251,14 +255,15 @@
               b.remove();
             }
           },
-          td: function (a) {
+          td: (a) => {
             var c = a.getAscendant("table"),
               d = c._tdBorders,
               e = ["border", "border-top", "border-right", "border-bottom", "border-left"],
               c = m.parseCssText(c.attributes.style),
               f = c.background || c.BACKGROUND;
             f && k.setStyle(a, "background", f, !0);
-            (c = c["background-color"] || c["BACKGROUND-COLOR"]) && k.setStyle(a, "background-color", c, !0);
+            (c = c["background-color"] || c["BACKGROUND-COLOR"]) &&
+              k.setStyle(a, "background-color", c, !0);
             var c = m.parseCssText(a.attributes.style),
               h;
             for (h in c) (f = c[h]), delete c[h], (c[h.toLowerCase()] = f);
@@ -271,19 +276,22 @@
             );
           },
           "v:imagedata": u,
-          "v:shape": function (a) {
+          "v:shape": (a) => {
             var b = !1;
             if (null === a.getFirst("v:imagedata")) c(a);
             else {
-              a.parent.find(function (c) {
-                "img" == c.name && c.attributes && c.attributes["v:shapes"] == a.attributes.id && (b = !0);
+              a.parent.find((c) => {
+                "img" == c.name &&
+                  c.attributes &&
+                  c.attributes["v:shapes"] == a.attributes.id &&
+                  (b = !0);
               }, !0);
               if (b) return !1;
               var d = "";
               "v:group" === a.parent.name
                 ? c(a)
                 : (a.forEach(
-                    function (a) {
+                    (a) => {
                       a.attributes && a.attributes.src && (d = a.attributes.src);
                     },
                     CKEDITOR.NODE_ELEMENT,
@@ -295,18 +303,12 @@
                   delete a.attributes.type);
             }
           },
-          style: function () {
-            return !1;
-          },
-          object: function (a) {
-            return !(!a.attributes || !a.attributes.data);
-          },
+          style: () => !1,
+          object: (a) => !(!a.attributes || !a.attributes.data),
         },
         attributes: {
-          style: function (a, c) {
-            return k.normalizedStyles(c, b) || !1;
-          },
-          class: function (a) {
+          style: (a, c) => k.normalizedStyles(c, b) || !1,
+          class: (a) => {
             a = a.replace(/(el\d+)|(font\d+)|msonormal|msolistparagraph\w*/gi, "");
             return "" === a ? !1 : a;
           },
@@ -316,20 +318,23 @@
           "v:shapes": u,
           "o:spid": u,
         },
-        comment: function (a) {
+        comment: (a) => {
           a.match(/\[if.* supportFields.*\]/) && v++;
           "[endif]" == a && (v = 0 < v ? v - 1 : 0);
           return !1;
         },
-        text: function (a, b) {
+        text: (a, b) => {
           if (v) return "";
           var c = b.parent && b.parent.parent;
-          return c && c.attributes && c.attributes.style && c.attributes.style.match(/mso-list:\s*ignore/i)
+          return c &&
+            c.attributes &&
+            c.attributes.style &&
+            c.attributes.style.match(/mso-list:\s*ignore/i)
             ? a.replace(/&nbsp;/g, " ")
             : a;
         },
       };
-    CKEDITOR.tools.array.forEach(A, function (a) {
+    CKEDITOR.tools.array.forEach(A, (a) => {
       f.elements[a] = c;
     });
     p = new CKEDITOR.htmlParser.filter(f);
@@ -339,11 +344,13 @@
     return l.getHtml();
   };
   CKEDITOR.plugins.pastefromword.styles = {
-    setStyle: function (a, b, c, d) {
+    setStyle: (a, b, c, d) => {
       var e = m.parseCssText(a.attributes.style);
-      (d && e[b]) || ("" === c ? delete e[b] : (e[b] = c), (a.attributes.style = CKEDITOR.tools.writeCssText(e)));
+      (d && e[b]) ||
+        ("" === c ? delete e[b] : (e[b] = c),
+        (a.attributes.style = CKEDITOR.tools.writeCssText(e)));
     },
-    mapStyles: function (a, b) {
+    mapStyles: (a, b) => {
       for (var c in b)
         if (a.attributes[c]) {
           if ("function" === typeof b[c]) b[c](a.attributes[c]);
@@ -351,13 +358,15 @@
           delete a.attributes[c];
         }
     },
-    normalizedStyles: function (a, b) {
+    normalizedStyles: (a, b) => {
       var c =
           "background-color:transparent border-image:none color:windowtext direction:ltr mso- visibility:visible div:border:none".split(
             " "
           ),
-        d = "font-family font font-size color background-color line-height text-decoration".split(" "),
-        e = function () {
+        d = "font-family font font-size color background-color line-height text-decoration".split(
+          " "
+        ),
+        e = () => {
           for (var a = [], b = 0; b < arguments.length; b++) arguments[b] && a.push(arguments[b]);
           return -1 !== m.indexOf(c, a.join(":"));
         },
@@ -384,15 +393,15 @@
           delete f[l[q]];
       }
       w(f);
-      (function () {
-        CKEDITOR.tools.array.forEach(["top", "right", "bottom", "left"], function (a) {
+      (() => {
+        CKEDITOR.tools.array.forEach(["top", "right", "bottom", "left"], (a) => {
           a = "margin-" + a;
-          parseFloat(f[a]) ? (f[a] = CKEDITOR.tools.convertToPx(f[a]) + "px") : delete f[a];
+          Number.parseFloat(f[a]) ? (f[a] = CKEDITOR.tools.convertToPx(f[a]) + "px") : delete f[a];
         });
       })();
       return CKEDITOR.tools.writeCssText(f);
     },
-    createStyleStack: function (a, b, c, d) {
+    createStyleStack: (a, b, c, d) => {
       var e = [];
       a.filterChildren(b);
       for (b = a.children.length - 1; 0 <= b; b--) e.unshift(a.children[b]), a.children[b].remove();
@@ -402,7 +411,12 @@
       var h = "span" === a.name,
         f;
       for (f in b)
-        if (!f.match(d || /margin((?!-)|-left|-top|-bottom|-right)|text-indent|text-align|width|border|padding/i))
+        if (
+          !f.match(
+            d ||
+              /margin((?!-)|-left|-top|-bottom|-right)|text-indent|text-align|width|border|padding/i
+          )
+        )
           if (h) h = !1;
           else {
             var l = new CKEDITOR.htmlParser.element("span");
@@ -411,10 +425,12 @@
             c = l;
             delete b[f];
           }
-      CKEDITOR.tools.isEmpty(b) ? delete a.attributes.style : (a.attributes.style = CKEDITOR.tools.writeCssText(b));
+      CKEDITOR.tools.isEmpty(b)
+        ? delete a.attributes.style
+        : (a.attributes.style = CKEDITOR.tools.writeCssText(b));
       for (b = 0; b < e.length; b++) c.add(e[b]);
     },
-    sortStyles: function (a) {
+    sortStyles: (a) => {
       for (
         var b = ["border", "border-bottom", "font-size", "background"],
           c = m.parseCssText(a.attributes.style),
@@ -426,7 +442,7 @@
         f++
       )
         -1 !== m.indexOf(b, d[f].toLowerCase()) ? e.push(d[f]) : h.push(d[f]);
-      e.sort(function (a, c) {
+      e.sort((a, c) => {
         var d = m.indexOf(b, a.toLowerCase()),
           e = m.indexOf(b, c.toLowerCase());
         return d - e;
@@ -436,14 +452,20 @@
       for (f = 0; f < d.length; f++) e[d[f]] = c[d[f]];
       a.attributes.style = CKEDITOR.tools.writeCssText(e);
     },
-    pushStylesLower: function (a, b, c) {
+    pushStylesLower: (a, b, c) => {
       if (!a.attributes.style || 0 === a.children.length) return !1;
       b = b || {};
       var d = { "list-style-type": !0, width: !0, height: !0, border: !0, "border-": !0 },
         e = m.parseCssText(a.attributes.style),
         h;
       for (h in e)
-        if (!(h.toLowerCase() in d || d[h.toLowerCase().replace(/\-.*$/, "-")] || h.toLowerCase() in b)) {
+        if (
+          !(
+            h.toLowerCase() in d ||
+            d[h.toLowerCase().replace(/\-.*$/, "-")] ||
+            h.toLowerCase() in b
+          )
+        ) {
           for (var f = !1, l = 0; l < a.children.length; l++) {
             var g = a.children[l];
             if (g.type === CKEDITOR.NODE_TEXT && c) {
@@ -464,7 +486,7 @@
         "break-before break-after break-inside page-break page-break-before page-break-after page-break-inside".split(
           " "
         ),
-      parse: function (a) {
+      parse: (a) => {
         function b(a) {
           var b = new CKEDITOR.dom.element("style"),
             c = new CKEDITOR.dom.element("iframe");
@@ -491,7 +513,7 @@
               a.push({ selector: h[f].selectorText, styles: e(c(h[f].cssText)) });
         return a;
       },
-      filter: function (a) {
+      filter: (a) => {
         var b = CKEDITOR.plugins.pastefromword.styles.inliner.filtered,
           c = m.array.indexOf,
           d = {},
@@ -499,37 +521,34 @@
         for (e in a) -1 === c(b, e) && (d[e] = a[e]);
         return d;
       },
-      sort: function (a) {
-        return a.sort(
-          (function (a) {
-            var c = CKEDITOR.tools.array.map(a, function (a) {
-              return a.selector;
-            });
-            return function (a, b) {
+      sort: (a) =>
+        a.sort(
+          ((a) => {
+            var c = CKEDITOR.tools.array.map(a, (a) => a.selector);
+            return (a, b) => {
               var h = -1 !== ("" + a.selector).indexOf(".") ? 1 : 0,
                 h = (-1 !== ("" + b.selector).indexOf(".") ? 1 : 0) - h;
               return 0 !== h ? h : c.indexOf(b.selector) - c.indexOf(a.selector);
             };
           })(a)
-        );
-      },
-      inline: function (a) {
+        ),
+      inline: (a) => {
         var b = CKEDITOR.plugins.pastefromword.styles.inliner.parse,
           c = CKEDITOR.plugins.pastefromword.styles.inliner.sort,
-          d = (function (a) {
+          d = ((a) => {
             a = new DOMParser().parseFromString(a, "text/html");
             return new CKEDITOR.dom.document(a);
           })(a);
         a = d.find("style");
         c = c(
-          (function (a) {
+          ((a) => {
             var c = [],
               d;
             for (d = 0; d < a.count(); d++) c = c.concat(b(a.getItem(d)));
             return c;
           })(a)
         );
-        CKEDITOR.tools.array.forEach(c, function (a) {
+        CKEDITOR.tools.array.forEach(c, (a) => {
           var b = a.styles;
           a = d.find(a.selector);
           var c, g, q;
@@ -547,23 +566,28 @@
   };
   k = CKEDITOR.plugins.pastefromword.styles;
   CKEDITOR.plugins.pastefromword.lists = {
-    thisIsAListItem: function (a, b) {
-      return t.isEdgeListItem(a, b) ||
-        (b.attributes.style && b.attributes.style.match(/mso\-list:\s?l\d/) && "li" !== b.parent.name) ||
-        b.attributes["cke-dissolved"] ||
-        b.getHtml().match(/<!\-\-\[if !supportLists]\-\->/)
+    thisIsAListItem: (a, b) =>
+      t.isEdgeListItem(a, b) ||
+      (b.attributes.style &&
+        b.attributes.style.match(/mso\-list:\s?l\d/) &&
+        "li" !== b.parent.name) ||
+      b.attributes["cke-dissolved"] ||
+      b.getHtml().match(/<!\-\-\[if !supportLists]\-\->/)
         ? !0
-        : !1;
-    },
+        : !1,
     convertToFakeListItem: function (a, b) {
       t.isDegenerateListItem(a, b) && t.assignListLevels(a, b);
       this.getListItemInfo(b);
       if (!b.attributes["cke-dissolved"]) {
         var c;
-        b.forEach(function (a) {
-          !c && "img" == a.name && a.attributes["cke-ignored"] && "*" == a.attributes.alt && ((c = "·"), a.remove());
+        b.forEach((a) => {
+          !c &&
+            "img" == a.name &&
+            a.attributes["cke-ignored"] &&
+            "*" == a.attributes.alt &&
+            ((c = "·"), a.remove());
         }, CKEDITOR.NODE_ELEMENT);
-        b.forEach(function (a) {
+        b.forEach((a) => {
           c || a.value.match(/^ /) || (c = a.value);
         }, CKEDITOR.NODE_TEXT);
         if ("undefined" == typeof c) return;
@@ -572,14 +596,15 @@
       }
       if (b.attributes.style) {
         var d = m.parseCssText(b.attributes.style);
-        d["margin-left"] && (delete d["margin-left"], (b.attributes.style = CKEDITOR.tools.writeCssText(d)));
+        d["margin-left"] &&
+          (delete d["margin-left"], (b.attributes.style = CKEDITOR.tools.writeCssText(d)));
       }
       b.name = "cke:li";
     },
-    convertToRealListItems: function (a) {
+    convertToRealListItems: (a) => {
       var b = [];
       a.forEach(
-        function (a) {
+        (a) => {
           "cke:li" == a.name && ((a.name = "li"), b.push(a));
         },
         CKEDITOR.NODE_ELEMENT,
@@ -587,20 +612,22 @@
       );
       return b;
     },
-    removeSymbolText: function (a) {
+    removeSymbolText: (a) => {
       var b = a.attributes["cke-symbol"],
         c,
         d;
-      a.forEach(function (e) {
+      a.forEach((e) => {
         !d &&
           -1 < e.value.indexOf(b) &&
           ((d = !0),
           (e.value = e.value.replace(b, "")),
-          e.parent.getHtml().match(/^(\s|&nbsp;)*$/) ? (c = e.parent !== a ? e.parent : null) : e.value || (c = e));
+          e.parent.getHtml().match(/^(\s|&nbsp;)*$/)
+            ? (c = e.parent !== a ? e.parent : null)
+            : e.value || (c = e));
       }, CKEDITOR.NODE_TEXT);
       c && c.remove();
     },
-    setListSymbol: function (a, b, c) {
+    setListSymbol: (a, b, c) => {
       c = c || 1;
       var d = m.parseCssText(a.attributes.style);
       if ("ol" == a.name) {
@@ -625,8 +652,9 @@
       g.setListSymbol.removeRedundancies(d, c);
       (a.attributes.style = CKEDITOR.tools.writeCssText(d)) || delete a.attributes.style;
     },
-    setListStart: function (a) {
-      for (var b = [], c = 0, d = 0; d < a.children.length; d++) b.push(a.children[d].attributes["cke-symbol"] || "");
+    setListStart: (a) => {
+      for (var b = [], c = 0, d = 0; d < a.children.length; d++)
+        b.push(a.children[d].attributes["cke-symbol"] || "");
       b[0] || c++;
       switch (a.attributes["cke-list-style-type"]) {
         case "lower-roman":
@@ -635,20 +663,22 @@
           break;
         case "lower-alpha":
         case "upper-alpha":
-          a.attributes.start = g.getSubsectionSymbol(b[c]).replace(/\W/g, "").toLowerCase().charCodeAt(0) - 96 - c;
+          a.attributes.start =
+            g.getSubsectionSymbol(b[c]).replace(/\W/g, "").toLowerCase().charCodeAt(0) - 96 - c;
           break;
         case "decimal":
-          a.attributes.start = parseInt(g.getSubsectionSymbol(b[c]), 10) - c || 1;
+          a.attributes.start = Number.parseInt(g.getSubsectionSymbol(b[c]), 10) - c || 1;
       }
       "1" == a.attributes.start && delete a.attributes.start;
       delete a.attributes["cke-list-style-type"];
     },
     numbering: {
-      toNumber: function (a, b) {
+      toNumber: (a, b) => {
         function c(a) {
           a = a.toUpperCase();
           for (var b = 1, c = 1; 0 < a.length; c *= 26)
-            (b += "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(a.charAt(a.length - 1)) * c), (a = a.substr(0, a.length - 1));
+            (b += "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(a.charAt(a.length - 1)) * c),
+              (a = a.substr(0, a.length - 1));
           return b;
         }
         function d(a) {
@@ -680,7 +710,7 @@
               ? c(a)
               : 1;
       },
-      getStyle: function (a) {
+      getStyle: (a) => {
         a = a.slice(0, 1);
         var b = {
           i: "lower-roman",
@@ -694,26 +724,27 @@
           L: "upper-roman",
           M: "upper-roman",
         }[a];
-        b || ((b = "decimal"), a.match(/[a-z]/) && (b = "lower-alpha"), a.match(/[A-Z]/) && (b = "upper-alpha"));
+        b ||
+          ((b = "decimal"),
+          a.match(/[a-z]/) && (b = "lower-alpha"),
+          a.match(/[A-Z]/) && (b = "upper-alpha"));
         return b;
       },
     },
-    getSubsectionSymbol: function (a) {
-      return (a.match(/([\da-zA-Z]+).?$/) || ["placeholder", "1"])[1];
-    },
-    setListDir: function (a) {
+    getSubsectionSymbol: (a) => (a.match(/([\da-zA-Z]+).?$/) || ["placeholder", "1"])[1],
+    setListDir: (a) => {
       var b = 0,
         c = 0;
-      a.forEach(function (a) {
-        "li" == a.name && ("rtl" == (a.attributes.dir || a.attributes.DIR || "").toLowerCase() ? c++ : b++);
+      a.forEach((a) => {
+        "li" == a.name &&
+          ("rtl" == (a.attributes.dir || a.attributes.DIR || "").toLowerCase() ? c++ : b++);
       }, CKEDITOR.ELEMENT_NODE);
       c > b && (a.attributes.dir = "rtl");
     },
-    createList: function (a) {
-      return (a.attributes["cke-symbol"].match(/([\da-np-zA-NP-Z]).?/) || [])[1]
+    createList: (a) =>
+      (a.attributes["cke-symbol"].match(/([\da-np-zA-NP-Z]).?/) || [])[1]
         ? new CKEDITOR.htmlParser.element("ol")
-        : new CKEDITOR.htmlParser.element("ul");
-    },
+        : new CKEDITOR.htmlParser.element("ul"),
     createLists: function (a) {
       var b,
         c,
@@ -740,14 +771,18 @@
               m = k.children;
             0 < m.length
               ? m[m.length - 1].add(r)
-              : ((m = new CKEDITOR.htmlParser.element("li", { style: "list-style-type:none" })), m.add(r), k.add(m));
+              : ((m = new CKEDITOR.htmlParser.element("li", { style: "list-style-type:none" })),
+                m.add(r),
+                k.add(m));
             l.push(r);
             n.push(r);
             k = r;
             c == l.length && g.setListSymbol(r, b.attributes["cke-symbol"], c);
           }
-          for (; c < l.length; )
-            l.pop(), (k = l[l.length - 1]), c == l.length && g.setListSymbol(k, b.attributes["cke-symbol"], c);
+          while (c < l.length)
+            l.pop(),
+              (k = l[l.length - 1]),
+              c == l.length && g.setListSymbol(k, b.attributes["cke-symbol"], c);
           b.remove();
           k.add(b);
         }
@@ -760,7 +795,7 @@
       }
       return e;
     },
-    cleanup: function (a) {
+    cleanup: (a) => {
       var b = ["cke-list-level", "cke-symbol", "cke-list-id", "cke-indentation", "cke-dissolved"],
         c,
         d;
@@ -778,7 +813,7 @@
           c !== b && (a.attributes.value = c));
       }
     },
-    calculateValue: function (a) {
+    calculateValue: (a) => {
       if (!a.parent) return 1;
       var b = a.parent;
       a = a.getIndex();
@@ -788,11 +823,15 @@
         h;
       for (h = a; 0 <= h && null === c; h--)
         (e = b.children[h]),
-          e.attributes && void 0 !== e.attributes.value && ((d = h), (c = parseInt(e.attributes.value, 10)));
-      null === c && ((c = void 0 !== b.attributes.start ? parseInt(b.attributes.start, 10) : 1), (d = 0));
+          e.attributes &&
+            void 0 !== e.attributes.value &&
+            ((d = h), (c = Number.parseInt(e.attributes.value, 10)));
+      null === c &&
+        ((c = void 0 !== b.attributes.start ? Number.parseInt(b.attributes.start, 10) : 1),
+        (d = 0));
       return c + (a - d);
     },
-    dissolveList: function (a) {
+    dissolveList: (a) => {
       function b(a) {
         return 50 <= a
           ? "l" + b(a - 50)
@@ -816,20 +855,14 @@
         }
         return c(b, 0);
       }
-      var d = function (a) {
-          return function (b) {
-            return b.name == a;
-          };
-        },
-        e = function (a) {
-          return d("ul")(a) || d("ol")(a);
-        },
+      var d = (a) => (b) => b.name == a,
+        e = (a) => d("ul")(a) || d("ol")(a),
         h = CKEDITOR.tools.array,
         f = [],
         g,
         q;
       a.forEach(
-        function (a) {
+        (a) => {
           f.push(a);
         },
         CKEDITOR.NODE_ELEMENT,
@@ -837,12 +870,12 @@
       );
       g = h.filter(f, d("li"));
       var n = h.filter(f, e);
-      h.forEach(n, function (a) {
+      h.forEach(n, (a) => {
         var f = a.attributes.type,
-          g = parseInt(a.attributes.start, 10) || 1,
+          g = Number.parseInt(a.attributes.start, 10) || 1,
           l = c(e, a) + 1;
         f || (f = m.parseCssText(a.attributes.style)["list-style-type"]);
-        h.forEach(h.filter(a.children, d("li")), function (c, d) {
+        h.forEach(h.filter(a.children, d("li")), (c, d) => {
           var e;
           switch (f) {
             case "disc":
@@ -883,7 +916,7 @@
       });
       g = h.reduce(
         g,
-        function (a, b) {
+        (a, b) => {
           var c = b.children[0];
           if (c && c.name && c.attributes.style && c.attributes.style.match(/mso-list:/i)) {
             k.pushStylesLower(b, { "list-style-type": !0, display: !0 });
@@ -891,7 +924,8 @@
             k.setStyle(b, "mso-list", d["mso-list"], !0);
             k.setStyle(c, "mso-list", "");
             delete b["cke-list-level"];
-            (c = d.display ? "display" : d.DISPLAY ? "DISPLAY" : "") && k.setStyle(b, "display", d[c], !0);
+            (c = d.display ? "display" : d.DISPLAY ? "DISPLAY" : "") &&
+              k.setStyle(b, "display", d[c], !0);
           }
           if (1 === b.children.length && e(b.children[0])) return a;
           b.name = "p";
@@ -904,17 +938,19 @@
       for (q = g.length - 1; 0 <= q; q--) g[q].insertAfter(a);
       for (q = n.length - 1; 0 <= q; q--) delete n[q].name;
     },
-    groupLists: function (a) {
+    groupLists: (a) => {
       var b,
         c,
         d = [[a[0]]],
         e = d[0];
       c = a[0];
-      c.attributes["cke-indentation"] = c.attributes["cke-indentation"] || g.getElementIndentation(c);
+      c.attributes["cke-indentation"] =
+        c.attributes["cke-indentation"] || g.getElementIndentation(c);
       for (b = 1; b < a.length; b++) {
         c = a[b];
         var h = a[b - 1];
-        c.attributes["cke-indentation"] = c.attributes["cke-indentation"] || g.getElementIndentation(c);
+        c.attributes["cke-indentation"] =
+          c.attributes["cke-indentation"] || g.getElementIndentation(c);
         c.previous !== h && (g.chopDiscontinuousLists(e, d), d.push((e = [])));
         e.push(c);
       }
@@ -932,16 +968,18 @@
             (n = "o" == a[h].attributes["cke-symbol"] && 14 == f.index ? "alpha" : n),
             (k = g.getSymbolInfo(a[h].attributes["cke-symbol"], n)),
             (l = this.getListItemInfo(a[h])),
-            (f.type != k.type || (e && l.id != e.id && !this.isAListContinuation(a[h]))) && d.push([]))
+            (f.type != k.type || (e && l.id != e.id && !this.isAListContinuation(a[h]))) &&
+              d.push([]))
           : (k = g.getSymbolInfo(a[h].attributes["cke-symbol"]));
-        for (e = parseInt(a[h].attributes["cke-list-level"], 10) + 1; 20 > e; e++) c[e] && delete c[e];
+        for (e = Number.parseInt(a[h].attributes["cke-list-level"], 10) + 1; 20 > e; e++)
+          c[e] && delete c[e];
         c[a[h].attributes["cke-list-level"]] = k;
         d[d.length - 1].push(a[h]);
         e = l;
       }
       [].splice.apply(b, [].concat([m.indexOf(b, a), 1], d));
     },
-    isAListContinuation: function (a) {
+    isAListContinuation: (a) => {
       var b = a;
       do
         if ((b = b.previous) && b.type === CKEDITOR.NODE_ELEMENT) {
@@ -952,7 +990,7 @@
       while (b);
       return !1;
     },
-    getElementIndentation: function (a) {
+    getElementIndentation: (a) => {
       a = m.parseCssText(a.attributes.style);
       if (a.margin || a.MARGIN) {
         a.margin = a.margin || a.MARGIN;
@@ -960,10 +998,10 @@
         CKEDITOR.filter.transformationsTools.splitMarginShorthand(b);
         a["margin-left"] = b.styles["margin-left"];
       }
-      return parseInt(m.convertToPx(a["margin-left"] || "0px"), 10);
+      return Number.parseInt(m.convertToPx(a["margin-left"] || "0px"), 10);
     },
-    toArabic: function (a) {
-      return a.match(/[ivxl]/i)
+    toArabic: (a) =>
+      a.match(/[ivxl]/i)
         ? a.match(/^l/i)
           ? 50 + g.toArabic(a.slice(1))
           : a.match(/^lx/i)
@@ -979,13 +1017,14 @@
                     : a.match(/^i/i)
                       ? 1 + g.toArabic(a.slice(1))
                       : g.toArabic(a.slice(1))
-        : 0;
-    },
-    getSymbolInfo: function (a, b) {
+        : 0,
+    getSymbolInfo: (a, b) => {
       var c = a.toUpperCase() == a ? "upper-" : "lower-",
         d = { "·": ["disc", -1], o: ["circle", -2], "§": ["square", -3] };
-      if (a in d || (b && b.match(/(disc|circle|square)/))) return { index: d[a][1], type: d[a][0] };
-      if (a.match(/\d/)) return { index: a ? parseInt(g.getSubsectionSymbol(a), 10) : 0, type: "decimal" };
+      if (a in d || (b && b.match(/(disc|circle|square)/)))
+        return { index: d[a][1], type: d[a][0] };
+      if (a.match(/\d/))
+        return { index: a ? Number.parseInt(g.getSubsectionSymbol(a), 10) : 0, type: "decimal" };
       a = a.replace(/\W/g, "").toLowerCase();
       return (!b && a.match(/[ivxl]+/i)) || (b && "alpha" != b) || "roman" == b
         ? { index: g.toArabic(a), type: c + "roman" }
@@ -993,7 +1032,7 @@
           ? { index: a.charCodeAt(0) - 97, type: c + "alpha" }
           : { index: -1, type: "disc" };
     },
-    getListItemInfo: function (a) {
+    getListItemInfo: (a) => {
       if (void 0 !== a.attributes["cke-list-id"])
         return { id: a.attributes["cke-list-id"], level: a.attributes["cke-list-level"] };
       var b = m.parseCssText(a.attributes.style)["mso-list"],
@@ -1007,9 +1046,10 @@
   };
   g = CKEDITOR.plugins.pastefromword.lists;
   CKEDITOR.plugins.pastefromword.images = {
-    extractFromRtf: function (a) {
+    extractFromRtf: (a) => {
       var b = [],
-        c = /\{\\pict[\s\S]+?\\bliptag\-?\d+(\\blipupi\-?\d+)?(\{\\\*\\blipuid\s?[\da-fA-F]+)?[\s\}]*?/,
+        c =
+          /\{\\pict[\s\S]+?\\bliptag\-?\d+(\\blipupi\-?\d+)?(\{\\\*\\blipuid\s?[\da-fA-F]+)?[\s\}]*?/,
         d;
       a = a.match(new RegExp("(?:(" + c.source + "))([\\da-fA-F\\s]+)\\}", "g"));
       if (!a) return b;
@@ -1022,108 +1062,108 @@
         }
       return b;
     },
-    extractTagsFromHtml: function (a) {
+    extractTagsFromHtml: (a) => {
       for (var b = /<img[^>]+src="([^"]+)[^>]+/g, c = [], d; (d = b.exec(a)); ) c.push(d[1]);
       return c;
     },
   };
   CKEDITOR.plugins.pastefromword.heuristics = {
-    isEdgeListItem: function (a, b) {
+    isEdgeListItem: (a, b) => {
       if (!CKEDITOR.env.edge || !a.config.pasteFromWord_heuristicsEdgeList) return !1;
       var c = "";
       b.forEach &&
-        b.forEach(function (a) {
+        b.forEach((a) => {
           c += a.value;
         }, CKEDITOR.NODE_TEXT);
-      return c.match(/^(?: |&nbsp;)*\(?[a-zA-Z0-9]+?[\.\)](?: |&nbsp;){2,}/) ? !0 : t.isDegenerateListItem(a, b);
+      return c.match(/^(?: |&nbsp;)*\(?[a-zA-Z0-9]+?[\.\)](?: |&nbsp;){2,}/)
+        ? !0
+        : t.isDegenerateListItem(a, b);
     },
-    cleanupEdgeListItem: function (a) {
+    cleanupEdgeListItem: (a) => {
       var b = !1;
-      a.forEach(function (a) {
+      a.forEach((a) => {
         b || ((a.value = a.value.replace(/^(?:&nbsp;|[\s])+/, "")), a.value.length && (b = !0));
       }, CKEDITOR.NODE_TEXT);
     },
-    isDegenerateListItem: function (a, b) {
-      return (
-        !!b.attributes["cke-list-level"] ||
-        (b.attributes.style &&
-          !b.attributes.style.match(/mso\-list/) &&
-          !!b.find(function (a) {
-            if (a.type == CKEDITOR.NODE_ELEMENT && b.name.match(/h\d/i) && a.getHtml().match(/^[a-zA-Z0-9]+?[\.\)]$/))
-              return !0;
-            var d = m.parseCssText(a.attributes && a.attributes.style, !0);
-            if (!d) return !1;
-            var e = d["font-family"] || "";
-            return ((d.font || d["font-size"] || "").match(/7pt/i) && !!a.previous) || e.match(/symbol/i);
-          }, !0).length)
-      );
-    },
+    isDegenerateListItem: (a, b) =>
+      !!b.attributes["cke-list-level"] ||
+      (b.attributes.style &&
+        !b.attributes.style.match(/mso\-list/) &&
+        !!b.find((a) => {
+          if (
+            a.type == CKEDITOR.NODE_ELEMENT &&
+            b.name.match(/h\d/i) &&
+            a.getHtml().match(/^[a-zA-Z0-9]+?[\.\)]$/)
+          )
+            return !0;
+          var d = m.parseCssText(a.attributes && a.attributes.style, !0);
+          if (!d) return !1;
+          var e = d["font-family"] || "";
+          return (
+            ((d.font || d["font-size"] || "").match(/7pt/i) && !!a.previous) || e.match(/symbol/i)
+          );
+        }, !0).length),
     assignListLevels: function (a, b) {
       if (!b.attributes || void 0 === b.attributes["cke-list-level"]) {
         for (
-          var c = [g.getElementIndentation(b)], d = [b], e = [], h = CKEDITOR.tools.array, f = h.map;
-          b.next && b.next.attributes && !b.next.attributes["cke-list-level"] && t.isDegenerateListItem(a, b.next);
+          var c = [g.getElementIndentation(b)],
+            d = [b],
+            e = [],
+            h = CKEDITOR.tools.array,
+            f = h.map;
+          b.next &&
+          b.next.attributes &&
+          !b.next.attributes["cke-list-level"] &&
+          t.isDegenerateListItem(a, b.next);
         )
           (b = b.next), c.push(g.getElementIndentation(b)), d.push(b);
-        var k = f(c, function (a, b) {
-            return 0 === b ? 0 : a - c[b - 1];
-          }),
-          m = this.guessIndentationStep(
-            h.filter(c, function (a) {
-              return 0 !== a;
-            })
-          ),
-          e = f(c, function (a) {
-            return Math.round(a / m);
-          });
-        -1 !== h.indexOf(e, 0) &&
-          (e = f(e, function (a) {
-            return a + 1;
-          }));
-        h.forEach(d, function (a, b) {
+        var k = f(c, (a, b) => (0 === b ? 0 : a - c[b - 1])),
+          m = this.guessIndentationStep(h.filter(c, (a) => 0 !== a)),
+          e = f(c, (a) => Math.round(a / m));
+        -1 !== h.indexOf(e, 0) && (e = f(e, (a) => a + 1));
+        h.forEach(d, (a, b) => {
           a.attributes["cke-list-level"] = e[b];
         });
         return { indents: c, levels: e, diffs: k };
       }
     },
-    guessIndentationStep: function (a) {
-      return a.length ? Math.min.apply(null, a) : null;
-    },
+    guessIndentationStep: (a) => (a.length ? Math.min.apply(null, a) : null),
     correctLevelShift: function (a) {
       if (this.isShifted(a)) {
-        var b = CKEDITOR.tools.array.filter(a.children, function (a) {
-            return "ul" == a.name || "ol" == a.name;
-          }),
+        var b = CKEDITOR.tools.array.filter(a.children, (a) => "ul" == a.name || "ol" == a.name),
           c = CKEDITOR.tools.array.reduce(
             b,
-            function (a, b) {
-              return (b.children && 1 == b.children.length && t.isShifted(b.children[0]) ? [b] : b.children).concat(a);
-            },
+            (a, b) =>
+              (b.children && 1 == b.children.length && t.isShifted(b.children[0])
+                ? [b]
+                : b.children
+              ).concat(a),
             []
           );
-        CKEDITOR.tools.array.forEach(b, function (a) {
+        CKEDITOR.tools.array.forEach(b, (a) => {
           a.remove();
         });
-        CKEDITOR.tools.array.forEach(c, function (b) {
+        CKEDITOR.tools.array.forEach(c, (b) => {
           a.add(b);
         });
         delete a.name;
       }
     },
-    isShifted: function (a) {
-      return "li" !== a.name
+    isShifted: (a) =>
+      "li" !== a.name
         ? !1
         : 0 ===
-            CKEDITOR.tools.array.filter(a.children, function (a) {
-              return a.name && ("ul" == a.name || "ol" == a.name || ("p" == a.name && 0 === a.children.length))
-                ? !1
-                : !0;
-            }).length;
-    },
+          CKEDITOR.tools.array.filter(a.children, (a) =>
+            a.name &&
+            ("ul" == a.name || "ol" == a.name || ("p" == a.name && 0 === a.children.length))
+              ? !1
+              : !0
+          ).length,
   };
   t = CKEDITOR.plugins.pastefromword.heuristics;
-  g.setListSymbol.removeRedundancies = function (a, b) {
-    ((1 === b && "disc" === a["list-style-type"]) || "decimal" === a["list-style-type"]) && delete a["list-style-type"];
+  g.setListSymbol.removeRedundancies = (a, b) => {
+    ((1 === b && "disc" === a["list-style-type"]) || "decimal" === a["list-style-type"]) &&
+      delete a["list-style-type"];
   };
   CKEDITOR.plugins.pastefromword.createAttributeStack = y;
   CKEDITOR.config.pasteFromWord_heuristicsEdgeList = !0;

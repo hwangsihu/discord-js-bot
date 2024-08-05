@@ -1,8 +1,6 @@
-define(["../core", "../var/document", "../ajax"], function (jQuery, document) {
-  "use strict";
-
+define(["../core", "../var/document", "../ajax"], (jQuery, document) => {
   // Prevent auto-execution of scripts when no explicit dataType was provided (See gh-2432)
-  jQuery.ajaxPrefilter(function (s) {
+  jQuery.ajaxPrefilter((s) => {
     if (s.crossDomain) {
       s.contents.script = false;
     }
@@ -11,13 +9,15 @@ define(["../core", "../var/document", "../ajax"], function (jQuery, document) {
   // Install script dataType
   jQuery.ajaxSetup({
     accepts: {
-      script: "text/javascript, application/javascript, " + "application/ecmascript, application/x-ecmascript",
+      script:
+        "text/javascript, application/javascript, " +
+        "application/ecmascript, application/x-ecmascript",
     },
     contents: {
       script: /\b(?:java|ecma)script\b/,
     },
     converters: {
-      "text script": function (text) {
+      "text script": (text) => {
         jQuery.globalEval(text);
         return text;
       },
@@ -25,7 +25,7 @@ define(["../core", "../var/document", "../ajax"], function (jQuery, document) {
   });
 
   // Handle cache's special case and crossDomain
-  jQuery.ajaxPrefilter("script", function (s) {
+  jQuery.ajaxPrefilter("script", (s) => {
     if (s.cache === undefined) {
       s.cache = false;
     }
@@ -35,12 +35,12 @@ define(["../core", "../var/document", "../ajax"], function (jQuery, document) {
   });
 
   // Bind script tag hack transport
-  jQuery.ajaxTransport("script", function (s) {
+  jQuery.ajaxTransport("script", (s) => {
     // This transport only deals with cross domain requests
     if (s.crossDomain) {
       var script, callback;
       return {
-        send: function (_, complete) {
+        send: (_, complete) => {
           script = jQuery("<script>")
             .prop({
               charset: s.scriptCharset,
@@ -48,7 +48,7 @@ define(["../core", "../var/document", "../ajax"], function (jQuery, document) {
             })
             .on(
               "load error",
-              (callback = function (evt) {
+              (callback = (evt) => {
                 script.remove();
                 callback = null;
                 if (evt) {
@@ -60,7 +60,7 @@ define(["../core", "../var/document", "../ajax"], function (jQuery, document) {
           // Use native DOM manipulation to avoid our domManip AJAX trickery
           document.head.appendChild(script[0]);
         },
-        abort: function () {
+        abort: () => {
           if (callback) {
             callback();
           }

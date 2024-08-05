@@ -6,9 +6,7 @@
  *         This plugin auto activates on any element using the `.box` class
  *         Pass any option as data-option="value"
  */
-+(function ($) {
-  "use strict";
-
++(($) => {
   var DataKey = "lte.boxwidget";
 
   var Default = {
@@ -180,7 +178,7 @@
 
   // BoxWidget Data API
   // ==================
-  $(window).on("load", function () {
+  $(window).on("load", () => {
     $(Selector.data).each(function () {
       Plugin.call($(this));
     });

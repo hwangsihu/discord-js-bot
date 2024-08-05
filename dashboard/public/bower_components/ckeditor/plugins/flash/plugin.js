@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function d(a) {
     a = a.attributes;
     return "application/x-shockwave-flash" == a.type || f.test(a.src || "");
@@ -28,28 +28,40 @@
         "object[classid,codebase,height,hspace,vspace,width];param[name,value];embed[height,hspace,pluginspage,src,type,vspace,width]";
       CKEDITOR.dialog.isTabEnabled(a, "flash", "properties") &&
         (b += ";object[align]; embed[allowscriptaccess,quality,scale,wmode]");
-      CKEDITOR.dialog.isTabEnabled(a, "flash", "advanced") && (b += ";object[id]{*}; embed[bgcolor]{*}(*)");
-      a.addCommand("flash", new CKEDITOR.dialogCommand("flash", { allowedContent: b, requiredContent: "embed" }));
-      a.ui.addButton && a.ui.addButton("Flash", { label: a.lang.common.flash, command: "flash", toolbar: "insert,20" });
+      CKEDITOR.dialog.isTabEnabled(a, "flash", "advanced") &&
+        (b += ";object[id]{*}; embed[bgcolor]{*}(*)");
+      a.addCommand(
+        "flash",
+        new CKEDITOR.dialogCommand("flash", { allowedContent: b, requiredContent: "embed" })
+      );
+      a.ui.addButton &&
+        a.ui.addButton("Flash", {
+          label: a.lang.common.flash,
+          command: "flash",
+          toolbar: "insert,20",
+        });
       CKEDITOR.dialog.add("flash", this.path + "dialogs/flash.js");
-      a.addMenuItems && a.addMenuItems({ flash: { label: a.lang.flash.properties, command: "flash", group: "flash" } });
-      a.on("doubleclick", function (a) {
+      a.addMenuItems &&
+        a.addMenuItems({
+          flash: { label: a.lang.flash.properties, command: "flash", group: "flash" },
+        });
+      a.on("doubleclick", (a) => {
         var b = a.data.element;
         b.is("img") && "flash" == b.data("cke-real-element-type") && (a.data.dialog = "flash");
       });
       a.contextMenu &&
-        a.contextMenu.addListener(function (a) {
+        a.contextMenu.addListener((a) => {
           if (a && a.is("img") && !a.isReadOnly() && "flash" == a.data("cke-real-element-type"))
             return { flash: CKEDITOR.TRISTATE_OFF };
         });
     },
-    afterInit: function (a) {
+    afterInit: (a) => {
       var b = a.dataProcessor;
       (b = b && b.dataFilter) &&
         b.addRules(
           {
             elements: {
-              "cke:object": function (b) {
+              "cke:object": (b) => {
                 var c = b.attributes;
                 if (!((c.classid && String(c.classid).toLowerCase()) || d(b))) {
                   for (c = 0; c < b.children.length; c++)
@@ -61,9 +73,7 @@
                 }
                 return e(a, b);
               },
-              "cke:embed": function (b) {
-                return d(b) ? e(a, b) : null;
-              },
+              "cke:embed": (b) => (d(b) ? e(a, b) : null),
             },
           },
           5
@@ -71,4 +81,8 @@
     },
   });
 })();
-CKEDITOR.tools.extend(CKEDITOR.config, { flashEmbedTagOnly: !1, flashAddEmbedTag: !0, flashConvertOnEdit: !1 });
+CKEDITOR.tools.extend(CKEDITOR.config, {
+  flashEmbedTagOnly: !1,
+  flashAddEmbedTag: !0,
+  flashConvertOnEdit: !1,
+});

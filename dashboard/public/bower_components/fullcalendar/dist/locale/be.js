@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(r) {
       if (n[r]) return n[r].exports;
       var a = (n[r] = { i: r, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = n),
-      (t.d = function (e, n, r) {
+      (t.d = (e, n, r) => {
         t.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: r });
       }),
-      (t.n = function (e) {
-        var n =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var n = e && e.__esModule ? () => e.default : () => e;
         return t.d(n, "a", n), n;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 87))
     );
   })({
-    0: function (t, n) {
+    0: (t, n) => {
       t.exports = e;
     },
-    1: function (e, n) {
+    1: (e, n) => {
       e.exports = t;
     },
-    87: function (e, t, n) {
+    87: (e, t, n) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), n(88);
       var r = n(1);
       r.datepickerLocale("be", "be", {
@@ -66,7 +57,20 @@
           "Лістапад",
           "Снежань",
         ],
-        monthNamesShort: ["Студ", "Лют", "Сак", "Крас", "Трав", "Чэрв", "Ліп", "Жнів", "Вер", "Каст", "Ліст", "Снеж"],
+        monthNamesShort: [
+          "Студ",
+          "Лют",
+          "Сак",
+          "Крас",
+          "Трав",
+          "Чэрв",
+          "Ліп",
+          "Жнів",
+          "Вер",
+          "Каст",
+          "Ліст",
+          "Снеж",
+        ],
         dayNames: ["нядзеля", "панядзелак", "аўторак", "серада", "чацвер", "пятніца", "субота"],
         dayNamesShort: ["ндз", "пнд", "аўт", "срд", "чцв", "птн", "сбт"],
         dayNamesMin: ["Нд", "Пн", "Ат", "Ср", "Чц", "Пт", "Сб"],
@@ -80,16 +84,14 @@
         r.locale("be", {
           buttonText: { month: "Месяц", week: "Тыдзень", day: "Дзень", list: "Парадак дня" },
           allDayHtml: "Увесь<br />дзень",
-          eventLimitText: function (e) {
-            return "+ яшчэ " + e;
-          },
+          eventLimitText: (e) => "+ яшчэ " + e,
           noEventsMessage: "Няма падзей для адлюстравання",
         });
     },
-    88: function (e, t, n) {
-      !(function (e, t) {
+    88: (e, t, n) => {
+      !((e, t) => {
         t(n(0));
-      })(0, function (e) {
+      })(0, (e) => {
         function t(e, t) {
           var n = e.split("_");
           return t % 10 == 1 && t % 100 != 11
@@ -148,9 +150,7 @@
             sameDay: "[Сёння ў] LT",
             nextDay: "[Заўтра ў] LT",
             lastDay: "[Учора ў] LT",
-            nextWeek: function () {
-              return "[У] dddd [ў] LT";
-            },
+            nextWeek: () => "[У] dddd [ў] LT",
             lastWeek: function () {
               switch (this.day()) {
                 case 0:
@@ -182,21 +182,19 @@
             yy: n,
           },
           meridiemParse: /ночы|раніцы|дня|вечара/,
-          isPM: function (e) {
-            return /^(дня|вечара)$/.test(e);
-          },
-          meridiem: function (e, t, n) {
-            return e < 4 ? "ночы" : e < 12 ? "раніцы" : e < 17 ? "дня" : "вечара";
-          },
+          isPM: (e) => /^(дня|вечара)$/.test(e),
+          meridiem: (e, t, n) => (e < 4 ? "ночы" : e < 12 ? "раніцы" : e < 17 ? "дня" : "вечара"),
           dayOfMonthOrdinalParse: /\d{1,2}-(і|ы|га)/,
-          ordinal: function (e, t) {
+          ordinal: (e, t) => {
             switch (t) {
               case "M":
               case "d":
               case "DDD":
               case "w":
               case "W":
-                return (e % 10 != 2 && e % 10 != 3) || e % 100 == 12 || e % 100 == 13 ? e + "-ы" : e + "-і";
+                return (e % 10 != 2 && e % 10 != 3) || e % 100 == 12 || e % 100 == 13
+                  ? e + "-ы"
+                  : e + "-і";
               case "D":
                 return e + "-га";
               default:
@@ -207,5 +205,5 @@
         });
       });
     },
-  });
-});
+  })
+);

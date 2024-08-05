@@ -1,4 +1,4 @@
-define(["jquery", "./utils"], function ($, Utils) {
+define(["jquery", "./utils"], ($, Utils) => {
   function Dropdown($element, options) {
     this.$element = $element;
     this.options = options;
@@ -9,7 +9,9 @@ define(["jquery", "./utils"], function ($, Utils) {
   Utils.Extend(Dropdown, Utils.Observable);
 
   Dropdown.prototype.render = function () {
-    var $dropdown = $('<span class="select2-dropdown">' + '<span class="select2-results"></span>' + "</span>");
+    var $dropdown = $(
+      '<span class="select2-dropdown">' + '<span class="select2-results"></span>' + "</span>"
+    );
 
     $dropdown.attr("dir", this.options.get("dir"));
 
@@ -18,11 +20,11 @@ define(["jquery", "./utils"], function ($, Utils) {
     return $dropdown;
   };
 
-  Dropdown.prototype.bind = function () {
+  Dropdown.prototype.bind = () => {
     // Should be implemented in subclasses
   };
 
-  Dropdown.prototype.position = function ($dropdown, $container) {
+  Dropdown.prototype.position = ($dropdown, $container) => {
     // Should be implemented in subclasses
   };
 

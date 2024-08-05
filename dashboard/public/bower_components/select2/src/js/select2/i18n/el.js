@@ -1,10 +1,8 @@
-define(function () {
+define(() => {
   // Greek (el)
   return {
-    errorLoading: function () {
-      return "Τα αποτελέσματα δεν μπόρεσαν να φορτώσουν.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "Τα αποτελέσματα δεν μπόρεσαν να φορτώσουν.",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "Παρακαλώ διαγράψτε " + overChars + " χαρακτήρ";
@@ -18,17 +16,15 @@ define(function () {
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "Παρακαλώ συμπληρώστε " + remainingChars + " ή περισσότερους χαρακτήρες";
 
       return message;
     },
-    loadingMore: function () {
-      return "Φόρτωση περισσότερων αποτελεσμάτων…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Φόρτωση περισσότερων αποτελεσμάτων…",
+    maximumSelected: (args) => {
       var message = "Μπορείτε να επιλέξετε μόνο " + args.maximum + " επιλογ";
 
       if (args.maximum == 1) {
@@ -41,14 +37,8 @@ define(function () {
 
       return message;
     },
-    noResults: function () {
-      return "Δεν βρέθηκαν αποτελέσματα";
-    },
-    searching: function () {
-      return "Αναζήτηση…";
-    },
-    removeAllItems: function () {
-      return "Καταργήστε όλα τα στοιχεία";
-    },
+    noResults: () => "Δεν βρέθηκαν αποτελέσματα",
+    searching: () => "Αναζήτηση…",
+    removeAllItems: () => "Καταργήστε όλα τα στοιχεία",
   };
 });

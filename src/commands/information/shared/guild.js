@@ -25,7 +25,9 @@ module.exports = async (guild) => {
   const all = memberCache.size;
   const bots = memberCache.filter((m) => m.user.bot).size;
   const users = all - bots;
-  const onlineUsers = memberCache.filter((m) => !m.user.bot && m.presence?.status === "online").size;
+  const onlineUsers = memberCache.filter(
+    (m) => !m.user.bot && m.presence?.status === "online"
+  ).size;
   const onlineBots = memberCache.filter((m) => m.user.bot && m.presence?.status === "online").size;
   const onlineAll = onlineUsers + onlineBots;
   const rolesCount = roles.cache.size;

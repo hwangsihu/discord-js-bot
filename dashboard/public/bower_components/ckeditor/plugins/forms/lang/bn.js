@@ -14,7 +14,13 @@
     selected: "সিলেক্টেড",
     required: "Required",
   },
-  form: { title: "ফর্ম প্রোপার্টি", menu: "ফর্ম প্রোপার্টি", action: "একশ্যন", method: "পদ্ধতি", encoding: "Encoding" },
+  form: {
+    title: "ফর্ম প্রোপার্টি",
+    menu: "ফর্ম প্রোপার্টি",
+    action: "একশ্যন",
+    method: "পদ্ধতি",
+    encoding: "Encoding",
+  },
   hidden: { title: "গুপ্ত ফীল্ড প্রোপার্টি", name: "নাম", value: "ভ্যালু" },
   select: {
     title: "বাছাই ফীল্ড প্রোপার্টি",

@@ -62,85 +62,88 @@ test("update - null", function () {
 });
 
 test("setDate", function () {
-  var date_in = new Date(2013, 1, 1),
-    expected_date = new Date(Date.UTC(2013, 1, 1)),
+  var dateIn = new Date(2013, 1, 1),
+    expectedDate = new Date(Date.UTC(2013, 1, 1)),
     returnedObject;
 
-  notEqual(this.dp.dates[0], date_in);
-  returnedObject = this.dp.setDate(date_in);
+  notEqual(this.dp.dates[0], dateIn);
+  returnedObject = this.dp.setDate(dateIn);
   strictEqual(returnedObject, this.dp, "is chainable");
-  datesEqual(this.dp.dates[0], expected_date);
+  datesEqual(this.dp.dates[0], expectedDate);
 });
 
 test("setUTCDate", function () {
-  var date_in = new Date(Date.UTC(2012, 3, 5)),
-    expected_date = date_in,
+  var dateIn = new Date(Date.UTC(2012, 3, 5)),
+    expectedDate = dateIn,
     returnedObject;
 
-  notEqual(this.dp.dates[0], date_in);
-  returnedObject = this.dp.setUTCDate(date_in);
+  notEqual(this.dp.dates[0], dateIn);
+  returnedObject = this.dp.setUTCDate(dateIn);
   strictEqual(returnedObject, this.dp, "is chainable");
-  datesEqual(this.dp.dates[0], expected_date);
+  datesEqual(this.dp.dates[0], expectedDate);
 });
 
 test("setStartDate", function () {
-  var date_in = new Date(2012, 3, 5),
-    expected_date = new Date(Date.UTC(2012, 3, 5)),
-    returnedObject = this.dp.setStartDate(date_in);
+  var dateIn = new Date(2012, 3, 5),
+    expectedDate = new Date(Date.UTC(2012, 3, 5)),
+    returnedObject = this.dp.setStartDate(dateIn);
   // ...
-  datesEqual(this.dp.o.startDate, expected_date);
+  datesEqual(this.dp.o.startDate, expectedDate);
   strictEqual(returnedObject, this.dp, "is chainable");
 });
 
 test("setEndDate", function () {
-  var date_in = new Date(2012, 3, 5),
-    expected_date = new Date(Date.UTC(2012, 3, 5)),
-    returnedObject = this.dp.setEndDate(date_in);
+  var dateIn = new Date(2012, 3, 5),
+    expectedDate = new Date(Date.UTC(2012, 3, 5)),
+    returnedObject = this.dp.setEndDate(dateIn);
   // ...
-  datesEqual(this.dp.o.endDate, expected_date);
+  datesEqual(this.dp.o.endDate, expectedDate);
   strictEqual(returnedObject, this.dp, "is chainable");
 });
 
 test("getStartDate", function () {
-  var date_in = new Date(2012, 3, 5),
-    expected_date = new Date(Date.UTC(2012, 3, 5)),
-    returnedObject = this.dp.setStartDate(date_in);
+  var dateIn = new Date(2012, 3, 5),
+    expectedDate = new Date(Date.UTC(2012, 3, 5)),
+    returnedObject = this.dp.setStartDate(dateIn);
   // ...
-  datesEqual(returnedObject.getStartDate(), expected_date);
+  datesEqual(returnedObject.getStartDate(), expectedDate);
   strictEqual(returnedObject, this.dp, "is chainable");
 });
 
 test("getEndDate", function () {
-  var date_in = new Date(2012, 3, 5),
-    expected_date = new Date(Date.UTC(2012, 3, 5)),
-    returnedObject = this.dp.setEndDate(date_in);
+  var dateIn = new Date(2012, 3, 5),
+    expectedDate = new Date(Date.UTC(2012, 3, 5)),
+    returnedObject = this.dp.setEndDate(dateIn);
   // ...
-  datesEqual(returnedObject.getEndDate(), expected_date);
+  datesEqual(returnedObject.getEndDate(), expectedDate);
   strictEqual(returnedObject, this.dp, "is chainable");
 });
 
 test("setDaysOfWeekDisabled - String", function () {
-  var days_in = "0,6",
-    expected_days = [0, 6],
-    returnedObject = this.dp.setDaysOfWeekDisabled(days_in);
+  var daysIn = "0,6",
+    expectedDays = [0, 6],
+    returnedObject = this.dp.setDaysOfWeekDisabled(daysIn);
   // ...
-  deepEqual(this.dp.o.daysOfWeekDisabled, expected_days);
+  deepEqual(this.dp.o.daysOfWeekDisabled, expectedDays);
   strictEqual(returnedObject, this.dp, "is chainable");
 });
 
 test("setDaysOfWeekDisabled - Array", function () {
-  var days_in = [0, 6],
-    expected_days = days_in,
-    returnedObject = this.dp.setDaysOfWeekDisabled(days_in);
+  var daysIn = [0, 6],
+    expectedDays = daysIn,
+    returnedObject = this.dp.setDaysOfWeekDisabled(daysIn);
   // ...
-  deepEqual(this.dp.o.daysOfWeekDisabled, expected_days);
+  deepEqual(this.dp.o.daysOfWeekDisabled, expectedDays);
   strictEqual(returnedObject, this.dp, "is chainable");
 });
 
 test("setDatesDisabled", function () {
   var monthShown = this.picker.find(".datepicker-days thead th.datepicker-switch");
   var returnedObject = this.dp.setDatesDisabled(["01-03-2011"]);
-  ok(this.picker.find(".datepicker-days tbody td.day:not(.old):first").hasClass("disabled"), "day is disabled");
+  ok(
+    this.picker.find(".datepicker-days tbody td.day:not(.old):first").hasClass("disabled"),
+    "day is disabled"
+  );
   this.dp.setDatesDisabled(["01-01-2011"]);
   equal(monthShown.text(), "March 2011", "should not change viewDate");
   strictEqual(returnedObject, this.dp, "is chainable");
@@ -166,7 +169,7 @@ test("moveMonth - can handle invalid date", function () {
   equal(this.input.val(), "31-03-2011", "date is reset");
 });
 
-test("parseDate - outputs correct value", function () {
+test("parseDate - outputs correct value", () => {
   var parsedDate = $.fn.datepicker.DPGlobal.parseDate(
     "11/13/2015",
     $.fn.datepicker.DPGlobal.parseFormat("mm/dd/yyyy"),
@@ -177,7 +180,7 @@ test("parseDate - outputs correct value", function () {
   equal(parsedDate.getUTCFullYear(), "2015", "fullyear is correct");
 });
 
-test("parseDate - outputs correct value for yyyy\u5E74mm\u6708dd\u65E5 format", function () {
+test("parseDate - outputs correct value for yyyy\u5E74mm\u6708dd\u65E5 format", () => {
   var parsedDate = $.fn.datepicker.DPGlobal.parseDate(
     "2015\u5E7411\u670813",
     $.fn.datepicker.DPGlobal.parseFormat("yyyy\u5E74mm\u6708dd\u65E5"),
@@ -188,7 +191,7 @@ test("parseDate - outputs correct value for yyyy\u5E74mm\u6708dd\u65E5 format", 
   equal(parsedDate.getUTCFullYear(), "2015", "fullyear is correct");
 });
 
-test("parseDate - outputs correct value for dates containing unicodes", function () {
+test("parseDate - outputs correct value for dates containing unicodes", () => {
   var parsedDate = $.fn.datepicker.DPGlobal.parseDate(
     "\u5341\u4E00\u6708 13 2015",
     $.fn.datepicker.DPGlobal.parseFormat("MM dd yyyy"),

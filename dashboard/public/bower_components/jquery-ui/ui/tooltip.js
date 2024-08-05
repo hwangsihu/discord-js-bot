@@ -8,7 +8,7 @@
  *
  * http://api.jqueryui.com/tooltip/
  */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["jquery", "./core", "./widget", "./position"], factory);
@@ -16,8 +16,8 @@
     // Browser globals
     factory(jQuery);
   }
-})(function ($) {
-  return $.widget("ui.tooltip", {
+})(($) =>
+  $.widget("ui.tooltip", {
     version: "1.11.4",
     options: {
       content: function () {
@@ -44,13 +44,13 @@
       open: null,
     },
 
-    _addDescribedBy: function (elem, id) {
+    _addDescribedBy: (elem, id) => {
       var describedby = (elem.attr("aria-describedby") || "").split(/\s+/);
       describedby.push(id);
       elem.data("ui-tooltip-id", id).attr("aria-describedby", $.trim(describedby.join(" ")));
     },
 
-    _removeDescribedBy: function (elem) {
+    _removeDescribedBy: (elem) => {
       var id = elem.data("ui-tooltip-id"),
         describedby = (elem.attr("aria-describedby") || "").split(/\s+/),
         index = $.inArray(id, describedby);
@@ -96,8 +96,6 @@
     },
 
     _setOption: function (key, value) {
-      var that = this;
-
       if (key === "disabled") {
         this[value ? "_disable" : "_enable"]();
         this.options[key] = value;
@@ -108,20 +106,18 @@
       this._super(key, value);
 
       if (key === "content") {
-        $.each(this.tooltips, function (id, tooltipData) {
-          that._updateContent(tooltipData.element);
+        $.each(this.tooltips, (id, tooltipData) => {
+          this._updateContent(tooltipData.element);
         });
       }
     },
 
     _disable: function () {
-      var that = this;
-
       // close open tooltips
-      $.each(this.tooltips, function (id, tooltipData) {
+      $.each(this.tooltips, (id, tooltipData) => {
         var event = $.Event("blur");
         event.target = event.currentTarget = tooltipData.element[0];
-        that.close(event, true);
+        this.close(event, true);
       });
 
       // remove title attributes to prevent native tooltips
@@ -195,17 +191,16 @@
     _updateContent: function (target, event) {
       var content,
         contentOption = this.options.content,
-        that = this,
         eventType = event ? event.type : null;
 
       if (typeof contentOption === "string") {
         return this._open(event, target, contentOption);
       }
 
-      content = contentOption.call(target[0], function (response) {
+      content = contentOption.call(target[0], (response) => {
         // IE may instantly serve a cached response for ajax requests
         // delay this call to _open so the other call to _open runs first
-        that._delay(function () {
+        this._delay(function () {
           // Ignore async response if tooltip was closed already
           if (!target.data("ui-tooltip-open")) {
             return;
@@ -309,7 +304,7 @@
       // as the tooltip is visible, position the tooltip using the most recent
       // event.
       if (this.options.show && this.options.show.delay) {
-        delayedShow = this.delayedShow = setInterval(function () {
+        delayedShow = this.delayedShow = setInterval(() => {
           if (tooltip.is(":visible")) {
             position(positionOption.of);
             clearInterval(delayedShow);
@@ -399,7 +394,7 @@
       this._off(this.document, "mousemove");
 
       if (event && event.type === "mouseleave") {
-        $.each(this.parents, function (id, parent) {
+        $.each(this.parents, (id, parent) => {
           $(parent.element).attr("title", parent.title);
           delete that.parents[id];
         });
@@ -415,7 +410,10 @@
     _tooltip: function (element) {
       var tooltip = $("<div>")
           .attr("role", "tooltip")
-          .addClass("ui-tooltip ui-widget ui-corner-all ui-widget-content " + (this.options.tooltipClass || "")),
+          .addClass(
+            "ui-tooltip ui-widget ui-corner-all ui-widget-content " +
+              (this.options.tooltipClass || "")
+          ),
         id = tooltip.uniqueId().attr("id");
 
       $("<div>").addClass("ui-tooltip-content").appendTo(tooltip);
@@ -439,15 +437,13 @@
     },
 
     _destroy: function () {
-      var that = this;
-
       // close open tooltips
-      $.each(this.tooltips, function (id, tooltipData) {
+      $.each(this.tooltips, (id, tooltipData) => {
         // Delegate to close method to handle common cleanup
         var event = $.Event("blur"),
           element = tooltipData.element;
         event.target = event.currentTarget = element[0];
-        that.close(event, true);
+        this.close(event, true);
 
         // Remove immediately; destroying an open tooltip doesn't use the
         // hide animation
@@ -464,5 +460,5 @@
       });
       this.liveRegion.remove();
     },
-  });
-});
+  })
+);

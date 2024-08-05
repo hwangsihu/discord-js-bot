@@ -3,6 +3,7 @@
   emptyListMsg: "(Belirli bir şablon seçilmedi)",
   insertOption: "Mevcut içerik ile değiştir",
   options: "Şablon Seçenekleri",
-  selectPromptMsg: "Düzenleyicide açmak için lütfen bir şablon seçin.\x3cbr\x3e(hali hazırdaki içerik kaybolacaktır.):",
+  selectPromptMsg:
+    "Düzenleyicide açmak için lütfen bir şablon seçin.\x3cbr\x3e(hali hazırdaki içerik kaybolacaktır.):",
   title: "İçerik Şablonları",
 });

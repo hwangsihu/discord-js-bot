@@ -1,11 +1,9 @@
-define(["../core", "../core/camelCase", "../var/rnothtmlwhite", "./var/acceptData"], function (
+define(["../core", "../core/camelCase", "../var/rnothtmlwhite", "./var/acceptData"], (
   jQuery,
   camelCase,
   rnothtmlwhite,
   acceptData
-) {
-  "use strict";
-
+) => {
   function Data() {
     this.expando = jQuery.expando + Data.uid++;
   }

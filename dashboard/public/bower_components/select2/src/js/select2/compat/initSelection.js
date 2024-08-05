@@ -1,4 +1,4 @@
-define(["jquery"], function ($) {
+define(["jquery"], ($) => {
   function InitSelection(decorated, $element, options) {
     if (options.get("debug") && window.console && console.warn) {
       console.warn(
@@ -17,16 +17,14 @@ define(["jquery"], function ($) {
   }
 
   InitSelection.prototype.current = function (decorated, callback) {
-    var self = this;
-
     if (this._isInitialized) {
       decorated.call(this, callback);
 
       return;
     }
 
-    this.initSelection.call(null, this.$element, function (data) {
-      self._isInitialized = true;
+    this.initSelection.call(null, this.$element, (data) => {
+      this._isInitialized = true;
 
       if (!$.isArray(data)) {
         data = [data];

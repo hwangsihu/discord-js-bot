@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(r) {
       if (n[r]) return n[r].exports;
       var o = (n[r] = { i: r, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = n),
-      (t.d = function (e, n, r) {
+      (t.d = (e, n, r) => {
         t.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: r });
       }),
-      (t.n = function (e) {
-        var n =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var n = e && e.__esModule ? () => e.default : () => e;
         return t.d(n, "a", n), n;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 157))
     );
   })({
-    0: function (t, n) {
+    0: (t, n) => {
       t.exports = e;
     },
-    1: function (e, n) {
+    1: (e, n) => {
       e.exports = t;
     },
-    157: function (e, t, n) {
+    157: (e, t, n) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), n(158);
       var r = n(1);
       r.datepickerLocale("kk", "kk", {
@@ -66,7 +57,20 @@
           "Қараша",
           "Желтоқсан",
         ],
-        monthNamesShort: ["Қаң", "Ақп", "Нау", "Сәу", "Мам", "Мау", "Шіл", "Там", "Қыр", "Қаз", "Қар", "Жел"],
+        monthNamesShort: [
+          "Қаң",
+          "Ақп",
+          "Нау",
+          "Сәу",
+          "Мам",
+          "Мау",
+          "Шіл",
+          "Там",
+          "Қыр",
+          "Қаз",
+          "Қар",
+          "Жел",
+        ],
         dayNames: ["Жексенбі", "Дүйсенбі", "Сейсенбі", "Сәрсенбі", "Бейсенбі", "Жұма", "Сенбі"],
         dayNamesShort: ["жкс", "дсн", "ссн", "срс", "бсн", "жма", "снб"],
         dayNamesMin: ["Жк", "Дс", "Сс", "Ср", "Бс", "Жм", "Сн"],
@@ -80,16 +84,14 @@
         r.locale("kk", {
           buttonText: { month: "Ай", week: "Апта", day: "Күн", list: "Күн тәртібі" },
           allDayText: "Күні бойы",
-          eventLimitText: function (e) {
-            return "+ тағы " + e;
-          },
+          eventLimitText: (e) => "+ тағы " + e,
           noEventsMessage: "Көрсету үшін оқиғалар жоқ",
         });
     },
-    158: function (e, t, n) {
-      !(function (e, t) {
+    158: (e, t, n) => {
+      !((e, t) => {
         t(n(0));
-      })(0, function (e) {
+      })(0, (e) => {
         var t = {
           0: "-ші",
           1: "-ші",
@@ -113,7 +115,10 @@
           100: "-ші",
         };
         return e.defineLocale("kk", {
-          months: "қаңтар_ақпан_наурыз_сәуір_мамыр_маусым_шілде_тамыз_қыркүйек_қазан_қараша_желтоқсан".split("_"),
+          months:
+            "қаңтар_ақпан_наурыз_сәуір_мамыр_маусым_шілде_тамыз_қыркүйек_қазан_қараша_желтоқсан".split(
+              "_"
+            ),
           monthsShort: "қаң_ақп_нау_сәу_мам_мау_шіл_там_қыр_қаз_қар_жел".split("_"),
           weekdays: "жексенбі_дүйсенбі_сейсенбі_сәрсенбі_бейсенбі_жұма_сенбі".split("_"),
           weekdaysShort: "жек_дүй_сей_сәр_бей_жұм_сен".split("_"),
@@ -151,7 +156,7 @@
             yy: "%d жыл",
           },
           dayOfMonthOrdinalParse: /\d{1,2}-(ші|шы)/,
-          ordinal: function (e) {
+          ordinal: (e) => {
             var n = e % 10,
               r = e >= 100 ? 100 : null;
             return e + (t[e] || t[n] || t[r]);
@@ -160,5 +165,5 @@
         });
       });
     },
-  });
-});
+  })
+);

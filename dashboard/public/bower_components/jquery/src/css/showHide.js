@@ -1,10 +1,8 @@
-define(["../core", "../data/var/dataPriv", "../css/var/isHiddenWithinTree"], function (
+define(["../core", "../data/var/dataPriv", "../css/var/isHiddenWithinTree"], (
   jQuery,
   dataPriv,
   isHiddenWithinTree
-) {
-  "use strict";
-
+) => {
   var defaultDisplayMap = {};
 
   function getDefaultDisplay(elem) {
@@ -58,13 +56,11 @@ define(["../core", "../data/var/dataPriv", "../css/var/isHiddenWithinTree"], fun
         if (elem.style.display === "" && isHiddenWithinTree(elem)) {
           values[index] = getDefaultDisplay(elem);
         }
-      } else {
-        if (display !== "none") {
-          values[index] = "none";
+      } else if (display !== "none") {
+        values[index] = "none";
 
-          // Remember what we're overwriting
-          dataPriv.set(elem, "display", display);
-        }
+        // Remember what we're overwriting
+        dataPriv.set(elem, "display", display);
       }
     }
 

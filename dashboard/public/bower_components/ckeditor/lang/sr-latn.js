@@ -11,7 +11,8 @@ CKEDITOR.lang["sr-latn"] = {
     btnUndo: "Vrati akciju",
     changeTo: "Izmeni",
     errorLoading: "Error loading application service host: %s.",
-    ieSpellDownload: "Provera spelovanja nije instalirana. Da li želite da je skinete sa Interneta?",
+    ieSpellDownload:
+      "Provera spelovanja nije instalirana. Da li želite da je skinete sa Interneta?",
     manyChanges: "Provera spelovanja završena: %1 reč(i) je izmenjeno",
     noChanges: "Provera spelovanja završena: Nije izmenjena nijedna rec",
     noMispell: "Provera spelovanja završena: greške nisu pronadene",
@@ -150,7 +151,8 @@ CKEDITOR.lang["sr-latn"] = {
     title: "Zalepi kao čist tekst",
   },
   pastefromword: {
-    confirmCleanup: "The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?",
+    confirmCleanup:
+      "The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?",
     error: "It was not possible to clean up the pasted data due to an internal error",
     title: "Zalepi iz Worda",
     toolbar: "Zalepi iz Worda",
@@ -348,7 +350,8 @@ CKEDITOR.lang["sr-latn"] = {
     validateNumberFailed: "Ova vrednost nije broj.",
     confirmNewPage:
       "Nesačuvane promene ovog sadržaja će biti izgubljene. Jeste li sigurni da želita da učitate novu stranu?",
-    confirmCancel: "You have changed some options. Are you sure you want to close the dialog window?",
+    confirmCancel:
+      "You have changed some options. Are you sure you want to close the dialog window?",
     options: "Opcije",
     target: "Meta",
     targetNew: "Novi prozor (_blank)",

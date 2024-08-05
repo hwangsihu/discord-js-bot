@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var symbolMap = {
       1: "၁",
       2: "၂",
@@ -73,16 +71,8 @@
       y: "တစ်နှစ်",
       yy: "%d နှစ်",
     },
-    preparse: function (string) {
-      return string.replace(/[၁၂၃၄၅၆၇၈၉၀]/g, function (match) {
-        return numberMap[match];
-      });
-    },
-    postformat: function (string) {
-      return string.replace(/\d/g, function (match) {
-        return symbolMap[match];
-      });
-    },
+    preparse: (string) => string.replace(/[၁၂၃၄၅၆၇၈၉၀]/g, (match) => numberMap[match]),
+    postformat: (string) => string.replace(/\d/g, (match) => symbolMap[match]),
     week: {
       dow: 1, // Monday is the first day of the week.
       doy: 4, // The week that contains Jan 4th is the first week of the year.

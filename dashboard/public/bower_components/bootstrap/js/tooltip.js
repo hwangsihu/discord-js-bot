@@ -7,18 +7,25 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
-+(function ($) {
-  "use strict";
++(($) => {
+  var disallowedAttributes = ["sanitize", "whiteList", "sanitizeFn"];
 
-  var DISALLOWED_ATTRIBUTES = ["sanitize", "whiteList", "sanitizeFn"];
+  var uriAttrs = [
+    "background",
+    "cite",
+    "href",
+    "itemtype",
+    "longdesc",
+    "poster",
+    "src",
+    "xlink:href",
+  ];
 
-  var uriAttrs = ["background", "cite", "href", "itemtype", "longdesc", "poster", "src", "xlink:href"];
-
-  var ARIA_ATTRIBUTE_PATTERN = /^aria-[\w-]*$/i;
+  var ariaAttributePattern = /^aria-[\w-]*$/i;
 
   var DefaultWhitelist = {
     // Global attributes allowed on any supplied element below.
-    "*": ["class", "dir", "id", "lang", "role", ARIA_ATTRIBUTE_PATTERN],
+    "*": ["class", "dir", "id", "lang", "role", ariaAttributePattern],
     a: ["target", "href", "title", "rel"],
     area: [],
     b: [],
@@ -55,14 +62,14 @@
    *
    * Shoutout to Angular 7 https://github.com/angular/angular/blob/7.2.4/packages/core/src/sanitization/url_sanitizer.ts
    */
-  var SAFE_URL_PATTERN = /^(?:(?:https?|mailto|ftp|tel|file):|[^&:/?#]*(?:[/?#]|$))/gi;
+  var safeUrlPattern = /^(?:(?:https?|mailto|ftp|tel|file):|[^&:/?#]*(?:[/?#]|$))/gi;
 
   /**
    * A pattern that matches safe data URLs. Only matches image, video and audio types.
    *
    * Shoutout to Angular 7 https://github.com/angular/angular/blob/7.2.4/packages/core/src/sanitization/url_sanitizer.ts
    */
-  var DATA_URL_PATTERN =
+  var dataUrlPattern =
     /^data:(?:image\/(?:bmp|gif|jpeg|jpg|png|tiff|webp)|video\/(?:mpeg|mp4|ogg|webm)|audio\/(?:mp3|oga|ogg|opus));base64,[a-z0-9+/]+=*$/i;
 
   function allowedAttribute(attr, allowedAttributeList) {
@@ -70,15 +77,15 @@
 
     if ($.inArray(attrName, allowedAttributeList) !== -1) {
       if ($.inArray(attrName, uriAttrs) !== -1) {
-        return Boolean(attr.nodeValue.match(SAFE_URL_PATTERN) || attr.nodeValue.match(DATA_URL_PATTERN));
+        return Boolean(
+          attr.nodeValue.match(safeUrlPattern) || attr.nodeValue.match(dataUrlPattern)
+        );
       }
 
       return true;
     }
 
-    var regExp = $(allowedAttributeList).filter(function (index, value) {
-      return value instanceof RegExp;
-    });
+    var regExp = $(allowedAttributeList).filter((index, value) => value instanceof RegExp);
 
     // Check if a regular expression validates the attribute.
     for (var i = 0, l = regExp.length; i < l; i++) {
@@ -107,9 +114,7 @@
     var createdDocument = document.implementation.createHTMLDocument("sanitization");
     createdDocument.body.innerHTML = unsafeHtml;
 
-    var whitelistKeys = $.map(whiteList, function (el, i) {
-      return i;
-    });
+    var whitelistKeys = $.map(whiteList, (el, i) => i);
     var elements = $(createdDocument.body).find("*");
 
     for (var i = 0, len = elements.length; i < len; i++) {
@@ -122,9 +127,7 @@
         continue;
       }
 
-      var attributeList = $.map(el.attributes, function (el) {
-        return el;
-      });
+      var attributeList = $.map(el.attributes, (el) => el);
       var whitelistedAttributes = [].concat(whiteList["*"] || [], whiteList[elName] || []);
 
       for (var j = 0, len2 = attributeList.length; j < len2; j++) {
@@ -192,7 +195,9 @@
 
     if (this.$element[0] instanceof document.constructor && !this.options.selector) {
       throw new Error(
-        "`selector` option must be specified when initializing " + this.type + " on the window.document object!"
+        "`selector` option must be specified when initializing " +
+          this.type +
+          " on the window.document object!"
       );
     }
 
@@ -207,8 +212,16 @@
         var eventIn = trigger == "hover" ? "mouseenter" : "focusin";
         var eventOut = trigger == "hover" ? "mouseleave" : "focusout";
 
-        this.$element.on(eventIn + "." + this.type, this.options.selector, $.proxy(this.enter, this));
-        this.$element.on(eventOut + "." + this.type, this.options.selector, $.proxy(this.leave, this));
+        this.$element.on(
+          eventIn + "." + this.type,
+          this.options.selector,
+          $.proxy(this.enter, this)
+        );
+        this.$element.on(
+          eventOut + "." + this.type,
+          this.options.selector,
+          $.proxy(this.leave, this)
+        );
       }
     }
 
@@ -217,15 +230,16 @@
       : this.fixTitle();
   };
 
-  Tooltip.prototype.getDefaults = function () {
-    return Tooltip.DEFAULTS;
-  };
+  Tooltip.prototype.getDefaults = () => Tooltip.DEFAULTS;
 
   Tooltip.prototype.getOptions = function (options) {
     var dataAttributes = this.$element.data();
 
     for (var dataAttr in dataAttributes) {
-      if (dataAttributes.hasOwnProperty(dataAttr) && $.inArray(dataAttr, DISALLOWED_ATTRIBUTES) !== -1) {
+      if (
+        dataAttributes.hasOwnProperty(dataAttr) &&
+        $.inArray(dataAttr, disallowedAttributes) !== -1
+      ) {
         delete dataAttributes[dataAttr];
       }
     }
@@ -251,7 +265,7 @@
     var defaults = this.getDefaults();
 
     this._options &&
-      $.each(this._options, function (key, value) {
+      $.each(this._options, (key, value) => {
         if (defaults[key] != value) options[key] = value;
       });
 
@@ -281,7 +295,7 @@
 
     if (!self.options.delay || !self.options.delay.show) return self.show();
 
-    self.timeout = setTimeout(function () {
+    self.timeout = setTimeout(() => {
       if (self.hoverState == "in") self.show();
     }, self.options.delay.show);
   };
@@ -314,7 +328,7 @@
 
     if (!self.options.delay || !self.options.delay.hide) return self.hide();
 
-    self.timeout = setTimeout(function () {
+    self.timeout = setTimeout(() => {
       if (self.hoverState == "out") self.hide();
     }, self.options.delay.hide);
   };
@@ -327,7 +341,6 @@
 
       var inDom = $.contains(this.$element[0].ownerDocument.documentElement, this.$element[0]);
       if (e.isDefaultPrevented() || !inDom) return;
-      var that = this;
 
       var $tip = this.tip();
 
@@ -385,12 +398,12 @@
 
       this.applyPlacement(calculatedOffset, placement);
 
-      var complete = function () {
-        var prevHoverState = that.hoverState;
-        that.$element.trigger("shown.bs." + that.type);
-        that.hoverState = null;
+      var complete = () => {
+        var prevHoverState = this.hoverState;
+        this.$element.trigger("shown.bs." + this.type);
+        this.hoverState = null;
 
-        if (prevHoverState == "out") that.leave(that);
+        if (prevHoverState == "out") this.leave(this);
       };
 
       $.support.transition && this.$tip.hasClass("fade")
@@ -405,8 +418,8 @@
     var height = $tip[0].offsetHeight;
 
     // manually read margins because getBoundingClientRect includes difference
-    var marginTop = parseInt($tip.css("margin-top"), 10);
-    var marginLeft = parseInt($tip.css("margin-left"), 10);
+    var marginTop = Number.parseInt($tip.css("margin-top"), 10);
+    var marginLeft = Number.parseInt($tip.css("margin-left"), 10);
 
     // we must check for NaN for ie 8/9
     if (isNaN(marginTop)) marginTop = 0;
@@ -421,7 +434,7 @@
       $tip[0],
       $.extend(
         {
-          using: function (props) {
+          using: (props) => {
             $tip.css({
               top: Math.round(props.top),
               left: Math.round(props.left),
@@ -449,7 +462,9 @@
     else offset.top += delta.top;
 
     var isVertical = /top|bottom/.test(placement);
-    var arrowDelta = isVertical ? delta.left * 2 - width + actualWidth : delta.top * 2 - height + actualHeight;
+    var arrowDelta = isVertical
+      ? delta.left * 2 - width + actualWidth
+      : delta.top * 2 - height + actualHeight;
     var arrowOffsetPosition = isVertical ? "offsetWidth" : "offsetHeight";
 
     $tip.offset(offset);
@@ -528,31 +543,43 @@
     var elRect = el.getBoundingClientRect();
     if (elRect.width == null) {
       // width and height are missing in IE8, so compute them manually; see https://github.com/twbs/bootstrap/issues/14093
-      elRect = $.extend({}, elRect, { width: elRect.right - elRect.left, height: elRect.bottom - elRect.top });
+      elRect = $.extend({}, elRect, {
+        width: elRect.right - elRect.left,
+        height: elRect.bottom - elRect.top,
+      });
     }
     var isSvg = window.SVGElement && el instanceof window.SVGElement;
     // Avoid using $.offset() on SVGs since it gives incorrect results in jQuery 3.
     // See https://github.com/twbs/bootstrap/issues/20280
     var elOffset = isBody ? { top: 0, left: 0 } : isSvg ? null : $element.offset();
     var scroll = {
-      scroll: isBody ? document.documentElement.scrollTop || document.body.scrollTop : $element.scrollTop(),
+      scroll: isBody
+        ? document.documentElement.scrollTop || document.body.scrollTop
+        : $element.scrollTop(),
     };
     var outerDims = isBody ? { width: $(window).width(), height: $(window).height() } : null;
 
     return $.extend({}, elRect, scroll, outerDims, elOffset);
   };
 
-  Tooltip.prototype.getCalculatedOffset = function (placement, pos, actualWidth, actualHeight) {
-    return placement == "bottom"
+  Tooltip.prototype.getCalculatedOffset = (placement, pos, actualWidth, actualHeight) =>
+    placement == "bottom"
       ? { top: pos.top + pos.height, left: pos.left + pos.width / 2 - actualWidth / 2 }
       : placement == "top"
         ? { top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2 }
         : placement == "left"
           ? { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth }
-          : /* placement == 'right' */ { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width };
-  };
+          : /* placement == 'right' */ {
+              top: pos.top + pos.height / 2 - actualHeight / 2,
+              left: pos.left + pos.width,
+            };
 
-  Tooltip.prototype.getViewportAdjustedDelta = function (placement, pos, actualWidth, actualHeight) {
+  Tooltip.prototype.getViewportAdjustedDelta = function (
+    placement,
+    pos,
+    actualWidth,
+    actualHeight
+  ) {
     var delta = { top: 0, left: 0 };
     if (!this.$viewport) return delta;
 
@@ -589,12 +616,14 @@
     var $e = this.$element;
     var o = this.options;
 
-    title = $e.attr("data-original-title") || (typeof o.title == "function" ? o.title.call($e[0]) : o.title);
+    title =
+      $e.attr("data-original-title") ||
+      (typeof o.title == "function" ? o.title.call($e[0]) : o.title);
 
     return title;
   };
 
-  Tooltip.prototype.getUID = function (prefix) {
+  Tooltip.prototype.getUID = (prefix) => {
     do prefix += ~~(Math.random() * 1000000);
     while (document.getElementById(prefix));
     return prefix;
@@ -604,7 +633,9 @@
     if (!this.$tip) {
       this.$tip = $(this.options.template);
       if (this.$tip.length != 1) {
-        throw new Error(this.type + " `template` option must consist of exactly 1 top-level element!");
+        throw new Error(
+          this.type + " `template` option must consist of exactly 1 top-level element!"
+        );
       }
     }
     return this.$tip;
@@ -646,17 +677,16 @@
   };
 
   Tooltip.prototype.destroy = function () {
-    var that = this;
     clearTimeout(this.timeout);
-    this.hide(function () {
-      that.$element.off("." + that.type).removeData("bs." + that.type);
-      if (that.$tip) {
-        that.$tip.detach();
+    this.hide(() => {
+      this.$element.off("." + this.type).removeData("bs." + this.type);
+      if (this.$tip) {
+        this.$tip.detach();
       }
-      that.$tip = null;
-      that.$arrow = null;
-      that.$viewport = null;
-      that.$element = null;
+      this.$tip = null;
+      this.$arrow = null;
+      this.$viewport = null;
+      this.$element = null;
     });
   };
 

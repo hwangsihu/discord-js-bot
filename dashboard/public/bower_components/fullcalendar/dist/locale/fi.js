@@ -1,4 +1,4 @@
-!(function (e, u) {
+!((e, u) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = u(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? u(require("moment"), require("fullcalendar"))
         : u(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, u) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, u) =>
+  ((e) => {
     function u(a) {
       if (t[a]) return t[a].exports;
       var n = (t[a] = { i: a, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (u.m = e),
       (u.c = t),
-      (u.d = function (e, t, a) {
+      (u.d = (e, t, a) => {
         u.o(e, t) || Object.defineProperty(e, t, { configurable: !1, enumerable: !0, get: a });
       }),
-      (u.n = function (e) {
-        var t =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (u.n = (e) => {
+        var t = e && e.__esModule ? () => e.default : () => e;
         return u.d(t, "a", t), t;
       }),
-      (u.o = function (e, u) {
-        return Object.prototype.hasOwnProperty.call(e, u);
-      }),
+      (u.o = (e, u) => Object.prototype.hasOwnProperty.call(e, u)),
       (u.p = ""),
       u((u.s = 129))
     );
   })({
-    0: function (u, t) {
+    0: (u, t) => {
       u.exports = e;
     },
-    1: function (e, t) {
+    1: (e, t) => {
       e.exports = u;
     },
-    129: function (e, u, t) {
+    129: (e, u, t) => {
       Object.defineProperty(u, "__esModule", { value: !0 }), t(130);
       var a = t(1);
       a.datepickerLocale("fi", "fi", {
@@ -81,7 +72,15 @@
           "Joulu",
         ],
         dayNamesShort: ["Su", "Ma", "Ti", "Ke", "To", "Pe", "La"],
-        dayNames: ["Sunnuntai", "Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai", "Lauantai"],
+        dayNames: [
+          "Sunnuntai",
+          "Maanantai",
+          "Tiistai",
+          "Keskiviikko",
+          "Torstai",
+          "Perjantai",
+          "Lauantai",
+        ],
         dayNamesMin: ["Su", "Ma", "Ti", "Ke", "To", "Pe", "La"],
         weekHeader: "Vk",
         dateFormat: "d.m.yy",
@@ -97,10 +96,10 @@
           noEventsMessage: "Ei näytettäviä tapahtumia",
         });
     },
-    130: function (e, u, t) {
-      !(function (e, u) {
+    130: (e, u, t) => {
+      !((e, u) => {
         u(t(0));
-      })(0, function (e) {
+      })(0, (e) => {
         function u(e, u, a, n) {
           var i = "";
           switch (a) {
@@ -139,13 +138,26 @@
           return e < 10 ? (u ? n[e] : a[e]) : e;
         }
         var a = "nolla yksi kaksi kolme neljä viisi kuusi seitsemän kahdeksan yhdeksän".split(" "),
-          n = ["nolla", "yhden", "kahden", "kolmen", "neljän", "viiden", "kuuden", a[7], a[8], a[9]];
+          n = [
+            "nolla",
+            "yhden",
+            "kahden",
+            "kolmen",
+            "neljän",
+            "viiden",
+            "kuuden",
+            a[7],
+            a[8],
+            a[9],
+          ];
         return e.defineLocale("fi", {
           months:
             "tammikuu_helmikuu_maaliskuu_huhtikuu_toukokuu_kesäkuu_heinäkuu_elokuu_syyskuu_lokakuu_marraskuu_joulukuu".split(
               "_"
             ),
-          monthsShort: "tammi_helmi_maalis_huhti_touko_kesä_heinä_elo_syys_loka_marras_joulu".split("_"),
+          monthsShort: "tammi_helmi_maalis_huhti_touko_kesä_heinä_elo_syys_loka_marras_joulu".split(
+            "_"
+          ),
           weekdays: "sunnuntai_maanantai_tiistai_keskiviikko_torstai_perjantai_lauantai".split("_"),
           weekdaysShort: "su_ma_ti_ke_to_pe_la".split("_"),
           weekdaysMin: "su_ma_ti_ke_to_pe_la".split("_"),
@@ -191,5 +203,5 @@
         });
       });
     },
-  });
-});
+  })
+);

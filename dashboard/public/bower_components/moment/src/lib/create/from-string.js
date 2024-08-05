@@ -3,7 +3,6 @@ import { defaultLocaleMonthsShort } from "../units/month";
 import { deprecate } from "../utils/deprecate";
 import { hooks } from "../utils/hooks";
 import { createUTCDate } from "./date-from-array";
-import { configFromArray } from "./from-array";
 import { configFromStringAndFormat } from "./from-string-and-format";
 import getParsingFlags from "./parsing-flags";
 
@@ -107,24 +106,24 @@ export function configFromISO(config) {
 var rfc2822 =
   /^(?:(Mon|Tue|Wed|Thu|Fri|Sat|Sun),?\s)?(\d{1,2})\s(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s(\d{2,4})\s(\d\d):(\d\d)(?::(\d\d))?\s(?:(UT|GMT|[ECMP][SD]T)|([Zz])|([+-]\d{4}))$/;
 
-function extractFromRFC2822Strings(yearStr, monthStr, dayStr, hourStr, minuteStr, secondStr) {
+function extractFromRfc2822Strings(yearStr, monthStr, dayStr, hourStr, minuteStr, secondStr) {
   var result = [
     untruncateYear(yearStr),
     defaultLocaleMonthsShort.indexOf(monthStr),
-    parseInt(dayStr, 10),
-    parseInt(hourStr, 10),
-    parseInt(minuteStr, 10),
+    Number.parseInt(dayStr, 10),
+    Number.parseInt(hourStr, 10),
+    Number.parseInt(minuteStr, 10),
   ];
 
   if (secondStr) {
-    result.push(parseInt(secondStr, 10));
+    result.push(Number.parseInt(secondStr, 10));
   }
 
   return result;
 }
 
 function untruncateYear(yearStr) {
-  var year = parseInt(yearStr, 10);
+  var year = Number.parseInt(yearStr, 10);
   if (year <= 49) {
     return 2000 + year;
   } else if (year <= 999) {
@@ -133,7 +132,7 @@ function untruncateYear(yearStr) {
   return year;
 }
 
-function preprocessRFC2822(s) {
+function preprocessRfc2822(s) {
   // Remove comments and folding whitespace and replace multiple-spaces with a single space
   return s
     .replace(/\([^)]*\)|[\n\t]/g, " ")
@@ -176,7 +175,7 @@ function calculateOffset(obsOffset, militaryOffset, numOffset) {
     // the only allowed military tz is Z
     return 0;
   } else {
-    var hm = parseInt(numOffset, 10);
+    var hm = Number.parseInt(numOffset, 10);
     var m = hm % 100,
       h = (hm - m) / 100;
     return h * 60 + m;
@@ -185,9 +184,16 @@ function calculateOffset(obsOffset, militaryOffset, numOffset) {
 
 // date and time from ref 2822 format
 export function configFromRFC2822(config) {
-  var match = rfc2822.exec(preprocessRFC2822(config._i));
+  var match = rfc2822.exec(preprocessRfc2822(config._i));
   if (match) {
-    var parsedArray = extractFromRFC2822Strings(match[4], match[3], match[2], match[5], match[6], match[7]);
+    var parsedArray = extractFromRfc2822Strings(
+      match[4],
+      match[3],
+      match[2],
+      match[5],
+      match[6],
+      match[7]
+    );
     if (!checkWeekday(match[1], parsedArray, config)) {
       return;
     }
@@ -236,7 +242,7 @@ hooks.createFromInputFallback = deprecate(
     "which is not reliable across all browsers and versions. Non RFC2822/ISO date formats are " +
     "discouraged and will be removed in an upcoming major release. Please refer to " +
     "http://momentjs.com/guides/#/warnings/js-date/ for more info.",
-  function (config) {
+  (config) => {
     config._d = new Date(config._i + (config._useUTC ? " UTC" : ""));
   }
 );

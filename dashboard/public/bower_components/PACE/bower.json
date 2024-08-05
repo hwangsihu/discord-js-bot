@@ -19,5 +19,14 @@
     "client-side"
   ],
   "license": "MIT",
-  "ignore": [".*", "Gruntfile.coffee", "bower_components", "docs", "node_modules", "package.json", "templates", "tests"]
+  "ignore": [
+    ".*",
+    "Gruntfile.coffee",
+    "bower_components",
+    "docs",
+    "node_modules",
+    "package.json",
+    "templates",
+    "tests"
+  ]
 }

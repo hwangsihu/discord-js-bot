@@ -1,6 +1,6 @@
 module("Data adaptor - Tokenizer");
 
-test("triggers the select event", function (assert) {
+test("triggers the select event", (assert) => {
   assert.expect(2);
 
   var SelectData = require("select2/data/select");
@@ -28,7 +28,7 @@ test("triggers the select event", function (assert) {
   var data = new TokenizedSelect($select, options);
   data.bind(container, $container);
 
-  data.on("select", function () {
+  data.on("select", () => {
     assert.ok(true, "The select event should be triggered");
   });
 
@@ -36,13 +36,13 @@ test("triggers the select event", function (assert) {
     {
       term: "first,second",
     },
-    function () {
+    () => {
       assert.ok(true, "The callback should have succeeded");
     }
   );
 });
 
-test("createTag can return null", function (assert) {
+test("createTag can return null", (assert) => {
   assert.expect(3);
 
   var SelectData = require("select2/data/select");
@@ -60,7 +60,7 @@ test("createTag can return null", function (assert) {
   var options = new Options({
     tags: true,
     tokenSeparators: [","],
-    createTag: function () {
+    createTag: () => {
       assert.ok(true, "createTag should have been called");
 
       return null;
@@ -75,7 +75,7 @@ test("createTag can return null", function (assert) {
   var data = new TokenizedSelect($select, options);
   data.bind(container, $container);
 
-  data.on("select", function (params) {
+  data.on("select", (params) => {
     if (params.data == null) {
       assert.ok(false, "Null data should never be selected");
     }
@@ -85,13 +85,13 @@ test("createTag can return null", function (assert) {
     {
       term: "first,second",
     },
-    function () {
+    () => {
       assert.ok(true, "The callback should have succeeded");
     }
   );
 });
 
-test("createTag returning null does not cut the term", function (assert) {
+test("createTag returning null does not cut the term", (assert) => {
   assert.expect(4);
 
   var SelectData = require("select2/data/select");
@@ -109,7 +109,7 @@ test("createTag returning null does not cut the term", function (assert) {
   var options = new Options({
     tags: true,
     tokenSeparators: [",", '"'],
-    createTag: function (params) {
+    createTag: (params) => {
       var term = params.term;
 
       // Ignore blanks
@@ -144,7 +144,7 @@ test("createTag returning null does not cut the term", function (assert) {
   var data = new TokenizedSelect($select, options);
   data.bind(container, $container);
 
-  data.on("select", function (params) {
+  data.on("select", (params) => {
     assert.ok(params.data, "Data should not be null");
 
     assert.equal(params.data.id, '"first, second"', "The id should have the quotes");
@@ -156,13 +156,13 @@ test("createTag returning null does not cut the term", function (assert) {
     {
       term: '"first, second",abc',
     },
-    function () {
+    () => {
       assert.ok(true, "The callback should have succeeded");
     }
   );
 });
 
-test("works with multiple tokens given", function (assert) {
+test("works with multiple tokens given", (assert) => {
   assert.expect(4);
 
   var SelectData = require("select2/data/select");
@@ -190,7 +190,7 @@ test("works with multiple tokens given", function (assert) {
   var data = new TokenizedSelect($select, options);
   data.bind(container, $container);
 
-  data.on("select", function () {
+  data.on("select", () => {
     assert.ok(true, "The select event should be triggered");
   });
 
@@ -198,7 +198,7 @@ test("works with multiple tokens given", function (assert) {
     {
       term: "first,second,third",
     },
-    function () {
+    () => {
       assert.ok(true, "The callback should have succeeded");
     }
   );

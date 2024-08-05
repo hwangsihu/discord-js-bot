@@ -150,7 +150,8 @@ CKEDITOR.lang["oc"] = {
     title: "Paste as Plain Text",
   },
   pastefromword: {
-    confirmCleanup: "Sembla que lo tèxte de pegar proven de Word. Lo volètz netejar abans de lo pegar ?",
+    confirmCleanup:
+      "Sembla que lo tèxte de pegar proven de Word. Lo volètz netejar abans de lo pegar ?",
     error: "Las donadas pegadas an pas pogut èsser netejadas a causa d'una error intèrna",
     title: "Pegar dempuèi Word",
     toolbar: "Pegar dempuèi Word",
@@ -268,8 +269,10 @@ CKEDITOR.lang["oc"] = {
   filetools: {
     loadError: "Una error s'es produita pendent la lectura del fichièr.",
     networkError: "Una error de ret s'es produita pendent lo mandadís del fichièr.",
-    httpError404: "Una error HTTP s'es produita pendent lo mandadís del fichièr (404 : fichièr pas trobat).",
-    httpError403: "Una error HTTP s'es produita pendent lo mandadís del fichièr (403 : accès refusat).",
+    httpError404:
+      "Una error HTTP s'es produita pendent lo mandadís del fichièr (404 : fichièr pas trobat).",
+    httpError403:
+      "Una error HTTP s'es produita pendent lo mandadís del fichièr (403 : accès refusat).",
     httpError: "Una error HTTP s'es produita pendent lo mandadís del fichièr (error : %1).",
     noUrlError: "L'URL de mandadís es pas especificada.",
     responseError: "Responsa del servidor incorrècta.",
@@ -349,7 +352,8 @@ CKEDITOR.lang["oc"] = {
     generalTab: "General",
     advancedTab: "Avançat",
     validateNumberFailed: "Aquesta valor es pas un nombre.",
-    confirmNewPage: "Los cambiaments pas salvats seràn perduts. Sètz segur que volètz cargar una novèla pagina ?",
+    confirmNewPage:
+      "Los cambiaments pas salvats seràn perduts. Sètz segur que volètz cargar una novèla pagina ?",
     confirmCancel: "Certanas opcions son estadas modificadas. Sètz segur que volètz tampar ?",
     options: "Opcions",
     target: "Cibla",

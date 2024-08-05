@@ -1,4 +1,10 @@
-const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require("discord.js");
+const {
+  EmbedBuilder,
+  ButtonBuilder,
+  ActionRowBuilder,
+  ButtonStyle,
+  ComponentType,
+} = require("discord.js");
 
 const IDLE_TIMEOUT = 30; // in seconds
 const MAX_PER_PAGE = 10; // max number of embed fields per page
@@ -46,9 +52,13 @@ module.exports = {
     let currentPage = 1;
 
     // Buttons Row
-    let components = [];
+    const components = [];
     components.push(
-      new ButtonBuilder().setCustomId("prevBtn").setEmoji("⬅️").setStyle(ButtonStyle.Secondary).setDisabled(true),
+      new ButtonBuilder()
+        .setCustomId("prevBtn")
+        .setEmoji("⬅️")
+        .setStyle(ButtonStyle.Secondary)
+        .setDisabled(true),
       new ButtonBuilder()
         .setCustomId("nxtBtn")
         .setEmoji("➡️")
@@ -65,7 +75,9 @@ module.exports = {
       const embed = new EmbedBuilder()
         .setColor(client.config.EMBED_COLORS.BOT_EMBED)
         .setAuthor({ name: "List of servers" })
-        .setFooter({ text: `${match ? "Matched" : "Total"} Servers: ${total} • Page ${currentPage} of ${totalPages}` });
+        .setFooter({
+          text: `${match ? "Matched" : "Total"} Servers: ${total} • Page ${currentPage} of ${totalPages}`,
+        });
 
       const fields = [];
       for (let i = start; i < end; i++) {
@@ -78,7 +90,7 @@ module.exports = {
       }
       embed.addFields(fields);
 
-      let components = [];
+      const components = [];
       components.push(
         ButtonBuilder.from(buttonsRow.components[0]).setDisabled(currentPage === 1),
         ButtonBuilder.from(buttonsRow.components[1]).setDisabled(currentPage === totalPages)

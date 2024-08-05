@@ -8,7 +8,7 @@
  *
  * http://api.jqueryui.com/tabs/
  */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["jquery", "./core", "./widget"], factory);
@@ -16,8 +16,8 @@
     // Browser globals
     factory(jQuery);
   }
-})(function ($) {
-  return $.widget("ui.tabs", {
+})(($) =>
+  $.widget("ui.tabs", {
     version: "1.11.4",
     delay: 300,
     options: {
@@ -35,10 +35,10 @@
       load: null,
     },
 
-    _isLocal: (function () {
+    _isLocal: (() => {
       var rhash = /#.*$/;
 
-      return function (anchor) {
+      return (anchor) => {
         var anchorUrl, locationUrl;
 
         // support: IE7
@@ -61,8 +61,7 @@
     })(),
 
     _create: function () {
-      var that = this,
-        options = this.options;
+      var options = this.options;
 
       this.running = false;
 
@@ -78,9 +77,7 @@
       if ($.isArray(options.disabled)) {
         options.disabled = $.unique(
           options.disabled.concat(
-            $.map(this.tabs.filter(".ui-state-disabled"), function (li) {
-              return that.tabs.index(li);
-            })
+            $.map(this.tabs.filter(".ui-state-disabled"), (li) => this.tabs.index(li))
           )
         ).sort();
       }
@@ -107,7 +104,7 @@
       if (active === null) {
         // check the fragment identifier in the URL
         if (locationHash) {
-          this.tabs.each(function (i, tab) {
+          this.tabs.each((i, tab) => {
             if ($(tab).attr("aria-controls") === locationHash) {
               active = i;
               return false;
@@ -145,7 +142,7 @@
     _getCreateEventData: function () {
       return {
         tab: this.active,
-        panel: !this.active.length ? $() : this._getPanelForTab(this.active),
+        panel: this.active.length ? this._getPanelForTab(this.active) : $(),
       };
     },
 
@@ -292,9 +289,8 @@
       }
     },
 
-    _sanitizeSelector: function (hash) {
-      return hash ? hash.replace(/[!"$%&'()*+,.\/:;<=>?@\[\]\^`{|}~]/g, "\\$&") : "";
-    },
+    _sanitizeSelector: (hash) =>
+      hash ? hash.replace(/[!"$%&'()*+,.\/:;<=>?@\[\]\^`{|}~]/g, "\\$&") : "",
 
     refresh: function () {
       var options = this.options,
@@ -302,9 +298,7 @@
 
       // get disabled tabs from class attribute from HTML
       // this will get converted to a boolean if needed in _refresh()
-      options.disabled = $.map(lis.filter(".ui-state-disabled"), function (tab) {
-        return lis.index(tab);
-      });
+      options.disabled = $.map(lis.filter(".ui-state-disabled"), (tab) => lis.index(tab));
 
       this._processTabs();
 
@@ -346,9 +340,7 @@
       });
 
       // Make sure one tab is in the tab order
-      if (!this.active.length) {
-        this.tabs.eq(0).attr("tabIndex", 0);
-      } else {
+      if (this.active.length) {
         this.active.addClass("ui-tabs-active ui-state-active").attr({
           "aria-selected": "true",
           "aria-expanded": "true",
@@ -357,12 +349,13 @@
         this._getPanelForTab(this.active).show().attr({
           "aria-hidden": "false",
         });
+      } else {
+        this.tabs.eq(0).attr("tabIndex", 0);
       }
     },
 
     _processTabs: function () {
-      var that = this,
-        prevTabs = this.tabs,
+      var prevTabs = this.tabs,
         prevAnchors = this.anchors,
         prevPanels = this.panels;
 
@@ -389,10 +382,13 @@
           }
         });
 
-      this.tabs = this.tablist.find("> li:has(a[href])").addClass("ui-state-default ui-corner-top").attr({
-        role: "tab",
-        tabIndex: -1,
-      });
+      this.tabs = this.tablist
+        .find("> li:has(a[href])")
+        .addClass("ui-state-default ui-corner-top")
+        .attr({
+          role: "tab",
+          tabIndex: -1,
+        });
 
       this.anchors = this.tabs
         .map(function () {
@@ -406,7 +402,7 @@
 
       this.panels = $();
 
-      this.anchors.each(function (i, anchor) {
+      this.anchors.each((i, anchor) => {
         var selector,
           panel,
           panelId,
@@ -415,26 +411,26 @@
           originalAriaControls = tab.attr("aria-controls");
 
         // inline tab
-        if (that._isLocal(anchor)) {
+        if (this._isLocal(anchor)) {
           selector = anchor.hash;
           panelId = selector.substring(1);
-          panel = that.element.find(that._sanitizeSelector(selector));
+          panel = this.element.find(this._sanitizeSelector(selector));
           // remote tab
         } else {
           // If the tab doesn't already have aria-controls,
           // generate an id by using a throw-away element
           panelId = tab.attr("aria-controls") || $({}).uniqueId()[0].id;
           selector = "#" + panelId;
-          panel = that.element.find(selector);
+          panel = this.element.find(selector);
           if (!panel.length) {
-            panel = that._createPanel(panelId);
-            panel.insertAfter(that.panels[i - 1] || that.tablist);
+            panel = this._createPanel(panelId);
+            panel.insertAfter(this.panels[i - 1] || this.tablist);
           }
           panel.attr("aria-live", "polite");
         }
 
         if (panel.length) {
-          that.panels = that.panels.add(panel);
+          this.panels = this.panels.add(panel);
         }
         if (originalAriaControls) {
           tab.data("ui-tabs-aria-controls", originalAriaControls);
@@ -446,7 +442,9 @@
         panel.attr("aria-labelledby", anchorId);
       });
 
-      this.panels.addClass("ui-tabs-panel ui-widget-content ui-corner-bottom").attr("role", "tabpanel");
+      this.panels
+        .addClass("ui-tabs-panel ui-widget-content ui-corner-bottom")
+        .attr("role", "tabpanel");
 
       // Avoid memory leaks (#10056)
       if (prevTabs) {
@@ -461,12 +459,11 @@
       return this.tablist || this.element.find("ol,ul").eq(0);
     },
 
-    _createPanel: function (id) {
-      return $("<div>")
+    _createPanel: (id) =>
+      $("<div>")
         .attr("id", id)
         .addClass("ui-tabs-panel ui-widget-content ui-corner-bottom")
-        .data("ui-tabs-destroy", true);
-    },
+        .data("ui-tabs-destroy", true),
 
     _setupDisabled: function (disabled) {
       if ($.isArray(disabled)) {
@@ -492,7 +489,7 @@
     _setupEvents: function (event) {
       var events = {};
       if (event) {
-        $.each(event.split(" "), function (index, eventName) {
+        $.each(event.split(" "), (index, eventName) => {
           events[eventName] = "_eventHandler";
         });
       }
@@ -500,7 +497,7 @@
       this._off(this.anchors.add(this.tabs).add(this.panels));
       // Always prevent the default action, even when disabled
       this._on(true, this.anchors, {
-        click: function (event) {
+        click: (event) => {
           event.preventDefault();
         },
       });
@@ -560,7 +557,7 @@
         clickedIsActive = tab[0] === active[0],
         collapsing = clickedIsActive && options.collapsible,
         toShow = collapsing ? $() : this._getPanelForTab(tab),
-        toHide = !active.length ? $() : this._getPanelForTab(active),
+        toHide = active.length ? this._getPanelForTab(active) : $(),
         eventData = {
           oldTab: active,
           oldPanel: toHide,
@@ -627,7 +624,7 @@
 
       // start out by hiding, then showing, then completing
       if (toHide.length && this.options.hide) {
-        this._hide(toHide, this.options.hide, function () {
+        this._hide(toHide, this.options.hide, () => {
           eventData.oldTab.closest("li").removeClass("ui-tabs-active ui-state-active");
           show();
         });
@@ -703,13 +700,21 @@
         this.xhr.abort();
       }
 
-      this.element.removeClass("ui-tabs ui-widget ui-widget-content ui-corner-all ui-tabs-collapsible");
+      this.element.removeClass(
+        "ui-tabs ui-widget ui-widget-content ui-corner-all ui-tabs-collapsible"
+      );
 
       this.tablist
-        .removeClass("ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all")
+        .removeClass(
+          "ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all"
+        )
         .removeAttr("role");
 
-      this.anchors.removeClass("ui-tabs-anchor").removeAttr("role").removeAttr("tabIndex").removeUniqueId();
+      this.anchors
+        .removeClass("ui-tabs-anchor")
+        .removeAttr("role")
+        .removeAttr("tabIndex")
+        .removeUniqueId();
 
       this.tablist.unbind(this.eventNamespace);
 
@@ -761,13 +766,9 @@
       } else {
         index = this._getIndex(index);
         if ($.isArray(disabled)) {
-          disabled = $.map(disabled, function (num) {
-            return num !== index ? num : null;
-          });
+          disabled = $.map(disabled, (num) => (num !== index ? num : null));
         } else {
-          disabled = $.map(this.tabs, function (li, num) {
-            return num !== index ? num : null;
-          });
+          disabled = $.map(this.tabs, (li, num) => (num !== index ? num : null));
         }
       }
       this._setupDisabled(disabled);
@@ -797,24 +798,23 @@
 
     load: function (index, event) {
       index = this._getIndex(index);
-      var that = this,
-        tab = this.tabs.eq(index),
+      var tab = this.tabs.eq(index),
         anchor = tab.find(".ui-tabs-anchor"),
         panel = this._getPanelForTab(tab),
         eventData = {
           tab: tab,
           panel: panel,
         },
-        complete = function (jqXHR, status) {
+        complete = (jqXhr, status) => {
           if (status === "abort") {
-            that.panels.stop(false, true);
+            this.panels.stop(false, true);
           }
 
           tab.removeClass("ui-tabs-loading");
           panel.removeAttr("aria-busy");
 
-          if (jqXHR === that.xhr) {
-            delete that.xhr;
+          if (jqXhr === this.xhr) {
+            delete this.xhr;
           }
         };
 
@@ -833,33 +833,35 @@
         panel.attr("aria-busy", "true");
 
         this.xhr
-          .done(function (response, status, jqXHR) {
+          .done((response, status, jqXhr) => {
             // support: jQuery <1.8
             // http://bugs.jquery.com/ticket/11778
-            setTimeout(function () {
+            setTimeout(() => {
               panel.html(response);
-              that._trigger("load", event, eventData);
+              this._trigger("load", event, eventData);
 
-              complete(jqXHR, status);
+              complete(jqXhr, status);
             }, 1);
           })
-          .fail(function (jqXHR, status) {
+          .fail((jqXhr, status) => {
             // support: jQuery <1.8
             // http://bugs.jquery.com/ticket/11778
-            setTimeout(function () {
-              complete(jqXHR, status);
+            setTimeout(() => {
+              complete(jqXhr, status);
             }, 1);
           });
       }
     },
 
     _ajaxSettings: function (anchor, event, eventData) {
-      var that = this;
       return {
         url: anchor.attr("href"),
-        beforeSend: function (jqXHR, settings) {
-          return that._trigger("beforeLoad", event, $.extend({ jqXHR: jqXHR, ajaxSettings: settings }, eventData));
-        },
+        beforeSend: (jqXhr, settings) =>
+          this._trigger(
+            "beforeLoad",
+            event,
+            $.extend({ jqXHR: jqXhr, ajaxSettings: settings }, eventData)
+          ),
       };
     },
 
@@ -867,5 +869,5 @@
       var id = $(tab).attr("aria-controls");
       return this.element.find(this._sanitizeSelector("#" + id));
     },
-  });
-});
+  })
+);

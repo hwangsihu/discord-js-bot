@@ -7,7 +7,7 @@ CKEDITOR.plugins.add("colorbutton", {
   lang: "af,ar,az,bg,bn,bs,ca,cs,cy,da,de,de-ch,el,en,en-au,en-ca,en-gb,eo,es,es-mx,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,oc,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn",
   icons: "bgcolor,textcolor",
   hidpi: !0,
-  init: function (e) {
+  init: (e) => {
     function t(a, d, g, r, k) {
       var p = new CKEDITOR.style(l["colorButton_" + d + "Style"]),
         m = CKEDITOR.tools.getNextId() + "_colorBox",
@@ -22,7 +22,10 @@ CKEDITOR.plugins.add("colorbutton", {
         allowedContent: p,
         requiredContent: p,
         contentTransformations: k.contentTransformations,
-        panel: { css: CKEDITOR.skin.getPath("editor"), attributes: { role: "listbox", "aria-label": h.panelTitle } },
+        panel: {
+          css: CKEDITOR.skin.getPath("editor"),
+          attributes: { role: "listbox", "aria-label": h.panelTitle },
+        },
         onBlock: function (a, b) {
           q = b;
           b.autoSize = !0;
@@ -49,13 +52,21 @@ CKEDITOR.plugins.add("colorbutton", {
             c = e.elementPath(b);
           if (c) {
             b = c.block || c.blockLimit || e.document.getBody();
-            do c = (b && b.getComputedStyle("back" == d ? "background-color" : "color")) || "transparent";
+            do
+              c =
+                (b && b.getComputedStyle("back" == d ? "background-color" : "color")) ||
+                "transparent";
             while ("back" == d && "transparent" == c && b && (b = b.getParent()));
             (c && "transparent" != c) || (c = "#ffffff");
             !1 !== l.colorButton_enableAutomatic &&
               this._.panel._.iframe.getFrameDocument().getById(m).setStyle("background-color", c);
             if ((b = a && a.getRanges()[0])) {
-              for (var a = new CKEDITOR.dom.walker(b), f = b.collapsed ? b.startContainer : a.next(), b = ""; f; ) {
+              for (
+                var a = new CKEDITOR.dom.walker(b),
+                  f = b.collapsed ? b.startContainer : a.next(),
+                  b = "";
+                f;
+              ) {
                 f.type !== CKEDITOR.NODE_ELEMENT && (f = f.getParent());
                 f = u(f.getComputedStyle("back" == d ? "background-color" : "color"));
                 b = b || f;
@@ -84,18 +95,14 @@ CKEDITOR.plugins.add("colorbutton", {
         k = l.colorButton_colorsPerRow || 6,
         p = e.plugins.colordialog && !1 !== l.colorButton_enableMore,
         m = r.length + (p ? 2 : 1),
-        q = CKEDITOR.tools.addFunction(function (a, b) {
+        q = CKEDITOR.tools.addFunction((a, b) => {
           function c(a) {
             var d = l["colorButton_" + b + "Style"];
             e.removeStyle(new CKEDITOR.style(d, { color: "inherit" }));
             d.childRule =
               "back" == b
-                ? function (a) {
-                    return v(a);
-                  }
-                : function (a) {
-                    return !(a.is("a") || a.getElementsByTag("a").count()) || v(a);
-                  };
+                ? (a) => v(a)
+                : (a) => !(a.is("a") || a.getElementsByTag("a").count()) || v(a);
             e.focus();
             a && e.applyStyle(new CKEDITOR.style(d, { color: a }));
             e.fire("saveSnapshot");
@@ -103,7 +110,7 @@ CKEDITOR.plugins.add("colorbutton", {
           e.focus();
           e.fire("saveSnapshot");
           if ("?" == a)
-            e.getColorFromDialog(function (a) {
+            e.getColorFromDialog((a) => {
               if (a) return c(a);
             });
           else return c(a);
@@ -128,7 +135,9 @@ CKEDITOR.plugins.add("colorbutton", {
           h.auto,
           "\x3c/td\x3e\x3c/tr\x3e\x3c/table\x3e\x3c/a\x3e"
         );
-      a.push('\x3ctable role\x3d"presentation" cellspacing\x3d0 cellpadding\x3d0 width\x3d"100%"\x3e');
+      a.push(
+        '\x3ctable role\x3d"presentation" cellspacing\x3d0 cellpadding\x3d0 width\x3d"100%"\x3e'
+      );
       for (g = 0; g < r.length; g++) {
         0 === g % k && a.push("\x3c/tr\x3e\x3ctr\x3e");
         var n = r[g].split("/"),
@@ -136,7 +145,8 @@ CKEDITOR.plugins.add("colorbutton", {
           c = n[1] || b;
         n[1]
           ? (n = b)
-          : ((b = "#" + b.replace(/^(.)(.)(.)$/, "$1$1$2$2$3$3")), (n = e.lang.colorbutton.colors[c] || c));
+          : ((b = "#" + b.replace(/^(.)(.)(.)$/, "$1$1$2$2$3$3")),
+            (n = e.lang.colorbutton.colors[c] || c));
         a.push(
           '\x3ctd\x3e\x3ca class\x3d"cke_colorbox" _cke_focus\x3d1 hidefocus\x3dtrue title\x3d"',
           n,
@@ -185,7 +195,9 @@ CKEDITOR.plugins.add("colorbutton", {
       return "false" == a.getAttribute("contentEditable") || a.getAttribute("data-nostyle");
     }
     function u(a) {
-      return CKEDITOR.tools.normalizeHex("#" + CKEDITOR.tools.convertRgbToHex(a || "")).replace(/#/g, "");
+      return CKEDITOR.tools
+        .normalizeHex("#" + CKEDITOR.tools.convertRgbToHex(a || ""))
+        .replace(/#/g, "");
     }
     var l = e.config,
       h = e.lang.colorbutton;
@@ -196,10 +208,8 @@ CKEDITOR.plugins.add("colorbutton", {
             {
               element: "font",
               check: "span{color}",
-              left: function (a) {
-                return !!a.attributes.color;
-              },
-              right: function (a) {
+              left: (a) => !!a.attributes.color,
+              right: (a) => {
                 a.name = "span";
                 a.attributes.color && (a.styles.color = a.attributes.color);
                 delete a.attributes.color;
@@ -215,13 +225,13 @@ CKEDITOR.plugins.add("colorbutton", {
           [
             {
               element: "span",
-              left: function (a) {
+              left: (a) => {
                 var d = CKEDITOR.tools;
                 if ("span" != a.name || !a.styles || !a.styles.background) return !1;
                 a = d.style.parse.background(a.styles.background);
                 return a.color && 1 === d.objectKeys(a).length;
               },
-              right: function (a) {
+              right: (a) => {
                 var d = new CKEDITOR.style(e.config.colorButton_backStyle, {
                   color: a.styles.background,
                 }).getDefinition();
@@ -244,4 +254,7 @@ CKEDITOR.config.colorButton_foreStyle = {
   styles: { color: "#(color)" },
   overrides: [{ element: "font", attributes: { color: null } }],
 };
-CKEDITOR.config.colorButton_backStyle = { element: "span", styles: { "background-color": "#(color)" } };
+CKEDITOR.config.colorButton_backStyle = {
+  element: "span",
+  styles: { "background-color": "#(color)" },
+};

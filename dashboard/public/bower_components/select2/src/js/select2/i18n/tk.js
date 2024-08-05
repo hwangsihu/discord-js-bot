@@ -1,38 +1,30 @@
-define(function () {
+define(() => {
   // Turkmen
   return {
-    errorLoading: function () {
-      return "Netije ýüklenmedi.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "Netije ýüklenmedi.",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = overChars + " harp bozuň.";
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "Ýene-de iň az " + remainingChars + " harp ýazyň.";
 
       return message;
     },
-    loadingMore: function () {
-      return "Köpräk netije görkezilýär…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Köpräk netije görkezilýär…",
+    maximumSelected: (args) => {
       var message = "Diňe " + args.maximum + " sanysyny saýlaň.";
 
       return message;
     },
-    noResults: function () {
-      return "Netije tapylmady.";
-    },
-    searching: function () {
-      return "Gözlenýär…";
-    },
-    removeAllItems: function () {
+    noResults: () => "Netije tapylmady.",
+    searching: () => "Gözlenýär…",
+    removeAllItems: () => {
       // TO DO : add in turkmen,
       return "Remove all items";
     },

@@ -6,9 +6,7 @@
  *         or add [data-widget="box-refresh"] to the box element
  *         Pass any option as data-option="value"
  */
-+(function ($) {
-  "use strict";
-
++(($) => {
   var DataKey = "lte.boxrefresh";
 
   var Default = {
@@ -19,10 +17,8 @@
     loadInContent: true,
     responseType: "",
     overlayTemplate: '<div class="overlay"><div class="fa fa-refresh fa-spin"></div></div>',
-    onLoadStart: function () {},
-    onLoadDone: function (response) {
-      return response;
-    },
+    onLoadStart: () => {},
+    onLoadDone: (response) => response,
   };
 
   var Selector = {
@@ -37,7 +33,9 @@
     this.$overlay = $(options.overlayTemplate);
 
     if (options.source === "") {
-      throw new Error("Source url was not defined. Please specify a url in your BoxRefresh source option.");
+      throw new Error(
+        "Source url was not defined. Please specify a url in your BoxRefresh source option."
+      );
     }
 
     this._setUpListeners();
@@ -118,7 +116,7 @@
 
   // BoxRefresh Data API
   // =================
-  $(window).on("load", function () {
+  $(window).on("load", () => {
     $(Selector.data).each(function () {
       Plugin.call($(this));
     });

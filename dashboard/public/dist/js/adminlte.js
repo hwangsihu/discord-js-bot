@@ -24,9 +24,7 @@ if (typeof jQuery === "undefined") {
  *         or add [data-widget="box-refresh"] to the box element
  *         Pass any option as data-option="value"
  */
-+(function ($) {
-  "use strict";
-
++(($) => {
   var DataKey = "lte.boxrefresh";
 
   var Default = {
@@ -37,10 +35,8 @@ if (typeof jQuery === "undefined") {
     loadInContent: true,
     responseType: "",
     overlayTemplate: '<div class="overlay"><div class="fa fa-refresh fa-spin"></div></div>',
-    onLoadStart: function () {},
-    onLoadDone: function (response) {
-      return response;
-    },
+    onLoadStart: () => {},
+    onLoadDone: (response) => response,
   };
 
   var Selector = {
@@ -55,7 +51,9 @@ if (typeof jQuery === "undefined") {
     this.$overlay = $(options.overlayTemplate);
 
     if (options.source === "") {
-      throw new Error("Source url was not defined. Please specify a url in your BoxRefresh source option.");
+      throw new Error(
+        "Source url was not defined. Please specify a url in your BoxRefresh source option."
+      );
     }
 
     this._setUpListeners();
@@ -136,7 +134,7 @@ if (typeof jQuery === "undefined") {
 
   // BoxRefresh Data API
   // =================
-  $(window).on("load", function () {
+  $(window).on("load", () => {
     $(Selector.data).each(function () {
       Plugin.call($(this));
     });
@@ -151,9 +149,7 @@ if (typeof jQuery === "undefined") {
  *         This plugin auto activates on any element using the `.box` class
  *         Pass any option as data-option="value"
  */
-+(function ($) {
-  "use strict";
-
++(($) => {
   var DataKey = "lte.boxwidget";
 
   var Default = {
@@ -325,7 +321,7 @@ if (typeof jQuery === "undefined") {
 
   // BoxWidget Data API
   // ==================
-  $(window).on("load", function () {
+  $(window).on("load", () => {
     $(Selector.data).each(function () {
       Plugin.call($(this));
     });
@@ -340,9 +336,7 @@ if (typeof jQuery === "undefined") {
  *         or add [data-toggle="control-sidebar"] to the trigger
  *         Pass any option as data-option="value"
  */
-+(function ($) {
-  "use strict";
-
++(($) => {
   var DataKey = "lte.controlsidebar";
 
   var Default = {
@@ -408,10 +402,10 @@ if (typeof jQuery === "undefined") {
 
   ControlSidebar.prototype.expand = function () {
     $(Selector.sidebar).show();
-    if (!this.options.slide) {
-      $("body").addClass(ClassName.open);
-    } else {
+    if (this.options.slide) {
       $(Selector.sidebar).addClass(ClassName.open);
+    } else {
+      $("body").addClass(ClassName.open);
     }
 
     $(this.element).trigger($.Event(Event.expanded));
@@ -431,7 +425,7 @@ if (typeof jQuery === "undefined") {
 
   // Private
 
-  ControlSidebar.prototype._fixForBoxed = function (bg) {
+  ControlSidebar.prototype._fixForBoxed = (bg) => {
     bg.css({
       position: "absolute",
       height: $(Selector.wrapper).height(),
@@ -481,9 +475,7 @@ if (typeof jQuery === "undefined") {
  * @Usage: $('#my-chat-box').directChat()
  *         or add [data-widget="direct-chat"] to the trigger
  */
-+(function ($) {
-  "use strict";
-
++(($) => {
   var DataKey = "lte.directchat";
 
   var Selector = {
@@ -501,7 +493,7 @@ if (typeof jQuery === "undefined") {
     this.element = element;
   };
 
-  DirectChat.prototype.toggle = function ($trigger) {
+  DirectChat.prototype.toggle = ($trigger) => {
     $trigger.parents(Selector.box).first().toggleClass(ClassName.open);
   };
 
@@ -548,9 +540,7 @@ if (typeof jQuery === "undefined") {
  *          or add [data-toggle="push-menu"] to any button
  *          Pass any option as data-option="value"
  */
-+(function ($) {
-  "use strict";
-
++(($) => {
   var DataKey = "lte.pushmenu";
 
   var Default = {
@@ -601,14 +591,17 @@ if (typeof jQuery === "undefined") {
     $(Selector.contentWrapper).click(
       function () {
         // Enable hide menu when clicking on the content-wrapper on small screens
-        if ($(window).width() <= this.options.collapseScreenSize && $("body").hasClass(ClassName.open)) {
+        if (
+          $(window).width() <= this.options.collapseScreenSize &&
+          $("body").hasClass(ClassName.open)
+        ) {
           this.close();
         }
       }.bind(this)
     );
 
     // __Fix for android devices
-    $(Selector.searchInput).click(function (e) {
+    $(Selector.searchInput).click((e) => {
       e.stopPropagation();
     });
   };
@@ -621,10 +614,10 @@ if (typeof jQuery === "undefined") {
       isOpen = $("body").hasClass(ClassName.open);
     }
 
-    if (!isOpen) {
-      this.open();
-    } else {
+    if (isOpen) {
       this.close();
+    } else {
+      this.open();
     }
   };
 
@@ -652,7 +645,10 @@ if (typeof jQuery === "undefined") {
   PushMenu.prototype.expandOnHover = function () {
     $(Selector.mainSidebar).hover(
       function () {
-        if ($("body").is(Selector.mini + Selector.collapsed) && $(window).width() > this.options.collapseScreenSize) {
+        if (
+          $("body").is(Selector.mini + Selector.collapsed) &&
+          $(window).width() > this.options.collapseScreenSize
+        ) {
           this.expand();
         }
       }.bind(this),
@@ -665,13 +661,13 @@ if (typeof jQuery === "undefined") {
   };
 
   PushMenu.prototype.expand = function () {
-    setTimeout(function () {
+    setTimeout(() => {
       $("body").removeClass(ClassName.collapsed).addClass(ClassName.expanded);
     }, this.options.expandTransitionDelay);
   };
 
   PushMenu.prototype.collapse = function () {
-    setTimeout(function () {
+    setTimeout(() => {
       $("body").removeClass(ClassName.expanded).addClass(ClassName.collapsed);
     }, this.options.expandTransitionDelay);
   };
@@ -710,7 +706,7 @@ if (typeof jQuery === "undefined") {
     e.preventDefault();
     Plugin.call($(this), "toggle");
   });
-  $(window).on("load", function () {
+  $(window).on("load", () => {
     Plugin.call($(Selector.button));
   });
 })(jQuery);
@@ -723,18 +719,12 @@ if (typeof jQuery === "undefined") {
  *         or add [data-widget="todo-list"] to the ul element
  *         Pass any option as data-option="value"
  */
-+(function ($) {
-  "use strict";
-
++(($) => {
   var DataKey = "lte.todolist";
 
   var Default = {
-    onCheck: function (item) {
-      return item;
-    },
-    onUnCheck: function (item) {
-      return item;
-    },
+    onCheck: (item) => item,
+    onUnCheck: (item) => item,
   };
 
   var Selector = {
@@ -816,7 +806,7 @@ if (typeof jQuery === "undefined") {
 
   // TodoList Data API
   // =================
-  $(window).on("load", function () {
+  $(window).on("load", () => {
     $(Selector.data).each(function () {
       Plugin.call($(this));
     });
@@ -832,9 +822,7 @@ if (typeof jQuery === "undefined") {
  *         or add [data-widget="tree"] to the ul element
  *         Pass any option as data-option="value"
  */
-+(function ($) {
-  "use strict";
-
++(($) => {
   var DataKey = "lte.tree";
 
   var Default = {
@@ -928,7 +916,11 @@ if (typeof jQuery === "undefined") {
         $(this.element).trigger(collapsedEvent);
 
         // Collapse child items
-        parentLi.find(Selector.treeview).removeClass(ClassName.open).find(Selector.treeviewMenu).hide();
+        parentLi
+          .find(Selector.treeview)
+          .removeClass(ClassName.open)
+          .find(Selector.treeviewMenu)
+          .hide();
       }.bind(this)
     );
   };
@@ -971,7 +963,7 @@ if (typeof jQuery === "undefined") {
 
   // Tree Data API
   // =============
-  $(window).on("load", function () {
+  $(window).on("load", () => {
     $(Selector.data).each(function () {
       Plugin.call($(this));
     });
@@ -987,9 +979,7 @@ if (typeof jQuery === "undefined") {
  *        Configure any options by passing data-option="value"
  *        to the body tag.
  */
-+(function ($) {
-  "use strict";
-
++(($) => {
   var DataKey = "lte.layout";
 
   var Default = {
@@ -1072,7 +1062,7 @@ if (typeof jQuery === "undefined") {
     );
   };
 
-  Layout.prototype.fix = function () {
+  Layout.prototype.fix = () => {
     // Remove overflow from .wrapper if layout-boxed exists
     $(Selector.layoutBoxed + " > " + Selector.wrapper).css("overflow", "hidden");
 
@@ -1167,7 +1157,7 @@ if (typeof jQuery === "undefined") {
 
   // Layout DATA-API
   // ===============
-  $(window).on("load", function () {
+  $(window).on("load", () => {
     Plugin.call($("body"));
   });
 })(jQuery);

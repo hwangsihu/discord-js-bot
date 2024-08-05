@@ -127,7 +127,11 @@ CKEDITOR.lang["fo"] = {
     panelTitle2: "Inline stílir",
     panelTitle3: "Object stílir",
   },
-  specialchar: { options: "Møguleikar við serteknum", title: "Vel sertekn", toolbar: "Set inn sertekn" },
+  specialchar: {
+    options: "Møguleikar við serteknum",
+    title: "Vel sertekn",
+    toolbar: "Set inn sertekn",
+  },
   sourcearea: { toolbar: "Kelda" },
   scayt: {
     btn_about: "Um SCAYT",
@@ -146,7 +150,8 @@ CKEDITOR.lang["fo"] = {
     title: "Innrita som reinan tekst",
   },
   pastefromword: {
-    confirmCleanup: "Teksturin, tú roynir at seta inn, sýnist at stava frá Word. Skal teksturin reinsast fyrst?",
+    confirmCleanup:
+      "Teksturin, tú roynir at seta inn, sýnist at stava frá Word. Skal teksturin reinsast fyrst?",
     error: "Tað eydnaðist ikki at reinsa tekstin vegna ein internan feil",
     title: "Innrita frá Word",
     toolbar: "Innrita frá Word",
@@ -342,8 +347,10 @@ CKEDITOR.lang["fo"] = {
     generalTab: "Generelt",
     advancedTab: "Fjølbroytt",
     validateNumberFailed: "Hetta er ikki eitt tal.",
-    confirmNewPage: "Allar ikki goymdar broytingar í hesum innihaldið hvørva. Skal nýggj síða lesast kortini?",
-    confirmCancel: "Nakrir valmøguleikar eru broyttir. Ert tú vísur í, at dialogurin skal latast aftur?",
+    confirmNewPage:
+      "Allar ikki goymdar broytingar í hesum innihaldið hvørva. Skal nýggj síða lesast kortini?",
+    confirmCancel:
+      "Nakrir valmøguleikar eru broyttir. Ert tú vísur í, at dialogurin skal latast aftur?",
     options: "Options",
     target: "Target",
     targetNew: "Nýtt vindeyga (_blank)",

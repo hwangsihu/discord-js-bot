@@ -36,7 +36,9 @@ module.exports = {
   async messageRun(message, args) {
     const choice = args[0];
     if (!animals.includes(choice)) {
-      return message.safeReply(`Invalid animal selected. Available animals:\n${animals.join(", ")}`);
+      return message.safeReply(
+        `Invalid animal selected. Available animals:\n${animals.join(", ")}`
+      );
     }
     const response = await getFact(message.author, choice);
     return message.safeReply(response);

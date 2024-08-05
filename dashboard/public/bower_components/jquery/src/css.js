@@ -17,7 +17,7 @@ define([
   "./core/init",
   "./core/ready",
   "./selector", // contains
-], function (
+], (
   jQuery,
   pnum,
   access,
@@ -28,13 +28,11 @@ define([
   cssExpand,
   getStyles,
   swap,
-  curCSS,
-  adjustCSS,
+  curCss,
+  adjustCss,
   addGetHookIf,
   support
-) {
-  "use strict";
-
+) => {
   var // Swappable if display is none or starts with table
     // except "table", "table-cell", or "table-caption"
     // See here for display values: https://developer.mozilla.org/en-US/docs/CSS/display
@@ -104,7 +102,17 @@ define([
       }
 
       // If we get here with a content-box, we're seeking "padding" or "border" or "margin"
-      if (!isBorderBox) {
+      if (isBorderBox) {
+        // For "content", subtract padding
+        if (box === "content") {
+          delta -= jQuery.css(elem, "padding" + cssExpand[i], true, styles);
+        }
+
+        // For "content" or "padding", subtract border
+        if (box !== "margin") {
+          delta -= jQuery.css(elem, "border" + cssExpand[i] + "Width", true, styles);
+        }
+      } else {
         // Add padding
         delta += jQuery.css(elem, "padding" + cssExpand[i], true, styles);
 
@@ -119,16 +127,6 @@ define([
 
         // If we get here with a border-box (content + padding + border), we're seeking "content" or
         // "padding" or "margin"
-      } else {
-        // For "content", subtract padding
-        if (box === "content") {
-          delta -= jQuery.css(elem, "padding" + cssExpand[i], true, styles);
-        }
-
-        // For "content" or "padding", subtract border
-        if (box !== "margin") {
-          delta -= jQuery.css(elem, "border" + cssExpand[i] + "Width", true, styles);
-        }
       }
     }
 
@@ -138,7 +136,13 @@ define([
       // Assuming integer scroll gutter, subtract the rest and round down
       delta += Math.max(
         0,
-        Math.ceil(elem["offset" + dimension[0].toUpperCase() + dimension.slice(1)] - computedVal - delta - extra - 0.5)
+        Math.ceil(
+          elem["offset" + dimension[0].toUpperCase() + dimension.slice(1)] -
+            computedVal -
+            delta -
+            extra -
+            0.5
+        )
       );
     }
 
@@ -148,7 +152,7 @@ define([
   function getWidthOrHeight(elem, dimension, extra) {
     // Start with computed style
     var styles = getStyles(elem),
-      val = curCSS(elem, dimension, styles),
+      val = curCss(elem, dimension, styles),
       isBorderBox = jQuery.css(elem, "boxSizing", false, styles) === "border-box",
       valueIsBorderBox = isBorderBox;
 
@@ -163,13 +167,17 @@ define([
 
     // Check for style in case a browser which returns unreliable values
     // for getComputedStyle silently falls back to the reliable elem.style
-    valueIsBorderBox = valueIsBorderBox && (support.boxSizingReliable() || val === elem.style[dimension]);
+    valueIsBorderBox =
+      valueIsBorderBox && (support.boxSizingReliable() || val === elem.style[dimension]);
 
     // Fall back to offsetWidth/offsetHeight when value is "auto"
     // This happens for inline elements with no explicit setting (gh-3571)
     // Support: Android <=4.1 - 4.3 only
     // Also use offsetWidth/offsetHeight for misreported inline dimensions (gh-3602)
-    if (val === "auto" || (!parseFloat(val) && jQuery.css(elem, "display", false, styles) === "inline")) {
+    if (
+      val === "auto" ||
+      (!Number.parseFloat(val) && jQuery.css(elem, "display", false, styles) === "inline")
+    ) {
       val = elem["offset" + dimension[0].toUpperCase() + dimension.slice(1)];
 
       // offsetWidth/offsetHeight provide border-box values
@@ -177,7 +185,7 @@ define([
     }
 
     // Normalize "" and auto
-    val = parseFloat(val) || 0;
+    val = Number.parseFloat(val) || 0;
 
     // Adjust for the element's box model
     return (
@@ -201,10 +209,10 @@ define([
     // behavior of getting and setting a style property
     cssHooks: {
       opacity: {
-        get: function (elem, computed) {
+        get: (elem, computed) => {
           if (computed) {
             // We should always get a number back from opacity
-            var ret = curCSS(elem, "opacity");
+            var ret = curCss(elem, "opacity");
             return ret === "" ? "1" : ret;
           }
         },
@@ -233,7 +241,7 @@ define([
     cssProps: {},
 
     // Get and set the style property on a DOM Node
-    style: function (elem, name, value, extra) {
+    style: (elem, name, value, extra) => {
       // Don't set styles on text and comment nodes
       if (!elem || elem.nodeType === 3 || elem.nodeType === 8 || !elem.style) {
         return;
@@ -263,7 +271,7 @@ define([
 
         // Convert "+=" or "-=" to relative numbers (#7345)
         if (type === "string" && (ret = rcssNum.exec(value)) && ret[1]) {
-          value = adjustCSS(elem, name, ret);
+          value = adjustCss(elem, name, ret);
 
           // Fixes bug #9237
           type = "number";
@@ -303,7 +311,7 @@ define([
       }
     },
 
-    css: function (elem, name, extra, styles) {
+    css: (elem, name, extra, styles) => {
       var val,
         num,
         hooks,
@@ -327,7 +335,7 @@ define([
 
       // Otherwise, if a way to get the computed value exists, use that
       if (val === undefined) {
-        val = curCSS(elem, name, styles);
+        val = curCss(elem, name, styles);
       }
 
       // Convert "normal" to computed value
@@ -337,7 +345,7 @@ define([
 
       // Make numeric if forced or a qualifier was provided and val looks numeric
       if (extra === "" || extra) {
-        num = parseFloat(val);
+        num = Number.parseFloat(val);
         return extra === true || isFinite(num) ? num || 0 : val;
       }
 
@@ -345,9 +353,9 @@ define([
     },
   });
 
-  jQuery.each(["height", "width"], function (i, dimension) {
+  jQuery.each(["height", "width"], (i, dimension) => {
     jQuery.cssHooks[dimension] = {
-      get: function (elem, computed, extra) {
+      get: (elem, computed, extra) => {
         if (computed) {
           // Certain elements can have dimension info if we invisibly show them
           // but it must have a current display style that would benefit
@@ -359,14 +367,12 @@ define([
             // Running getBoundingClientRect on a disconnected node
             // in IE throws an error.
             (!elem.getClientRects().length || !elem.getBoundingClientRect().width)
-            ? swap(elem, cssShow, function () {
-                return getWidthOrHeight(elem, dimension, extra);
-              })
+            ? swap(elem, cssShow, () => getWidthOrHeight(elem, dimension, extra))
             : getWidthOrHeight(elem, dimension, extra);
         }
       },
 
-      set: function (elem, value, extra) {
+      set: (elem, value, extra) => {
         var matches,
           styles = getStyles(elem),
           isBorderBox = jQuery.css(elem, "boxSizing", false, styles) === "border-box",
@@ -377,7 +383,7 @@ define([
         if (isBorderBox && support.scrollboxSize() === styles.position) {
           subtract -= Math.ceil(
             elem["offset" + dimension[0].toUpperCase() + dimension.slice(1)] -
-              parseFloat(styles[dimension]) -
+              Number.parseFloat(styles[dimension]) -
               boxModelAdjustment(elem, dimension, "border", false, styles) -
               0.5
           );
@@ -394,14 +400,12 @@ define([
     };
   });
 
-  jQuery.cssHooks.marginLeft = addGetHookIf(support.reliableMarginLeft, function (elem, computed) {
+  jQuery.cssHooks.marginLeft = addGetHookIf(support.reliableMarginLeft, (elem, computed) => {
     if (computed) {
       return (
-        (parseFloat(curCSS(elem, "marginLeft")) ||
+        (Number.parseFloat(curCss(elem, "marginLeft")) ||
           elem.getBoundingClientRect().left -
-            swap(elem, { marginLeft: 0 }, function () {
-              return elem.getBoundingClientRect().left;
-            })) + "px"
+            swap(elem, { marginLeft: 0 }, () => elem.getBoundingClientRect().left)) + "px"
       );
     }
   });
@@ -413,9 +417,9 @@ define([
       padding: "",
       border: "Width",
     },
-    function (prefix, suffix) {
+    (prefix, suffix) => {
       jQuery.cssHooks[prefix + suffix] = {
-        expand: function (value) {
+        expand: (value) => {
           var i = 0,
             expanded = {},
             // Assumes a single number if not a string
@@ -439,7 +443,7 @@ define([
     css: function (name, value) {
       return access(
         this,
-        function (elem, name, value) {
+        (elem, name, value) => {
           var styles,
             len,
             map = {},

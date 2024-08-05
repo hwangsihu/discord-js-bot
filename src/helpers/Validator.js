@@ -37,7 +37,11 @@ module.exports = class Validator {
     }
 
     // Cache Size
-    if (isNaN(config.CACHE_SIZE.GUILDS) || isNaN(config.CACHE_SIZE.USERS) || isNaN(config.CACHE_SIZE.MEMBERS)) {
+    if (
+      isNaN(config.CACHE_SIZE.GUILDS) ||
+      isNaN(config.CACHE_SIZE.USERS) ||
+      isNaN(config.CACHE_SIZE.MEMBERS)
+    ) {
       error("config.js: CACHE_SIZE must be a positive integer");
       process.exit(1);
     }
@@ -45,7 +49,9 @@ module.exports = class Validator {
     // Music
     if (config.MUSIC.ENABLED) {
       if (!process.env.SPOTIFY_CLIENT_ID || !process.env.SPOTIFY_CLIENT_SECRET) {
-        warn("env: SPOTIFY_CLIENT_ID or SPOTIFY_CLIENT_SECRET are missing. Spotify music links won't work");
+        warn(
+          "env: SPOTIFY_CLIENT_ID or SPOTIFY_CLIENT_SECRET are missing. Spotify music links won't work"
+        );
       }
       if (config.MUSIC.LAVALINK_NODES.length == 0) {
         warn("config.js: There must be at least one node for Lavalink");
@@ -58,8 +64,10 @@ module.exports = class Validator {
     // Warnings
     if (config.OWNER_IDS.length === 0) warn("config.js: OWNER_IDS are empty");
     if (!config.SUPPORT_SERVER) warn("config.js: SUPPORT_SERVER is not provided");
-    if (!process.env.WEATHERSTACK_KEY) warn("env: WEATHERSTACK_KEY is missing. Weather command won't work");
-    if (!process.env.STRANGE_API_KEY) warn("env: STRANGE_API_KEY is missing. Image commands won't work");
+    if (!process.env.WEATHERSTACK_KEY)
+      warn("env: WEATHERSTACK_KEY is missing. Weather command won't work");
+    if (!process.env.STRANGE_API_KEY)
+      warn("env: STRANGE_API_KEY is missing. Image commands won't work");
   }
 
   /**
@@ -121,7 +129,10 @@ module.exports = class Validator {
       if (typeof cmd.command !== "object") {
         throw new TypeError("Command.command must be an object");
       }
-      if (Object.prototype.hasOwnProperty.call(cmd.command, "enabled") && typeof cmd.command.enabled !== "boolean") {
+      if (
+        Object.prototype.hasOwnProperty.call(cmd.command, "enabled") &&
+        typeof cmd.command.enabled !== "boolean"
+      ) {
         throw new TypeError("Command.command enabled must be a boolean value");
       }
       if (
@@ -197,13 +208,22 @@ module.exports = class Validator {
     if (typeof context.description !== "string") {
       throw new TypeError("Context description must be a string.");
     }
-    if (context.type !== ApplicationCommandType.User && context.type !== ApplicationCommandType.Message) {
+    if (
+      context.type !== ApplicationCommandType.User &&
+      context.type !== ApplicationCommandType.Message
+    ) {
       throw new TypeError("Context type must be a either User/Message.");
     }
-    if (Object.prototype.hasOwnProperty.call(context, "enabled") && typeof context.enabled !== "boolean") {
+    if (
+      Object.prototype.hasOwnProperty.call(context, "enabled") &&
+      typeof context.enabled !== "boolean"
+    ) {
       throw new TypeError("Context enabled must be a boolean value");
     }
-    if (Object.prototype.hasOwnProperty.call(context, "ephemeral") && typeof context.ephemeral !== "boolean") {
+    if (
+      Object.prototype.hasOwnProperty.call(context, "ephemeral") &&
+      typeof context.ephemeral !== "boolean"
+    ) {
       throw new TypeError("Context enabled must be a boolean value");
     }
     if (
@@ -212,7 +232,10 @@ module.exports = class Validator {
     ) {
       throw new TypeError("Context defaultPermission must be a boolean value");
     }
-    if (Object.prototype.hasOwnProperty.call(context, "cooldown") && typeof context.cooldown !== "number") {
+    if (
+      Object.prototype.hasOwnProperty.call(context, "cooldown") &&
+      typeof context.cooldown !== "number"
+    ) {
       throw new TypeError("Context cooldown must be a number");
     }
     if (context.userPermissions) {

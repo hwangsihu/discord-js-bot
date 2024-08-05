@@ -1,11 +1,9 @@
-import { createUTCDate } from "../create/date-from-array";
 import { addFormatToken } from "../format/format";
 import { addRegexToken, match1to3, match3 } from "../parse/regex";
 import { addParseToken } from "../parse/token";
 import toInt from "../utils/to-int";
 import { addUnitAlias } from "./aliases";
 import { addUnitPriority } from "./priorities";
-import { daysInYear } from "./year";
 
 // FORMATTING
 
@@ -22,7 +20,7 @@ addUnitPriority("dayOfYear", 4);
 
 addRegexToken("DDD", match1to3);
 addRegexToken("DDDD", match3);
-addParseToken(["DDD", "DDDD"], function (input, array, config) {
+addParseToken(["DDD", "DDDD"], (input, array, config) => {
   config._dayOfYear = toInt(input);
 });
 
@@ -31,6 +29,7 @@ addParseToken(["DDD", "DDDD"], function (input, array, config) {
 // MOMENTS
 
 export function getSetDayOfYear(input) {
-  var dayOfYear = Math.round((this.clone().startOf("day") - this.clone().startOf("year")) / 864e5) + 1;
+  var dayOfYear =
+    Math.round((this.clone().startOf("day") - this.clone().startOf("year")) / 864e5) + 1;
   return input == null ? dayOfYear : this.add(input - dayOfYear, "d");
 }

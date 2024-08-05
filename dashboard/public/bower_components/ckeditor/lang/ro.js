@@ -11,7 +11,8 @@ CKEDITOR.lang["ro"] = {
     btnUndo: "Starea anterioară (undo)",
     changeTo: "Schimbă în",
     errorLoading: "Eroare în lansarea aplicației service host %s.",
-    ieSpellDownload: "Unealta pentru verificat textul (Spell checker) neinstalată. Doriţi să o descărcaţi acum?",
+    ieSpellDownload:
+      "Unealta pentru verificat textul (Spell checker) neinstalată. Doriţi să o descărcaţi acum?",
     manyChanges: "Verificarea textului terminată: 1% cuvinte modificate",
     noChanges: "Verificarea textului terminată: Niciun cuvânt modificat",
     noMispell: "Verificarea textului terminată: Nicio greşeală găsită",
@@ -150,7 +151,8 @@ CKEDITOR.lang["ro"] = {
     title: "Adaugă ca text simplu (Plain Text)",
   },
   pastefromword: {
-    confirmCleanup: "Textul pe care doriți să-l lipiți este din Word. Doriți curățarea textului înante de a-l adăuga?",
+    confirmCleanup:
+      "Textul pe care doriți să-l lipiți este din Word. Doriți curățarea textului înante de a-l adăuga?",
     error: "Nu a fost posibilă curățarea datelor adăugate datorită unei erori interne",
     title: "Adaugă din Word",
     toolbar: "Adaugă din Word",
@@ -158,7 +160,10 @@ CKEDITOR.lang["ro"] = {
   notification: { closed: "Notificare închisă." },
   maximize: { maximize: "Mărește", minimize: "Micșorează" },
   magicline: { title: "Inserează paragraf aici" },
-  list: { bulletedlist: "Inserează / Elimină Listă cu puncte", numberedlist: "Inserează / Elimină Listă numerotată" },
+  list: {
+    bulletedlist: "Inserează / Elimină Listă cu puncte",
+    numberedlist: "Inserează / Elimină Listă numerotată",
+  },
   link: {
     acccessKey: "Tasta de acces",
     advanced: "Avansat",
@@ -348,7 +353,8 @@ CKEDITOR.lang["ro"] = {
     validateNumberFailed: "Această valoare nu este un număr!",
     confirmNewPage:
       "Orice modificări nesalvate ale acestui conținut, vor fi pierdute. Sigur doriți încărcarea unei noi pagini?",
-    confirmCancel: "Ai schimbat câteva opțiuni. Ești sigur că dorești să închiz fereastra de dialog?",
+    confirmCancel:
+      "Ai schimbat câteva opțiuni. Ești sigur că dorești să închiz fereastra de dialog?",
     options: "Opțiuni",
     target: "Țintă",
     targetNew: "Fereastră nouă (_blank)",

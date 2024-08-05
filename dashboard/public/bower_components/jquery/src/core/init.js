@@ -6,9 +6,7 @@ define([
   "./var/rsingleTag",
 
   "../traversing/findFilter",
-], function (jQuery, document, isFunction, rsingleTag) {
-  "use strict";
-
+], (jQuery, document, isFunction, rsingleTag) => {
   // A central reference to the root jQuery(document)
   var rootjQuery,
     // A simple way to check for HTML strings

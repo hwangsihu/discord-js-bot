@@ -7,9 +7,7 @@ define([
   "../traversing",
   "../manipulation",
   "../selector",
-], function (jQuery, stripAndCollapse, isFunction) {
-  "use strict";
-
+], (jQuery, stripAndCollapse, isFunction) => {
   /**
    * Load a url into a page
    */
@@ -17,7 +15,6 @@ define([
     var selector,
       type,
       response,
-      self = this,
       off = url.indexOf(" ");
 
     if (off > -1) {
@@ -37,7 +34,7 @@ define([
     }
 
     // If we have elements to modify, make the request
-    if (self.length > 0) {
+    if (this.length > 0) {
       jQuery
         .ajax({
           url: url,
@@ -49,11 +46,11 @@ define([
           dataType: "html",
           data: params,
         })
-        .done(function (responseText) {
+        .done((responseText) => {
           // Save response for use in complete callback
           response = arguments;
 
-          self.html(
+          this.html(
             selector
               ? // If a selector was specified, locate the right elements in a dummy div
                 // Exclude scripts to avoid IE 'Permission Denied' errors
@@ -70,11 +67,11 @@ define([
         })
         .always(
           callback &&
-            function (jqXHR, status) {
-              self.each(function () {
-                callback.apply(this, response || [jqXHR.responseText, status, jqXHR]);
+            ((jqXhr, status) => {
+              this.each(function () {
+                callback.apply(this, response || [jqXhr.responseText, status, jqXhr]);
               });
-            }
+            })
         );
     }
 

@@ -54,7 +54,13 @@ $.fn.sparkline.line = line = createClass($.fn.sparkline._base, {
       return;
     }
     if (spotRadius && highlightSpotColor) {
-      highlightSpot = target.drawCircle(vertex[0], vertex[1], spotRadius, undefined, highlightSpotColor);
+      highlightSpot = target.drawCircle(
+        vertex[0],
+        vertex[1],
+        spotRadius,
+        undefined,
+        highlightSpotColor
+      );
       this.highlightSpotId = highlightSpot.id;
       target.insertAfterShape(this.lastShapeId, highlightSpot);
     }
@@ -175,10 +181,19 @@ $.fn.sparkline.line = line = createClass($.fn.sparkline._base, {
   drawNormalRange: function (canvasLeft, canvasTop, canvasHeight, canvasWidth, rangey) {
     var normalRangeMin = this.options.get("normalRangeMin"),
       normalRangeMax = this.options.get("normalRangeMax"),
-      ytop = canvasTop + Math.round(canvasHeight - canvasHeight * ((normalRangeMax - this.miny) / rangey)),
+      ytop =
+        canvasTop +
+        Math.round(canvasHeight - canvasHeight * ((normalRangeMax - this.miny) / rangey)),
       height = Math.round((canvasHeight * (normalRangeMax - normalRangeMin)) / rangey);
     this.target
-      .drawRect(canvasLeft, ytop, canvasWidth, height, undefined, this.options.get("normalRangeColor"))
+      .drawRect(
+        canvasLeft,
+        ytop,
+        canvasWidth,
+        height,
+        undefined,
+        this.options.get("normalRangeColor")
+      )
       .append();
   },
 
@@ -270,7 +285,8 @@ $.fn.sparkline.line = line = createClass($.fn.sparkline._base, {
         hlSpotsEnabled ||
         options.get("spotColor") ||
         options.get("minSpotColor") ||
-        (options.get("maxSpotColor") && (yvalues[yvallast] === this.miny || yvalues[yvallast] === this.maxy))
+        (options.get("maxSpotColor") &&
+          (yvalues[yvallast] === this.miny || yvalues[yvallast] === this.maxy))
       ) {
         canvasWidth -= Math.ceil(spotRadius);
       }
@@ -292,7 +308,9 @@ $.fn.sparkline.line = line = createClass($.fn.sparkline._base, {
       y = yvalues[i];
       xpos = canvasLeft + Math.round((x - this.minx) * (canvasWidth / rangex));
       xposnext =
-        i < yvalcount - 1 ? canvasLeft + Math.round((xnext - this.minx) * (canvasWidth / rangex)) : canvasWidth;
+        i < yvalcount - 1
+          ? canvasLeft + Math.round((xnext - this.minx) * (canvasWidth / rangex))
+          : canvasWidth;
       next = xpos + (xposnext - xpos) / 2;
       regionMap[i] = [last || 0, next, i];
       last = next;
@@ -315,7 +333,10 @@ $.fn.sparkline.line = line = createClass($.fn.sparkline._base, {
           // previous value was null
           path.push([xpos, canvasTop + canvasHeight]);
         }
-        vertex = [xpos, canvasTop + Math.round(canvasHeight - canvasHeight * ((y - this.miny) / rangey))];
+        vertex = [
+          xpos,
+          canvasTop + Math.round(canvasHeight - canvasHeight * ((y - this.miny) / rangey)),
+        ];
         path.push(vertex);
         vertices.push(vertex);
       }
@@ -354,7 +375,9 @@ $.fn.sparkline.line = line = createClass($.fn.sparkline._base, {
 
     plen = lineShapes.length;
     for (i = 0; i < plen; i++) {
-      target.drawShape(lineShapes[i], options.get("lineColor"), undefined, options.get("lineWidth")).append();
+      target
+        .drawShape(lineShapes[i], options.get("lineColor"), undefined, options.get("lineWidth"))
+        .append();
     }
 
     if (spotRadius && options.get("valueSpots")) {
@@ -368,7 +391,8 @@ $.fn.sparkline.line = line = createClass($.fn.sparkline._base, {
           target
             .drawCircle(
               canvasLeft + Math.round((xvalues[i] - this.minx) * (canvasWidth / rangex)),
-              canvasTop + Math.round(canvasHeight - canvasHeight * ((yvalues[i] - this.miny) / rangey)),
+              canvasTop +
+                Math.round(canvasHeight - canvasHeight * ((yvalues[i] - this.miny) / rangey)),
               spotRadius,
               undefined,
               color
@@ -380,8 +404,10 @@ $.fn.sparkline.line = line = createClass($.fn.sparkline._base, {
     if (spotRadius && options.get("spotColor") && yvalues[yvallast] !== null) {
       target
         .drawCircle(
-          canvasLeft + Math.round((xvalues[xvalues.length - 1] - this.minx) * (canvasWidth / rangex)),
-          canvasTop + Math.round(canvasHeight - canvasHeight * ((yvalues[yvallast] - this.miny) / rangey)),
+          canvasLeft +
+            Math.round((xvalues[xvalues.length - 1] - this.minx) * (canvasWidth / rangex)),
+          canvasTop +
+            Math.round(canvasHeight - canvasHeight * ((yvalues[yvallast] - this.miny) / rangey)),
           spotRadius,
           undefined,
           options.get("spotColor")
@@ -394,7 +420,8 @@ $.fn.sparkline.line = line = createClass($.fn.sparkline._base, {
         target
           .drawCircle(
             canvasLeft + Math.round((x - this.minx) * (canvasWidth / rangex)),
-            canvasTop + Math.round(canvasHeight - canvasHeight * ((this.minyorg - this.miny) / rangey)),
+            canvasTop +
+              Math.round(canvasHeight - canvasHeight * ((this.minyorg - this.miny) / rangey)),
             spotRadius,
             undefined,
             options.get("minSpotColor")
@@ -406,7 +433,8 @@ $.fn.sparkline.line = line = createClass($.fn.sparkline._base, {
         target
           .drawCircle(
             canvasLeft + Math.round((x - this.minx) * (canvasWidth / rangex)),
-            canvasTop + Math.round(canvasHeight - canvasHeight * ((this.maxyorg - this.miny) / rangey)),
+            canvasTop +
+              Math.round(canvasHeight - canvasHeight * ((this.maxyorg - this.miny) / rangey)),
             spotRadius,
             undefined,
             options.get("maxSpotColor")

@@ -3,7 +3,7 @@
  * Ando Roots <https://github.com/anroots>
  * Fixes by Illimar Tambek <<https://github.com/ragulka>
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["et"] = {
     days: ["Pühapäev", "Esmaspäev", "Teisipäev", "Kolmapäev", "Neljapäev", "Reede", "Laupäev"],
     daysShort: ["Pühap", "Esmasp", "Teisip", "Kolmap", "Neljap", "Reede", "Laup"],
@@ -22,7 +22,20 @@
       "November",
       "Detsember",
     ],
-    monthsShort: ["Jaan", "Veebr", "Märts", "Apr", "Mai", "Juuni", "Juuli", "Aug", "Sept", "Okt", "Nov", "Dets"],
+    monthsShort: [
+      "Jaan",
+      "Veebr",
+      "Märts",
+      "Apr",
+      "Mai",
+      "Juuni",
+      "Juuli",
+      "Aug",
+      "Sept",
+      "Okt",
+      "Nov",
+      "Dets",
+    ],
     today: "Täna",
     clear: "Tühjenda",
     weekStart: 1,

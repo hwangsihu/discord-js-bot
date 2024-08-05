@@ -1,4 +1,4 @@
-define([], function () {
+define([], () => {
   function HidePlaceholder(decorated, $element, options, dataAdapter) {
     this.placeholder = this.normalizePlaceholder(options.get("placeholder"));
 
@@ -11,7 +11,7 @@ define([], function () {
     decorated.call(this, data);
   };
 
-  HidePlaceholder.prototype.normalizePlaceholder = function (_, placeholder) {
+  HidePlaceholder.prototype.normalizePlaceholder = (_, placeholder) => {
     if (typeof placeholder === "string") {
       placeholder = {
         id: "",

@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-"use strict";
-
 /*!
  * Script to generate SRI hashes for use in our docs.
  * Remember to use the same vendor files as the CDN ones,
@@ -37,8 +35,8 @@ var files = [
   },
 ];
 
-files.forEach(function (file) {
-  fs.readFile(file.file, "utf8", function (err, data) {
+files.forEach((file) => {
+  fs.readFile(file.file, "utf8", (err, data) => {
     if (err) {
       throw err;
     }

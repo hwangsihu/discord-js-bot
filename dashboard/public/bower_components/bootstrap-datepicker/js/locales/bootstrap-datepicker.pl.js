@@ -2,7 +2,7 @@
  * Polish translation for bootstrap-datepicker
  * Robert <rtpm@gazeta.pl>
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["pl"] = {
     days: ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"],
     daysShort: ["Niedz.", "Pon.", "Wt.", "Śr.", "Czw.", "Piąt.", "Sob."],
@@ -21,7 +21,20 @@
       "Listopad",
       "Grudzień",
     ],
-    monthsShort: ["Sty.", "Lut.", "Mar.", "Kwi.", "Maj", "Cze.", "Lip.", "Sie.", "Wrz.", "Paź.", "Lis.", "Gru."],
+    monthsShort: [
+      "Sty.",
+      "Lut.",
+      "Mar.",
+      "Kwi.",
+      "Maj",
+      "Cze.",
+      "Lip.",
+      "Sie.",
+      "Wrz.",
+      "Paź.",
+      "Lis.",
+      "Gru.",
+    ],
     today: "Dzisiaj",
     weekStart: 1,
     clear: "Wyczyść",

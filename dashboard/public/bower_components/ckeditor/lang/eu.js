@@ -150,7 +150,8 @@ CKEDITOR.lang["eu"] = {
     title: "Itsatsi testu arrunta bezala",
   },
   pastefromword: {
-    confirmCleanup: "Itsatsi nahi duzun testua Word-etik kopiatua dela dirudi. Itsatsi baino lehen garbitu nahi duzu?",
+    confirmCleanup:
+      "Itsatsi nahi duzun testua Word-etik kopiatua dela dirudi. Itsatsi baino lehen garbitu nahi duzu?",
     error: "Barne-errore bat dela eta ezin izan da itsatsitako testua garbitu",
     title: "Itsatsi Word-etik",
     toolbar: "Itsatsi Word-etik",

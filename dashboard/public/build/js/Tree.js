@@ -7,9 +7,7 @@
  *         or add [data-widget="tree"] to the ul element
  *         Pass any option as data-option="value"
  */
-+(function ($) {
-  "use strict";
-
++(($) => {
   var DataKey = "lte.tree";
 
   var Default = {
@@ -103,7 +101,11 @@
         $(this.element).trigger(collapsedEvent);
 
         // Collapse child items
-        parentLi.find(Selector.treeview).removeClass(ClassName.open).find(Selector.treeviewMenu).hide();
+        parentLi
+          .find(Selector.treeview)
+          .removeClass(ClassName.open)
+          .find(Selector.treeviewMenu)
+          .hide();
       }.bind(this)
     );
   };
@@ -146,7 +148,7 @@
 
   // Tree Data API
   // =============
-  $(window).on("load", function () {
+  $(window).on("load", () => {
     $(Selector.data).each(function () {
       Plugin.call($(this));
     });

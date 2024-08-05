@@ -10,7 +10,7 @@ export function configFromStringAndArray(config) {
 
   if (config._f.length === 0) {
     getParsingFlags(config).invalidFormat = true;
-    config._d = new Date(NaN);
+    config._d = new Date(Number.NaN);
     return;
   }
 

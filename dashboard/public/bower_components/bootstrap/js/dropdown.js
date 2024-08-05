@@ -6,9 +6,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
-+(function ($) {
-  "use strict";
-
++(($) => {
   // DROPDOWN CLASS DEFINITION
   // =========================
 
@@ -43,7 +41,12 @@
 
       if (!$parent.hasClass("open")) return;
 
-      if (e && e.type == "click" && /input|textarea/i.test(e.target.tagName) && $.contains($parent[0], e.target))
+      if (
+        e &&
+        e.type == "click" &&
+        /input|textarea/i.test(e.target.tagName) &&
+        $.contains($parent[0], e.target)
+      )
         return;
 
       $parent.trigger((e = $.Event("hide.bs.dropdown", relatedTarget)));
@@ -68,7 +71,10 @@
     if (!isActive) {
       if ("ontouchstart" in document.documentElement && !$parent.closest(".navbar-nav").length) {
         // if mobile we use a backdrop because click events don't delegate
-        $(document.createElement("div")).addClass("dropdown-backdrop").insertAfter($(this)).on("click", clearMenus);
+        $(document.createElement("div"))
+          .addClass("dropdown-backdrop")
+          .insertAfter($(this))
+          .on("click", clearMenus);
       }
 
       var relatedTarget = { relatedTarget: this };
@@ -147,7 +153,7 @@
 
   $(document)
     .on("click.bs.dropdown.data-api", clearMenus)
-    .on("click.bs.dropdown.data-api", ".dropdown form", function (e) {
+    .on("click.bs.dropdown.data-api", ".dropdown form", (e) => {
       e.stopPropagation();
     })
     .on("click.bs.dropdown.data-api", toggle, Dropdown.prototype.toggle)

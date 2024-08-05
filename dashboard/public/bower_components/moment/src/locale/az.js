@@ -65,10 +65,8 @@ export default moment.defineLocale("az", {
     yy: "%d il",
   },
   meridiemParse: /gecə|səhər|gündüz|axşam/,
-  isPM: function (input) {
-    return /^(gündüz|axşam)$/.test(input);
-  },
-  meridiem: function (hour, minute, isLower) {
+  isPM: (input) => /^(gündüz|axşam)$/.test(input),
+  meridiem: (hour, minute, isLower) => {
     if (hour < 4) {
       return "gecə";
     } else if (hour < 12) {
@@ -80,7 +78,7 @@ export default moment.defineLocale("az", {
     }
   },
   dayOfMonthOrdinalParse: /\d{1,2}-(ıncı|inci|nci|üncü|ncı|uncu)/,
-  ordinal: function (number) {
+  ordinal: (number) => {
     if (number === 0) {
       // special case for zero
       return number + "-ıncı";

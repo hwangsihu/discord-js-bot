@@ -28,7 +28,8 @@ var suffixes = {
 };
 
 export default moment.defineLocale("kk", {
-  months: "қаңтар_ақпан_наурыз_сәуір_мамыр_маусым_шілде_тамыз_қыркүйек_қазан_қараша_желтоқсан".split("_"),
+  months:
+    "қаңтар_ақпан_наурыз_сәуір_мамыр_маусым_шілде_тамыз_қыркүйек_қазан_қараша_желтоқсан".split("_"),
   monthsShort: "қаң_ақп_нау_сәу_мам_мау_шіл_там_қыр_қаз_қар_жел".split("_"),
   weekdays: "жексенбі_дүйсенбі_сейсенбі_сәрсенбі_бейсенбі_жұма_сенбі".split("_"),
   weekdaysShort: "жек_дүй_сей_сәр_бей_жұм_сен".split("_"),
@@ -66,7 +67,7 @@ export default moment.defineLocale("kk", {
     yy: "%d жыл",
   },
   dayOfMonthOrdinalParse: /\d{1,2}-(ші|шы)/,
-  ordinal: function (number) {
+  ordinal: (number) => {
     var a = number % 10,
       b = number >= 100 ? 100 : null;
     return number + (suffixes[number] || suffixes[a] || suffixes[b]);

@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(r) {
       if (n[r]) return n[r].exports;
       var o = (n[r] = { i: r, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = n),
-      (t.d = function (e, n, r) {
+      (t.d = (e, n, r) => {
         t.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: r });
       }),
-      (t.n = function (e) {
-        var n =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var n = e && e.__esModule ? () => e.default : () => e;
         return t.d(n, "a", n), n;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 153))
     );
   })({
-    0: function (t, n) {
+    0: (t, n) => {
       t.exports = e;
     },
-    1: function (e, n) {
+    1: (e, n) => {
       e.exports = t;
     },
-    153: function (e, t, n) {
+    153: (e, t, n) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), n(154);
       var r = n(1);
       r.datepickerLocale("ja", "ja", {
@@ -52,8 +43,34 @@
         prevText: "&#x3C;前",
         nextText: "次&#x3E;",
         currentText: "今日",
-        monthNames: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
-        monthNamesShort: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+        monthNames: [
+          "1月",
+          "2月",
+          "3月",
+          "4月",
+          "5月",
+          "6月",
+          "7月",
+          "8月",
+          "9月",
+          "10月",
+          "11月",
+          "12月",
+        ],
+        monthNamesShort: [
+          "1月",
+          "2月",
+          "3月",
+          "4月",
+          "5月",
+          "6月",
+          "7月",
+          "8月",
+          "9月",
+          "10月",
+          "11月",
+          "12月",
+        ],
         dayNames: ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"],
         dayNamesShort: ["日", "月", "火", "水", "木", "金", "土"],
         dayNamesMin: ["日", "月", "火", "水", "木", "金", "土"],
@@ -67,17 +84,15 @@
         r.locale("ja", {
           buttonText: { month: "月", week: "週", day: "日", list: "予定リスト" },
           allDayText: "終日",
-          eventLimitText: function (e) {
-            return "他 " + e + " 件";
-          },
+          eventLimitText: (e) => "他 " + e + " 件",
           noEventsMessage: "表示する予定はありません",
         });
     },
-    154: function (e, t, n) {
-      !(function (e, t) {
+    154: (e, t, n) => {
+      !((e, t) => {
         t(n(0));
-      })(0, function (e) {
-        return e.defineLocale("ja", {
+      })(0, (e) =>
+        e.defineLocale("ja", {
           months: "1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月".split("_"),
           monthsShort: "1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月".split("_"),
           weekdays: "日曜日_月曜日_火曜日_水曜日_木曜日_金曜日_土曜日".split("_"),
@@ -96,12 +111,8 @@
             llll: "YYYY年M月D日(ddd) HH:mm",
           },
           meridiemParse: /午前|午後/i,
-          isPM: function (e) {
-            return "午後" === e;
-          },
-          meridiem: function (e, t, n) {
-            return e < 12 ? "午前" : "午後";
-          },
+          isPM: (e) => "午後" === e,
+          meridiem: (e, t, n) => (e < 12 ? "午前" : "午後"),
           calendar: {
             sameDay: "[今日] LT",
             nextDay: "[明日] LT",
@@ -115,7 +126,7 @@
             sameElse: "L",
           },
           dayOfMonthOrdinalParse: /\d{1,2}日/,
-          ordinal: function (e, t) {
+          ordinal: (e, t) => {
             switch (t) {
               case "d":
               case "D":
@@ -141,8 +152,8 @@
             y: "1年",
             yy: "%d年",
           },
-        });
-      });
+        })
+      );
     },
-  });
-});
+  })
+);

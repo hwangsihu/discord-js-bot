@@ -1,6 +1,6 @@
 /* Faroese initialisation for the jQuery UI date picker plugin */
 /* Written by Sverri Mohr Olsen, sverrimo@gmail.com */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["fo"] = {
     closeText: "Lat aftur",
     prevText: "&#x3C;Fyrra",
@@ -28,8 +28,29 @@
       "November",
       "Desember",
     ],
-    monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Des"],
-    dayNames: ["Sunnudagur", "Mánadagur", "Týsdagur", "Mikudagur", "Hósdagur", "Fríggjadagur", "Leyardagur"],
+    monthNamesShort: [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Mei",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Des",
+    ],
+    dayNames: [
+      "Sunnudagur",
+      "Mánadagur",
+      "Týsdagur",
+      "Mikudagur",
+      "Hósdagur",
+      "Fríggjadagur",
+      "Leyardagur",
+    ],
     dayNamesShort: ["Sun", "Mán", "Týs", "Mik", "Hós", "Frí", "Ley"],
     dayNamesMin: ["Su", "Má", "Tý", "Mi", "Hó", "Fr", "Le"],
     weekHeader: "Vk",

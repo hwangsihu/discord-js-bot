@@ -1,10 +1,8 @@
-define(function () {
+define(() => {
   // Italian
   return {
-    errorLoading: function () {
-      return "I risultati non possono essere caricati.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "I risultati non possono essere caricati.",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "Per favore cancella " + overChars + " caratter";
@@ -17,17 +15,15 @@ define(function () {
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "Per favore inserisci " + remainingChars + " o più caratteri";
 
       return message;
     },
-    loadingMore: function () {
-      return "Caricando più risultati…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Caricando più risultati…",
+    maximumSelected: (args) => {
       var message = "Puoi selezionare solo " + args.maximum + " element";
 
       if (args.maximum !== 1) {
@@ -38,14 +34,8 @@ define(function () {
 
       return message;
     },
-    noResults: function () {
-      return "Nessun risultato trovato";
-    },
-    searching: function () {
-      return "Sto cercando…";
-    },
-    removeAllItems: function () {
-      return "Rimuovi tutti gli oggetti";
-    },
+    noResults: () => "Nessun risultato trovato",
+    searching: () => "Sto cercando…",
+    removeAllItems: () => "Rimuovi tutti gli oggetti",
   };
 });

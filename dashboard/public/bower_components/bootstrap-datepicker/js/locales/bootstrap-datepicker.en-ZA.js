@@ -1,7 +1,7 @@
 /**
  * South African English translation for bootstrap-datepicker
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["en-ZA"] = {
     days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
     daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
@@ -20,7 +20,20 @@
       "November",
       "December",
     ],
-    monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    monthsShort: [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ],
     today: "Today",
     monthsTitle: "Months",
     clear: "Clear",

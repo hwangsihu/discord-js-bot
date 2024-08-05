@@ -1,10 +1,8 @@
-define(function () {
+define(() => {
   // Hebrew
   return {
-    errorLoading: function () {
-      return "שגיאה בטעינת התוצאות";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "שגיאה בטעינת התוצאות",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "נא למחוק ";
@@ -17,7 +15,7 @@ define(function () {
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "נא להכניס ";
@@ -32,10 +30,8 @@ define(function () {
 
       return message;
     },
-    loadingMore: function () {
-      return "טוען תוצאות נוספות…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "טוען תוצאות נוספות…",
+    maximumSelected: (args) => {
       var message = "באפשרותך לבחור עד ";
 
       if (args.maximum === 1) {
@@ -46,14 +42,8 @@ define(function () {
 
       return message;
     },
-    noResults: function () {
-      return "לא נמצאו תוצאות";
-    },
-    searching: function () {
-      return "מחפש…";
-    },
-    removeAllItems: function () {
-      return "הסר את כל הפריטים";
-    },
+    noResults: () => "לא נמצאו תוצאות",
+    searching: () => "מחפש…",
+    removeAllItems: () => "הסר את כל הפריטים",
   };
 });

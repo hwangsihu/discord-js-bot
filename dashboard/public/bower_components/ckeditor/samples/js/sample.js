@@ -12,16 +12,18 @@ if (CKEDITOR.env.ie && CKEDITOR.env.version < 9) CKEDITOR.tools.enableHtml5Eleme
 CKEDITOR.config.height = 150;
 CKEDITOR.config.width = "auto";
 
-var initSample = (function () {
+var initSample = (() => {
   var wysiwygareaAvailable = isWysiwygareaAvailable(),
-    isBBCodeBuiltIn = !!CKEDITOR.plugins.get("bbcode");
+    isBbCodeBuiltIn = !!CKEDITOR.plugins.get("bbcode");
 
-  return function () {
+  return () => {
     var editorElement = CKEDITOR.document.getById("editor");
 
     // :(((
-    if (isBBCodeBuiltIn) {
-      editorElement.setHtml("Hello world!\n\n" + "I'm an instance of [url=https://ckeditor.com]CKEditor[/url].");
+    if (isBbCodeBuiltIn) {
+      editorElement.setHtml(
+        "Hello world!\n\n" + "I'm an instance of [url=https://ckeditor.com]CKEditor[/url]."
+      );
     }
 
     // Depending on the wysiwygarea plugin availability initialize classic or inline editor.

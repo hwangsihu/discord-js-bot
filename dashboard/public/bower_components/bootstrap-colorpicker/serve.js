@@ -16,12 +16,12 @@ var http = require("http"),
   };
 
 http
-  .createServer(function (req, res) {
+  .createServer((req, res) => {
     var file = req.url === "/" ? "index.html" : "." + req.url;
     var ext = require("path").extname(file),
       type = mimeTypes[ext] ? mimeTypes[ext] : "";
 
-    fs.exists(file, function (exists) {
+    fs.exists(file, (exists) => {
       if (exists) {
         res.writeHead(200, { "Content-Type": type });
         fs.createReadStream(file).pipe(res);

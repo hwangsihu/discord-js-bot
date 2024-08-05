@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var symbolMap = {
       1: "༡",
       2: "༢",
@@ -78,28 +76,24 @@
       y: "ལོ་གཅིག",
       yy: "%d ལོ",
     },
-    preparse: function (string) {
-      return string.replace(/[༡༢༣༤༥༦༧༨༩༠]/g, function (match) {
-        return numberMap[match];
-      });
-    },
-    postformat: function (string) {
-      return string.replace(/\d/g, function (match) {
-        return symbolMap[match];
-      });
-    },
+    preparse: (string) => string.replace(/[༡༢༣༤༥༦༧༨༩༠]/g, (match) => numberMap[match]),
+    postformat: (string) => string.replace(/\d/g, (match) => symbolMap[match]),
     meridiemParse: /མཚན་མོ|ཞོགས་ཀས|ཉིན་གུང|དགོང་དག|མཚན་མོ/,
-    meridiemHour: function (hour, meridiem) {
+    meridiemHour: (hour, meridiem) => {
       if (hour === 12) {
         hour = 0;
       }
-      if ((meridiem === "མཚན་མོ" && hour >= 4) || (meridiem === "ཉིན་གུང" && hour < 5) || meridiem === "དགོང་དག") {
+      if (
+        (meridiem === "མཚན་མོ" && hour >= 4) ||
+        (meridiem === "ཉིན་གུང" && hour < 5) ||
+        meridiem === "དགོང་དག"
+      ) {
         return hour + 12;
       } else {
         return hour;
       }
     },
-    meridiem: function (hour, minute, isLower) {
+    meridiem: (hour, minute, isLower) => {
       if (hour < 4) {
         return "མཚན་མོ";
       } else if (hour < 10) {

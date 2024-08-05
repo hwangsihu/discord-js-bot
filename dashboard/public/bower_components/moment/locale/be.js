@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   function plural(word, num) {
     var forms = word.split("_");
     return num % 10 === 1 && num % 100 !== 11
@@ -42,7 +40,9 @@
           "_"
         ),
       standalone:
-        "студзень_люты_сакавік_красавік_травень_чэрвень_ліпень_жнівень_верасень_кастрычнік_лістапад_снежань".split("_"),
+        "студзень_люты_сакавік_красавік_травень_чэрвень_ліпень_жнівень_верасень_кастрычнік_лістапад_снежань".split(
+          "_"
+        ),
     },
     monthsShort: "студ_лют_сак_крас_трав_чэрв_ліп_жнів_вер_каст_ліст_снеж".split("_"),
     weekdays: {
@@ -64,9 +64,7 @@
       sameDay: "[Сёння ў] LT",
       nextDay: "[Заўтра ў] LT",
       lastDay: "[Учора ў] LT",
-      nextWeek: function () {
-        return "[У] dddd [ў] LT";
-      },
+      nextWeek: () => "[У] dddd [ў] LT",
       lastWeek: function () {
         switch (this.day()) {
           case 0:
@@ -98,10 +96,8 @@
       yy: relativeTimeWithPlural,
     },
     meridiemParse: /ночы|раніцы|дня|вечара/,
-    isPM: function (input) {
-      return /^(дня|вечара)$/.test(input);
-    },
-    meridiem: function (hour, minute, isLower) {
+    isPM: (input) => /^(дня|вечара)$/.test(input),
+    meridiem: (hour, minute, isLower) => {
       if (hour < 4) {
         return "ночы";
       } else if (hour < 12) {
@@ -113,14 +109,16 @@
       }
     },
     dayOfMonthOrdinalParse: /\d{1,2}-(і|ы|га)/,
-    ordinal: function (number, period) {
+    ordinal: (number, period) => {
       switch (period) {
         case "M":
         case "d":
         case "DDD":
         case "w":
         case "W":
-          return (number % 10 === 2 || number % 10 === 3) && number % 100 !== 12 && number % 100 !== 13
+          return (number % 10 === 2 || number % 10 === 3) &&
+            number % 100 !== 12 &&
+            number % 100 !== 13
             ? number + "-і"
             : number + "-ы";
         case "D":

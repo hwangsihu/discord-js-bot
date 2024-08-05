@@ -1,9 +1,7 @@
-define(["../core", "../core/toType", "../var/isFunction"], function (jQuery, toType, isFunction) {
-  "use strict";
-
+define(["../core", "../core/toType", "../var/isFunction"], (jQuery, toType, isFunction) => {
   // Multifunctional method to get and set values of a collection
   // The value/s can optionally be executed if it's a function
-  var access = function (elems, fn, key, value, chainable, emptyGet, raw) {
+  var access = (elems, fn, key, value, chainable, emptyGet, raw) => {
     var i = 0,
       len = elems.length,
       bulk = key == null;
@@ -32,9 +30,7 @@ define(["../core", "../core/toType", "../var/isFunction"], function (jQuery, toT
           // ...except when executing function values
         } else {
           bulk = fn;
-          fn = function (elem, key, value) {
-            return bulk.call(jQuery(elem), value);
-          };
+          fn = (elem, key, value) => bulk.call(jQuery(elem), value);
         }
       }
 

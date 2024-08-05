@@ -1,4 +1,4 @@
-define(["jquery", "../utils"], function ($, Utils) {
+define(["jquery", "../utils"], ($, Utils) => {
   function Search() {}
 
   Search.prototype.render = function (decorated) {
@@ -21,14 +21,12 @@ define(["jquery", "../utils"], function ($, Utils) {
   };
 
   Search.prototype.bind = function (decorated, container, $container) {
-    var self = this;
-
     decorated.call(this, container, $container);
 
-    this.$search.on("keydown", function (evt) {
-      self.trigger("keypress", evt);
+    this.$search.on("keydown", (evt) => {
+      this.trigger("keypress", evt);
 
-      self._keyUpPrevented = evt.isDefaultPrevented();
+      this._keyUpPrevented = evt.isDefaultPrevented();
     });
 
     // Workaround for browsers which do not support the `input` event
@@ -39,41 +37,41 @@ define(["jquery", "../utils"], function ($, Utils) {
       $(this).off("keyup");
     });
 
-    this.$search.on("keyup input", function (evt) {
-      self.handleSearch(evt);
+    this.$search.on("keyup input", (evt) => {
+      this.handleSearch(evt);
     });
 
-    container.on("open", function () {
-      self.$search.attr("tabindex", 0);
+    container.on("open", () => {
+      this.$search.attr("tabindex", 0);
 
-      self.$search.focus();
+      this.$search.focus();
 
-      window.setTimeout(function () {
-        self.$search.focus();
+      window.setTimeout(() => {
+        this.$search.focus();
       }, 0);
     });
 
-    container.on("close", function () {
-      self.$search.attr("tabindex", -1);
+    container.on("close", () => {
+      this.$search.attr("tabindex", -1);
 
-      self.$search.val("");
-      self.$search.blur();
+      this.$search.val("");
+      this.$search.blur();
     });
 
-    container.on("focus", function () {
+    container.on("focus", () => {
       if (!container.isOpen()) {
-        self.$search.focus();
+        this.$search.focus();
       }
     });
 
-    container.on("results:all", function (params) {
+    container.on("results:all", (params) => {
       if (params.query.term == null || params.query.term === "") {
-        var showSearch = self.showSearch(params);
+        var showSearch = this.showSearch(params);
 
         if (showSearch) {
-          self.$searchContainer.removeClass("select2-search--hide");
+          this.$searchContainer.removeClass("select2-search--hide");
         } else {
-          self.$searchContainer.addClass("select2-search--hide");
+          this.$searchContainer.addClass("select2-search--hide");
         }
       }
     });
@@ -91,9 +89,7 @@ define(["jquery", "../utils"], function ($, Utils) {
     this._keyUpPrevented = false;
   };
 
-  Search.prototype.showSearch = function (_, params) {
-    return true;
-  };
+  Search.prototype.showSearch = (_, params) => true;
 
   return Search;
 });

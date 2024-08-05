@@ -1,4 +1,4 @@
-define(["jquery", "./base", "../utils"], function ($, BaseSelection, Utils) {
+define(["jquery", "./base", "../utils"], ($, BaseSelection, Utils) => {
   function MultipleSelection($element, options) {
     MultipleSelection.__super__.constructor.apply(this, arguments);
   }
@@ -20,7 +20,7 @@ define(["jquery", "./base", "../utils"], function ($, BaseSelection, Utils) {
 
     MultipleSelection.__super__.bind.apply(this, arguments);
 
-    this.$selection.on("click", function (evt) {
+    this.$selection.on("click", (evt) => {
       self.trigger("toggle", {
         originalEvent: evt,
       });
@@ -57,7 +57,7 @@ define(["jquery", "./base", "../utils"], function ($, BaseSelection, Utils) {
     return escapeMarkup(template(data, container));
   };
 
-  MultipleSelection.prototype.selectionContainer = function () {
+  MultipleSelection.prototype.selectionContainer = () => {
     var $container = $(
       '<li class="select2-selection__choice">' +
         '<span class="select2-selection__choice__remove" role="presentation">' +

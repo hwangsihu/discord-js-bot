@@ -47,7 +47,7 @@ export default moment.defineLocale("ss", {
     yy: "%d iminyaka",
   },
   meridiemParse: /ekuseni|emini|entsambama|ebusuku/,
-  meridiem: function (hours, minutes, isLower) {
+  meridiem: (hours, minutes, isLower) => {
     if (hours < 11) {
       return "ekuseni";
     } else if (hours < 15) {
@@ -58,7 +58,7 @@ export default moment.defineLocale("ss", {
       return "ebusuku";
     }
   },
-  meridiemHour: function (hour, meridiem) {
+  meridiemHour: (hour, meridiem) => {
     if (hour === 12) {
       hour = 0;
     }

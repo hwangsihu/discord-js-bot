@@ -8,8 +8,11 @@ var monthsShortWithDots = "jan._feb._mrt._apr._mai_jun._jul._aug._sep._okt._nov.
   monthsShortWithoutDots = "jan_feb_mrt_apr_mai_jun_jul_aug_sep_okt_nov_des".split("_");
 
 export default moment.defineLocale("fy", {
-  months: "jannewaris_febrewaris_maart_april_maaie_juny_july_augustus_septimber_oktober_novimber_desimber".split("_"),
-  monthsShort: function (m, format) {
+  months:
+    "jannewaris_febrewaris_maart_april_maaie_juny_july_augustus_septimber_oktober_novimber_desimber".split(
+      "_"
+    ),
+  monthsShort: (m, format) => {
     if (!m) {
       return monthsShortWithDots;
     } else if (/-MMM-/.test(format)) {
@@ -56,9 +59,7 @@ export default moment.defineLocale("fy", {
     yy: "%d jierren",
   },
   dayOfMonthOrdinalParse: /\d{1,2}(ste|de)/,
-  ordinal: function (number) {
-    return number + (number === 1 || number === 8 || number >= 20 ? "ste" : "de");
-  },
+  ordinal: (number) => number + (number === 1 || number === 8 || number >= 20 ? "ste" : "de"),
   week: {
     dow: 1, // Monday is the first day of the week.
     doy: 4, // The week that contains Jan 4th is the first week of the year.

@@ -50,7 +50,9 @@ async function performAutomod(message, settings) {
   if (!automod.debug && !shouldModerate(message)) return;
 
   const { channel, member, guild, content, author, mentions } = message;
-  const logChannel = settings.modlog_channel ? channel.guild.channels.cache.get(settings.modlog_channel) : null;
+  const logChannel = settings.modlog_channel
+    ? channel.guild.channels.cache.get(settings.modlog_channel)
+    : null;
 
   let shouldDelete = false;
   let strikesTotal = 0;
@@ -59,14 +61,22 @@ async function performAutomod(message, settings) {
 
   // Max mentions
   if (mentions.members.size > automod.max_mentions) {
-    fields.push({ name: "Mentions", value: `${mentions.members.size}/${automod.max_mentions}`, inline: true });
+    fields.push({
+      name: "Mentions",
+      value: `${mentions.members.size}/${automod.max_mentions}`,
+      inline: true,
+    });
     // strikesTotal += mentions.members.size - automod.max_mentions;
     strikesTotal += 1;
   }
 
   // Maxrole mentions
   if (mentions.roles.size > automod.max_role_mentions) {
-    fields.push({ name: "RoleMentions", value: `${mentions.roles.size}/${automod.max_role_mentions}`, inline: true });
+    fields.push({
+      name: "RoleMentions",
+      value: `${mentions.roles.size}/${automod.max_role_mentions}`,
+      inline: true,
+    });
     // strikesTotal += mentions.roles.size - automod.max_role_mentions;
     strikesTotal += 1;
   }
@@ -124,7 +134,7 @@ async function performAutomod(message, settings) {
     if (containsLink(content)) {
       const key = author.id + "|" + message.guildId;
       if (antispamCache.has(key)) {
-        let antispamInfo = antispamCache.get(key);
+        const antispamInfo = antispamCache.get(key);
         if (
           antispamInfo.channelId !== message.channelId &&
           antispamInfo.content === content &&
@@ -135,7 +145,7 @@ async function performAutomod(message, settings) {
           strikesTotal += 1;
         }
       } else {
-        let antispamInfo = {
+        const antispamInfo = {
           channelId: message.channelId,
           content,
           timestamp: Date.now(),
@@ -207,7 +217,12 @@ async function performAutomod(message, settings) {
       memberDb.strikes = 0;
 
       // Add Moderation Action
-      await addModAction(guild.members.me, member, "Automod: Max strikes received", automod.action).catch(() => {});
+      await addModAction(
+        guild.members.me,
+        member,
+        "Automod: Max strikes received",
+        automod.action
+      ).catch(() => {});
     }
 
     await memberDb.save();

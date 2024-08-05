@@ -17,7 +17,9 @@ module.exports = async (client) => {
   // Initialize Giveaways Manager
   if (client.config.GIVEAWAYS.ENABLED) {
     client.logger.log("Initializing giveaways manager...");
-    client.giveawaysManager._init().then((_) => client.logger.success("Giveaway Manager initialized"));
+    client.giveawaysManager
+      ._init()
+      .then((_) => client.logger.success("Giveaway Manager initialized"));
   }
 
   // Update Bot Presence

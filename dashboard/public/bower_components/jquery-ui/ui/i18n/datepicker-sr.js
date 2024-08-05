@@ -1,6 +1,6 @@
 /* Serbian i18n for the jQuery UI date picker plugin. */
 /* Written by Dejan Dimić. */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["sr"] = {
     closeText: "Затвори",
     prevText: "&#x3C;",
@@ -28,7 +28,20 @@
       "Новембар",
       "Децембар",
     ],
-    monthNamesShort: ["Јан", "Феб", "Мар", "Апр", "Мај", "Јун", "Јул", "Авг", "Сеп", "Окт", "Нов", "Дец"],
+    monthNamesShort: [
+      "Јан",
+      "Феб",
+      "Мар",
+      "Апр",
+      "Мај",
+      "Јун",
+      "Јул",
+      "Авг",
+      "Сеп",
+      "Окт",
+      "Нов",
+      "Дец",
+    ],
     dayNames: ["Недеља", "Понедељак", "Уторак", "Среда", "Четвртак", "Петак", "Субота"],
     dayNamesShort: ["Нед", "Пон", "Уто", "Сре", "Чет", "Пет", "Суб"],
     dayNamesMin: ["Не", "По", "Ут", "Ср", "Че", "Пе", "Су"],

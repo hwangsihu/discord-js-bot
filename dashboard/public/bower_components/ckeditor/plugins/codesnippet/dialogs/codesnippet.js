@@ -2,8 +2,8 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
-  CKEDITOR.dialog.add("codeSnippet", function (c) {
+(() => {
+  CKEDITOR.dialog.add("codeSnippet", (c) => {
     var b = c._.codesnippet.langs,
       d = c.lang.codesnippet,
       g = document.documentElement.clientHeight,
@@ -30,7 +30,9 @@
               items: e,
               setup: function (a) {
                 a.ready && a.data.lang && this.setValue(a.data.lang);
-                !CKEDITOR.env.gecko || (a.data.lang && a.ready) || (this.getInputElement().$.selectedIndex = -1);
+                !CKEDITOR.env.gecko ||
+                  (a.data.lang && a.ready) ||
+                  (this.getInputElement().$.selectedIndex = -1);
               },
               commit: function (a) {
                 a.setData("lang", this.getValue());
@@ -48,7 +50,8 @@
               },
               required: !0,
               validate: CKEDITOR.dialog.validate.notEmpty(d.emptySnippetError),
-              inputStyle: "cursor:auto;width:" + c + "px;height:" + b + "px;tab-size:4;text-align:left;",
+              inputStyle:
+                "cursor:auto;width:" + c + "px;height:" + b + "px;tab-size:4;text-align:left;",
               class: "cke_source",
             },
           ],

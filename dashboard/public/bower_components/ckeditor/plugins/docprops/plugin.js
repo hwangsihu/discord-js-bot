@@ -10,11 +10,18 @@ CKEDITOR.plugins.add("docprops", {
   init: function (a) {
     var b = new CKEDITOR.dialogCommand("docProps");
     b.modes = { wysiwyg: a.config.fullPage };
-    b.allowedContent = { body: { styles: "*", attributes: "dir" }, html: { attributes: "lang,xml:lang" } };
+    b.allowedContent = {
+      body: { styles: "*", attributes: "dir" },
+      html: { attributes: "lang,xml:lang" },
+    };
     b.requiredContent = "body";
     a.addCommand("docProps", b);
     CKEDITOR.dialog.add("docProps", this.path + "dialogs/docprops.js");
     a.ui.addButton &&
-      a.ui.addButton("DocProps", { label: a.lang.docprops.label, command: "docProps", toolbar: "document,30" });
+      a.ui.addButton("DocProps", {
+        label: a.lang.docprops.label,
+        command: "docProps",
+        toolbar: "document,30",
+      });
   },
 });

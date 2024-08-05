@@ -1,6 +1,6 @@
 module("DOM integration");
 
-test("adding a new unselected option changes nothing", function (assert) {
+test("adding a new unselected option changes nothing", (assert) => {
   // Any browsers which support mutation observers will not trigger the event
   var expected = 4;
   if (window.MutationObserver) {
@@ -28,7 +28,7 @@ test("adding a new unselected option changes nothing", function (assert) {
 
   var select = new Select2($select);
 
-  select.on("selection:update", function (args) {
+  select.on("selection:update", (args) => {
     assert.equal(args.data.length, 1, "There was more than one selection");
 
     assert.equal(args.data[0].id, "One", "The selection changed to something other than One");
@@ -49,7 +49,7 @@ test("adding a new unselected option changes nothing", function (assert) {
   syncDone();
 });
 
-test("adding a new selected option changes the value", function (assert) {
+test("adding a new selected option changes the value", (assert) => {
   // handle IE 8 not being supported
   var expected = 4;
   if (!window.MutationObserver && !window.addEventListener) {
@@ -75,7 +75,7 @@ test("adding a new selected option changes the value", function (assert) {
 
   var select = new Select2($select);
 
-  select.on("selection:update", function (args) {
+  select.on("selection:update", (args) => {
     assert.equal(args.data.length, 1, "There was more than one selection");
 
     assert.equal(args.data[0].id, "Three", "The selection did not change to Three");
@@ -96,7 +96,7 @@ test("adding a new selected option changes the value", function (assert) {
   syncDone();
 });
 
-test("removing an unselected option changes nothing", function (assert) {
+test("removing an unselected option changes nothing", (assert) => {
   // Any browsers which support mutation observers will not trigger the event
   var expected = 4;
   if (!window.MutationObserver && !window.addEventListener) {
@@ -122,7 +122,7 @@ test("removing an unselected option changes nothing", function (assert) {
 
   var select = new Select2($select);
 
-  select.on("selection:update", function (args) {
+  select.on("selection:update", (args) => {
     assert.equal(args.data.length, 1, "There was more than one selection");
 
     assert.equal(args.data[0].id, "One", "The selection changed to something other than One");
@@ -141,7 +141,7 @@ test("removing an unselected option changes nothing", function (assert) {
   syncDone();
 });
 
-test("removing a selected option changes the value", function (assert) {
+test("removing a selected option changes the value", (assert) => {
   // handle IE 8 not being supported
   var expected = 3;
   if (!window.MutationObserver && !window.addEventListener) {
@@ -167,7 +167,7 @@ test("removing a selected option changes the value", function (assert) {
 
   var select = new Select2($select);
 
-  select.on("selection:update", function (args) {
+  select.on("selection:update", (args) => {
     assert.equal(args.data.length, 1, "There was more than one selection");
 
     if (expected != 2) {

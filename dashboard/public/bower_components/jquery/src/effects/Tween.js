@@ -1,6 +1,4 @@
-define(["../core", "../css"], function (jQuery) {
-  "use strict";
-
+define(["../core", "../css"], (jQuery) => {
   function Tween(elem, options, prop, end, easing) {
     return new Tween.prototype.init(elem, options, prop, end, easing);
   }
@@ -56,12 +54,15 @@ define(["../core", "../css"], function (jQuery) {
 
   Tween.propHooks = {
     _default: {
-      get: function (tween) {
+      get: (tween) => {
         var result;
 
         // Use a property on the element directly when it is not a DOM element,
         // or when there is no matching style property that exists.
-        if (tween.elem.nodeType !== 1 || (tween.elem[tween.prop] != null && tween.elem.style[tween.prop] == null)) {
+        if (
+          tween.elem.nodeType !== 1 ||
+          (tween.elem[tween.prop] != null && tween.elem.style[tween.prop] == null)
+        ) {
           return tween.elem[tween.prop];
         }
 
@@ -74,7 +75,7 @@ define(["../core", "../css"], function (jQuery) {
         // Empty strings, null, undefined and "auto" are converted to 0.
         return !result || result === "auto" ? 0 : result;
       },
-      set: function (tween) {
+      set: (tween) => {
         // Use step hook for back compat.
         // Use cssHook if its there.
         // Use .style if available and use plain properties where available.
@@ -95,7 +96,7 @@ define(["../core", "../css"], function (jQuery) {
   // Support: IE <=9 only
   // Panic based approach to setting things on disconnected nodes
   Tween.propHooks.scrollTop = Tween.propHooks.scrollLeft = {
-    set: function (tween) {
+    set: (tween) => {
       if (tween.elem.nodeType && tween.elem.parentNode) {
         tween.elem[tween.prop] = tween.now;
       }
@@ -103,12 +104,8 @@ define(["../core", "../css"], function (jQuery) {
   };
 
   jQuery.easing = {
-    linear: function (p) {
-      return p;
-    },
-    swing: function (p) {
-      return 0.5 - Math.cos(p * Math.PI) / 2;
-    },
+    linear: (p) => p,
+    swing: (p) => 0.5 - Math.cos(p * Math.PI) / 2,
     _default: "swing",
   };
 

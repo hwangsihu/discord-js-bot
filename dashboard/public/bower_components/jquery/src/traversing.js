@@ -9,9 +9,7 @@ define([
   "./core/init",
   "./traversing/findFilter",
   "./selector",
-], function (jQuery, indexOf, dir, siblings, rneedsContext, nodeName) {
-  "use strict";
-
+], (jQuery, indexOf, dir, siblings, rneedsContext, nodeName) => {
   var rparentsprev = /^(?:parents|prev(?:Until|All))/,
     // Methods guaranteed to produce a unique set when starting from a unique set
     guaranteedUnique = {
@@ -102,41 +100,21 @@ define([
 
   jQuery.each(
     {
-      parent: function (elem) {
+      parent: (elem) => {
         var parent = elem.parentNode;
         return parent && parent.nodeType !== 11 ? parent : null;
       },
-      parents: function (elem) {
-        return dir(elem, "parentNode");
-      },
-      parentsUntil: function (elem, i, until) {
-        return dir(elem, "parentNode", until);
-      },
-      next: function (elem) {
-        return sibling(elem, "nextSibling");
-      },
-      prev: function (elem) {
-        return sibling(elem, "previousSibling");
-      },
-      nextAll: function (elem) {
-        return dir(elem, "nextSibling");
-      },
-      prevAll: function (elem) {
-        return dir(elem, "previousSibling");
-      },
-      nextUntil: function (elem, i, until) {
-        return dir(elem, "nextSibling", until);
-      },
-      prevUntil: function (elem, i, until) {
-        return dir(elem, "previousSibling", until);
-      },
-      siblings: function (elem) {
-        return siblings((elem.parentNode || {}).firstChild, elem);
-      },
-      children: function (elem) {
-        return siblings(elem.firstChild);
-      },
-      contents: function (elem) {
+      parents: (elem) => dir(elem, "parentNode"),
+      parentsUntil: (elem, i, until) => dir(elem, "parentNode", until),
+      next: (elem) => sibling(elem, "nextSibling"),
+      prev: (elem) => sibling(elem, "previousSibling"),
+      nextAll: (elem) => dir(elem, "nextSibling"),
+      prevAll: (elem) => dir(elem, "previousSibling"),
+      nextUntil: (elem, i, until) => dir(elem, "nextSibling", until),
+      prevUntil: (elem, i, until) => dir(elem, "previousSibling", until),
+      siblings: (elem) => siblings((elem.parentNode || {}).firstChild, elem),
+      children: (elem) => siblings(elem.firstChild),
+      contents: (elem) => {
         if (nodeName(elem, "iframe")) {
           return elem.contentDocument;
         }
@@ -151,7 +129,7 @@ define([
         return jQuery.merge([], elem.childNodes);
       },
     },
-    function (name, fn) {
+    (name, fn) => {
       jQuery.fn[name] = function (until, selector) {
         var matched = jQuery.map(this, fn, until);
 

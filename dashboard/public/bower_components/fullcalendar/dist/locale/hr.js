@@ -1,4 +1,4 @@
-!(function (e, a) {
+!((e, a) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = a(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? a(require("moment"), require("fullcalendar"))
         : a(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, a) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, a) =>
+  ((e) => {
     function a(n) {
       if (t[n]) return t[n].exports;
       var r = (t[n] = { i: n, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (a.m = e),
       (a.c = t),
-      (a.d = function (e, t, n) {
+      (a.d = (e, t, n) => {
         a.o(e, t) || Object.defineProperty(e, t, { configurable: !1, enumerable: !0, get: n });
       }),
-      (a.n = function (e) {
-        var t =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (a.n = (e) => {
+        var t = e && e.__esModule ? () => e.default : () => e;
         return a.d(t, "a", t), t;
       }),
-      (a.o = function (e, a) {
-        return Object.prototype.hasOwnProperty.call(e, a);
-      }),
+      (a.o = (e, a) => Object.prototype.hasOwnProperty.call(e, a)),
       (a.p = ""),
       a((a.s = 143))
     );
   })({
-    0: function (a, t) {
+    0: (a, t) => {
       a.exports = e;
     },
-    1: function (e, t) {
+    1: (e, t) => {
       e.exports = a;
     },
-    143: function (e, a, t) {
+    143: (e, a, t) => {
       Object.defineProperty(a, "__esModule", { value: !0 }), t(144);
       var n = t(1);
       n.datepickerLocale("hr", "hr", {
@@ -66,7 +57,20 @@
           "Studeni",
           "Prosinac",
         ],
-        monthNamesShort: ["Sij", "Velj", "Ožu", "Tra", "Svi", "Lip", "Srp", "Kol", "Ruj", "Lis", "Stu", "Pro"],
+        monthNamesShort: [
+          "Sij",
+          "Velj",
+          "Ožu",
+          "Tra",
+          "Svi",
+          "Lip",
+          "Srp",
+          "Kol",
+          "Ruj",
+          "Lis",
+          "Stu",
+          "Pro",
+        ],
         dayNames: ["Nedjelja", "Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak", "Subota"],
         dayNamesShort: ["Ned", "Pon", "Uto", "Sri", "Čet", "Pet", "Sub"],
         dayNamesMin: ["Ne", "Po", "Ut", "Sr", "Če", "Pe", "Su"],
@@ -87,25 +91,25 @@
             list: "Raspored",
           },
           allDayText: "Cijeli dan",
-          eventLimitText: function (e) {
-            return "+ još " + e;
-          },
+          eventLimitText: (e) => "+ još " + e,
           noEventsMessage: "Nema događaja za prikaz",
         });
     },
-    144: function (e, a, t) {
-      !(function (e, a) {
+    144: (e, a, t) => {
+      !((e, a) => {
         a(t(0));
-      })(0, function (e) {
+      })(0, (e) => {
         function a(e, a, t) {
           var n = e + " ";
           switch (t) {
             case "ss":
-              return (n += 1 === e ? "sekunda" : 2 === e || 3 === e || 4 === e ? "sekunde" : "sekundi");
+              return (n +=
+                1 === e ? "sekunda" : 2 === e || 3 === e || 4 === e ? "sekunde" : "sekundi");
             case "m":
               return a ? "jedna minuta" : "jedne minute";
             case "mm":
-              return (n += 1 === e ? "minuta" : 2 === e || 3 === e || 4 === e ? "minute" : "minuta");
+              return (n +=
+                1 === e ? "minuta" : 2 === e || 3 === e || 4 === e ? "minute" : "minuta");
             case "h":
               return a ? "jedan sat" : "jednog sata";
             case "hh":
@@ -113,9 +117,11 @@
             case "dd":
               return (n += 1 === e ? "dan" : "dana");
             case "MM":
-              return (n += 1 === e ? "mjesec" : 2 === e || 3 === e || 4 === e ? "mjeseca" : "mjeseci");
+              return (n +=
+                1 === e ? "mjesec" : 2 === e || 3 === e || 4 === e ? "mjeseca" : "mjeseci");
             case "yy":
-              return (n += 1 === e ? "godina" : 2 === e || 3 === e || 4 === e ? "godine" : "godina");
+              return (n +=
+                1 === e ? "godina" : 2 === e || 3 === e || 4 === e ? "godine" : "godina");
           }
         }
         return e.defineLocale("hr", {
@@ -200,5 +206,5 @@
         });
       });
     },
-  });
-});
+  })
+);

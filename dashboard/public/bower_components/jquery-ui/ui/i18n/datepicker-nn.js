@@ -1,6 +1,6 @@
 /* Norwegian Nynorsk initialisation for the jQuery UI date picker plugin. */
 /* Written by Bjørn Johansen (post@bjornjohansen.no). */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["nn"] = {
     closeText: "Lukk",
     prevText: "&#xAB;Førre",
@@ -28,7 +28,20 @@
       "november",
       "desember",
     ],
-    monthNamesShort: ["jan", "feb", "mar", "apr", "mai", "jun", "jul", "aug", "sep", "okt", "nov", "des"],
+    monthNamesShort: [
+      "jan",
+      "feb",
+      "mar",
+      "apr",
+      "mai",
+      "jun",
+      "jul",
+      "aug",
+      "sep",
+      "okt",
+      "nov",
+      "des",
+    ],
     dayNamesShort: ["sun", "mån", "tys", "ons", "tor", "fre", "lau"],
     dayNames: ["sundag", "måndag", "tysdag", "onsdag", "torsdag", "fredag", "laurdag"],
     dayNamesMin: ["su", "må", "ty", "on", "to", "fr", "la"],

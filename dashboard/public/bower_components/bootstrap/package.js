@@ -5,12 +5,13 @@
 
 Package.describe({
   name: "twbs:bootstrap", // https://atmospherejs.com/twbs/bootstrap
-  summary: "The most popular front-end framework for developing responsive, mobile first projects on the web.",
+  summary:
+    "The most popular front-end framework for developing responsive, mobile first projects on the web.",
   version: "3.4.1",
   git: "https://github.com/twbs/bootstrap.git",
 });
 
-Package.onUse(function (api) {
+Package.onUse((api) => {
   api.versionsFrom("METEOR@1.0");
   api.use("jquery", "client");
   var assets = [

@@ -2,20 +2,16 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function k(a, b, d, e) {
     var c = new CKEDITOR.dom.walker(a);
-    if ((a = a.startContainer.getAscendant(b, !0) || a.endContainer.getAscendant(b, !0))) if ((d(a), e)) return;
-    for (; (a = c.next()); ) if ((a = a.getAscendant(b, !0))) if ((d(a), e)) break;
+    if ((a = a.startContainer.getAscendant(b, !0) || a.endContainer.getAscendant(b, !0)))
+      if ((d(a), e)) return;
+    while ((a = c.next())) if ((a = a.getAscendant(b, !0))) if ((d(a), e)) break;
   }
   function u(a, b) {
     var d = { ul: "ol", ol: "ul" };
-    return (
-      -1 !==
-      l(b, function (b) {
-        return b.element === a || b.element === d[a];
-      })
-    );
+    return -1 !== l(b, (b) => b.element === a || b.element === d[a]);
   }
   function q(a) {
     this.styles = null;
@@ -23,7 +19,8 @@
     this.editor = a;
     this.filter = new CKEDITOR.filter(a, a.config.copyFormatting_allowRules);
     !0 === a.config.copyFormatting_allowRules && (this.filter.disabled = !0);
-    a.config.copyFormatting_disallowRules && this.filter.disallow(a.config.copyFormatting_disallowRules);
+    a.config.copyFormatting_disallowRules &&
+      this.filter.disallow(a.config.copyFormatting_disallowRules);
   }
   var l = CKEDITOR.tools.indexOf,
     r = CKEDITOR.tools.getMouseButton,
@@ -45,14 +42,14 @@
         command: "copyFormatting",
         toolbar: "cleanup,0",
       });
-      a.on("contentDom", function () {
+      a.on("contentDom", () => {
         var d = a.editable(),
           b = d.isInline() ? d : a.document,
           c = a.ui.get("CopyFormatting");
-        d.attachListener(b, "mouseup", function (b) {
+        d.attachListener(b, "mouseup", (b) => {
           r(b) === CKEDITOR.MOUSE_BUTTON_LEFT && a.execCommand("applyFormatting");
         });
-        d.attachListener(CKEDITOR.document, "mouseup", function (b) {
+        d.attachListener(CKEDITOR.document, "mouseup", (b) => {
           var e = a.getCommand("copyFormatting");
           r(b) !== CKEDITOR.MOUSE_BUTTON_LEFT ||
             e.state !== CKEDITOR.TRISTATE_ON ||
@@ -61,15 +58,16 @@
         });
         c &&
           ((b = CKEDITOR.document.getById(c._.id)),
-          d.attachListener(b, "dblclick", function () {
+          d.attachListener(b, "dblclick", () => {
             a.execCommand("copyFormatting", { sticky: !0 });
           }),
-          d.attachListener(b, "mouseup", function (a) {
+          d.attachListener(b, "mouseup", (a) => {
             a.data.stopPropagation();
           }));
       });
-      a.config.copyFormatting_keystrokeCopy && a.setKeystroke(a.config.copyFormatting_keystrokeCopy, "copyFormatting");
-      a.on("key", function (b) {
+      a.config.copyFormatting_keystrokeCopy &&
+        a.setKeystroke(a.config.copyFormatting_keystrokeCopy, "copyFormatting");
+      a.on("key", (b) => {
         var e = a.getCommand("copyFormatting");
         b = b.data.domEvent;
         b.getKeystroke &&
@@ -77,14 +75,14 @@
           e.state === CKEDITOR.TRISTATE_ON &&
           a.execCommand("copyFormatting");
       });
-      a.copyFormatting.on("extractFormatting", function (d) {
+      a.copyFormatting.on("extractFormatting", (d) => {
         var e = d.data.element;
         if (e.contains(a.editable()) || e.equals(a.editable())) return d.cancel();
         e = b._convertElementToStyleDef(e);
         if (!a.copyFormatting.filter.check(new CKEDITOR.style(e), !0, !0)) return d.cancel();
         d.data.styleDef = e;
       });
-      a.copyFormatting.on("applyFormatting", function (d) {
+      a.copyFormatting.on("applyFormatting", (d) => {
         if (!d.data.preventFormatStripping) {
           var e = d.data.range,
             c = b._extractStylesFromRange(a, e),
@@ -105,7 +103,7 @@
       });
       a.copyFormatting.on(
         "applyFormatting",
-        function (b) {
+        (b) => {
           var e = CKEDITOR.plugins.copyformatting,
             c = e._determineContext(b.data.range);
           "list" === c && a.copyFormatting._isContextAllowed("list")
@@ -169,7 +167,7 @@
       },
       applyFormatting: {
         editorFocus: CKEDITOR.env.ie && !CKEDITOR.env.edge ? !1 : !0,
-        exec: function (a, b) {
+        exec: (a, b) => {
           var d = a.getCommand("copyFormatting"),
             e = b ? "keystrokeHandler" == b.from : !1,
             c = CKEDITOR.plugins.copyformatting,
@@ -177,7 +175,8 @@
             g = c._getCursorContainer(a),
             h = CKEDITOR.document.getDocumentElement();
           if (e || d.state === CKEDITOR.TRISTATE_ON) {
-            if (e && !f.styles) return c._putScreenReaderMessage(a, "failed"), c._detachPasteKeystrokeHandler(a), !1;
+            if (e && !f.styles)
+              return c._putScreenReaderMessage(a, "failed"), c._detachPasteKeystrokeHandler(a), !1;
             e = c._applyFormat(a, f.styles);
             f.sticky ||
               ((f.styles = null),
@@ -191,16 +190,15 @@
         },
       },
     },
-    _getCursorContainer: function (a) {
-      return a.elementMode === CKEDITOR.ELEMENT_MODE_INLINE ? a.editable() : a.editable().getParent();
-    },
-    _convertElementToStyleDef: function (a) {
+    _getCursorContainer: (a) =>
+      a.elementMode === CKEDITOR.ELEMENT_MODE_INLINE ? a.editable() : a.editable().getParent(),
+    _convertElementToStyleDef: (a) => {
       var b = CKEDITOR.tools,
         d = a.getAttributes(CKEDITOR.plugins.copyformatting.excludedAttributes),
         b = b.parseCssText(a.getAttribute("style"), !0, !0);
       return { element: a.getName(), type: CKEDITOR.STYLE_INLINE, attributes: d, styles: b };
     },
-    _extractStylesFromElement: function (a, b) {
+    _extractStylesFromElement: (a, b) => {
       var d = {},
         e = [];
       do
@@ -208,27 +206,30 @@
           b.type === CKEDITOR.NODE_ELEMENT &&
           !b.hasAttribute("data-cke-bookmark") &&
           ((d.element = b),
-          a.copyFormatting.fire("extractFormatting", d, a) && d.styleDef && e.push(new CKEDITOR.style(d.styleDef)),
+          a.copyFormatting.fire("extractFormatting", d, a) &&
+            d.styleDef &&
+            e.push(new CKEDITOR.style(d.styleDef)),
           b.getName && -1 !== l(CKEDITOR.plugins.copyformatting.breakOnElements, b.getName()))
         )
           break;
       while ((b = b.getParent()) && b.type === CKEDITOR.NODE_ELEMENT);
       return e;
     },
-    _extractStylesFromRange: function (a, b) {
+    _extractStylesFromRange: (a, b) => {
       for (var d = [], e = new CKEDITOR.dom.walker(b), c; (c = e.next()); )
         d = d.concat(CKEDITOR.plugins.copyformatting._extractStylesFromElement(a, c));
       return d;
     },
-    _removeStylesFromElementInRange: function (a, b) {
-      for (var d = -1 !== l(["ol", "ul", "table"], b), e = new CKEDITOR.dom.walker(a), c; (c = e.next()); )
+    _removeStylesFromElementInRange: (a, b) => {
+      for (
+        var d = -1 !== l(["ol", "ul", "table"], b), e = new CKEDITOR.dom.walker(a), c;
+        (c = e.next());
+      )
         if ((c = c.getAscendant(b, !0))) if ((c.removeAttributes(c.getAttributes()), d)) break;
     },
-    _getSelectedWordOffset: function (a) {
+    _getSelectedWordOffset: (a) => {
       function b(a, b) {
-        return a[b ? "getPrevious" : "getNext"](function (a) {
-          return a.type !== CKEDITOR.NODE_COMMENT;
-        });
+        return a[b ? "getPrevious" : "getNext"]((a) => a.type !== CKEDITOR.NODE_COMMENT);
       }
       function d(a) {
         return a.type == CKEDITOR.NODE_ELEMENT
@@ -284,28 +285,29 @@
           );
       return null;
     },
-    _filterStyles: function (a) {
+    _filterStyles: (a) => {
       var b = CKEDITOR.tools.isEmpty,
         d = [],
         e,
         c;
       for (c = 0; c < a.length; c++)
         (e = a[c]._.definition),
-          -1 !== CKEDITOR.tools.indexOf(CKEDITOR.plugins.copyformatting.inlineBoundary, e.element) &&
+          -1 !==
+            CKEDITOR.tools.indexOf(CKEDITOR.plugins.copyformatting.inlineBoundary, e.element) &&
             (e.element = a[c].element = "span"),
           ("span" === e.element && b(e.attributes) && b(e.styles)) || d.push(a[c]);
       return d;
     },
-    _determineContext: function (a) {
+    _determineContext: (a) => {
       function b(b) {
         var e = new CKEDITOR.dom.walker(a),
           c;
         if (a.startContainer.getAscendant(b, !0) || a.endContainer.getAscendant(b, !0)) return !0;
-        for (; (c = e.next()); ) if (c.getAscendant(b, !0)) return !0;
+        while ((c = e.next())) if (c.getAscendant(b, !0)) return !0;
       }
       return b({ ul: 1, ol: 1 }) ? "list" : b("table") ? "table" : "text";
     },
-    _applyStylesToTextContext: function (a, b, d) {
+    _applyStylesToTextContext: (a, b, d) => {
       var e = CKEDITOR.plugins.copyformatting,
         c = e.excludedAttributesFromInlineTransform,
         f,
@@ -319,7 +321,7 @@
           b.apply(a);
         }
     },
-    _applyStylesToListContext: function (a, b, d) {
+    _applyStylesToListContext: (a, b, d) => {
       var e, c, f;
       for (f = 0; f < d.length; f++)
         (e = d[f]),
@@ -328,7 +330,7 @@
             ? k(
                 b,
                 { ul: 1, ol: 1 },
-                function (a) {
+                (a) => {
                   var b = e;
                   a.getName() !== b.element && a.renameNode(b.element);
                   b.applyToObject(a);
@@ -336,15 +338,16 @@
                 !0
               )
             : "li" === e.element
-              ? k(b, "li", function (a) {
+              ? k(b, "li", (a) => {
                   e.applyToObject(a);
                 })
               : CKEDITOR.plugins.copyformatting._applyStylesToTextContext(a, b, [e]),
           b.moveToBookmark(c);
     },
-    _applyStylesToTableContext: function (a, b, d) {
+    _applyStylesToTableContext: (a, b, d) => {
       function e(a, b) {
-        a.getName() !== b.element && ((b = b.getDefinition()), (b.element = a.getName()), (b = new CKEDITOR.style(b)));
+        a.getName() !== b.element &&
+          ((b = b.getDefinition()), (b.element = a.getName()), (b = new CKEDITOR.style(b)));
         b.applyToObject(a);
       }
       var c, f, g;
@@ -352,21 +355,21 @@
         (c = d[g]),
           (f = b.createBookmark()),
           -1 !== l(["table", "tr"], c.element)
-            ? k(b, c.element, function (a) {
+            ? k(b, c.element, (a) => {
                 c.applyToObject(a);
               })
             : -1 !== l(["td", "th"], c.element)
-              ? k(b, { td: 1, th: 1 }, function (a) {
+              ? k(b, { td: 1, th: 1 }, (a) => {
                   e(a, c);
                 })
               : -1 !== l(["thead", "tbody"], c.element)
-                ? k(b, { thead: 1, tbody: 1 }, function (a) {
+                ? k(b, { thead: 1, tbody: 1 }, (a) => {
                     e(a, c);
                   })
                 : CKEDITOR.plugins.copyformatting._applyStylesToTextContext(a, b, [c]),
           b.moveToBookmark(f);
     },
-    _applyFormat: function (a, b) {
+    _applyFormat: (a, b) => {
       var d = a.getSelection().getRanges()[0],
         e = CKEDITOR.plugins.copyformatting,
         c,
@@ -381,7 +384,14 @@
         d.select();
       }
       b = e._filterStyles(b);
-      if (!a.copyFormatting.fire("applyFormatting", { styles: b, range: d, preventFormatStripping: !1 }, a)) return !1;
+      if (
+        !a.copyFormatting.fire(
+          "applyFormatting",
+          { styles: b, range: d, preventFormatStripping: !1 },
+          a
+        )
+      )
+        return !1;
       f && a.getSelection().selectBookmarks(f);
       return !0;
     },
@@ -401,14 +411,17 @@
           )
           .getChild(0);
     },
-    _getScreenReaderContainer: function () {
+    _getScreenReaderContainer: () => {
       if (!CKEDITOR.env.ie6Compat && !CKEDITOR.env.ie7Compat)
-        return CKEDITOR.document.getBody().findOne(".cke_copyformatting_notification div[aria-live]");
+        return CKEDITOR.document
+          .getBody()
+          .findOne(".cke_copyformatting_notification div[aria-live]");
     },
     _attachPasteKeystrokeHandler: function (a) {
       var b = a.config.copyFormatting_keystrokePaste;
       b &&
-        ((this._initialKeystrokePasteCommand = a.keystrokeHandler.keystrokes[b]), a.setKeystroke(b, "applyFormatting"));
+        ((this._initialKeystrokePasteCommand = a.keystrokeHandler.keystrokes[b]),
+        a.setKeystroke(b, "applyFormatting"));
     },
     _detachPasteKeystrokeHandler: function (a) {
       var b = a.config.copyFormatting_keystrokePaste;
@@ -416,8 +429,10 @@
     },
   };
   CKEDITOR.config.copyFormatting_outerCursor = !0;
-  CKEDITOR.config.copyFormatting_allowRules = "b s u i em strong span p div td th ol ul li(*)[*]{*}";
-  CKEDITOR.config.copyFormatting_disallowRules = "*[data-cke-widget*,data-widget*,data-cke-realelement](cke_widget*)";
+  CKEDITOR.config.copyFormatting_allowRules =
+    "b s u i em strong span p div td th ol ul li(*)[*]{*}";
+  CKEDITOR.config.copyFormatting_disallowRules =
+    "*[data-cke-widget*,data-widget*,data-cke-realelement](cke_widget*)";
   CKEDITOR.config.copyFormatting_allowedContexts = !0;
   CKEDITOR.config.copyFormatting_keystrokeCopy = CKEDITOR.CTRL + CKEDITOR.SHIFT + 67;
   CKEDITOR.config.copyFormatting_keystrokePaste = CKEDITOR.CTRL + CKEDITOR.SHIFT + 86;

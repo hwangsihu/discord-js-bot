@@ -14,7 +14,13 @@
     selected: "Selected",
     required: "Required",
   },
-  form: { title: "පෝරමයේ ", menu: "පෝරමයේ ගුණ/", action: "ගන්නා පියවර", method: "ක්‍රමය", encoding: "කේතීකරණය" },
+  form: {
+    title: "පෝරමයේ ",
+    menu: "පෝරමයේ ගුණ/",
+    action: "ගන්නා පියවර",
+    method: "ක්‍රමය",
+    encoding: "කේතීකරණය",
+  },
   hidden: { title: "සැඟවුණු ප්‍රදේශයේ ", name: "නම", value: "Value" },
   select: {
     title: "තේරීම් ප්‍රදේශයේ ",

@@ -158,7 +158,10 @@ CKEDITOR.lang["az"] = {
   notification: { closed: "Xəbərdarlıq pəncərəsi bağlanıb" },
   maximize: { maximize: "Aşkarla", minimize: "Gizlət" },
   magicline: { title: "Abzası burada əlavə et" },
-  list: { bulletedlist: "Markerlənmiş siyahını başlat/sil", numberedlist: "Nömrələnmiş siyahını başlat/sil" },
+  list: {
+    bulletedlist: "Markerlənmiş siyahını başlat/sil",
+    numberedlist: "Nömrələnmiş siyahını başlat/sil",
+  },
   link: {
     acccessKey: "Qısayol düyməsi",
     advanced: "Geniş seçimləri",
@@ -344,7 +347,8 @@ CKEDITOR.lang["az"] = {
     generalTab: "Əsas",
     advancedTab: "Əlavə",
     validateNumberFailed: "Rəqəm deyil.",
-    confirmNewPage: "Yadda saxlanılmamış dəyişikliklər itiriləcək. Davam etmək istədiyinizə əminsinizmi?",
+    confirmNewPage:
+      "Yadda saxlanılmamış dəyişikliklər itiriləcək. Davam etmək istədiyinizə əminsinizmi?",
     confirmCancel: "Dəyişikliklər edilib. Pəncərəni bağlamaq istəyirsizə əminsinizmi?",
     options: "Seçimlər",
     target: "Hədəf çərçivə",
@@ -379,8 +383,10 @@ CKEDITOR.lang["az"] = {
       '"%1" xanasında göstərilən məzmun tam və müsbət olmalıdır, CSS-də olan ölçü vahidlərin (px, %, in, cm, mm, em, ex, pt, or pc) istifadısinə icazə verilir.',
     invalidHtmlLength:
       '"%1" xanasında göstərilən məzmun tam və müsbət olmalıdır HTML-də olan ölçü vahidlərin (px və ya %) istifadısinə icazə verilir.',
-    invalidInlineStyle: 'Teq içində olan üslub "ad :  məzmun" şəklidə, nöqtə-verqül işarəsi ilə bitməlidir',
-    cssLengthTooltip: "Piksel sayı və ya digər CSS ölçü vahidləri (px, %, in, cm, mm, em, ex, pt, or pc) daxil edin.",
+    invalidInlineStyle:
+      'Teq içində olan üslub "ad :  məzmun" şəklidə, nöqtə-verqül işarəsi ilə bitməlidir',
+    cssLengthTooltip:
+      "Piksel sayı və ya digər CSS ölçü vahidləri (px, %, in, cm, mm, em, ex, pt, or pc) daxil edin.",
     unavailable: '%1<span class="cke_accessibility">, mövcud deyil</span>',
     keyboard: {
       8: "Backspace",

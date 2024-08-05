@@ -16,10 +16,9 @@ var translator = {
     MM: ["mjesec", "mjeseca", "mjeseci"],
     yy: ["godina", "godine", "godina"],
   },
-  correctGrammaticalCase: function (number, wordKey) {
-    return number === 1 ? wordKey[0] : number >= 2 && number <= 4 ? wordKey[1] : wordKey[2];
-  },
-  translate: function (number, withoutSuffix, key) {
+  correctGrammaticalCase: (number, wordKey) =>
+    number === 1 ? wordKey[0] : number >= 2 && number <= 4 ? wordKey[1] : wordKey[2],
+  translate: (number, withoutSuffix, key) => {
     var wordKey = translator.words[key];
     if (key.length === 1) {
       return withoutSuffix ? wordKey[0] : wordKey[1];
@@ -30,7 +29,9 @@ var translator = {
 };
 
 export default moment.defineLocale("me", {
-  months: "januar_februar_mart_april_maj_jun_jul_avgust_septembar_oktobar_novembar_decembar".split("_"),
+  months: "januar_februar_mart_april_maj_jun_jul_avgust_septembar_oktobar_novembar_decembar".split(
+    "_"
+  ),
   monthsShort: "jan._feb._mar._apr._maj_jun_jul_avg._sep._okt._nov._dec.".split("_"),
   monthsParseExact: true,
   weekdays: "nedjelja_ponedjeljak_utorak_srijeda_četvrtak_petak_subota".split("_"),

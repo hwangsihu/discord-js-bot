@@ -1,4 +1,4 @@
-!(function (e, i) {
+!((e, i) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = i(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? i(require("moment"), require("fullcalendar"))
         : i(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, i) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, i) =>
+  ((e) => {
     function i(a) {
       if (n[a]) return n[a].exports;
       var t = (n[a] = { i: a, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (i.m = e),
       (i.c = n),
-      (i.d = function (e, n, a) {
+      (i.d = (e, n, a) => {
         i.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: a });
       }),
-      (i.n = function (e) {
-        var n =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (i.n = (e) => {
+        var n = e && e.__esModule ? () => e.default : () => e;
         return i.d(n, "a", n), n;
       }),
-      (i.o = function (e, i) {
-        return Object.prototype.hasOwnProperty.call(e, i);
-      }),
+      (i.o = (e, i) => Object.prototype.hasOwnProperty.call(e, i)),
       (i.p = ""),
       i((i.s = 163))
     );
   })({
-    0: function (i, n) {
+    0: (i, n) => {
       i.exports = e;
     },
-    1: function (e, n) {
+    1: (e, n) => {
       e.exports = i;
     },
-    163: function (e, i, n) {
+    163: (e, i, n) => {
       Object.defineProperty(i, "__esModule", { value: !0 }), n(164);
       var a = n(1);
       a.datepickerLocale("lt", "lt", {
@@ -66,7 +57,20 @@
           "Lapkritis",
           "Gruodis",
         ],
-        monthNamesShort: ["Sau", "Vas", "Kov", "Bal", "Geg", "Bir", "Lie", "Rugp", "Rugs", "Spa", "Lap", "Gru"],
+        monthNamesShort: [
+          "Sau",
+          "Vas",
+          "Kov",
+          "Bal",
+          "Geg",
+          "Bir",
+          "Lie",
+          "Rugp",
+          "Rugs",
+          "Spa",
+          "Lap",
+          "Gru",
+        ],
         dayNames: [
           "sekmadienis",
           "pirmadienis",
@@ -92,10 +96,10 @@
           noEventsMessage: "Nėra įvykių rodyti",
         });
     },
-    164: function (e, i, n) {
-      !(function (e, i) {
+    164: (e, i, n) => {
+      !((e, i) => {
         i(n(0));
-      })(0, function (e) {
+      })(0, (e) => {
         function i(e, i, n, a) {
           return i ? "kelios sekundės" : a ? "kelių sekundžių" : "kelias sekundes";
         }
@@ -145,9 +149,14 @@
           },
           monthsShort: "sau_vas_kov_bal_geg_bir_lie_rgp_rgs_spa_lap_grd".split("_"),
           weekdays: {
-            format: "sekmadienį_pirmadienį_antradienį_trečiadienį_ketvirtadienį_penktadienį_šeštadienį".split("_"),
+            format:
+              "sekmadienį_pirmadienį_antradienį_trečiadienį_ketvirtadienį_penktadienį_šeštadienį".split(
+                "_"
+              ),
             standalone:
-              "sekmadienis_pirmadienis_antradienis_trečiadienis_ketvirtadienis_penktadienis_šeštadienis".split("_"),
+              "sekmadienis_pirmadienis_antradienis_trečiadienis_ketvirtadienis_penktadienis_šeštadienis".split(
+                "_"
+              ),
             isFormat: /dddd HH:mm/,
           },
           weekdaysShort: "Sek_Pir_Ant_Tre_Ket_Pen_Šeš".split("_"),
@@ -190,12 +199,10 @@
             yy: s,
           },
           dayOfMonthOrdinalParse: /\d{1,2}-oji/,
-          ordinal: function (e) {
-            return e + "-oji";
-          },
+          ordinal: (e) => e + "-oji",
           week: { dow: 1, doy: 4 },
         });
       });
     },
-  });
-});
+  })
+);

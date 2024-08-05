@@ -1,6 +1,6 @@
 /* Tajiki (UTF-8) initialisation for the jQuery UI date picker plugin. */
 /* Written by Abdurahmon Saidov (saidovab@gmail.com). */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["tj"] = {
     closeText: "Идома",
     prevText: "&#x3c;Қафо",
@@ -28,7 +28,20 @@
       "Ноябр",
       "Декабр",
     ],
-    monthNamesShort: ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"],
+    monthNamesShort: [
+      "Янв",
+      "Фев",
+      "Мар",
+      "Апр",
+      "Май",
+      "Июн",
+      "Июл",
+      "Авг",
+      "Сен",
+      "Окт",
+      "Ноя",
+      "Дек",
+    ],
     dayNames: ["якшанбе", "душанбе", "сешанбе", "чоршанбе", "панҷшанбе", "ҷумъа", "шанбе"],
     dayNamesShort: ["якш", "душ", "сеш", "чор", "пан", "ҷум", "шан"],
     dayNamesMin: ["Як", "Дш", "Сш", "Чш", "Пш", "Ҷм", "Шн"],

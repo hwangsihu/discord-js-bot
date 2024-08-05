@@ -2,7 +2,7 @@
  * Albanian translation for bootstrap-datepicker
  * Tomor Pupovci <http://www.github.com/ttomor>
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["sq"] = {
     days: ["E Diel", "E Hënë", "E Martē", "E Mërkurë", "E Enjte", "E Premte", "E Shtunë"],
     daysShort: ["Die", "Hën", "Mar", "Mër", "Enj", "Pre", "Shtu"],
@@ -21,7 +21,20 @@
       "Nëntor",
       "Dhjetor",
     ],
-    monthsShort: ["Jan", "Shk", "Mar", "Pri", "Maj", "Qer", "Korr", "Gu", "Sht", "Tet", "Nën", "Dhjet"],
+    monthsShort: [
+      "Jan",
+      "Shk",
+      "Mar",
+      "Pri",
+      "Maj",
+      "Qer",
+      "Korr",
+      "Gu",
+      "Sht",
+      "Tet",
+      "Nën",
+      "Dhjet",
+    ],
     today: "Sot",
   };
 })(jQuery);

@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(n) {
       if (r[n]) return r[n].exports;
       var a = (r[n] = { i: n, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = r),
-      (t.d = function (e, r, n) {
+      (t.d = (e, r, n) => {
         t.o(e, r) || Object.defineProperty(e, r, { configurable: !1, enumerable: !0, get: n });
       }),
-      (t.n = function (e) {
-        var r =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var r = e && e.__esModule ? () => e.default : () => e;
         return t.d(r, "a", r), r;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 145))
     );
   })({
-    0: function (t, r) {
+    0: (t, r) => {
       t.exports = e;
     },
-    1: function (e, r) {
+    1: (e, r) => {
       e.exports = t;
     },
-    145: function (e, t, r) {
+    145: (e, t, r) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), r(146);
       var n = r(1);
       n.datepickerLocale("hu", "hu", {
@@ -66,7 +57,20 @@
           "November",
           "December",
         ],
-        monthNamesShort: ["Jan", "Feb", "Már", "Ápr", "Máj", "Jún", "Júl", "Aug", "Szep", "Okt", "Nov", "Dec"],
+        monthNamesShort: [
+          "Jan",
+          "Feb",
+          "Már",
+          "Ápr",
+          "Máj",
+          "Jún",
+          "Júl",
+          "Aug",
+          "Szep",
+          "Okt",
+          "Nov",
+          "Dec",
+        ],
         dayNames: ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"],
         dayNamesShort: ["Vas", "Hét", "Ked", "Sze", "Csü", "Pén", "Szo"],
         dayNamesMin: ["V", "H", "K", "Sze", "Cs", "P", "Szo"],
@@ -84,10 +88,10 @@
           noEventsMessage: "Nincs megjeleníthető esemény",
         });
     },
-    146: function (e, t, r) {
-      !(function (e, t) {
+    146: (e, t, r) => {
+      !((e, t) => {
         t(r(0));
-      })(0, function (e) {
+      })(0, (e) => {
         function t(e, t, r, n) {
           var a = e;
           switch (r) {
@@ -140,12 +144,8 @@
             LLLL: "YYYY. MMMM D., dddd H:mm",
           },
           meridiemParse: /de|du/i,
-          isPM: function (e) {
-            return "u" === e.charAt(1).toLowerCase();
-          },
-          meridiem: function (e, t, r) {
-            return e < 12 ? (!0 === r ? "de" : "DE") : !0 === r ? "du" : "DU";
-          },
+          isPM: (e) => "u" === e.charAt(1).toLowerCase(),
+          meridiem: (e, t, r) => (e < 12 ? (!0 === r ? "de" : "DE") : !0 === r ? "du" : "DU"),
           calendar: {
             sameDay: "[ma] LT[-kor]",
             nextDay: "[holnap] LT[-kor]",
@@ -180,5 +180,5 @@
         });
       });
     },
-  });
-});
+  })
+);

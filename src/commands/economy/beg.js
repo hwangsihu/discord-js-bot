@@ -30,7 +30,7 @@ module.exports = {
 };
 
 async function beg(user) {
-  let users = [
+  const users = [
     "PewDiePie",
     "T-Series",
     "Sans",
@@ -59,7 +59,9 @@ async function beg(user) {
     "Joe Mama",
   ];
 
-  let amount = Math.floor(Math.random() * `${ECONOMY.MAX_BEG_AMOUNT}` + `${ECONOMY.MIN_BEG_AMOUNT}`);
+  const amount = Math.floor(
+    Math.random() * `${ECONOMY.MAX_BEG_AMOUNT}` + `${ECONOMY.MIN_BEG_AMOUNT}`
+  );
   const userDb = await getUser(user);
   userDb.coins += amount;
   await userDb.save();

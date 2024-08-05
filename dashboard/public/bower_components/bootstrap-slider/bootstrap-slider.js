@@ -17,7 +17,7 @@
  * limitations under the License.
  * ========================================================= */
 
-!(function ($) {
+!(($) => {
   var Slider = function (element, options) {
     this.dragLocked = false;
     this.limit = 100000;
@@ -180,23 +180,31 @@
       this.handle2Stype[this.stylePos] = positionPercentages[1] + "%";
       if (this.orientation == "vertical") {
         this.selectionElStyle.top = Math.min(positionPercentages[0], positionPercentages[1]) + "%";
-        this.selectionElStyle.height = Math.abs(positionPercentages[0] - positionPercentages[1]) + "%";
+        this.selectionElStyle.height =
+          Math.abs(positionPercentages[0] - positionPercentages[1]) + "%";
       } else {
         this.selectionElStyle.left = Math.min(positionPercentages[0], positionPercentages[1]) + "%";
-        this.selectionElStyle.width = Math.abs(positionPercentages[0] - positionPercentages[1]) + "%";
+        this.selectionElStyle.width =
+          Math.abs(positionPercentages[0] - positionPercentages[1]) + "%";
       }
 
       if (this.range) {
         this.tooltipInner.text(this.formater(this.value[0]) + " : " + this.formater(this.value[1]));
         this.tooltip[0].style[this.stylePos] =
-          (this.size * (positionPercentages[0] + (positionPercentages[1] - positionPercentages[0]) / 2)) / 100 -
-          (this.orientation === "vertical" ? this.tooltip.outerHeight() / 2 : this.tooltip.outerWidth() / 2) +
+          (this.size *
+            (positionPercentages[0] + (positionPercentages[1] - positionPercentages[0]) / 2)) /
+            100 -
+          (this.orientation === "vertical"
+            ? this.tooltip.outerHeight() / 2
+            : this.tooltip.outerWidth() / 2) +
           "px";
       } else {
         this.tooltipInner.text(this.formater(this.value[0]));
         this.tooltip[0].style[this.stylePos] =
           (this.size * positionPercentages[0]) / 100 -
-          (this.orientation === "vertical" ? this.tooltip.outerHeight() / 2 : this.tooltip.outerWidth() / 2) +
+          (this.orientation === "vertical"
+            ? this.tooltip.outerHeight() / 2
+            : this.tooltip.outerWidth() / 2) +
           "px";
       }
     },
@@ -221,7 +229,9 @@
           this.dragged = 0;
         }
 
-        this.percentage[this.dragged] = this.reversed ? this.percentage[1] - percentage : percentage;
+        this.percentage[this.dragged] = this.reversed
+          ? this.percentage[1] - percentage
+          : percentage;
         this.layout();
 
         if (this.touchCapable) {
@@ -396,7 +406,10 @@
         data = $this.data("slider"),
         options = typeof option === "object" && option;
       if (!data) {
-        $this.data("slider", (data = new Slider(this, $.extend({}, $.fn.slider.defaults, options))));
+        $this.data(
+          "slider",
+          (data = new Slider(this, $.extend({}, $.fn.slider.defaults, options)))
+        );
       }
       if (typeof option == "string") {
         data[option](val);
@@ -416,9 +429,7 @@
     reversed: false,
     limit: 100000,
     dragLocked: false,
-    formater: function (value) {
-      return value;
-    },
+    formater: (value) => value,
   };
 
   $.fn.slider.Constructor = Slider;

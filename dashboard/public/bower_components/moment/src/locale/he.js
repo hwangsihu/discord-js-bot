@@ -40,28 +40,28 @@ export default moment.defineLocale("he", {
     m: "דקה",
     mm: "%d דקות",
     h: "שעה",
-    hh: function (number) {
+    hh: (number) => {
       if (number === 2) {
         return "שעתיים";
       }
       return number + " שעות";
     },
     d: "יום",
-    dd: function (number) {
+    dd: (number) => {
       if (number === 2) {
         return "יומיים";
       }
       return number + " ימים";
     },
     M: "חודש",
-    MM: function (number) {
+    MM: (number) => {
       if (number === 2) {
         return "חודשיים";
       }
       return number + " חודשים";
     },
     y: "שנה",
-    yy: function (number) {
+    yy: (number) => {
       if (number === 2) {
         return "שנתיים";
       } else if (number % 10 === 0 && number !== 10) {
@@ -71,10 +71,8 @@ export default moment.defineLocale("he", {
     },
   },
   meridiemParse: /אחה"צ|לפנה"צ|אחרי הצהריים|לפני הצהריים|לפנות בוקר|בבוקר|בערב/i,
-  isPM: function (input) {
-    return /^(אחה"צ|אחרי הצהריים|בערב)$/.test(input);
-  },
-  meridiem: function (hour, minute, isLower) {
+  isPM: (input) => /^(אחה"צ|אחרי הצהריים|בערב)$/.test(input),
+  meridiem: (hour, minute, isLower) => {
     if (hour < 5) {
       return "לפנות בוקר";
     } else if (hour < 10) {

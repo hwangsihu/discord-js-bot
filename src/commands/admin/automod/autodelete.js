@@ -126,21 +126,24 @@ module.exports = {
 
     if (sub == "attachments") {
       const status = args[1].toLowerCase();
-      if (!["on", "off"].includes(status)) return message.safeReply("Invalid status. Value must be `on/off`");
+      if (!["on", "off"].includes(status))
+        return message.safeReply("Invalid status. Value must be `on/off`");
       response = await antiAttachments(settings, status);
     }
 
     //
     else if (sub === "invites") {
       const status = args[1].toLowerCase();
-      if (!["on", "off"].includes(status)) return message.safeReply("Invalid status. Value must be `on/off`");
+      if (!["on", "off"].includes(status))
+        return message.safeReply("Invalid status. Value must be `on/off`");
       response = await antiInvites(settings, status);
     }
 
     //
     else if (sub == "links") {
       const status = args[1].toLowerCase();
-      if (!["on", "off"].includes(status)) return message.safeReply("Invalid status. Value must be `on/off`");
+      if (!["on", "off"].includes(status))
+        return message.safeReply("Invalid status. Value must be `on/off`");
       response = await antilinks(settings, status);
     }
 
@@ -165,9 +168,12 @@ module.exports = {
 
     if (sub == "attachments") {
       response = await antiAttachments(settings, interaction.options.getString("status"));
-    } else if (sub === "invites") response = await antiInvites(settings, interaction.options.getString("status"));
-    else if (sub == "links") response = await antilinks(settings, interaction.options.getString("status"));
-    else if (sub === "maxlines") response = await maxLines(settings, interaction.options.getInteger("amount"));
+    } else if (sub === "invites")
+      response = await antiInvites(settings, interaction.options.getString("status"));
+    else if (sub == "links")
+      response = await antilinks(settings, interaction.options.getString("status"));
+    else if (sub === "maxlines")
+      response = await maxLines(settings, interaction.options.getInteger("amount"));
     else response = "Invalid command usage!";
 
     await interaction.followUp(response);
@@ -179,7 +185,9 @@ async function antiAttachments(settings, input) {
   settings.automod.anti_attachments = status;
   await settings.save();
   return `Messages ${
-    status ? "with attachments will now be automatically deleted" : "will not be filtered for attachments now"
+    status
+      ? "with attachments will now be automatically deleted"
+      : "will not be filtered for attachments now"
   }`;
 }
 
@@ -188,7 +196,9 @@ async function antiInvites(settings, input) {
   settings.automod.anti_invites = status;
   await settings.save();
   return `Messages ${
-    status ? "with discord invites will now be automatically deleted" : "will not be filtered for discord invites now"
+    status
+      ? "with discord invites will now be automatically deleted"
+      : "will not be filtered for discord invites now"
   }`;
 }
 

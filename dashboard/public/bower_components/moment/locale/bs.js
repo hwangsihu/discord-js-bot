@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   function translate(number, withoutSuffix, key) {
     var result = number + " ";
     switch (key) {
@@ -72,7 +70,10 @@
   }
 
   var bs = moment.defineLocale("bs", {
-    months: "januar_februar_mart_april_maj_juni_juli_august_septembar_oktobar_novembar_decembar".split("_"),
+    months:
+      "januar_februar_mart_april_maj_juni_juli_august_septembar_oktobar_novembar_decembar".split(
+        "_"
+      ),
     monthsShort: "jan._feb._mar._apr._maj._jun._jul._aug._sep._okt._nov._dec.".split("_"),
     monthsParseExact: true,
     weekdays: "nedjelja_ponedjeljak_utorak_srijeda_četvrtak_petak_subota".split("_"),

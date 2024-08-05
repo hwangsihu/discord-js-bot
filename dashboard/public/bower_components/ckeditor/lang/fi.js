@@ -349,7 +349,8 @@ CKEDITOR.lang["fi"] = {
     validateNumberFailed: "Arvon pitää olla numero.",
     confirmNewPage:
       "Kaikki tallentamattomat muutokset tähän sisältöön menetetään. Oletko varma, että haluat ladata uuden sivun?",
-    confirmCancel: "Jotkut asetuksista on muuttuneet. Oletko varma, että haluat sulkea valintaikkunan?",
+    confirmCancel:
+      "Jotkut asetuksista on muuttuneet. Oletko varma, että haluat sulkea valintaikkunan?",
     options: "Asetukset",
     target: "Kohde",
     targetNew: "Uusi ikkuna (_blank)",
@@ -381,7 +382,8 @@ CKEDITOR.lang["fi"] = {
       'Value specified for the "%1" field must be a positive number with or without a valid measurement unit (%2).',
     invalidCssLength:
       'Kentän "%1" arvon täytyy olla positiivinen luku CSS mittayksikön (px, %, in, cm, mm, em, ex, pt tai pc) kanssa tai ilman.',
-    invalidHtmlLength: 'Kentän "%1" arvon täytyy olla positiivinen luku HTML mittayksikön (px tai %) kanssa tai ilman.',
+    invalidHtmlLength:
+      'Kentän "%1" arvon täytyy olla positiivinen luku HTML mittayksikön (px tai %) kanssa tai ilman.',
     invalidInlineStyle:
       'Tyylille annetun arvon täytyy koostua yhdestä tai useammasta "nimi : arvo" parista, jotka ovat eroteltuna toisistaan puolipisteillä.',
     cssLengthTooltip:

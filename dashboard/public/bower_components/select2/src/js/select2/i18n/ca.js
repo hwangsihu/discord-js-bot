@@ -1,10 +1,8 @@
-define(function () {
+define(() => {
   // Catalan
   return {
-    errorLoading: function () {
-      return "La càrrega ha fallat";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "La càrrega ha fallat",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "Si us plau, elimina " + overChars + " car";
@@ -17,7 +15,7 @@ define(function () {
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "Si us plau, introdueix " + remainingChars + " car";
@@ -30,10 +28,8 @@ define(function () {
 
       return message;
     },
-    loadingMore: function () {
-      return "Carregant més resultats…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Carregant més resultats…",
+    maximumSelected: (args) => {
       var message = "Només es pot seleccionar " + args.maximum + " element";
 
       if (args.maximum != 1) {
@@ -42,14 +38,8 @@ define(function () {
 
       return message;
     },
-    noResults: function () {
-      return "No s'han trobat resultats";
-    },
-    searching: function () {
-      return "Cercant…";
-    },
-    removeAllItems: function () {
-      return "Treu tots els elements";
-    },
+    noResults: () => "No s'han trobat resultats",
+    searching: () => "Cercant…",
+    removeAllItems: () => "Treu tots els elements",
   };
 });

@@ -4,7 +4,20 @@
 
 import moment from "../moment";
 
-var months = ["ޖެނުއަރީ", "ފެބްރުއަރީ", "މާރިޗު", "އޭޕްރީލު", "މޭ", "ޖޫން", "ޖުލައި", "އޯގަސްޓު", "ސެޕްޓެމްބަރު", "އޮކްޓޯބަރު", "ނޮވެމްބަރު", "ޑިސެމްބަރު"],
+var months = [
+    "ޖެނުއަރީ",
+    "ފެބްރުއަރީ",
+    "މާރިޗު",
+    "އޭޕްރީލު",
+    "މޭ",
+    "ޖޫން",
+    "ޖުލައި",
+    "އޯގަސްޓު",
+    "ސެޕްޓެމްބަރު",
+    "އޮކްޓޯބަރު",
+    "ނޮވެމްބަރު",
+    "ޑިސެމްބަރު",
+  ],
   weekdays = ["އާދިއްތަ", "ހޯމަ", "އަންގާރަ", "ބުދަ", "ބުރާސްފަތި", "ހުކުރު", "ހޮނިހިރު"];
 
 export default moment.defineLocale("dv", {
@@ -22,10 +35,8 @@ export default moment.defineLocale("dv", {
     LLLL: "dddd D MMMM YYYY HH:mm",
   },
   meridiemParse: /މކ|މފ/,
-  isPM: function (input) {
-    return "މފ" === input;
-  },
-  meridiem: function (hour, minute, isLower) {
+  isPM: (input) => "މފ" === input,
+  meridiem: (hour, minute, isLower) => {
     if (hour < 12) {
       return "މކ";
     } else {
@@ -56,12 +67,8 @@ export default moment.defineLocale("dv", {
     y: "އަހަރެއް",
     yy: "އަހަރު %d",
   },
-  preparse: function (string) {
-    return string.replace(/،/g, ",");
-  },
-  postformat: function (string) {
-    return string.replace(/,/g, "،");
-  },
+  preparse: (string) => string.replace(/،/g, ","),
+  postformat: (string) => string.replace(/,/g, "،"),
   week: {
     dow: 7, // Sunday is the first day of the week.
     doy: 12, // The week that contains Jan 12th is the first week of the year.

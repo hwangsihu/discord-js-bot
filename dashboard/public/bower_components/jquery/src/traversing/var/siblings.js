@@ -1,15 +1,11 @@
-define(function () {
-  "use strict";
+define(() => (n, elem) => {
+  var matched = [];
 
-  return function (n, elem) {
-    var matched = [];
-
-    for (; n; n = n.nextSibling) {
-      if (n.nodeType === 1 && n !== elem) {
-        matched.push(n);
-      }
+  for (; n; n = n.nextSibling) {
+    if (n.nodeType === 1 && n !== elem) {
+      matched.push(n);
     }
+  }
 
-    return matched;
-  };
+  return matched;
 });

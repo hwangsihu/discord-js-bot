@@ -45,14 +45,10 @@ export default moment.defineLocale("si", {
     yy: "වසර %d",
   },
   dayOfMonthOrdinalParse: /\d{1,2} වැනි/,
-  ordinal: function (number) {
-    return number + " වැනි";
-  },
+  ordinal: (number) => number + " වැනි",
   meridiemParse: /පෙර වරු|පස් වරු|පෙ.ව|ප.ව./,
-  isPM: function (input) {
-    return input === "ප.ව." || input === "පස් වරු";
-  },
-  meridiem: function (hours, minutes, isLower) {
+  isPM: (input) => input === "ප.ව." || input === "පස් වරු",
+  meridiem: (hours, minutes, isLower) => {
     if (hours > 11) {
       return isLower ? "ප.ව." : "පස් වරු";
     } else {

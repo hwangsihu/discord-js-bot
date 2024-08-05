@@ -5,9 +5,7 @@ define([
   "../var/rnothtmlwhite",
   "../data/var/dataPriv",
   "../core/init",
-], function (jQuery, stripAndCollapse, isFunction, rnothtmlwhite, dataPriv) {
-  "use strict";
-
+], (jQuery, stripAndCollapse, isFunction, rnothtmlwhite, dataPriv) => {
   function getClass(elem) {
     return (elem.getAttribute && elem.getAttribute("class")) || "";
   }
@@ -161,7 +159,10 @@ define([
           // Otherwise bring back whatever was previously saved (if anything),
           // falling back to the empty string if nothing was stored.
           if (this.setAttribute) {
-            this.setAttribute("class", className || value === false ? "" : dataPriv.get(this, "__className__") || "");
+            this.setAttribute(
+              "class",
+              className || value === false ? "" : dataPriv.get(this, "__className__") || ""
+            );
           }
         }
       });
@@ -174,7 +175,10 @@ define([
 
       className = " " + selector + " ";
       while ((elem = this[i++])) {
-        if (elem.nodeType === 1 && (" " + stripAndCollapse(getClass(elem)) + " ").indexOf(className) > -1) {
+        if (
+          elem.nodeType === 1 &&
+          (" " + stripAndCollapse(getClass(elem)) + " ").indexOf(className) > -1
+        ) {
           return true;
         }
       }

@@ -21,7 +21,13 @@ proto.pastFuture = pastFuture;
 proto.set = set;
 
 // Month
-import { localeMonths, localeMonthsParse, localeMonthsShort, monthsRegex, monthsShortRegex } from "../units/month";
+import {
+  localeMonths,
+  localeMonthsParse,
+  localeMonthsShort,
+  monthsRegex,
+  monthsShortRegex,
+} from "../units/month";
 
 proto.months = localeMonths;
 proto.monthsShort = localeMonthsShort;

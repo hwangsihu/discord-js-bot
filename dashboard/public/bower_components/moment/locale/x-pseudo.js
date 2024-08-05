@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var xPseudo = moment.defineLocale("x-pseudo", {
     months:
       "J~áñúá~rý_F~ébrú~árý_~Márc~h_Áp~ríl_~Máý_~Júñé~_Júl~ý_Áú~gúst~_Sép~témb~ér_Ó~ctób~ér_Ñ~óvém~bér_~Décé~mbér".split(
@@ -52,9 +50,18 @@
       yy: "%d ý~éárs",
     },
     dayOfMonthOrdinalParse: /\d{1,2}(th|st|nd|rd)/,
-    ordinal: function (number) {
+    ordinal: (number) => {
       var b = number % 10,
-        output = ~~((number % 100) / 10) === 1 ? "th" : b === 1 ? "st" : b === 2 ? "nd" : b === 3 ? "rd" : "th";
+        output =
+          ~~((number % 100) / 10) === 1
+            ? "th"
+            : b === 1
+              ? "st"
+              : b === 2
+                ? "nd"
+                : b === 3
+                  ? "rd"
+                  : "th";
       return number + output;
     },
     week: {

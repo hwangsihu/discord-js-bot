@@ -1,6 +1,4 @@
-define(["../core", "../core/access", "./support", "../selector"], function (jQuery, access, support) {
-  "use strict";
-
+define(["../core", "../core/access", "./support", "../selector"], (jQuery, access, support) => {
   var rfocusable = /^(?:input|select|textarea|button)$/i,
     rclickable = /^(?:a|area)$/i;
 
@@ -17,7 +15,7 @@ define(["../core", "../core/access", "./support", "../selector"], function (jQue
   });
 
   jQuery.extend({
-    prop: function (elem, name, value) {
+    prop: (elem, name, value) => {
       var ret,
         hooks,
         nType = elem.nodeType;
@@ -50,7 +48,7 @@ define(["../core", "../core/access", "./support", "../selector"], function (jQue
 
     propHooks: {
       tabIndex: {
-        get: function (elem) {
+        get: (elem) => {
           // Support: IE <=9 - 11 only
           // elem.tabIndex doesn't always return the
           // correct value when it hasn't been explicitly set
@@ -59,7 +57,7 @@ define(["../core", "../core/access", "./support", "../selector"], function (jQue
           var tabindex = jQuery.find.attr(elem, "tabindex");
 
           if (tabindex) {
-            return parseInt(tabindex, 10);
+            return Number.parseInt(tabindex, 10);
           }
 
           if (rfocusable.test(elem.nodeName) || (rclickable.test(elem.nodeName) && elem.href)) {
@@ -87,7 +85,7 @@ define(["../core", "../core/access", "./support", "../selector"], function (jQue
   // since it considers such accessions noop
   if (!support.optSelected) {
     jQuery.propHooks.selected = {
-      get: function (elem) {
+      get: (elem) => {
         /* eslint no-unused-expressions: "off" */
 
         var parent = elem.parentNode;
@@ -96,7 +94,7 @@ define(["../core", "../core/access", "./support", "../selector"], function (jQue
         }
         return null;
       },
-      set: function (elem) {
+      set: (elem) => {
         /* eslint no-unused-expressions: "off" */
 
         var parent = elem.parentNode;

@@ -1,10 +1,10 @@
-﻿(function (f) {
+﻿((f) => {
   "object" == typeof exports && "object" == typeof module
     ? f(require("../../lib/codemirror"))
     : "function" == typeof define && define.amd
       ? define(["../../lib/codemirror"], f)
       : f(CodeMirror);
-})(function (f) {
+})((f) => {
   function p(a, b) {
     this.cm = a;
     this.options = this.buildOptions(b);
@@ -12,44 +12,36 @@
     this.tick = this.debounce = 0;
     this.startPos = this.cm.getCursor();
     this.startLen = this.cm.getLine(this.startPos.line).length;
-    var c = this;
     a.on(
       "cursorActivity",
-      (this.activityFunc = function () {
-        c.cursorActivity();
+      (this.activityFunc = () => {
+        this.cursorActivity();
       })
     );
   }
   function w(a, b) {
     function c(a, c) {
       var d;
-      d =
-        "string" != typeof c
-          ? function (a) {
-              return c(a, b);
-            }
-          : e.hasOwnProperty(c)
-            ? e[c]
-            : c;
+      d = "string" != typeof c ? (a) => c(a, b) : e.hasOwnProperty(c) ? e[c] : c;
       f[a] = d;
     }
     var e = {
-        Up: function () {
+        Up: () => {
           b.moveFocus(-1);
         },
-        Down: function () {
+        Down: () => {
           b.moveFocus(1);
         },
-        PageUp: function () {
+        PageUp: () => {
           b.moveFocus(-b.menuSize() + 1, !0);
         },
-        PageDown: function () {
+        PageDown: () => {
           b.moveFocus(b.menuSize() - 1, !0);
         },
-        Home: function () {
+        Home: () => {
           b.setFocus(0);
         },
-        End: function () {
+        End: () => {
           b.setFocus(b.length - 1);
         },
         Enter: b.pick,
@@ -63,7 +55,7 @@
     return f;
   }
   function v(a, b) {
-    for (; b && b != a; ) {
+    while (b && b != a) {
       if ("LI" === b.nodeName.toUpperCase() && b.parentNode == a) return b;
       b = b.parentNode;
     }
@@ -72,8 +64,7 @@
     this.completion = a;
     this.data = b;
     this.picked = !1;
-    var c = this,
-      e = a.cm,
+    var e = a.cm,
       d = (this.hints = document.createElement("ul"));
     d.className = "CodeMirror-hints";
     this.selectedHint = b.selectedHint || 0;
@@ -85,7 +76,9 @@
       l.className = k;
       h.render
         ? h.render(l, b, h)
-        : l.appendChild(document.createTextNode(h.displayText || ("string" == typeof h ? h : h.text)));
+        : l.appendChild(
+            document.createTextNode(h.displayText || ("string" == typeof h ? h : h.text))
+          );
       l.hintId = g;
     }
     var g = e.cursorCoords(a.options.alignWithWord ? b.from : null),
@@ -94,8 +87,12 @@
       n = !0;
     d.style.left = r + "px";
     d.style.top = t + "px";
-    l = window.innerWidth || Math.max(document.body.offsetWidth, document.documentElement.offsetWidth);
-    k = window.innerHeight || Math.max(document.body.offsetHeight, document.documentElement.offsetHeight);
+    l =
+      window.innerWidth ||
+      Math.max(document.body.offsetWidth, document.documentElement.offsetWidth);
+    k =
+      window.innerHeight ||
+      Math.max(document.body.offsetHeight, document.documentElement.offsetHeight);
     (a.options.container || document.body).appendChild(d);
     h = d.getBoundingClientRect();
     if (0 < h.bottom - k) {
@@ -107,7 +104,9 @@
           (d.style.top = (t = g.bottom - h.top) + "px"),
           (k = e.getCursor()),
           b.from.ch != k.ch &&
-            ((g = e.cursorCoords(k)), (d.style.left = (r = g.left) + "px"), (h = d.getBoundingClientRect())));
+            ((g = e.cursorCoords(k)),
+            (d.style.left = (r = g.left) + "px"),
+            (h = d.getBoundingClientRect())));
     }
     k = h.right - l;
     0 < k &&
@@ -115,21 +114,19 @@
       (d.style.left = (r = g.left - k) + "px"));
     e.addKeyMap(
       (this.keyMap = w(a, {
-        moveFocus: function (a, b) {
-          c.changeActive(c.selectedHint + a, b);
+        moveFocus: (a, b) => {
+          this.changeActive(this.selectedHint + a, b);
         },
-        setFocus: function (a) {
-          c.changeActive(a);
+        setFocus: (a) => {
+          this.changeActive(a);
         },
-        menuSize: function () {
-          return c.screenAmount();
-        },
+        menuSize: () => this.screenAmount(),
         length: m.length,
-        close: function () {
+        close: () => {
           a.close();
         },
-        pick: function () {
-          c.pick();
+        pick: () => {
+          this.pick();
         },
         data: b,
       }))
@@ -138,15 +135,15 @@
       var p;
       e.on(
         "blur",
-        (this.onBlur = function () {
-          p = setTimeout(function () {
+        (this.onBlur = () => {
+          p = setTimeout(() => {
             a.close();
           }, 100);
         })
       );
       e.on(
         "focus",
-        (this.onFocus = function () {
+        (this.onFocus = () => {
           clearTimeout(p);
         })
       );
@@ -154,7 +151,7 @@
     var q = e.getScrollInfo();
     e.on(
       "scroll",
-      (this.onScroll = function () {
+      (this.onScroll = () => {
         var c = e.getScrollInfo(),
           b = e.getWrapperElement().getBoundingClientRect(),
           f = t + q.top - c.top,
@@ -165,23 +162,25 @@
         d.style.left = r + q.left - c.left + "px";
       })
     );
-    f.on(d, "dblclick", function (a) {
-      (a = v(d, a.target || a.srcElement)) && null != a.hintId && (c.changeActive(a.hintId), c.pick());
+    f.on(d, "dblclick", (a) => {
+      (a = v(d, a.target || a.srcElement)) &&
+        null != a.hintId &&
+        (this.changeActive(a.hintId), this.pick());
     });
-    f.on(d, "click", function (b) {
+    f.on(d, "click", (b) => {
       (b = v(d, b.target || b.srcElement)) &&
         null != b.hintId &&
-        (c.changeActive(b.hintId), a.options.completeOnSingleClick && c.pick());
+        (this.changeActive(b.hintId), a.options.completeOnSingleClick && this.pick());
     });
-    f.on(d, "mousedown", function () {
-      setTimeout(function () {
+    f.on(d, "mousedown", () => {
+      setTimeout(() => {
         e.focus();
       }, 20);
     });
     f.signal(b, "select", m[0], d.firstChild);
     return !0;
   }
-  f.showHint = function (a, b, c) {
+  f.showHint = (a, b, c) => {
     if (!b) return a.showHint(c);
     c && c.async && (b.async = !0);
     b = { hint: b };
@@ -195,11 +194,7 @@
       (a = this.state.completionActive = new p(this, a)),
       a.options.hint && (f.signal(this, "startCompletion", this), a.update()));
   });
-  var x =
-      window.requestAnimationFrame ||
-      function (a) {
-        return setTimeout(a, 1e3 / 60);
-      },
+  var x = window.requestAnimationFrame || ((a) => setTimeout(a, 1e3 / 60)),
     y = window.cancelAnimationFrame || clearTimeout;
   p.prototype = {
     close: function () {
@@ -216,7 +211,12 @@
       var c = a.list[b];
       c.hint
         ? c.hint(this.cm, a, c)
-        : this.cm.replaceRange("string" == typeof c ? c : c.text, c.from || a.from, c.to || a.to, "complete");
+        : this.cm.replaceRange(
+            "string" == typeof c ? c : c.text,
+            c.from || a.from,
+            c.to || a.to,
+            "complete"
+          );
       f.signal(a, "pick", c);
       this.close();
     },
@@ -237,9 +237,8 @@
       )
         this.close();
       else {
-        var c = this;
-        this.debounce = x(function () {
-          c.update();
+        this.debounce = x(() => {
+          this.update();
         });
         this.widget && this.widget.disable();
       }
@@ -247,12 +246,11 @@
     update: function () {
       if (null != this.tick)
         if ((this.data && f.signal(this.data, "update"), this.options.hint.async)) {
-          var a = ++this.tick,
-            b = this;
+          var a = ++this.tick;
           this.options.hint(
             this.cm,
-            function (c) {
-              b.tick == a && b.finishUpdate(c);
+            (c) => {
+              this.tick == a && this.finishUpdate(c);
             },
             this.options
           );
@@ -262,7 +260,9 @@
       this.data = a;
       var b = this.widget && this.widget.picked;
       this.widget && this.widget.close();
-      a && a.list.length && (b && 1 == a.list.length ? this.pick(a, 0) : (this.widget = new n(this, a)));
+      a &&
+        a.list.length &&
+        (b && 1 == a.list.length ? this.pick(a, 0) : (this.widget = new n(this, a)));
     },
     showWidget: function (a) {
       this.data = a;
@@ -286,16 +286,16 @@
         this.hints.parentNode.removeChild(this.hints);
         this.completion.cm.removeKeyMap(this.keyMap);
         var a = this.completion.cm;
-        this.completion.options.closeOnUnfocus && (a.off("blur", this.onBlur), a.off("focus", this.onFocus));
+        this.completion.options.closeOnUnfocus &&
+          (a.off("blur", this.onBlur), a.off("focus", this.onFocus));
         a.off("scroll", this.onScroll);
       }
     },
     disable: function () {
       this.completion.cm.removeKeyMap(this.keyMap);
-      var a = this;
       this.keyMap = {
-        Enter: function () {
-          a.picked = !0;
+        Enter: () => {
+          this.picked = !0;
         },
       };
       this.completion.cm.addKeyMap(this.keyMap);
@@ -323,7 +323,7 @@
       return Math.floor(this.hints.clientHeight / this.hints.firstChild.offsetHeight) || 1;
     },
   };
-  f.registerHelper("hint", "auto", function (a, b) {
+  f.registerHelper("hint", "auto", (a, b) => {
     var c = a.getHelpers(a.getCursor(), "hint");
     if (c.length)
       for (var e = 0; e < c.length; e++) {
@@ -334,7 +334,7 @@
       if (c) return f.hint.fromList(a, { words: c });
     } else if (f.hint.anyword) return f.hint.anyword(a, b);
   });
-  f.registerHelper("hint", "fromList", function (a, b) {
+  f.registerHelper("hint", "fromList", (a, b) => {
     for (var c = a.getCursor(), e = a.getTokenAt(c), d = [], m = 0; m < b.words.length; m++) {
       var g = b.words[m];
       g.slice(0, e.string.length) == e.string && d.push(g);

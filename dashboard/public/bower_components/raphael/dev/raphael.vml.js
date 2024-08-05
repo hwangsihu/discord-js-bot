@@ -1,11 +1,11 @@
-define(["./raphael.core"], function (R) {
+define(["./raphael.core"], (R) => {
   if (R && !R.vml) {
     return;
   }
 
   var has = "hasOwnProperty",
     Str = String,
-    toFloat = parseFloat,
+    toFloat = Number.parseFloat,
     math = Math,
     round = math.round,
     mmax = math.max,
@@ -25,17 +25,17 @@ define(["./raphael.core"], function (R) {
     zoom = 21600,
     pathTypes = { path: 1, rect: 1, image: 1 },
     ovalTypes = { circle: 1, ellipse: 1 },
-    path2vml = function (path) {
+    path2vml = (path) => {
       var total = /[ahqstv]/gi,
         command = R._pathToAbsolute;
       Str(path).match(total) && (command = R._path2curve);
       total = /[clmz]/g;
       if (command == R._pathToAbsolute && !Str(path).match(total)) {
-        var res = Str(path).replace(bites, function (all, command, args) {
+        var res = Str(path).replace(bites, (all, command, args) => {
           var vals = [],
             isMove = command.toLowerCase() == "m",
             res = map[command];
-          args.replace(val, function (value) {
+          args.replace(val, (value) => {
             if (isMove && vals.length == 2) {
               res += vals + map[command == "m" ? "l" : "L"];
               vals = [];
@@ -61,7 +61,7 @@ define(["./raphael.core"], function (R) {
       }
       return res.join(S);
     },
-    compensation = function (deg, dx, dy) {
+    compensation = (deg, dx, dy) => {
       var m = R.matrix();
       m.rotate(-deg, 0.5, 0.5);
       return {
@@ -69,7 +69,7 @@ define(["./raphael.core"], function (R) {
         dy: m.y(dx, dy),
       };
     },
-    setCoords = function (p, sx, sy, dx, dy, deg) {
+    setCoords = (p, sx, sy, dx, dy, deg) => {
       var _ = p._,
         m = p.matrix,
         fillpos = _.fillpos,
@@ -111,9 +111,12 @@ define(["./raphael.core"], function (R) {
       s.visibility = "visible";
     };
   R.toString = function () {
-    return "Your browser doesn\u2019t support SVG. Falling down to VML.\nYou are running Rapha\xebl " + this.version;
+    return (
+      "Your browser doesn\u2019t support SVG. Falling down to VML.\nYou are running Rapha\xebl " +
+      this.version
+    );
   };
-  var addArrow = function (o, value, isEnd) {
+  var addArrow = (o, value, isEnd) => {
       var values = Str(value).toLowerCase().split("-"),
         se = isEnd ? "end" : "start",
         i = values.length,
@@ -145,7 +148,7 @@ define(["./raphael.core"], function (R) {
       stroke[se + "arrowlength"] = w;
       stroke[se + "arrowwidth"] = h;
     },
-    setFillAndStroke = function (o, params) {
+    setFillAndStroke = (o, params) => {
       // o.paper.canvas.style.display = "none";
       o.attrs = o.attrs || {};
       var node = o.node,
@@ -165,7 +168,11 @@ define(["./raphael.core"], function (R) {
             params.r != a.r),
         isOval =
           ovalTypes[o.type] &&
-          (a.cx != params.cx || a.cy != params.cy || a.r != params.r || a.rx != params.rx || a.ry != params.ry),
+          (a.cx != params.cx ||
+            a.cy != params.cy ||
+            a.r != params.r ||
+            a.rx != params.rx ||
+            a.ry != params.ry),
         res = o;
 
       for (var par in params)
@@ -182,7 +189,9 @@ define(["./raphael.core"], function (R) {
       params.cursor && (s.cursor = params.cursor);
       "blur" in params && o.blur(params.blur);
       if ((params.path && o.type == "path") || newpath) {
-        node.path = path2vml(~Str(a.path).toLowerCase().indexOf("r") ? R._pathToAbsolute(a.path) : a.path);
+        node.path = path2vml(
+          ~Str(a.path).toLowerCase().indexOf("r") ? R._pathToAbsolute(a.path) : a.path
+        );
         o._.dirty = 1;
         if (o.type == "image") {
           o._.fillpos = [a.x, a.y];
@@ -233,7 +242,8 @@ define(["./raphael.core"], function (R) {
         var textpathStyle = o.textpath.style;
         params.font && (textpathStyle.font = params.font);
         params["font-family"] &&
-          (textpathStyle.fontFamily = '"' + params["font-family"].split(",")[0].replace(/^['"]+|['"]+$/g, E) + '"');
+          (textpathStyle.fontFamily =
+            '"' + params["font-family"].split(",")[0].replace(/^['"]+|['"]+$/g, E) + '"');
         params["font-size"] && (textpathStyle.fontSize = params["font-size"]);
         params["font-weight"] && (textpathStyle.fontWeight = params["font-weight"]);
         params["font-style"] && (textpathStyle.fontStyle = params["font-style"]);
@@ -269,17 +279,17 @@ define(["./raphael.core"], function (R) {
           fill.on = false;
         }
         if (fill.on && params.fill) {
-          var isURL = Str(params.fill).match(R._ISURL);
-          if (isURL) {
+          var isUrl = Str(params.fill).match(R._ISURL);
+          if (isUrl) {
             fill.parentNode == node && node.removeChild(fill);
             fill.rotate = true;
-            fill.src = isURL[1];
+            fill.src = isUrl[1];
             fill.type = "tile";
             var bbox = o.getBBox(1);
             fill.position = bbox.x + S + bbox.y;
             o._.fillpos = [bbox.x, bbox.y];
 
-            R._preload(isURL[1], function () {
+            R._preload(isUrl[1], function () {
               o._.fillsize = [this.offsetWidth, this.offsetHeight];
             });
           } else {
@@ -331,7 +341,10 @@ define(["./raphael.core"], function (R) {
           (stroke.on = false);
         var strokeColor = R.getRGB(params.stroke);
         stroke.on && params.stroke && (stroke.color = strokeColor.hex);
-        opacity = ((+a["stroke-opacity"] + 1 || 2) - 1) * ((+a.opacity + 1 || 2) - 1) * ((+strokeColor.o + 1 || 2) - 1);
+        opacity =
+          ((+a["stroke-opacity"] + 1 || 2) - 1) *
+          ((+a.opacity + 1 || 2) - 1) *
+          ((+strokeColor.o + 1 || 2) - 1);
         var width = (toFloat(params["stroke-width"]) || 1) * 0.75;
         opacity = mmin(mmax(opacity, 0), 1);
         params["stroke-width"] == null && (width = a["stroke-width"]);
@@ -343,7 +356,11 @@ define(["./raphael.core"], function (R) {
         stroke.miterlimit = params["stroke-miterlimit"] || 8;
         params["stroke-linecap"] &&
           (stroke.endcap =
-            params["stroke-linecap"] == "butt" ? "flat" : params["stroke-linecap"] == "square" ? "square" : "round");
+            params["stroke-linecap"] == "butt"
+              ? "flat"
+              : params["stroke-linecap"] == "square"
+                ? "square"
+                : "round");
         if ("stroke-dasharray" in params) {
           var dasharray = {
             "-": "shortdash",
@@ -357,7 +374,9 @@ define(["./raphael.core"], function (R) {
             "--.": "longdashdot",
             "--..": "longdashdotdot",
           };
-          stroke.dashstyle = dasharray[has](params["stroke-dasharray"]) ? dasharray[params["stroke-dasharray"]] : E;
+          stroke.dashstyle = dasharray[has](params["stroke-dasharray"])
+            ? dasharray[params["stroke-dasharray"]]
+            : E;
         }
         newstroke && node.appendChild(stroke);
       }
@@ -386,8 +405,22 @@ define(["./raphael.core"], function (R) {
         res.Y = a.y + res.H / 2;
 
         ("x" in params || "y" in params) &&
-          (res.path.v = R.format("m{0},{1}l{2},{1}", round(a.x * zoom), round(a.y * zoom), round(a.x * zoom) + 1));
-        var dirtyattrs = ["x", "y", "text", "font", "font-family", "font-weight", "font-style", "font-size"];
+          (res.path.v = R.format(
+            "m{0},{1}l{2},{1}",
+            round(a.x * zoom),
+            round(a.y * zoom),
+            round(a.x * zoom) + 1
+          ));
+        var dirtyattrs = [
+          "x",
+          "y",
+          "text",
+          "font",
+          "font-family",
+          "font-weight",
+          "font-style",
+          "font-size",
+        ];
         for (var d = 0, dd = dirtyattrs.length; d < dd; d++)
           if (dirtyattrs[d] in params) {
             res._.dirty = 1;
@@ -413,7 +446,7 @@ define(["./raphael.core"], function (R) {
       }
       // res.paper.canvas.style.display = E;
     },
-    addGradientFill = function (o, gradient, fill) {
+    addGradientFill = (o, gradient, fill) => {
       o.attrs = o.attrs || {};
       var attrs = o.attrs,
         pow = Math.pow,
@@ -422,7 +455,7 @@ define(["./raphael.core"], function (R) {
         type = "linear",
         fxfy = ".5 .5";
       o.attrs.gradient = gradient;
-      gradient = Str(gradient).replace(R._radial_gradient, function (all, fx, fy) {
+      gradient = Str(gradient).replace(R._radial_gradient, (all, fx, fy) => {
         type = "radial";
         if (fx && fy) {
           fx = toFloat(fx);
@@ -793,7 +826,7 @@ define(["./raphael.core"], function (R) {
     return this;
   };
 
-  R._engine.path = function (pathString, vml) {
+  R._engine.path = (pathString, vml) => {
     var el = createNode("shape");
     el.style.cssText = cssDot;
     el.coordsize = zoom + S + zoom;
@@ -813,7 +846,7 @@ define(["./raphael.core"], function (R) {
     p.transform(E);
     return p;
   };
-  R._engine.rect = function (vml, x, y, w, h, r) {
+  R._engine.rect = (vml, x, y, w, h, r) => {
     var path = R._rectPath(x, y, w, h, r),
       res = vml.path(path),
       a = res.attrs;
@@ -826,7 +859,7 @@ define(["./raphael.core"], function (R) {
     res.type = "rect";
     return res;
   };
-  R._engine.ellipse = function (vml, x, y, rx, ry) {
+  R._engine.ellipse = (vml, x, y, rx, ry) => {
     var res = vml.path(),
       a = res.attrs;
     res.X = x - rx;
@@ -842,7 +875,7 @@ define(["./raphael.core"], function (R) {
     });
     return res;
   };
-  R._engine.circle = function (vml, x, y, r) {
+  R._engine.circle = (vml, x, y, r) => {
     var res = vml.path(),
       a = res.attrs;
     res.X = x - r;
@@ -856,7 +889,7 @@ define(["./raphael.core"], function (R) {
     });
     return res;
   };
-  R._engine.image = function (vml, src, x, y, w, h) {
+  R._engine.image = (vml, src, x, y, w, h) => {
     var path = R._rectPath(x, y, w, h),
       res = vml.path(path).attr({ stroke: "none" }),
       a = res.attrs,
@@ -879,7 +912,7 @@ define(["./raphael.core"], function (R) {
     setCoords(res, 1, 1, 0, 0, 0);
     return res;
   };
-  R._engine.text = function (vml, x, y, text) {
+  R._engine.text = (vml, x, y, text) => {
     var el = createNode("shape"),
       path = createNode("path"),
       o = createNode("textpath");
@@ -957,13 +990,13 @@ define(["./raphael.core"], function (R) {
       dy: -y,
       scale: paperSize,
     };
-    this.forEach(function (el) {
+    this.forEach((el) => {
       el.transform("...");
     });
     return this;
   };
   var createNode;
-  R._engine.initWin = function (win) {
+  R._engine.initWin = (win) => {
     var doc = win.document;
     if (doc.styleSheets.length < 31) {
       doc.createStyleSheet().addRule(".rvml", "behavior:url(#default#VML)");
@@ -974,17 +1007,14 @@ define(["./raphael.core"], function (R) {
     }
     try {
       !doc.namespaces.rvml && doc.namespaces.add("rvml", "urn:schemas-microsoft-com:vml");
-      createNode = function (tagName) {
-        return doc.createElement("<rvml:" + tagName + ' class="rvml">');
-      };
+      createNode = (tagName) => doc.createElement("<rvml:" + tagName + ' class="rvml">');
     } catch (e) {
-      createNode = function (tagName) {
-        return doc.createElement("<" + tagName + ' xmlns="urn:schemas-microsoft.com:vml" class="rvml">');
-      };
+      createNode = (tagName) =>
+        doc.createElement("<" + tagName + ' xmlns="urn:schemas-microsoft.com:vml" class="rvml">');
     }
   };
   R._engine.initWin(R._g.win);
-  R._engine.create = function () {
+  R._engine.create = () => {
     var con = R._getContainer.apply(0, arguments),
       container = con.container,
       height = con.height,
@@ -1009,7 +1039,8 @@ define(["./raphael.core"], function (R) {
     res.coordsize = zoom * 1e3 + S + zoom * 1e3;
     res.coordorigin = "0 0";
     res.span = R._g.doc.createElement("span");
-    res.span.style.cssText = "position:absolute;left:-9999em;top:-9999em;padding:0;margin:0;line-height:1;";
+    res.span.style.cssText =
+      "position:absolute;left:-9999em;top:-9999em;padding:0;margin:0;line-height:1;";
     c.appendChild(res.span);
     cs.cssText = R.format(
       "top:0;left:0;width:{0};height:{1};display:inline-block;position:relative;clip:rect(0 {0} {1} 0);overflow:hidden",
@@ -1021,14 +1052,12 @@ define(["./raphael.core"], function (R) {
       cs.left = x + "px";
       cs.top = y + "px";
       cs.position = "absolute";
+    } else if (container.firstChild) {
+      container.insertBefore(c, container.firstChild);
     } else {
-      if (container.firstChild) {
-        container.insertBefore(c, container.firstChild);
-      } else {
-        container.appendChild(c);
-      }
+      container.appendChild(c);
     }
-    res.renderfix = function () {};
+    res.renderfix = () => {};
     return res;
   };
   R.prototype.clear = function () {
@@ -1052,13 +1081,12 @@ define(["./raphael.core"], function (R) {
   var setproto = R.st;
   for (var method in elproto)
     if (elproto[has](method) && !setproto[has](method)) {
-      setproto[method] = (function (methodname) {
-        return function () {
+      setproto[method] = ((methodname) =>
+        function () {
           var arg = arguments;
-          return this.forEach(function (el) {
+          return this.forEach((el) => {
             el[methodname].apply(el, arg);
           });
-        };
-      })(method);
+        })(method);
     }
 });

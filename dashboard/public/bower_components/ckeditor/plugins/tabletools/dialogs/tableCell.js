@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-CKEDITOR.dialog.add("cellProperties", function (f) {
+CKEDITOR.dialog.add("cellProperties", (f) => {
   function d(a) {
     return function (b) {
       for (var c = a(b[0]), d = 1; d < b.length; d++)
@@ -12,7 +12,10 @@ CKEDITOR.dialog.add("cellProperties", function (f) {
         }
       "undefined" != typeof c &&
         (this.setValue(c),
-        CKEDITOR.env.gecko && "select" == this.type && !c && (this.getInputElement().$.selectedIndex = -1));
+        CKEDITOR.env.gecko &&
+          "select" == this.type &&
+          !c &&
+          (this.getInputElement().$.selectedIndex = -1));
     };
   }
   function l(a) {
@@ -56,18 +59,20 @@ CKEDITOR.dialog.add("cellProperties", function (f) {
                         label: e.width,
                         validate: k.number(c.invalidWidth),
                         onLoad: function () {
-                          var a = this.getDialog().getContentElement("info", "widthType").getElement(),
+                          var a = this.getDialog()
+                              .getContentElement("info", "widthType")
+                              .getElement(),
                             b = this.getInputElement(),
                             c = b.getAttribute("aria-labelledby");
                           b.setAttribute("aria-labelledby", [c, a.$.id].join(" "));
                         },
-                        setup: d(function (a) {
-                          var b = parseInt(a.getAttribute("width"), 10);
-                          a = parseInt(a.getStyle("width"), 10);
+                        setup: d((a) => {
+                          var b = Number.parseInt(a.getAttribute("width"), 10);
+                          a = Number.parseInt(a.getStyle("width"), 10);
                           return isNaN(a) ? (isNaN(b) ? "" : b) : a;
                         }),
                         commit: function (a) {
-                          var b = parseInt(this.getValue(), 10),
+                          var b = Number.parseInt(this.getValue(), 10),
                             c = this.getDialog().getValueOf("info", "widthType") || l(a);
                           isNaN(b) ? a.removeStyle("width") : a.setStyle("width", b + c);
                           a.removeAttribute("width");
@@ -102,7 +107,9 @@ CKEDITOR.dialog.add("cellProperties", function (f) {
                         default: "",
                         validate: k.number(c.invalidHeight),
                         onLoad: function () {
-                          var a = this.getDialog().getContentElement("info", "htmlHeightType").getElement(),
+                          var a = this.getDialog()
+                              .getContentElement("info", "htmlHeightType")
+                              .getElement(),
                             b = this.getInputElement(),
                             c = b.getAttribute("aria-labelledby");
                           this.getDialog().getContentElement("info", "height").isVisible() &&
@@ -114,14 +121,16 @@ CKEDITOR.dialog.add("cellProperties", function (f) {
                               .setStyle("display", "block"));
                           b.setAttribute("aria-labelledby", [c, a.$.id].join(" "));
                         },
-                        setup: d(function (a) {
-                          var b = parseInt(a.getAttribute("height"), 10);
-                          a = parseInt(a.getStyle("height"), 10);
+                        setup: d((a) => {
+                          var b = Number.parseInt(a.getAttribute("height"), 10);
+                          a = Number.parseInt(a.getStyle("height"), 10);
                           return isNaN(a) ? (isNaN(b) ? "" : b) : a;
                         }),
                         commit: function (a) {
-                          var b = parseInt(this.getValue(), 10);
-                          isNaN(b) ? a.removeStyle("height") : a.setStyle("height", CKEDITOR.tools.cssLength(b));
+                          var b = Number.parseInt(this.getValue(), 10);
+                          isNaN(b)
+                            ? a.removeStyle("height")
+                            : a.setStyle("height", CKEDITOR.tools.cssLength(b));
                           a.removeAttribute("height");
                         },
                       },
@@ -138,12 +147,14 @@ CKEDITOR.dialog.add("cellProperties", function (f) {
                       [c.yes, "yes"],
                       [c.no, "no"],
                     ],
-                    setup: d(function (a) {
+                    setup: d((a) => {
                       var b = a.getAttribute("noWrap");
                       if ("nowrap" == a.getStyle("white-space") || b) return "no";
                     }),
                     commit: function (a) {
-                      "no" == this.getValue() ? a.setStyle("white-space", "nowrap") : a.removeStyle("white-space");
+                      "no" == this.getValue()
+                        ? a.setStyle("white-space", "nowrap")
+                        : a.removeStyle("white-space");
                       a.removeAttribute("noWrap");
                     },
                   },
@@ -160,7 +171,7 @@ CKEDITOR.dialog.add("cellProperties", function (f) {
                       [e.right, "right"],
                       [e.justify, "justify"],
                     ],
-                    setup: d(function (a) {
+                    setup: d((a) => {
                       var b = a.getAttribute("align");
                       return a.getStyle("text-align") || b || "";
                     }),
@@ -182,7 +193,7 @@ CKEDITOR.dialog.add("cellProperties", function (f) {
                       [e.alignBottom, "bottom"],
                       [c.alignBaseline, "baseline"],
                     ],
-                    setup: d(function (a) {
+                    setup: d((a) => {
                       var b = a.getAttribute("vAlign");
                       a = a.getStyle("vertical-align");
                       switch (a) {
@@ -218,9 +229,7 @@ CKEDITOR.dialog.add("cellProperties", function (f) {
                       [c.data, "td"],
                       [c.header, "th"],
                     ],
-                    setup: d(function (a) {
-                      return a.getName();
-                    }),
+                    setup: d((a) => a.getName()),
                     commit: function (a) {
                       a.renameNode(this.getValue());
                     },
@@ -232,12 +241,14 @@ CKEDITOR.dialog.add("cellProperties", function (f) {
                     label: c.rowSpan,
                     default: "",
                     validate: k.integer(c.invalidRowSpan),
-                    setup: d(function (a) {
-                      if ((a = parseInt(a.getAttribute("rowSpan"), 10)) && 1 != a) return a;
+                    setup: d((a) => {
+                      if ((a = Number.parseInt(a.getAttribute("rowSpan"), 10)) && 1 != a) return a;
                     }),
                     commit: function (a) {
-                      var b = parseInt(this.getValue(), 10);
-                      b && 1 != b ? a.setAttribute("rowSpan", this.getValue()) : a.removeAttribute("rowSpan");
+                      var b = Number.parseInt(this.getValue(), 10);
+                      b && 1 != b
+                        ? a.setAttribute("rowSpan", this.getValue())
+                        : a.removeAttribute("rowSpan");
                     },
                   },
                   {
@@ -246,12 +257,14 @@ CKEDITOR.dialog.add("cellProperties", function (f) {
                     label: c.colSpan,
                     default: "",
                     validate: k.integer(c.invalidColSpan),
-                    setup: d(function (a) {
-                      if ((a = parseInt(a.getAttribute("colSpan"), 10)) && 1 != a) return a;
+                    setup: d((a) => {
+                      if ((a = Number.parseInt(a.getAttribute("colSpan"), 10)) && 1 != a) return a;
                     }),
                     commit: function (a) {
-                      var b = parseInt(this.getValue(), 10);
-                      b && 1 != b ? a.setAttribute("colSpan", this.getValue()) : a.removeAttribute("colSpan");
+                      var b = Number.parseInt(this.getValue(), 10);
+                      b && 1 != b
+                        ? a.setAttribute("colSpan", this.getValue())
+                        : a.removeAttribute("colSpan");
                     },
                   },
                   g,
@@ -265,7 +278,7 @@ CKEDITOR.dialog.add("cellProperties", function (f) {
                         id: "bgColor",
                         label: c.bgColor,
                         default: "",
-                        setup: d(function (a) {
+                        setup: d((a) => {
                           var b = a.getAttribute("bgColor");
                           return a.getStyle("background-color") || b;
                         }),
@@ -287,7 +300,8 @@ CKEDITOR.dialog.add("cellProperties", function (f) {
                             },
                             onClick: function () {
                               f.getColorFromDialog(function (a) {
-                                a && this.getDialog().getContentElement("info", "bgColor").setValue(a);
+                                a &&
+                                  this.getDialog().getContentElement("info", "bgColor").setValue(a);
                                 this.focus();
                               }, this);
                             },
@@ -306,12 +320,14 @@ CKEDITOR.dialog.add("cellProperties", function (f) {
                         id: "borderColor",
                         label: c.borderColor,
                         default: "",
-                        setup: d(function (a) {
+                        setup: d((a) => {
                           var b = a.getAttribute("borderColor");
                           return a.getStyle("border-color") || b;
                         }),
                         commit: function (a) {
-                          this.getValue() ? a.setStyle("border-color", this.getValue()) : a.removeStyle("border-color");
+                          this.getValue()
+                            ? a.setStyle("border-color", this.getValue())
+                            : a.removeStyle("border-color");
                           a.removeAttribute("borderColor");
                         },
                       },
@@ -327,7 +343,10 @@ CKEDITOR.dialog.add("cellProperties", function (f) {
                             },
                             onClick: function () {
                               f.getColorFromDialog(function (a) {
-                                a && this.getDialog().getContentElement("info", "borderColor").setValue(a);
+                                a &&
+                                  this.getDialog()
+                                    .getContentElement("info", "borderColor")
+                                    .setValue(a);
                                 this.focus();
                               }, this);
                             },
@@ -347,7 +366,11 @@ CKEDITOR.dialog.add("cellProperties", function (f) {
       this.setupContent(this.cells);
     },
     onOk: function () {
-      for (var a = this._.editor.getSelection(), b = a.createBookmarks(), c = this.cells, d = 0; d < c.length; d++)
+      for (
+        var a = this._.editor.getSelection(), b = a.createBookmarks(), c = this.cells, d = 0;
+        d < c.length;
+        d++
+      )
         this.commitContent(c[d]);
       this._.editor.forceNextSelectionCheck();
       a.selectBookmarks(b);
@@ -355,20 +378,24 @@ CKEDITOR.dialog.add("cellProperties", function (f) {
     },
     onLoad: function () {
       var a = {};
-      this.foreach(function (b) {
+      this.foreach((b) => {
         b.setup &&
           b.commit &&
-          ((b.setup = CKEDITOR.tools.override(b.setup, function (c) {
-            return function () {
-              c.apply(this, arguments);
-              a[b.id] = b.getValue();
-            };
-          })),
-          (b.commit = CKEDITOR.tools.override(b.commit, function (c) {
-            return function () {
-              a[b.id] !== b.getValue() && c.apply(this, arguments);
-            };
-          })));
+          ((b.setup = CKEDITOR.tools.override(
+            b.setup,
+            (c) =>
+              function () {
+                c.apply(this, arguments);
+                a[b.id] = b.getValue();
+              }
+          )),
+          (b.commit = CKEDITOR.tools.override(
+            b.commit,
+            (c) =>
+              function () {
+                a[b.id] !== b.getValue() && c.apply(this, arguments);
+              }
+          )));
       });
     },
   };

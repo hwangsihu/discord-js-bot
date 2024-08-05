@@ -5,32 +5,28 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
-module.exports = function (grunt) {
-  "use strict";
-
+module.exports = (grunt) => {
   // Force use of Unix newlines
   grunt.util.linefeed = "\n";
 
-  RegExp.quote = function (string) {
-    return string.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");
-  };
+  RegExp.quote = (string) => string.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");
 
   var fs = require("fs");
   var path = require("path");
   var generateGlyphiconsData = require("./grunt/bs-glyphicons-data-generator.js");
   var BsLessdocParser = require("./grunt/bs-lessdoc-parser.js");
-  var getLessVarsData = function () {
+  var getLessVarsData = () => {
     var filePath = path.join(__dirname, "less/variables.less");
     var fileContent = fs.readFileSync(filePath, { encoding: "utf8" });
     var parser = new BsLessdocParser(fileContent);
     return { sections: parser.parseFile() };
   };
   var generateRawFiles = require("./grunt/bs-raw-files-generator.js");
-  var generateCommonJSModule = require("./grunt/bs-commonjs-generator.js");
+  var generateCommonJsModule = require("./grunt/bs-commonjs-generator.js");
   var configBridge = grunt.file.readJSON("./grunt/configBridge.json", { encoding: "utf8" });
 
-  Object.keys(configBridge.paths).forEach(function (key) {
-    configBridge.paths[key].forEach(function (val, i, arr) {
+  Object.keys(configBridge.paths).forEach((key) => {
+    configBridge.paths[key].forEach((val, i, arr) => {
       arr[i] = path.join("./docs/assets", val);
     });
   });
@@ -345,18 +341,20 @@ module.exports = function (grunt) {
   // Docs HTML validation task
   grunt.registerTask("validate-html", ["jekyll:docs", "htmllint"]);
 
-  var runSubset = function (subset) {
-    return !process.env.TWBS_TEST || process.env.TWBS_TEST === subset;
-  };
-  var isUndefOrNonZero = function (val) {
-    return typeof val === "undefined" || val !== "0";
-  };
+  var runSubset = (subset) => !process.env.TWBS_TEST || process.env.TWBS_TEST === subset;
+  var isUndefOrNonZero = (val) => typeof val === "undefined" || val !== "0";
 
   // Test task.
   var testSubtasks = [];
   // Skip core tests if running a different subset of the test suite
   if (runSubset("core")) {
-    testSubtasks = testSubtasks.concat(["dist-css", "dist-js", "stylelint:dist", "test-js", "docs"]);
+    testSubtasks = testSubtasks.concat([
+      "dist-css",
+      "dist-js",
+      "stylelint:dist",
+      "test-js",
+      "docs",
+    ]);
   }
   // Skip HTML validation if running a different subset of the test suite
   if (
@@ -414,19 +412,25 @@ module.exports = function (grunt) {
   // task for building customizer
   grunt.registerTask("build-customizer", ["build-customizer-html", "build-raw-files"]);
   grunt.registerTask("build-customizer-html", "pug");
-  grunt.registerTask("build-raw-files", "Add scripts/less files to customizer.", function () {
+  grunt.registerTask("build-raw-files", "Add scripts/less files to customizer.", () => {
     var banner = grunt.template.process("<%= banner %>");
     generateRawFiles(grunt, banner);
   });
 
-  grunt.registerTask("commonjs", "Generate CommonJS entrypoint module in dist dir.", function () {
+  grunt.registerTask("commonjs", "Generate CommonJS entrypoint module in dist dir.", () => {
     var srcFiles = grunt.config.get("concat.core.src");
     var destFilepath = "dist/js/npm.js";
-    generateCommonJSModule(grunt, srcFiles, destFilepath);
+    generateCommonJsModule(grunt, srcFiles, destFilepath);
   });
 
   // Docs task.
-  grunt.registerTask("docs-css", ["less:docs", "less:docsIe", "postcss:docs", "postcss:examples", "cssmin:docs"]);
+  grunt.registerTask("docs-css", [
+    "less:docs",
+    "less:docsIe",
+    "postcss:docs",
+    "postcss:examples",
+    "cssmin:docs",
+  ]);
   grunt.registerTask("lint-docs-css", ["stylelint:docs", "stylelint:examples"]);
   grunt.registerTask("docs-js", ["uglify:docs", "uglify:customize"]);
   grunt.registerTask("lint-docs-js", ["jshint:assets", "jscs:assets"]);

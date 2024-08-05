@@ -1,4 +1,4 @@
-define([], function () {
+define([], () => {
   function Query(decorated, $element, options) {
     if (options.get("debug") && window.console && console.warn) {
       console.warn(

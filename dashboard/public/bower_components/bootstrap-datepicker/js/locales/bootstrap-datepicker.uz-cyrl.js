@@ -2,7 +2,7 @@
  * Uzbek latin translation for bootstrap-datepicker
  * Kakhramonov Javlonbek <kakjavlon@gmail.com>
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["uz-cyrl"] = {
     days: ["Якшанба", "Душанба", "Сешанба", "Чоршанба", "Пайшанба", "Жума", "Шанба"],
     daysShort: ["Якш", "Ду", "Се", "Чор", "Пай", "Жу", "Ша"],
@@ -21,7 +21,20 @@
       "Ноябрь",
       "Декабрь",
     ],
-    monthsShort: ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"],
+    monthsShort: [
+      "Янв",
+      "Фев",
+      "Мар",
+      "Апр",
+      "Май",
+      "Июн",
+      "Июл",
+      "Авг",
+      "Сен",
+      "Окт",
+      "Ноя",
+      "Дек",
+    ],
     today: "Бугун",
     clear: "Ўчириш",
     format: "dd.mm.yyyy",

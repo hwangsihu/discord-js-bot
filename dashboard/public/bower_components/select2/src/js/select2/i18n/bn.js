@@ -1,10 +1,8 @@
-define(function () {
+define(() => {
   // Bangla
   return {
-    errorLoading: function () {
-      return "ফলাফলগুলি লোড করা যায়নি।";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "ফলাফলগুলি লোড করা যায়নি।",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "অনুগ্রহ করে " + overChars + " টি অক্ষর মুছে দিন।";
@@ -15,17 +13,15 @@ define(function () {
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = remainingChars + " টি অক্ষর অথবা অধিক অক্ষর লিখুন।";
 
       return message;
     },
-    loadingMore: function () {
-      return "আরো ফলাফল লোড হচ্ছে ...";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "আরো ফলাফল লোড হচ্ছে ...",
+    maximumSelected: (args) => {
       var message = args.maximum + " টি আইটেম নির্বাচন করতে পারবেন।";
 
       if (args.maximum != 1) {
@@ -34,11 +30,7 @@ define(function () {
 
       return message;
     },
-    noResults: function () {
-      return "কোন ফলাফল পাওয়া যায়নি।";
-    },
-    searching: function () {
-      return "অনুসন্ধান করা হচ্ছে ...";
-    },
+    noResults: () => "কোন ফলাফল পাওয়া যায়নি।",
+    searching: () => "অনুসন্ধান করা হচ্ছে ...",
   };
 });

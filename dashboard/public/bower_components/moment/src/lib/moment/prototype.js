@@ -3,7 +3,7 @@ import { Moment } from "./constructor";
 var proto = Moment.prototype;
 
 import { add, subtract } from "./add-subtract";
-import { calendar, getCalendarFormat } from "./calendar";
+import { calendar } from "./calendar";
 import { clone } from "./clone";
 import { isAfter, isBefore, isBetween, isSame, isSameOrAfter, isSameOrBefore } from "./compare";
 import { creationData } from "./creation-data";
@@ -63,7 +63,12 @@ proto.year = getSetYear;
 proto.isLeapYear = getIsLeapYear;
 
 // Week Year
-import { getISOWeeksInYear, getSetISOWeekYear, getSetWeekYear, getWeeksInYear } from "../units/week-year";
+import {
+  getISOWeeksInYear,
+  getSetISOWeekYear,
+  getSetWeekYear,
+  getWeeksInYear,
+} from "../units/week-year";
 proto.weekYear = getSetWeekYear;
 proto.isoWeekYear = getSetISOWeekYear;
 

@@ -30,7 +30,7 @@
  * MIT license
  */
 
-(function (root, factory) {
+((root, factory) => {
   if (typeof define === "function" && define.amd) {
     define(["jquery"], factory);
   } else if (typeof module === "object" && module.exports) {
@@ -44,13 +44,11 @@
   } else {
     root.Slider = factory(root.jQuery);
   }
-})(this, function ($) {
+})(this, ($) => {
   // Reference to Slider constructor
   var Slider;
 
-  (function ($) {
-    "use strict";
-
+  (($) => {
     // -------------------------- utils -------------------------- //
 
     var slice = Array.prototype.slice;
@@ -94,7 +92,7 @@
       var logError =
         typeof console === "undefined"
           ? noop
-          : function (message) {
+          : (message) => {
               console.error(message);
             };
 
@@ -172,7 +170,7 @@
        * @param {String} namespace - plugin name, used in $().pluginName
        * @param {Function} PluginClass - constructor class
        */
-      $.bridget = function (namespace, PluginClass) {
+      $.bridget = (namespace, PluginClass) => {
         addOptionMethod(PluginClass);
         bridge(namespace, PluginClass);
       };
@@ -190,11 +188,9 @@
 
 	**************************************************/
 
-  (function ($) {
+  (($) => {
     var ErrorMsgs = {
-      formatInvalidInputErrorMsg: function (input) {
-        return "Invalid input value '" + input + "' passed in";
-      },
+      formatInvalidInputErrorMsg: (input) => "Invalid input value '" + input + "' passed in",
       callingContextNotSliderInstance:
         "Calling context element does not have instance of Slider bound to it. Check your code to make sure the JQuery object returned from the call to the slider() initializer is calling the method",
     };
@@ -224,7 +220,8 @@
             }
           }
 
-          var value = this.options.min + Math.round(rawValue / this.options.step) * this.options.step;
+          var value =
+            this.options.min + Math.round(rawValue / this.options.step) * this.options.step;
           if (value < this.options.min) {
             return this.options.min;
           } else if (value > this.options.max) {
@@ -269,7 +266,9 @@
           var min = this.options.min === 0 ? 0 : Math.log(this.options.min);
           var max = Math.log(this.options.max);
           var value = Math.exp(min + ((max - min) * percentage) / 100);
-          value = this.options.min + Math.round((value - this.options.min) / this.options.step) * this.options.step;
+          value =
+            this.options.min +
+            Math.round((value - this.options.min) / this.options.step) * this.options.step;
           /* Rounding to the nearest step could exceed the min or
            * max, so clip to those values. */
           if (value < this.options.min) {
@@ -468,7 +467,9 @@
             var label = document.createElement("div");
             var noTickPositionsSpecified = this.options.ticks_positions.length === 0;
             var tickLabelsIndex =
-              this.options.reversed && noTickPositionsSpecified ? this.options.ticks_labels.length - (i + 1) : i;
+              this.options.reversed && noTickPositionsSpecified
+                ? this.options.ticks_labels.length - (i + 1)
+                : i;
             label.className = "slider-tick-label";
             label.innerHTML = this.options.ticks_labels[tickLabelsIndex];
 
@@ -477,7 +478,7 @@
           }
         }
 
-        var createAndAppendTooltipSubElements = function (tooltipElem) {
+        var createAndAppendTooltipSubElements = (tooltipElem) => {
           var arrow = document.createElement("div");
           arrow.className = "tooltip-arrow";
 
@@ -535,7 +536,8 @@
       this.sliderElem.id = this.options.id;
 
       this.touchCapable =
-        "ontouchstart" in window || (window.DocumentTouch && document instanceof window.DocumentTouch);
+        "ontouchstart" in window ||
+        (window.DocumentTouch && document instanceof window.DocumentTouch);
 
       this.tooltip = this.sliderElem.querySelector(".tooltip-main");
       this.tooltipInner = this.tooltip.querySelector(".tooltip-inner");
@@ -709,7 +711,7 @@
 
 		**************************************************/
     Slider.prototype = {
-      _init: function () {}, // NOTE: Must exist to support bridget
+      _init: () => {}, // NOTE: Must exist to support bridget
 
       constructor: Slider,
 
@@ -728,7 +730,7 @@
         handle: "round",
         reversed: false,
         enabled: true,
-        formatter: function (val) {
+        formatter: (val) => {
           if (Array.isArray(val)) {
             return val[0] + " : " + val[1];
           } else {
@@ -770,11 +772,19 @@
           this._state.value[0] = applyPrecision(this._state.value[0]);
           this._state.value[1] = applyPrecision(this._state.value[1]);
 
-          this._state.value[0] = Math.max(this.options.min, Math.min(this.options.max, this._state.value[0]));
-          this._state.value[1] = Math.max(this.options.min, Math.min(this.options.max, this._state.value[1]));
+          this._state.value[0] = Math.max(
+            this.options.min,
+            Math.min(this.options.max, this._state.value[0])
+          );
+          this._state.value[1] = Math.max(
+            this.options.min,
+            Math.min(this.options.max, this._state.value[1])
+          );
         } else {
           this._state.value = applyPrecision(this._state.value);
-          this._state.value = [Math.max(this.options.min, Math.min(this.options.max, this._state.value))];
+          this._state.value = [
+            Math.max(this.options.min, Math.min(this.options.max, this._state.value)),
+          ];
           this._addClass(this.handle2, "hide");
           if (this.options.selection === "after") {
             this._state.value[1] = this.options.max;
@@ -1030,7 +1040,8 @@
             }
           }
           for (var i = 0; i < this.options.ticks.length; i++) {
-            var percentage = this.options.ticks_positions[i] || this._toPercentage(this.options.ticks[i]);
+            var percentage =
+              this.options.ticks_positions[i] || this._toPercentage(this.options.ticks[i]);
 
             if (this.options.reversed) {
               percentage = 100 - percentage;
@@ -1043,23 +1054,33 @@
             if (!this.options.range) {
               if (this.options.selection === "after" && percentage >= positionPercentages[0]) {
                 this._addClass(this.ticks[i], "in-selection");
-              } else if (this.options.selection === "before" && percentage <= positionPercentages[0]) {
+              } else if (
+                this.options.selection === "before" &&
+                percentage <= positionPercentages[0]
+              ) {
                 this._addClass(this.ticks[i], "in-selection");
               }
-            } else if (percentage >= positionPercentages[0] && percentage <= positionPercentages[1]) {
+            } else if (
+              percentage >= positionPercentages[0] &&
+              percentage <= positionPercentages[1]
+            ) {
               this._addClass(this.ticks[i], "in-selection");
             }
 
             if (this.tickLabels[i]) {
               this.tickLabels[i].style[styleSize] = labelSize + "px";
 
-              if (this.options.orientation !== "vertical" && this.options.ticks_positions[i] !== undefined) {
+              if (
+                this.options.orientation !== "vertical" &&
+                this.options.ticks_positions[i] !== undefined
+              ) {
                 this.tickLabels[i].style.position = "absolute";
                 this.tickLabels[i].style[this.stylePos] = percentage + "%";
                 this.tickLabels[i].style[styleMargin] = -labelSize / 2 + "px";
               } else if (this.options.orientation === "vertical") {
                 this.tickLabels[i].style["marginLeft"] = this.sliderElem.offsetWidth + "px";
-                this.tickLabelContainer.style["marginTop"] = (this.sliderElem.offsetWidth / 2) * -1 + "px";
+                this.tickLabelContainer.style["marginTop"] =
+                  (this.sliderElem.offsetWidth / 2) * -1 + "px";
               }
             }
           }
@@ -1070,7 +1091,8 @@
         if (this.options.range) {
           formattedTooltipVal = this.options.formatter(this._state.value);
           this._setText(this.tooltipInner, formattedTooltipVal);
-          this.tooltip.style[this.stylePos] = (positionPercentages[1] + positionPercentages[0]) / 2 + "%";
+          this.tooltip.style[this.stylePos] =
+            (positionPercentages[1] + positionPercentages[0]) / 2 + "%";
 
           if (this.options.orientation === "vertical") {
             this._css(this.tooltip, "margin-top", -this.tooltip.offsetHeight / 2 + "px");
@@ -1119,10 +1141,13 @@
 
         if (this.options.orientation === "vertical") {
           this.trackLow.style.top = "0";
-          this.trackLow.style.height = Math.min(positionPercentages[0], positionPercentages[1]) + "%";
+          this.trackLow.style.height =
+            Math.min(positionPercentages[0], positionPercentages[1]) + "%";
 
-          this.trackSelection.style.top = Math.min(positionPercentages[0], positionPercentages[1]) + "%";
-          this.trackSelection.style.height = Math.abs(positionPercentages[0] - positionPercentages[1]) + "%";
+          this.trackSelection.style.top =
+            Math.min(positionPercentages[0], positionPercentages[1]) + "%";
+          this.trackSelection.style.height =
+            Math.abs(positionPercentages[0] - positionPercentages[1]) + "%";
 
           this.trackHigh.style.bottom = "0";
           this.trackHigh.style.height =
@@ -1132,10 +1157,13 @@
             "%";
         } else {
           this.trackLow.style.left = "0";
-          this.trackLow.style.width = Math.min(positionPercentages[0], positionPercentages[1]) + "%";
+          this.trackLow.style.width =
+            Math.min(positionPercentages[0], positionPercentages[1]) + "%";
 
-          this.trackSelection.style.left = Math.min(positionPercentages[0], positionPercentages[1]) + "%";
-          this.trackSelection.style.width = Math.abs(positionPercentages[0] - positionPercentages[1]) + "%";
+          this.trackSelection.style.left =
+            Math.min(positionPercentages[0], positionPercentages[1]) + "%";
+          this.trackSelection.style.width =
+            Math.abs(positionPercentages[0] - positionPercentages[1]) + "%";
 
           this.trackHigh.style.right = "0";
           this.trackHigh.style.width =
@@ -1144,10 +1172,10 @@
             Math.abs(positionPercentages[0] - positionPercentages[1]) +
             "%";
 
-          var offset_min = this.tooltip_min.getBoundingClientRect();
-          var offset_max = this.tooltip_max.getBoundingClientRect();
+          var offsetMin = this.tooltip_min.getBoundingClientRect();
+          var offsetMax = this.tooltip_max.getBoundingClientRect();
 
-          if (offset_min.right > offset_max.left) {
+          if (offsetMin.right > offsetMax.left) {
             this._removeClass(this.tooltip_max, "top");
             this._addClass(this.tooltip_max, "bottom");
             this.tooltip_max.style.top = 18 + "px";
@@ -1158,7 +1186,7 @@
           }
         }
       },
-      _removeProperty: function (element, prop) {
+      _removeProperty: (element, prop) => {
         if (element.style.removeProperty) {
           element.style.removeProperty(prop);
         } else {
@@ -1256,8 +1284,10 @@
 
         // use natural arrow keys instead of from min to max
         if (this.options.natural_arrow_keys) {
-          var ifVerticalAndNotReversed = this.options.orientation === "vertical" && !this.options.reversed;
-          var ifHorizontalAndReversed = this.options.orientation === "horizontal" && this.options.reversed;
+          var ifVerticalAndNotReversed =
+            this.options.orientation === "vertical" && !this.options.reversed;
+          var ifHorizontalAndReversed =
+            this.options.orientation === "horizontal" && this.options.reversed;
 
           if (ifVerticalAndNotReversed || ifHorizontalAndReversed) {
             dir = -dir;
@@ -1266,7 +1296,7 @@
 
         var val = this._state.value[handleIdx] + dir * this.options.step;
         if (this.options.range) {
-          val = [!handleIdx ? val : this._state.value[0], handleIdx ? val : this._state.value[1]];
+          val = [handleIdx ? this._state.value[0] : val, handleIdx ? val : this._state.value[1]];
         }
 
         this._trigger("slideStart", val);
@@ -1281,7 +1311,7 @@
 
         return false;
       },
-      _pauseEvent: function (ev) {
+      _pauseEvent: (ev) => {
         if (ev.stopPropagation) {
           ev.stopPropagation();
         }
@@ -1310,16 +1340,21 @@
         if (this.options.range) {
           var precision = this._getNumDigitsAfterDecimalPlace(percentage);
           precision = precision ? precision - 1 : 0;
-          var percentageWithAdjustedPrecision = this._applyToFixedAndParseFloat(percentage, precision);
+          var percentageWithAdjustedPrecision = this._applyToFixedAndParseFloat(
+            percentage,
+            precision
+          );
           if (
             this._state.dragged === 0 &&
-            this._applyToFixedAndParseFloat(this._state.percentage[1], precision) < percentageWithAdjustedPrecision
+            this._applyToFixedAndParseFloat(this._state.percentage[1], precision) <
+              percentageWithAdjustedPrecision
           ) {
             this._state.percentage[0] = this._state.percentage[1];
             this._state.dragged = 1;
           } else if (
             this._state.dragged === 1 &&
-            this._applyToFixedAndParseFloat(this._state.percentage[0], precision) > percentageWithAdjustedPrecision
+            this._applyToFixedAndParseFloat(this._state.percentage[0], precision) >
+              percentageWithAdjustedPrecision
           ) {
             this._state.percentage[1] = this._state.percentage[0];
             this._state.dragged = 0;
@@ -1365,12 +1400,12 @@
           }
         } else {
           val = this._toValue(this._state.percentage[0]);
-          val = parseFloat(val);
+          val = Number.parseFloat(val);
           val = this._applyPrecision(val);
         }
 
         if (snapToClosestTick) {
-          var min = [val, Infinity];
+          var min = [val, Number.POSITIVE_INFINITY];
           for (var i = 0; i < this.options.ticks.length; i++) {
             var diff = Math.abs(this.options.ticks[i] - val);
             if (diff <= min[1]) {
@@ -1385,19 +1420,20 @@
         return val;
       },
       _applyPrecision: function (val) {
-        var precision = this.options.precision || this._getNumDigitsAfterDecimalPlace(this.options.step);
+        var precision =
+          this.options.precision || this._getNumDigitsAfterDecimalPlace(this.options.step);
         return this._applyToFixedAndParseFloat(val, precision);
       },
-      _getNumDigitsAfterDecimalPlace: function (num) {
+      _getNumDigitsAfterDecimalPlace: (num) => {
         var match = ("" + num).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
         if (!match) {
           return 0;
         }
         return Math.max(0, (match[1] ? match[1].length : 0) - (match[2] ? +match[2] : 0));
       },
-      _applyToFixedAndParseFloat: function (num, toFixedInput) {
+      _applyToFixedAndParseFloat: (num, toFixedInput) => {
         var truncatedNum = num.toFixed(toFixedInput);
-        return parseFloat(truncatedNum);
+        return Number.parseFloat(truncatedNum);
       },
       /*
 				Credits to Mike Samuel for the following method!
@@ -1433,7 +1469,7 @@
           throw new Error(ErrorMsgs.formatInvalidInputErrorMsg(val));
         }
       },
-      _validateArray: function (val) {
+      _validateArray: (val) => {
         for (var i = 0; i < val.length; i++) {
           var input = val[i];
           if (typeof input !== "number") {
@@ -1474,14 +1510,14 @@
         this.$element.off();
         this.$sliderElem.off();
       },
-      _setText: function (element, text) {
+      _setText: (element, text) => {
         if (typeof element.innerText !== "undefined") {
           element.innerText = text;
         } else if (typeof element.textContent !== "undefined") {
           element.textContent = text;
         }
       },
-      _removeClass: function (element, classString) {
+      _removeClass: (element, classString) => {
         var classes = classString.split(" ");
         var newClasses = element.className;
 
@@ -1493,7 +1529,7 @@
 
         element.className = newClasses.trim();
       },
-      _addClass: function (element, classString) {
+      _addClass: (element, classString) => {
         var classes = classString.split(" ");
         var newClasses = element.className;
 
@@ -1509,10 +1545,8 @@
 
         element.className = newClasses.trim();
       },
-      _offsetLeft: function (obj) {
-        return obj.getBoundingClientRect().left;
-      },
-      _offsetTop: function (obj) {
+      _offsetLeft: (obj) => obj.getBoundingClientRect().left,
+      _offsetTop: (obj) => {
         var offsetTop = obj.offsetTop;
         while ((obj = obj.offsetParent) && !isNaN(obj.offsetTop)) {
           offsetTop += obj.offsetTop;
@@ -1525,13 +1559,13 @@
           top: this._offsetTop(obj),
         };
       },
-      _css: function (elementRef, styleName, value) {
+      _css: (elementRef, styleName, value) => {
         if ($) {
           $.style(elementRef, styleName, value);
         } else {
-          var style = styleName.replace(/^-ms-/, "ms-").replace(/-([\da-z])/gi, function (all, letter) {
-            return letter.toUpperCase();
-          });
+          var style = styleName
+            .replace(/^-ms-/, "ms-")
+            .replace(/-([\da-z])/gi, (all, letter) => letter.toUpperCase());
           elementRef.style[style] = value;
         }
       },

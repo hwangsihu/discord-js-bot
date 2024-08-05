@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   function processRelativeTime(number, withoutSuffix, key, isFuture) {
     var result = number + " ";
     switch (key) {
@@ -92,7 +90,10 @@
   }
 
   var sl = moment.defineLocale("sl", {
-    months: "januar_februar_marec_april_maj_junij_julij_avgust_september_oktober_november_december".split("_"),
+    months:
+      "januar_februar_marec_april_maj_junij_julij_avgust_september_oktober_november_december".split(
+        "_"
+      ),
     monthsShort: "jan._feb._mar._apr._maj._jun._jul._avg._sep._okt._nov._dec.".split("_"),
     monthsParseExact: true,
     weekdays: "nedelja_ponedeljek_torek_sreda_četrtek_petek_sobota".split("_"),

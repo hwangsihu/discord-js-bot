@@ -57,7 +57,11 @@ CKEDITOR.plugins.setLang("a11yhelp", "zh", {
             "請按下 ${accessNextSpace} 以存取最近但無法靠近之插字符號後的焦點空間。舉例：二個相鄰的 HR 元素。\r\n重複按鍵以存取較遠的焦點空間。",
         },
         { name: "協助工具說明", legend: "請按下「${a11yHelp}」" },
-        { name: "以純文字貼上", legend: "按 ${pastetext}", legendEdge: "按 ${pastetext}，再來是 ${paste}" },
+        {
+          name: "以純文字貼上",
+          legend: "按 ${pastetext}",
+          legendEdge: "按 ${pastetext}，再來是 ${paste}",
+        },
       ],
     },
   ],

@@ -1,27 +1,27 @@
-define(["../utils"], function (Utils) {
+define(["../utils"], (Utils) => {
   function BaseAdapter($element, options) {
     BaseAdapter.__super__.constructor.call(this);
   }
 
   Utils.Extend(BaseAdapter, Utils.Observable);
 
-  BaseAdapter.prototype.current = function (callback) {
+  BaseAdapter.prototype.current = (callback) => {
     throw new Error("The `current` method must be defined in child classes.");
   };
 
-  BaseAdapter.prototype.query = function (params, callback) {
+  BaseAdapter.prototype.query = (params, callback) => {
     throw new Error("The `query` method must be defined in child classes.");
   };
 
-  BaseAdapter.prototype.bind = function (container, $container) {
+  BaseAdapter.prototype.bind = (container, $container) => {
     // Can be implemented in subclasses
   };
 
-  BaseAdapter.prototype.destroy = function () {
+  BaseAdapter.prototype.destroy = () => {
     // Can be implemented in subclasses
   };
 
-  BaseAdapter.prototype.generateResultId = function (container, data) {
+  BaseAdapter.prototype.generateResultId = (container, data) => {
     var id = container.id + "-result-";
 
     id += Utils.generateChars(4);

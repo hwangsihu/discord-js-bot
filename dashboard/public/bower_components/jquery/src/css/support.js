@@ -1,12 +1,10 @@
-define(["../core", "../var/document", "../var/documentElement", "../var/support"], function (
+define(["../core", "../var/document", "../var/documentElement", "../var/support"], (
   jQuery,
   document,
   documentElement,
   support
-) {
-  "use strict";
-
-  (function () {
+) => {
+  (() => {
     // Executing both pixelPosition & boxSizingReliable tests require only one layout
     // so they're executed at the same time to save the second computation.
     function computeStyleTests() {
@@ -15,7 +13,8 @@ define(["../core", "../var/document", "../var/documentElement", "../var/support"
         return;
       }
 
-      container.style.cssText = "position:absolute;left:-11111px;width:60px;" + "margin-top:1px;padding:0;border:0";
+      container.style.cssText =
+        "position:absolute;left:-11111px;width:60px;" + "margin-top:1px;padding:0;border:0";
       div.style.cssText =
         "position:relative;display:block;box-sizing:border-box;overflow:scroll;" +
         "margin:auto;border:1px;padding:1px;" +
@@ -50,7 +49,7 @@ define(["../core", "../var/document", "../var/documentElement", "../var/support"
     }
 
     function roundPixelMeasures(measure) {
-      return Math.round(parseFloat(measure));
+      return Math.round(Number.parseFloat(measure));
     }
 
     var pixelPositionVal,
@@ -73,23 +72,23 @@ define(["../core", "../var/document", "../var/documentElement", "../var/support"
     support.clearCloneStyle = div.style.backgroundClip === "content-box";
 
     jQuery.extend(support, {
-      boxSizingReliable: function () {
+      boxSizingReliable: () => {
         computeStyleTests();
         return boxSizingReliableVal;
       },
-      pixelBoxStyles: function () {
+      pixelBoxStyles: () => {
         computeStyleTests();
         return pixelBoxStylesVal;
       },
-      pixelPosition: function () {
+      pixelPosition: () => {
         computeStyleTests();
         return pixelPositionVal;
       },
-      reliableMarginLeft: function () {
+      reliableMarginLeft: () => {
         computeStyleTests();
         return reliableMarginLeftVal;
       },
-      scrollboxSize: function () {
+      scrollboxSize: () => {
         computeStyleTests();
         return scrollboxSizeVal;
       },

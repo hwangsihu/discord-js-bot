@@ -20,7 +20,7 @@ MockContainer.prototype.isOpen = function () {
 var log = [];
 var testName;
 
-QUnit.done(function (test_results) {
+QUnit.done((testResults) => {
   var tests = [];
   for (var i = 0, len = log.length; i < len; i++) {
     var details = log[i];
@@ -32,12 +32,12 @@ QUnit.done(function (test_results) {
       source: details.source,
     });
   }
-  test_results.tests = tests;
+  testResults.tests = tests;
 
-  window.global_test_results = test_results;
+  window.global_test_results = testResults;
 });
-QUnit.testStart(function (testDetails) {
-  QUnit.log(function (details) {
+QUnit.testStart((testDetails) => {
+  QUnit.log((details) => {
     if (!details.result) {
       details.name = testDetails.name;
       log.push(details);

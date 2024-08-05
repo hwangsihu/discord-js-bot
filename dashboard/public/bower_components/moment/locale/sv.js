@@ -1,16 +1,17 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var sv = moment.defineLocale("sv", {
-    months: "januari_februari_mars_april_maj_juni_juli_augusti_september_oktober_november_december".split("_"),
+    months:
+      "januari_februari_mars_april_maj_juni_juli_augusti_september_oktober_november_december".split(
+        "_"
+      ),
     monthsShort: "jan_feb_mar_apr_maj_jun_jul_aug_sep_okt_nov_dec".split("_"),
     weekdays: "söndag_måndag_tisdag_onsdag_torsdag_fredag_lördag".split("_"),
     weekdaysShort: "sön_mån_tis_ons_tor_fre_lör".split("_"),
@@ -50,9 +51,10 @@
       yy: "%d år",
     },
     dayOfMonthOrdinalParse: /\d{1,2}(e|a)/,
-    ordinal: function (number) {
+    ordinal: (number) => {
       var b = number % 10,
-        output = ~~((number % 100) / 10) === 1 ? "e" : b === 1 ? "a" : b === 2 ? "a" : b === 3 ? "e" : "e";
+        output =
+          ~~((number % 100) / 10) === 1 ? "e" : b === 1 ? "a" : b === 2 ? "a" : b === 3 ? "e" : "e";
       return number + output;
     },
     week: {

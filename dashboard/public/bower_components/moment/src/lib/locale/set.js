@@ -39,7 +39,11 @@ export function mergeConfigs(parentConfig, childConfig) {
     }
   }
   for (prop in parentConfig) {
-    if (hasOwnProp(parentConfig, prop) && !hasOwnProp(childConfig, prop) && isObject(parentConfig[prop])) {
+    if (
+      hasOwnProp(parentConfig, prop) &&
+      !hasOwnProp(childConfig, prop) &&
+      isObject(parentConfig[prop])
+    ) {
       // make sure changes to properties don't modify parent config
       res[prop] = extend({}, res[prop]);
     }

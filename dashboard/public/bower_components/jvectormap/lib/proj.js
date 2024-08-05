@@ -8,7 +8,7 @@ jvm.Proj = {
   radDeg: Math.PI / 180,
   radius: 6381372,
 
-  sgn: function (n) {
+  sgn: (n) => {
     if (n > 0) {
       return 1;
     } else if (n < 0) {

@@ -6,14 +6,14 @@
  * Version: 3.3.11
  */
 
-!(function (factory) {
+!((factory) => {
   "function" == typeof define && define.amd
     ? define(["../inputmask"], factory)
     : "object" == typeof exports
       ? (module.exports = factory(require("../inputmask")))
       : factory(window.Inputmask);
-})(function (Inputmask) {
-  return (
+})(
+  (Inputmask) => (
     Inputmask.extendAliases({
       phoneru: {
         alias: "abstractphone",
@@ -13712,7 +13712,14 @@
             cc: "RU",
             cd: "Russia",
             region: "Карелия",
-            city: ["Великая Губа", "Великая Нива", "Кижи", "Космозеро", "Ламбасручей", "Сенная Губа"],
+            city: [
+              "Великая Губа",
+              "Великая Нива",
+              "Кижи",
+              "Космозеро",
+              "Ламбасручей",
+              "Сенная Губа",
+            ],
             operator: "",
             desc: "",
           },
@@ -21665,5 +21672,5 @@
       },
     }),
     Inputmask
-  );
-});
+  )
+);

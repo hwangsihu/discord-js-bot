@@ -2,14 +2,14 @@ module("Utils - escapeMarkup");
 
 var Utils = require("select2/utils");
 
-test("text passes through", function (assert) {
+test("text passes through", (assert) => {
   var text = "testing this";
   var escaped = Utils.escapeMarkup(text);
 
   assert.equal(text, escaped);
 });
 
-test("html tags are escaped", function (assert) {
+test("html tags are escaped", (assert) => {
   var text = '<script>alert("bad");</script>';
   var escaped = Utils.escapeMarkup(text);
 
@@ -17,7 +17,7 @@ test("html tags are escaped", function (assert) {
   assert.equal(escaped.indexOf("<script>"), -1);
 });
 
-test("quotes are killed as well", function (assert) {
+test("quotes are killed as well", (assert) => {
   var text = 'testin\' these "quotes"';
   var escaped = Utils.escapeMarkup(text);
 
@@ -26,7 +26,7 @@ test("quotes are killed as well", function (assert) {
   assert.equal(escaped.indexOf('"'), -1);
 });
 
-test("DocumentFragment options pass through", function (assert) {
+test("DocumentFragment options pass through", (assert) => {
   var frag = document.createDocumentFragment();
   frag.innerHTML = "<strong>test</strong>";
 

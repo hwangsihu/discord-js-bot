@@ -1,4 +1,4 @@
-define(function () {
+define(() => {
   // Croatian
   function character(n) {
     var message = " " + n + " znak";
@@ -15,33 +15,21 @@ define(function () {
   }
 
   return {
-    errorLoading: function () {
-      return "Preuzimanje nije uspjelo.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "Preuzimanje nije uspjelo.",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       return "Unesite " + character(overChars);
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       return "Unesite još " + character(remainingChars);
     },
-    loadingMore: function () {
-      return "Učitavanje rezultata…";
-    },
-    maximumSelected: function (args) {
-      return "Maksimalan broj odabranih stavki je " + args.maximum;
-    },
-    noResults: function () {
-      return "Nema rezultata";
-    },
-    searching: function () {
-      return "Pretraga…";
-    },
-    removeAllItems: function () {
-      return "Ukloni sve stavke";
-    },
+    loadingMore: () => "Učitavanje rezultata…",
+    maximumSelected: (args) => "Maksimalan broj odabranih stavki je " + args.maximum,
+    noResults: () => "Nema rezultata",
+    searching: () => "Pretraga…",
+    removeAllItems: () => "Ukloni sve stavke",
   };
 });

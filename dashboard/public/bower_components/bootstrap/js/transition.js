@@ -6,9 +6,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
-+(function ($) {
-  "use strict";
-
++(($) => {
   // CSS TRANSITION SUPPORT (Shoutout: https://modernizr.com/)
   // ============================================================
 
@@ -34,18 +32,17 @@
   // https://blog.alexmaccaw.com/css-transitions
   $.fn.emulateTransitionEnd = function (duration) {
     var called = false;
-    var $el = this;
-    $(this).one("bsTransitionEnd", function () {
+    $(this).one("bsTransitionEnd", () => {
       called = true;
     });
-    var callback = function () {
-      if (!called) $($el).trigger($.support.transition.end);
+    var callback = () => {
+      if (!called) $(this).trigger($.support.transition.end);
     };
     setTimeout(callback, duration);
     return this;
   };
 
-  $(function () {
+  $(() => {
     $.support.transition = transitionEnd();
 
     if (!$.support.transition) return;

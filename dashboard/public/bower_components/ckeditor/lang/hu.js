@@ -106,7 +106,12 @@ CKEDITOR.lang["hu"] = {
     invalidRows: "A sorok számának nagyobbnak kell lenni mint 0.",
     invalidWidth: "A szélesség mezőbe csak számokat írhat.",
     menu: "Táblázat tulajdonságai",
-    row: { menu: "Sor", insertBefore: "Beszúrás fölé", insertAfter: "Beszúrás alá", deleteRow: "Sorok törlése" },
+    row: {
+      menu: "Sor",
+      insertBefore: "Beszúrás fölé",
+      insertAfter: "Beszúrás alá",
+      deleteRow: "Sorok törlése",
+    },
     rows: "Sorok",
     summary: "Leírás",
     title: "Táblázat tulajdonságai",
@@ -342,7 +347,8 @@ CKEDITOR.lang["hu"] = {
     generalTab: "Általános",
     advancedTab: "További opciók",
     validateNumberFailed: "A mezőbe csak számokat írhat.",
-    confirmNewPage: "Minden nem mentett változás el fog veszni! Biztosan be szeretné tölteni az oldalt?",
+    confirmNewPage:
+      "Minden nem mentett változás el fog veszni! Biztosan be szeretné tölteni az oldalt?",
     confirmCancel: "Pár beállítást megváltoztatott. Biztosan be szeretné zárni az ablakot?",
     options: "Beállítások",
     target: "Cél",

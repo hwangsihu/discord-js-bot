@@ -5,7 +5,7 @@
 CKEDITOR.skin.name = "kama";
 CKEDITOR.skin.ua_editor = "ie,iequirks,ie7,ie8";
 CKEDITOR.skin.ua_dialog = "ie,iequirks,ie7,ie8";
-CKEDITOR.skin.chameleon = function (d, c) {
+CKEDITOR.skin.chameleon = (d, c) => {
   var b,
     a = "." + d.id;
   "editor" == c

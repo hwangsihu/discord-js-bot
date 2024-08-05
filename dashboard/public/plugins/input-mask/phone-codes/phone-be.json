@@ -4,7 +4,12 @@
   { "mask": "+32(63)##-##-##", "cc": "BE", "cd": "Belgium", "city": "Arlon" },
   { "mask": "+32(67)##-##-##", "cc": "BE", "cd": "Belgium", "city": "Ath" },
   { "mask": "+32(50)##-##-##", "cc": "BE", "cd": "Belgium", "city": "Brugge (Bruges)" },
-  { "mask": "+32(2)###-##-##", "cc": "BE", "cd": "Belgium", "city": "Brussel/Bruxelles (Brussels)" },
+  {
+    "mask": "+32(2)###-##-##",
+    "cc": "BE",
+    "cd": "Belgium",
+    "city": "Brussel/Bruxelles (Brussels)"
+  },
   { "mask": "+32(71)##-##-##", "cc": "BE", "cd": "Belgium", "city": "Charleroi" },
   { "mask": "+32(60)##-##-##", "cc": "BE", "cd": "Belgium", "city": "Chimay" },
   { "mask": "+32(83)##-##-##", "cc": "BE", "cd": "Belgium", "city": "Ciney" },

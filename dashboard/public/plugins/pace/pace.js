@@ -1,4 +1,4 @@
-(function () {
+(() => {
   var AjaxMonitor,
     Bar,
     DocumentMonitor,
@@ -10,10 +10,10 @@
     NoTargetError,
     Pace,
     RequestIntercept,
-    SOURCE_KEYS,
+    sourceKeys,
     Scaler,
     SocketRequestTracker,
-    XHRRequestTracker,
+    xhrRequestTracker,
     animation,
     avgAmplitude,
     bar,
@@ -22,7 +22,7 @@
     defaultOptions,
     extend,
     extendNative,
-    getFromDOM,
+    getFromDom,
     getIntercept,
     handlePushState,
     ignoreStack,
@@ -33,14 +33,14 @@
     result,
     runAnimation,
     scalers,
-    shouldIgnoreURL,
+    shouldIgnoreUrl,
     shouldTrack,
     source,
     sources,
     uniScaler,
     _WebSocket,
-    _XDomainRequest,
-    _XMLHttpRequest,
+    _xDomainRequest,
+    _xmlHttpRequest,
     _i,
     _intercept,
     _len,
@@ -50,7 +50,7 @@
     _replaceState,
     __slice = [].slice,
     __hasProp = {}.hasOwnProperty,
-    __extends = function (child, parent) {
+    __extends = (child, parent) => {
       for (var key in parent) {
         if (__hasProp.call(parent, key)) child[key] = parent[key];
       }
@@ -98,7 +98,7 @@
     },
   };
 
-  now = function () {
+  now = () => {
     var _ref;
     return (_ref =
       typeof performance !== "undefined" && performance !== null
@@ -119,25 +119,19 @@
   cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
 
   if (requestAnimationFrame == null) {
-    requestAnimationFrame = function (fn) {
-      return setTimeout(fn, 50);
-    };
-    cancelAnimationFrame = function (id) {
-      return clearTimeout(id);
-    };
+    requestAnimationFrame = (fn) => setTimeout(fn, 50);
+    cancelAnimationFrame = (id) => clearTimeout(id);
   }
 
-  runAnimation = function (fn) {
+  runAnimation = (fn) => {
     var last, tick;
     last = now();
-    tick = function () {
+    tick = () => {
       var diff;
       diff = now() - last;
       if (diff >= 33) {
         last = now();
-        return fn(diff, function () {
-          return requestAnimationFrame(tick);
-        });
+        return fn(diff, () => requestAnimationFrame(tick));
       } else {
         return setTimeout(tick, 33 - diff);
       }
@@ -145,9 +139,11 @@
     return tick();
   };
 
-  result = function () {
+  result = () => {
     var args, key, obj;
-    (obj = arguments[0]), (key = arguments[1]), (args = 3 <= arguments.length ? __slice.call(arguments, 2) : []);
+    (obj = arguments[0]),
+      (key = arguments[1]),
+      (args = 3 <= arguments.length ? __slice.call(arguments, 2) : []);
     if (typeof obj[key] === "function") {
       return obj[key].apply(obj, args);
     } else {
@@ -155,7 +151,7 @@
     }
   };
 
-  extend = function () {
+  extend = () => {
     var key, out, source, sources, val, _i, _len;
     (out = arguments[0]), (sources = 2 <= arguments.length ? __slice.call(arguments, 1) : []);
     for (_i = 0, _len = sources.length; _i < _len; _i++) {
@@ -164,7 +160,12 @@
         for (key in source) {
           if (!__hasProp.call(source, key)) continue;
           val = source[key];
-          if (out[key] != null && typeof out[key] === "object" && val != null && typeof val === "object") {
+          if (
+            out[key] != null &&
+            typeof out[key] === "object" &&
+            val != null &&
+            typeof val === "object"
+          ) {
             extend(out[key], val);
           } else {
             out[key] = val;
@@ -175,7 +176,7 @@
     return out;
   };
 
-  avgAmplitude = function (arr) {
+  avgAmplitude = (arr) => {
     var count, sum, v, _i, _len;
     sum = count = 0;
     for (_i = 0, _len = arr.length; _i < _len; _i++) {
@@ -186,7 +187,7 @@
     return sum / count;
   };
 
-  getFromDOM = function (key, json) {
+  getFromDom = (key, json) => {
     var data, e, el;
     if (key == null) {
       key = "options";
@@ -212,7 +213,7 @@
     }
   };
 
-  Evented = (function () {
+  Evented = (() => {
     function Evented() {}
 
     Evented.prototype.on = function (event, handler, ctx, once) {
@@ -265,7 +266,10 @@
         i = 0;
         _results = [];
         while (i < this.bindings[event].length) {
-          (_ref1 = this.bindings[event][i]), (handler = _ref1.handler), (ctx = _ref1.ctx), (once = _ref1.once);
+          (_ref1 = this.bindings[event][i]),
+            (handler = _ref1.handler),
+            (ctx = _ref1.ctx),
+            (once = _ref1.once);
           handler.apply(ctx != null ? ctx : this, args);
           if (once) {
             _results.push(this.bindings[event].splice(i, 1));
@@ -286,7 +290,7 @@
 
   extend(Pace, Evented.prototype);
 
-  options = Pace.options = extend({}, defaultOptions, window.paceOptions, getFromDOM());
+  options = Pace.options = extend({}, defaultOptions, window.paceOptions, getFromDom());
 
   _ref = ["ajax", "document", "eventLag", "elements"];
   for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -296,7 +300,7 @@
     }
   }
 
-  NoTargetError = (function (_super) {
+  NoTargetError = ((_super) => {
     __extends(NoTargetError, _super);
 
     function NoTargetError() {
@@ -307,7 +311,7 @@
     return NoTargetError;
   })(Error);
 
-  Bar = (function () {
+  Bar = (() => {
     function Bar() {
       this.progress = 0;
     }
@@ -389,7 +393,7 @@
     return Bar;
   })();
 
-  Events = (function () {
+  Events = (() => {
     function Events() {
       this.bindings = {};
     }
@@ -418,13 +422,13 @@
     return Events;
   })();
 
-  _XMLHttpRequest = window.XMLHttpRequest;
+  _xmlHttpRequest = window.XMLHttpRequest;
 
-  _XDomainRequest = window.XDomainRequest;
+  _xDomainRequest = window.XDomainRequest;
 
   _WebSocket = window.WebSocket;
 
-  extendNative = function (to, from) {
+  extendNative = (to, from) => {
     var e, key, _results;
     _results = [];
     for (key in from.prototype) {
@@ -433,9 +437,7 @@
           if (typeof Object.defineProperty === "function") {
             _results.push(
               Object.defineProperty(to, key, {
-                get: function () {
-                  return from.prototype[key];
-                },
+                get: () => from.prototype[key],
                 configurable: true,
                 enumerable: true,
               })
@@ -455,7 +457,7 @@
 
   ignoreStack = [];
 
-  Pace.ignore = function () {
+  Pace.ignore = () => {
     var args, fn, ret;
     (fn = arguments[0]), (args = 2 <= arguments.length ? __slice.call(arguments, 1) : []);
     ignoreStack.unshift("ignore");
@@ -464,7 +466,7 @@
     return ret;
   };
 
-  Pace.track = function () {
+  Pace.track = () => {
     var args, fn, ret;
     (fn = arguments[0]), (args = 2 <= arguments.length ? __slice.call(arguments, 1) : []);
     ignoreStack.unshift("track");
@@ -473,7 +475,7 @@
     return ret;
   };
 
-  shouldTrack = function (method) {
+  shouldTrack = (method) => {
     var _ref2;
     if (method == null) {
       method = "GET";
@@ -484,26 +486,27 @@
     if (!ignoreStack.length && options.ajax) {
       if (method === "socket" && options.ajax.trackWebSockets) {
         return true;
-      } else if (((_ref2 = method.toUpperCase()), __indexOf.call(options.ajax.trackMethods, _ref2) >= 0)) {
+      } else if (
+        ((_ref2 = method.toUpperCase()), __indexOf.call(options.ajax.trackMethods, _ref2) >= 0)
+      ) {
         return true;
       }
     }
     return false;
   };
 
-  RequestIntercept = (function (_super) {
+  RequestIntercept = ((_super) => {
     __extends(RequestIntercept, _super);
 
     function RequestIntercept() {
-      var monitorXHR,
-        _this = this;
+      var monitorXhr;
       RequestIntercept.__super__.constructor.apply(this, arguments);
-      monitorXHR = function (req) {
+      monitorXhr = (req) => {
         var _open;
         _open = req.open;
-        return (req.open = function (type, url, async) {
+        return (req.open = (type, url, async) => {
           if (shouldTrack(type)) {
-            _this.trigger("request", {
+            this.trigger("request", {
               type: type,
               url: url,
               request: req,
@@ -512,28 +515,28 @@
           return _open.apply(req, arguments);
         });
       };
-      window.XMLHttpRequest = function (flags) {
+      window.XMLHttpRequest = (flags) => {
         var req;
-        req = new _XMLHttpRequest(flags);
-        monitorXHR(req);
+        req = new _xmlHttpRequest(flags);
+        monitorXhr(req);
         return req;
       };
       try {
-        extendNative(window.XMLHttpRequest, _XMLHttpRequest);
+        extendNative(window.XMLHttpRequest, _xmlHttpRequest);
       } catch (_error) {}
-      if (_XDomainRequest != null) {
-        window.XDomainRequest = function () {
+      if (_xDomainRequest != null) {
+        window.XDomainRequest = () => {
           var req;
-          req = new _XDomainRequest();
-          monitorXHR(req);
+          req = new _xDomainRequest();
+          monitorXhr(req);
           return req;
         };
         try {
-          extendNative(window.XDomainRequest, _XDomainRequest);
+          extendNative(window.XDomainRequest, _xDomainRequest);
         } catch (_error) {}
       }
       if (_WebSocket != null && options.ajax.trackWebSockets) {
-        window.WebSocket = function (url, protocols) {
+        window.WebSocket = (url, protocols) => {
           var req;
           if (protocols != null) {
             req = new _WebSocket(url, protocols);
@@ -541,7 +544,7 @@
             req = new _WebSocket(url);
           }
           if (shouldTrack("socket")) {
-            _this.trigger("request", {
+            this.trigger("request", {
               type: "socket",
               url: url,
               protocols: protocols,
@@ -561,14 +564,14 @@
 
   _intercept = null;
 
-  getIntercept = function () {
+  getIntercept = () => {
     if (_intercept == null) {
       _intercept = new RequestIntercept();
     }
     return _intercept;
   };
 
-  shouldIgnoreURL = function (url) {
+  shouldIgnoreUrl = (url) => {
     var pattern, _j, _len1, _ref2;
     _ref2 = options.ajax.ignoreURLs;
     for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
@@ -577,28 +580,29 @@
         if (url.indexOf(pattern) !== -1) {
           return true;
         }
-      } else {
-        if (pattern.test(url)) {
-          return true;
-        }
+      } else if (pattern.test(url)) {
+        return true;
       }
     }
     return false;
   };
 
-  getIntercept().on("request", function (_arg) {
+  getIntercept().on("request", (_arg) => {
     var after, args, request, type, url;
     (type = _arg.type), (request = _arg.request), (url = _arg.url);
-    if (shouldIgnoreURL(url)) {
+    if (shouldIgnoreUrl(url)) {
       return;
     }
-    if (!Pace.running && (options.restartOnRequestAfter !== false || shouldTrack(type) === "force")) {
+    if (
+      !Pace.running &&
+      (options.restartOnRequestAfter !== false || shouldTrack(type) === "force")
+    ) {
       args = arguments;
       after = options.restartOnRequestAfter || 0;
       if (typeof after === "boolean") {
         after = 0;
       }
-      return setTimeout(function () {
+      return setTimeout(() => {
         var stillActive, _j, _len1, _ref2, _ref3, _results;
         if (type === "socket") {
           stillActive = request.readyState < 2;
@@ -624,25 +628,22 @@
     }
   });
 
-  AjaxMonitor = (function () {
+  AjaxMonitor = (() => {
     function AjaxMonitor() {
-      var _this = this;
       this.elements = [];
-      getIntercept().on("request", function () {
-        return _this.watch.apply(_this, arguments);
-      });
+      getIntercept().on("request", () => this.watch.apply(this, arguments));
     }
 
     AjaxMonitor.prototype.watch = function (_arg) {
       var request, tracker, type, url;
       (type = _arg.type), (request = _arg.request), (url = _arg.url);
-      if (shouldIgnoreURL(url)) {
+      if (shouldIgnoreUrl(url)) {
         return;
       }
       if (type === "socket") {
         tracker = new SocketRequestTracker(request);
       } else {
-        tracker = new XHRRequestTracker(request);
+        tracker = new xhrRequestTracker(request);
       }
       return this.elements.push(tracker);
     };
@@ -650,25 +651,19 @@
     return AjaxMonitor;
   })();
 
-  XHRRequestTracker = (function () {
+  xhrRequestTracker = (() => {
     function XHRRequestTracker(request) {
-      var event,
-        size,
-        _j,
-        _len1,
-        _onreadystatechange,
-        _ref2,
-        _this = this;
+      var event, size, _j, _len1, _onreadystatechange, _ref2;
       this.progress = 0;
       if (window.ProgressEvent != null) {
         size = null;
         request.addEventListener(
           "progress",
-          function (evt) {
+          (evt) => {
             if (evt.lengthComputable) {
-              return (_this.progress = (100 * evt.loaded) / evt.total);
+              return (this.progress = (100 * evt.loaded) / evt.total);
             } else {
-              return (_this.progress = _this.progress + (100 - _this.progress) / 2);
+              return (this.progress = this.progress + (100 - this.progress) / 2);
             }
           },
           false
@@ -676,24 +671,20 @@
         _ref2 = ["load", "abort", "timeout", "error"];
         for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
           event = _ref2[_j];
-          request.addEventListener(
-            event,
-            function () {
-              return (_this.progress = 100);
-            },
-            false
-          );
+          request.addEventListener(event, () => (this.progress = 100), false);
         }
       } else {
         _onreadystatechange = request.onreadystatechange;
-        request.onreadystatechange = function () {
+        request.onreadystatechange = () => {
           var _ref3;
           if ((_ref3 = request.readyState) === 0 || _ref3 === 4) {
-            _this.progress = 100;
+            this.progress = 100;
           } else if (request.readyState === 3) {
-            _this.progress = 50;
+            this.progress = 50;
           }
-          return typeof _onreadystatechange === "function" ? _onreadystatechange.apply(null, arguments) : void 0;
+          return typeof _onreadystatechange === "function"
+            ? _onreadystatechange.apply(null, arguments)
+            : void 0;
         };
       }
     }
@@ -701,31 +692,21 @@
     return XHRRequestTracker;
   })();
 
-  SocketRequestTracker = (function () {
+  SocketRequestTracker = (() => {
     function SocketRequestTracker(request) {
-      var event,
-        _j,
-        _len1,
-        _ref2,
-        _this = this;
+      var event, _j, _len1, _ref2;
       this.progress = 0;
       _ref2 = ["error", "open"];
       for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
         event = _ref2[_j];
-        request.addEventListener(
-          event,
-          function () {
-            return (_this.progress = 100);
-          },
-          false
-        );
+        request.addEventListener(event, () => (this.progress = 100), false);
       }
     }
 
     return SocketRequestTracker;
   })();
 
-  ElementMonitor = (function () {
+  ElementMonitor = (() => {
     function ElementMonitor(options) {
       var selector, _j, _len1, _ref2;
       if (options == null) {
@@ -745,7 +726,7 @@
     return ElementMonitor;
   })();
 
-  ElementTracker = (function () {
+  ElementTracker = (() => {
     function ElementTracker(selector) {
       this.selector = selector;
       this.progress = 0;
@@ -753,13 +734,10 @@
     }
 
     ElementTracker.prototype.check = function () {
-      var _this = this;
       if (document.querySelector(this.selector)) {
         return this.done();
       } else {
-        return setTimeout(function () {
-          return _this.check();
-        }, options.elements.checkInterval);
+        return setTimeout(() => this.check(), options.elements.checkInterval);
       }
     };
 
@@ -770,7 +748,7 @@
     return ElementTracker;
   })();
 
-  DocumentMonitor = (function () {
+  DocumentMonitor = (() => {
     DocumentMonitor.prototype.states = {
       loading: 0,
       interactive: 50,
@@ -778,36 +756,31 @@
     };
 
     function DocumentMonitor() {
-      var _onreadystatechange,
-        _ref2,
-        _this = this;
+      var _onreadystatechange, _ref2;
       this.progress = (_ref2 = this.states[document.readyState]) != null ? _ref2 : 100;
       _onreadystatechange = document.onreadystatechange;
-      document.onreadystatechange = function () {
-        if (_this.states[document.readyState] != null) {
-          _this.progress = _this.states[document.readyState];
+      document.onreadystatechange = () => {
+        if (this.states[document.readyState] != null) {
+          this.progress = this.states[document.readyState];
         }
-        return typeof _onreadystatechange === "function" ? _onreadystatechange.apply(null, arguments) : void 0;
+        return typeof _onreadystatechange === "function"
+          ? _onreadystatechange.apply(null, arguments)
+          : void 0;
       };
     }
 
     return DocumentMonitor;
   })();
 
-  EventLagMonitor = (function () {
+  EventLagMonitor = (() => {
     function EventLagMonitor() {
-      var avg,
-        interval,
-        last,
-        points,
-        samples,
-        _this = this;
+      var avg, interval, last, points, samples;
       this.progress = 0;
       avg = 0;
       samples = [];
       points = 0;
       last = now();
-      interval = setInterval(function () {
+      interval = setInterval(() => {
         var diff;
         diff = now() - last - 50;
         last = now();
@@ -817,10 +790,10 @@
         }
         avg = avgAmplitude(samples);
         if (++points >= options.eventLag.minSamples && avg < options.eventLag.lagThreshold) {
-          _this.progress = 100;
+          this.progress = 100;
           return clearInterval(interval);
         } else {
-          return (_this.progress = 100 * (3 / (avg + 3)));
+          return (this.progress = 100 * (3 / (avg + 3)));
         }
       }, 50);
     }
@@ -828,7 +801,7 @@
     return EventLagMonitor;
   })();
 
-  Scaler = (function () {
+  Scaler = (() => {
     function Scaler(source) {
       this.source = source;
       this.last = this.sinceLastUpdate = 0;
@@ -887,7 +860,7 @@
 
   Pace.running = false;
 
-  handlePushState = function () {
+  handlePushState = () => {
     if (options.restartOnPushState) {
       return Pace.restart();
     }
@@ -895,7 +868,7 @@
 
   if (window.history.pushState != null) {
     _pushState = window.history.pushState;
-    window.history.pushState = function () {
+    window.history.pushState = () => {
       handlePushState();
       return _pushState.apply(window.history, arguments);
     };
@@ -903,27 +876,27 @@
 
   if (window.history.replaceState != null) {
     _replaceState = window.history.replaceState;
-    window.history.replaceState = function () {
+    window.history.replaceState = () => {
       handlePushState();
       return _replaceState.apply(window.history, arguments);
     };
   }
 
-  SOURCE_KEYS = {
+  sourceKeys = {
     ajax: AjaxMonitor,
     elements: ElementMonitor,
     document: DocumentMonitor,
     eventLag: EventLagMonitor,
   };
 
-  (init = function () {
+  (init = () => {
     var type, _j, _k, _len1, _len2, _ref2, _ref3, _ref4;
     Pace.sources = sources = [];
     _ref2 = ["ajax", "elements", "document", "eventLag"];
     for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
       type = _ref2[_j];
       if (options[type] !== false) {
-        sources.push(new SOURCE_KEYS[type](options[type]));
+        sources.push(new sourceKeys[type](options[type]));
       }
     }
     _ref4 = (_ref3 = options.extraSources) != null ? _ref3 : [];
@@ -936,7 +909,7 @@
     return (uniScaler = new Scaler());
   })();
 
-  Pace.stop = function () {
+  Pace.stop = () => {
     Pace.trigger("stop");
     Pace.running = false;
     bar.destroy();
@@ -950,20 +923,35 @@
     return init();
   };
 
-  Pace.restart = function () {
+  Pace.restart = () => {
     Pace.trigger("restart");
     Pace.stop();
     return Pace.start();
   };
 
-  Pace.go = function () {
+  Pace.go = () => {
     var start;
     Pace.running = true;
     bar.render();
     start = now();
     cancelAnimation = false;
-    return (animation = runAnimation(function (frameTime, enqueueNextFrame) {
-      var avg, count, done, element, elements, i, j, remaining, scaler, scalerList, sum, _j, _k, _len1, _len2, _ref2;
+    return (animation = runAnimation((frameTime, enqueueNextFrame) => {
+      var avg,
+        count,
+        done,
+        element,
+        elements,
+        i,
+        j,
+        remaining,
+        scaler,
+        scalerList,
+        sum,
+        _j,
+        _k,
+        _len1,
+        _len2,
+        _ref2;
       remaining = 100 - bar.progress;
       count = sum = 0;
       done = true;
@@ -988,7 +976,7 @@
         bar.update(100);
         Pace.trigger("done");
         return setTimeout(
-          function () {
+          () => {
             bar.finish();
             Pace.running = false;
             return Pace.trigger("hide");
@@ -1001,7 +989,7 @@
     }));
   };
 
-  Pace.start = function (_options) {
+  Pace.start = (_options) => {
     extend(options, _options);
     Pace.running = true;
     try {
@@ -1009,23 +997,19 @@
     } catch (_error) {
       NoTargetError = _error;
     }
-    if (!document.querySelector(".pace")) {
-      return setTimeout(Pace.start, 50);
-    } else {
+    if (document.querySelector(".pace")) {
       Pace.trigger("start");
       return Pace.go();
+    } else {
+      return setTimeout(Pace.start, 50);
     }
   };
 
   if (typeof define === "function" && define.amd) {
-    define(["pace"], function () {
-      return Pace;
-    });
+    define(["pace"], () => Pace);
   } else if (typeof exports === "object") {
     module.exports = Pace;
-  } else {
-    if (options.startOnPageLoad) {
-      Pace.start();
-    }
+  } else if (options.startOnPageLoad) {
+    Pace.start();
   }
 }).call(this);

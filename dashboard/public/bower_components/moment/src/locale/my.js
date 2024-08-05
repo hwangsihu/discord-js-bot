@@ -70,16 +70,8 @@ export default moment.defineLocale("my", {
     y: "တစ်နှစ်",
     yy: "%d နှစ်",
   },
-  preparse: function (string) {
-    return string.replace(/[၁၂၃၄၅၆၇၈၉၀]/g, function (match) {
-      return numberMap[match];
-    });
-  },
-  postformat: function (string) {
-    return string.replace(/\d/g, function (match) {
-      return symbolMap[match];
-    });
-  },
+  preparse: (string) => string.replace(/[၁၂၃၄၅၆၇၈၉၀]/g, (match) => numberMap[match]),
+  postformat: (string) => string.replace(/\d/g, (match) => symbolMap[match]),
   week: {
     dow: 1, // Monday is the first day of the week.
     doy: 4, // The week that contains Jan 4th is the first week of the year.

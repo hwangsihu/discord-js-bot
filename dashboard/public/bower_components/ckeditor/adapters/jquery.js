@@ -2,11 +2,15 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function (a) {
-  if ("undefined" == typeof a) throw Error("jQuery should be loaded before CKEditor jQuery adapter.");
-  if ("undefined" == typeof CKEDITOR) throw Error("CKEditor should be loaded before CKEditor jQuery adapter.");
+((a) => {
+  if ("undefined" == typeof a)
+    throw Error("jQuery should be loaded before CKEditor jQuery adapter.");
+  if ("undefined" == typeof CKEDITOR)
+    throw Error("CKEditor should be loaded before CKEditor jQuery adapter.");
   CKEDITOR.config.jqueryOverrideVal =
-    "undefined" == typeof CKEDITOR.config.jqueryOverrideVal ? !0 : CKEDITOR.config.jqueryOverrideVal;
+    "undefined" == typeof CKEDITOR.config.jqueryOverrideVal
+      ? !0
+      : CKEDITOR.config.jqueryOverrideVal;
   a.extend(a.fn, {
     ckeditorGet: function () {
       var a = this.eq(0).data("ckeditorInstance");
@@ -26,16 +30,17 @@
         var b = a(this),
           c = b.data("ckeditorInstance"),
           f = b.data("_ckeditorInstanceLock"),
-          h = this,
           l = new a.Deferred();
         k.push(l.promise());
         if (c && !f) g && g.apply(c, [this]), l.resolve();
         else if (f)
           c.once(
             "instanceReady",
-            function () {
-              setTimeout(function () {
-                c.element ? (c.element.$ == h && g && g.apply(c, [h]), l.resolve()) : setTimeout(arguments.callee, 100);
+            () => {
+              setTimeout(() => {
+                c.element
+                  ? (c.element.$ == this && g && g.apply(c, [this]), l.resolve())
+                  : setTimeout(arguments.callee, 100);
               }, 0);
             },
             null,
@@ -43,64 +48,67 @@
             9999
           );
         else {
-          if (d.autoUpdateElement || ("undefined" == typeof d.autoUpdateElement && CKEDITOR.config.autoUpdateElement))
+          if (
+            d.autoUpdateElement ||
+            ("undefined" == typeof d.autoUpdateElement && CKEDITOR.config.autoUpdateElement)
+          )
             d.autoUpdateElementJquery = !0;
           d.autoUpdateElement = !1;
           b.data("_ckeditorInstanceLock", !0);
-          c = a(this).is("textarea") ? CKEDITOR.replace(h, d) : CKEDITOR.inline(h, d);
+          c = a(this).is("textarea") ? CKEDITOR.replace(this, d) : CKEDITOR.inline(this, d);
           b.data("ckeditorInstance", c);
           c.on(
             "instanceReady",
-            function (d) {
+            (d) => {
               var e = d.editor;
-              setTimeout(function () {
+              setTimeout(() => {
                 if (e.element) {
                   d.removeListener();
-                  e.on("dataReady", function () {
+                  e.on("dataReady", () => {
                     b.trigger("dataReady.ckeditor", [e]);
                   });
-                  e.on("setData", function (a) {
+                  e.on("setData", (a) => {
                     b.trigger("setData.ckeditor", [e, a.data]);
                   });
                   e.on(
                     "getData",
-                    function (a) {
+                    (a) => {
                       b.trigger("getData.ckeditor", [e, a.data]);
                     },
                     999
                   );
-                  e.on("destroy", function () {
+                  e.on("destroy", () => {
                     b.trigger("destroy.ckeditor", [e]);
                   });
                   e.on(
                     "save",
-                    function () {
-                      a(h.form).submit();
+                    () => {
+                      a(this.form).submit();
                       return !1;
                     },
                     null,
                     null,
                     20
                   );
-                  if (e.config.autoUpdateElementJquery && b.is("textarea") && a(h.form).length) {
-                    var c = function () {
-                      b.ckeditor(function () {
+                  if (e.config.autoUpdateElementJquery && b.is("textarea") && a(this.form).length) {
+                    var c = () => {
+                      b.ckeditor(() => {
                         e.updateElement();
                       });
                     };
-                    a(h.form).submit(c);
-                    a(h.form).bind("form-pre-serialize", c);
-                    b.bind("destroy.ckeditor", function () {
-                      a(h.form).unbind("submit", c);
-                      a(h.form).unbind("form-pre-serialize", c);
+                    a(this.form).submit(c);
+                    a(this.form).bind("form-pre-serialize", c);
+                    b.bind("destroy.ckeditor", () => {
+                      a(this.form).unbind("submit", c);
+                      a(this.form).unbind("form-pre-serialize", c);
                     });
                   }
-                  e.on("destroy", function () {
+                  e.on("destroy", () => {
                     b.removeData("ckeditorInstance");
                   });
                   b.removeData("_ckeditorInstanceLock");
                   b.trigger("instanceReady.ckeditor", [e]);
-                  g && g.apply(e, [h]);
+                  g && g.apply(e, [this]);
                   l.resolve();
                 } else setTimeout(arguments.callee, 100);
               }, 0);
@@ -113,7 +121,7 @@
       });
       var f = new a.Deferred();
       this.promise = f.promise();
-      a.when.apply(this, k).then(function () {
+      a.when.apply(this, k).then(() => {
         f.resolve();
       });
       this.editor = this.eq(0).data("ckeditorInstance");
@@ -121,36 +129,37 @@
     },
   });
   CKEDITOR.config.jqueryOverrideVal &&
-    (a.fn.val = CKEDITOR.tools.override(a.fn.val, function (g) {
-      return function (d) {
-        if (arguments.length) {
-          var m = this,
-            k = [],
-            f = this.each(function () {
-              var b = a(this),
-                c = b.data("ckeditorInstance");
-              if (b.is("textarea") && c) {
-                var f = new a.Deferred();
-                c.setData(d, function () {
-                  f.resolve();
-                });
-                k.push(f.promise());
-                return !0;
-              }
-              return g.call(b, d);
-            });
-          if (k.length) {
-            var b = new a.Deferred();
-            a.when.apply(this, k).done(function () {
-              b.resolveWith(m);
-            });
-            return b.promise();
+    (a.fn.val = CKEDITOR.tools.override(
+      a.fn.val,
+      (g) =>
+        function (d) {
+          if (arguments.length) {
+            var k = [],
+              f = this.each(function () {
+                var b = a(this),
+                  c = b.data("ckeditorInstance");
+                if (b.is("textarea") && c) {
+                  var f = new a.Deferred();
+                  c.setData(d, () => {
+                    f.resolve();
+                  });
+                  k.push(f.promise());
+                  return !0;
+                }
+                return g.call(b, d);
+              });
+            if (k.length) {
+              var b = new a.Deferred();
+              a.when.apply(this, k).done(() => {
+                b.resolveWith(this);
+              });
+              return b.promise();
+            }
+            return f;
           }
-          return f;
+          var f = a(this).eq(0),
+            c = f.data("ckeditorInstance");
+          return f.is("textarea") && c ? c.getData() : g.call(f);
         }
-        var f = a(this).eq(0),
-          c = f.data("ckeditorInstance");
-        return f.is("textarea") && c ? c.getData() : g.call(f);
-      };
-    }));
+    ));
 })(window.jQuery);

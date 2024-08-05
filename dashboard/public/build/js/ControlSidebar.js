@@ -6,9 +6,7 @@
  *         or add [data-toggle="control-sidebar"] to the trigger
  *         Pass any option as data-option="value"
  */
-+(function ($) {
-  "use strict";
-
++(($) => {
   var DataKey = "lte.controlsidebar";
 
   var Default = {
@@ -74,10 +72,10 @@
 
   ControlSidebar.prototype.expand = function () {
     $(Selector.sidebar).show();
-    if (!this.options.slide) {
-      $("body").addClass(ClassName.open);
-    } else {
+    if (this.options.slide) {
       $(Selector.sidebar).addClass(ClassName.open);
+    } else {
+      $("body").addClass(ClassName.open);
     }
 
     $(this.element).trigger($.Event(Event.expanded));
@@ -97,7 +95,7 @@
 
   // Private
 
-  ControlSidebar.prototype._fixForBoxed = function (bg) {
+  ControlSidebar.prototype._fixForBoxed = (bg) => {
     bg.css({
       position: "absolute",
       height: $(Selector.wrapper).height(),

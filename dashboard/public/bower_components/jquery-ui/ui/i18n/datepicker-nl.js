@@ -1,6 +1,6 @@
 /* Dutch (UTF-8) initialisation for the jQuery UI date picker plugin. */
 /* Written by Mathias Bynens <http://mathiasbynens.be/> */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional.nl = {
     closeText: "Sluiten",
     prevText: "←",
@@ -28,7 +28,20 @@
       "november",
       "december",
     ],
-    monthNamesShort: ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"],
+    monthNamesShort: [
+      "jan",
+      "feb",
+      "mrt",
+      "apr",
+      "mei",
+      "jun",
+      "jul",
+      "aug",
+      "sep",
+      "okt",
+      "nov",
+      "dec",
+    ],
     dayNames: ["zondag", "maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag"],
     dayNamesShort: ["zon", "maa", "din", "woe", "don", "vri", "zat"],
     dayNamesMin: ["zo", "ma", "di", "wo", "do", "vr", "za"],

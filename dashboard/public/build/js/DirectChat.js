@@ -5,9 +5,7 @@
  * @Usage: $('#my-chat-box').directChat()
  *         or add [data-widget="direct-chat"] to the trigger
  */
-+(function ($) {
-  "use strict";
-
++(($) => {
   var DataKey = "lte.directchat";
 
   var Selector = {
@@ -25,7 +23,7 @@
     this.element = element;
   };
 
-  DirectChat.prototype.toggle = function ($trigger) {
+  DirectChat.prototype.toggle = ($trigger) => {
     $trigger.parents(Selector.box).first().toggleClass(ClassName.open);
   };
 

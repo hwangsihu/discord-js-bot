@@ -3,7 +3,7 @@
  * Written by Edmond L. (ll_edmond@walla.com)
  * and Ionut G. Stan (ionut.g.stan@gmail.com)
  */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -11,7 +11,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["ro"] = {
     closeText: "Închide",
     prevText: "&#xAB; Luna precedentă",
@@ -31,7 +31,20 @@
       "Noiembrie",
       "Decembrie",
     ],
-    monthNamesShort: ["Ian", "Feb", "Mar", "Apr", "Mai", "Iun", "Iul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    monthNamesShort: [
+      "Ian",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Mai",
+      "Iun",
+      "Iul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ],
     dayNames: ["Duminică", "Luni", "Marţi", "Miercuri", "Joi", "Vineri", "Sâmbătă"],
     dayNamesShort: ["Dum", "Lun", "Mar", "Mie", "Joi", "Vin", "Sâm"],
     dayNamesMin: ["Du", "Lu", "Ma", "Mi", "Jo", "Vi", "Sâ"],

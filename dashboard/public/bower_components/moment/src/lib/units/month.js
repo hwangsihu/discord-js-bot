@@ -18,7 +18,7 @@ import { addUnitPriority } from "./priorities";
 
 export function daysInMonth(year, month) {
   if (isNaN(year) || isNaN(month)) {
-    return NaN;
+    return Number.NaN;
   }
   var modMonth = mod(month, 12);
   year += (month - modMonth) / 12;
@@ -51,18 +51,14 @@ addUnitPriority("month", 8);
 
 addRegexToken("M", match1to2);
 addRegexToken("MM", match1to2, match2);
-addRegexToken("MMM", function (isStrict, locale) {
-  return locale.monthsShortRegex(isStrict);
-});
-addRegexToken("MMMM", function (isStrict, locale) {
-  return locale.monthsRegex(isStrict);
-});
+addRegexToken("MMM", (isStrict, locale) => locale.monthsShortRegex(isStrict));
+addRegexToken("MMMM", (isStrict, locale) => locale.monthsRegex(isStrict));
 
-addParseToken(["M", "MM"], function (input, array) {
+addParseToken(["M", "MM"], (input, array) => {
   array[MONTH] = toInt(input) - 1;
 });
 
-addParseToken(["MMM", "MMMM"], function (input, array, config, token) {
+addParseToken(["MMM", "MMMM"], (input, array, config, token) => {
   var month = config._locale.monthsParse(input, token, config._strict);
   // if we didn't find a month name, mark the date as invalid.
   if (month != null) {
@@ -76,14 +72,18 @@ addParseToken(["MMM", "MMMM"], function (input, array, config, token) {
 
 var MONTHS_IN_FORMAT = /D[oD]?(\[[^\[\]]*\]|\s)+MMMM?/;
 export var defaultLocaleMonths =
-  "January_February_March_April_May_June_July_August_September_October_November_December".split("_");
+  "January_February_March_April_May_June_July_August_September_October_November_December".split(
+    "_"
+  );
 export function localeMonths(m, format) {
   if (!m) {
     return isArray(this._months) ? this._months : this._months["standalone"];
   }
   return isArray(this._months)
     ? this._months[m.month()]
-    : this._months[(this._months.isFormat || MONTHS_IN_FORMAT).test(format) ? "format" : "standalone"][m.month()];
+    : this._months[
+        (this._months.isFormat || MONTHS_IN_FORMAT).test(format) ? "format" : "standalone"
+      ][m.month()];
 }
 
 export var defaultLocaleMonthsShort = "Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec".split("_");
@@ -121,22 +121,20 @@ function handleStrictParse(monthName, format, strict) {
       ii = indexOf.call(this._longMonthsParse, llc);
       return ii !== -1 ? ii : null;
     }
-  } else {
-    if (format === "MMM") {
-      ii = indexOf.call(this._shortMonthsParse, llc);
-      if (ii !== -1) {
-        return ii;
-      }
-      ii = indexOf.call(this._longMonthsParse, llc);
-      return ii !== -1 ? ii : null;
-    } else {
-      ii = indexOf.call(this._longMonthsParse, llc);
-      if (ii !== -1) {
-        return ii;
-      }
-      ii = indexOf.call(this._shortMonthsParse, llc);
-      return ii !== -1 ? ii : null;
+  } else if (format === "MMM") {
+    ii = indexOf.call(this._shortMonthsParse, llc);
+    if (ii !== -1) {
+      return ii;
     }
+    ii = indexOf.call(this._longMonthsParse, llc);
+    return ii !== -1 ? ii : null;
+  } else {
+    ii = indexOf.call(this._longMonthsParse, llc);
+    if (ii !== -1) {
+      return ii;
+    }
+    ii = indexOf.call(this._shortMonthsParse, llc);
+    return ii !== -1 ? ii : null;
   }
 }
 
@@ -161,7 +159,10 @@ export function localeMonthsParse(monthName, format, strict) {
     mom = createUTC([2000, i]);
     if (strict && !this._longMonthsParse[i]) {
       this._longMonthsParse[i] = new RegExp("^" + this.months(mom, "").replace(".", "") + "$", "i");
-      this._shortMonthsParse[i] = new RegExp("^" + this.monthsShort(mom, "").replace(".", "") + "$", "i");
+      this._shortMonthsParse[i] = new RegExp(
+        "^" + this.monthsShort(mom, "").replace(".", "") + "$",
+        "i"
+      );
     }
     if (!strict && !this._monthsParse[i]) {
       regex = "^" + this.months(mom, "") + "|^" + this.monthsShort(mom, "");
@@ -234,7 +235,9 @@ export function monthsShortRegex(isStrict) {
     if (!hasOwnProp(this, "_monthsShortRegex")) {
       this._monthsShortRegex = defaultMonthsShortRegex;
     }
-    return this._monthsShortStrictRegex && isStrict ? this._monthsShortStrictRegex : this._monthsShortRegex;
+    return this._monthsShortStrictRegex && isStrict
+      ? this._monthsShortStrictRegex
+      : this._monthsShortRegex;
   }
 }
 

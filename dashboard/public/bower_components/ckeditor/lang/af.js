@@ -106,7 +106,12 @@ CKEDITOR.lang["af"] = {
     invalidRows: "Aantal rye moet 'n getal groter as 0 wees.",
     invalidWidth: "Tabelbreedte moet 'n getal wees.",
     menu: "Tabel eienskappe",
-    row: { menu: "Ry", insertBefore: "Voeg ry in voor", insertAfter: "Voeg ry in na", deleteRow: "Verwyder ry" },
+    row: {
+      menu: "Ry",
+      insertBefore: "Voeg ry in voor",
+      insertAfter: "Voeg ry in na",
+      deleteRow: "Verwyder ry",
+    },
     rows: "Rye",
     summary: "Opsomming",
     title: "Tabel eienskappe",
@@ -343,7 +348,8 @@ CKEDITOR.lang["af"] = {
     advancedTab: "Gevorderd",
     validateNumberFailed: "Hierdie waarde is nie 'n nommer nie.",
     confirmNewPage: "Alle wysiginge sal verlore gaan. Is jy seker dat jy 'n nuwe bladsy wil laai?",
-    confirmCancel: "Sommige opsies is gewysig. Is jy seker dat jy hierdie dialoogvenster wil sluit?",
+    confirmCancel:
+      "Sommige opsies is gewysig. Is jy seker dat jy hierdie dialoogvenster wil sluit?",
     options: "Opsies",
     target: "Teiken",
     targetNew: "Nuwe venster (_blank)",
@@ -371,12 +377,14 @@ CKEDITOR.lang["af"] = {
     invalidValue: "Ongeldige waarde",
     invalidHeight: "Hoogte moet 'n getal wees",
     invalidWidth: "Breedte moet 'n getal wees.",
-    invalidLength: 'Die waarde vir die veld "%1" moet \'n  posetiewe nommer wees met of sonder die meeteenheid (%2).',
+    invalidLength:
+      'Die waarde vir die veld "%1" moet \'n  posetiewe nommer wees met of sonder die meeteenheid (%2).',
     invalidCssLength:
       "Die waarde vir die \"%1\" veld moet 'n posetiewe getal wees met of sonder 'n geldige CSS eenheid (px, %, in, cm, mm, em, ex, pt, of pc).",
     invalidHtmlLength:
       "Die waarde vir die  \"%1\" veld moet 'n posetiewe getal wees met of sonder 'n geldige HTML eenheid (px of %).",
-    invalidInlineStyle: 'Ongeldige CSS. Formaat is een of meer sleutel-wert paare, "naam : wert" met kommapunte gesky.',
+    invalidInlineStyle:
+      'Ongeldige CSS. Formaat is een of meer sleutel-wert paare, "naam : wert" met kommapunte gesky.',
     cssLengthTooltip:
       "Voeg 'n getal wert in pixel in, of 'n waarde met geldige CSS eenheid (px, %, in, cm, mm, em, ex, pt, of pc).",
     unavailable: '%1<span class="cke_accessibility">, nie beskikbaar nie</span>',

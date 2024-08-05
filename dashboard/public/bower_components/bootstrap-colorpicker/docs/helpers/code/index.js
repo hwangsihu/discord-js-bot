@@ -8,15 +8,13 @@ var entityMap = {
   "'": "&#39;",
   "/": "&#x2F;",
 };
-module.exports.register = function (Handlebars, options) {
+module.exports.register = (Handlebars, options) => {
   Handlebars.registerHelper("code", function (hboptions) {
     var codeStr = beautify(String(hboptions.fn(this)).trim(), {
       wrap_line_length: 80,
       wrap_attributes: "auto",
       indent_scripts: "normal",
-    }).replace(/[&<>"'\/]/g, function (s) {
-      return entityMap[s];
-    });
+    }).replace(/[&<>"'\/]/g, (s) => entityMap[s]);
 
     return '<div class="example-code">' + codeStr + "</div>";
   });

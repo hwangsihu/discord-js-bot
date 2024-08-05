@@ -37,7 +37,9 @@ $.fn.sparkline.bullet = bullet = createClass($.fn.sparkline._base, {
 
   getRegion: function (el, x, y) {
     var shapeid = this.target.getShapeAt(el, x, y);
-    return shapeid !== undefined && this.shapes[shapeid] !== undefined ? this.shapes[shapeid] : undefined;
+    return shapeid !== undefined && this.shapes[shapeid] !== undefined
+      ? this.shapes[shapeid]
+      : undefined;
   },
 
   getCurrentRegionFields: function () {
@@ -99,14 +101,24 @@ $.fn.sparkline.bullet = bullet = createClass($.fn.sparkline._base, {
 
   renderTarget: function (highlight) {
     var targetval = this.values[0],
-      x = Math.round(this.canvasWidth * ((targetval - this.min) / this.range) - this.options.get("targetWidth") / 2),
+      x = Math.round(
+        this.canvasWidth * ((targetval - this.min) / this.range) -
+          this.options.get("targetWidth") / 2
+      ),
       targettop = Math.round(this.canvasHeight * 0.1),
       targetheight = this.canvasHeight - targettop * 2,
       color = this.options.get("targetColor");
     if (highlight) {
       color = this.calcHighlightColor(color, this.options);
     }
-    return this.target.drawRect(x, targettop, this.options.get("targetWidth") - 1, targetheight - 1, color, color);
+    return this.target.drawRect(
+      x,
+      targettop,
+      this.options.get("targetWidth") - 1,
+      targetheight - 1,
+      color,
+      color
+    );
   },
 
   render: function () {

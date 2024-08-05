@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(s) {
       if (n[s]) return n[s].exports;
       var i = (n[s] = { i: s, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = n),
-      (t.d = function (e, n, s) {
+      (t.d = (e, n, s) => {
         t.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: s });
       }),
-      (t.n = function (e) {
-        var n =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var n = e && e.__esModule ? () => e.default : () => e;
         return t.d(n, "a", n), n;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 165))
     );
   })({
-    0: function (t, n) {
+    0: (t, n) => {
       t.exports = e;
     },
-    1: function (e, n) {
+    1: (e, n) => {
       e.exports = t;
     },
-    165: function (e, t, n) {
+    165: (e, t, n) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), n(166);
       var s = n(1);
       s.datepickerLocale("lv", "lv", {
@@ -66,8 +57,29 @@
           "Novembris",
           "Decembris",
         ],
-        monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jūn", "Jūl", "Aug", "Sep", "Okt", "Nov", "Dec"],
-        dayNames: ["svētdiena", "pirmdiena", "otrdiena", "trešdiena", "ceturtdiena", "piektdiena", "sestdiena"],
+        monthNamesShort: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "Mai",
+          "Jūn",
+          "Jūl",
+          "Aug",
+          "Sep",
+          "Okt",
+          "Nov",
+          "Dec",
+        ],
+        dayNames: [
+          "svētdiena",
+          "pirmdiena",
+          "otrdiena",
+          "trešdiena",
+          "ceturtdiena",
+          "piektdiena",
+          "sestdiena",
+        ],
         dayNamesShort: ["svt", "prm", "otr", "tre", "ctr", "pkt", "sst"],
         dayNamesMin: ["Sv", "Pr", "Ot", "Tr", "Ct", "Pk", "Ss"],
         weekHeader: "Ned.",
@@ -80,18 +92,22 @@
         s.locale("lv", {
           buttonText: { month: "Mēnesis", week: "Nedēļa", day: "Diena", list: "Dienas kārtība" },
           allDayText: "Visu dienu",
-          eventLimitText: function (e) {
-            return "+vēl " + e;
-          },
+          eventLimitText: (e) => "+vēl " + e,
           noEventsMessage: "Nav notikumu",
         });
     },
-    166: function (e, t, n) {
-      !(function (e, t) {
+    166: (e, t, n) => {
+      !((e, t) => {
         t(n(0));
-      })(0, function (e) {
+      })(0, (e) => {
         function t(e, t, n) {
-          return n ? (t % 10 == 1 && t % 100 != 11 ? e[2] : e[3]) : t % 10 == 1 && t % 100 != 11 ? e[0] : e[1];
+          return n
+            ? t % 10 == 1 && t % 100 != 11
+              ? e[2]
+              : e[3]
+            : t % 10 == 1 && t % 100 != 11
+              ? e[0]
+              : e[1];
         }
         function n(e, n, s) {
           return e + " " + t(a[s], e, n);
@@ -121,7 +137,9 @@
               "_"
             ),
           monthsShort: "jan_feb_mar_apr_mai_jūn_jūl_aug_sep_okt_nov_dec".split("_"),
-          weekdays: "svētdiena_pirmdiena_otrdiena_trešdiena_ceturtdiena_piektdiena_sestdiena".split("_"),
+          weekdays: "svētdiena_pirmdiena_otrdiena_trešdiena_ceturtdiena_piektdiena_sestdiena".split(
+            "_"
+          ),
           weekdaysShort: "Sv_P_O_T_C_Pk_S".split("_"),
           weekdaysMin: "Sv_P_O_T_C_Pk_S".split("_"),
           weekdaysParseExact: !0,
@@ -163,5 +181,5 @@
         });
       });
     },
-  });
-});
+  })
+);

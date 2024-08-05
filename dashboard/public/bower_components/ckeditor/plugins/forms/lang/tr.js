@@ -14,7 +14,13 @@
     selected: "Seçili",
     required: "Zorunlu",
   },
-  form: { title: "Form Özellikleri", menu: "Form Özellikleri", action: "İşlem", method: "Yöntem", encoding: "Kodlama" },
+  form: {
+    title: "Form Özellikleri",
+    menu: "Form Özellikleri",
+    action: "İşlem",
+    method: "Yöntem",
+    encoding: "Kodlama",
+  },
   hidden: { title: "Gizli Veri Özellikleri", name: "Ad", value: "Değer" },
   select: {
     title: "Seçim Menüsü Özellikleri",

@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function p(c) {
     var a = c.widgets,
       b = c.focusManager.currentActive;
@@ -17,7 +17,7 @@
   function t(c, a) {
     return CKEDITOR.tools.array.reduce(
       CKEDITOR.tools.objectKeys(c),
-      function (b, d) {
+      (b, d) => {
         var f = c[d];
         l(f, a) && b.push(f);
         return b;
@@ -32,7 +32,11 @@
         defaults: { imageClass: c.config.easyimage_class || "", alt: "", src: "", caption: "" },
         template:
           '\x3cfigure class\x3d"{imageClass}"\x3e\x3cimg alt\x3d"{alt}" src\x3d"{src}" /\x3e\x3cfigcaption\x3e{caption}\x3c/figcaption\x3e\x3c/figure\x3e',
-        allowedContent: { img: { attributes: "!src,alt,width,height" }, figure: !0, figcaption: !0 },
+        allowedContent: {
+          img: { attributes: "!src,alt,width,height" },
+          figure: !0,
+          figcaption: !0,
+        },
         requiredContent: "figure; img[!src]",
         features: [],
         editables: {
@@ -44,7 +48,7 @@
         },
         parts: { image: "img", caption: "figcaption" },
         upcasts: {
-          figure: function (b) {
+          figure: (b) => {
             if (1 === b.find("img", !0).length) return b;
           },
         },
@@ -55,7 +59,9 @@
     return a;
   }
   function m(c) {
-    this.wrapper = CKEDITOR.dom.element.createFromHtml(c || '\x3cdiv class\x3d"cke_loader"\x3e\x3c/div\x3e');
+    this.wrapper = CKEDITOR.dom.element.createFromHtml(
+      c || '\x3cdiv class\x3d"cke_loader"\x3e\x3c/div\x3e'
+    );
   }
   function n() {
     m.call(
@@ -68,7 +74,7 @@
   }
   var r = !1,
     v = {
-      caption: (function () {
+      caption: (() => {
         function c(b) {
           b.parts.caption.data("cke-caption-placeholder", !1);
         }
@@ -77,15 +83,17 @@
           b.data("cke-caption-hidden", !a);
         }
         return {
-          setUp: function (b) {
+          setUp: (b) => {
             function a(d) {
-              var e = (d = "blur" === d.name ? b.elementPath() : d.data.path) ? d.lastElement : null;
+              var e = (d = "blur" === d.name ? b.elementPath() : d.data.path)
+                ? d.lastElement
+                : null;
               d = t(b.widgets.instances, "caption");
               if (!b.filter.check("figcaption"))
-                return CKEDITOR.tools.array.forEach(c, function (a) {
+                return CKEDITOR.tools.array.forEach(c, (a) => {
                   a.removeListener();
                 });
-              CKEDITOR.tools.array.forEach(d, function (a) {
+              CKEDITOR.tools.array.forEach(d, (a) => {
                 a._refreshCaption(e);
               });
             }
@@ -115,18 +123,24 @@
             if (d)
               g.getData() || b.equals(f)
                 ? (!b || (b.equals(f) && b.data("cke-caption-placeholder"))) && c(this)
-                : this.parts.caption.data("cke-caption-placeholder", this.editor.lang.imagebase.captionPlaceholder),
+                : this.parts.caption.data(
+                    "cke-caption-placeholder",
+                    this.editor.lang.imagebase.captionPlaceholder
+                  ),
                 a(f, !0);
-            else if (!this.editables.caption.getData() || this.parts.caption.data("cke-caption-placeholder"))
+            else if (
+              !this.editables.caption.getData() ||
+              this.parts.caption.data("cke-caption-placeholder")
+            )
               c(this), a(f, !1);
           },
         };
       })(),
-      upload: (function () {
+      upload: (() => {
         var c = {
           progressReporterType: n,
-          setUp: function (a, b) {
-            a.on("paste", function (d) {
+          setUp: (a, b) => {
+            a.on("paste", (d) => {
               var f = d.data.method,
                 g = d.data.dataTransfer,
                 e = g && g.getFilesCount();
@@ -134,15 +148,18 @@
                 var h = [];
                 b = a.widgets.registered[b.name];
                 for (var k = 0; k < e; k++)
-                  (f = g.getFile(k)), CKEDITOR.fileTools.isTypeSupported(f, b.supportedTypes) && h.push(f);
+                  (f = g.getFile(k)),
+                    CKEDITOR.fileTools.isTypeSupported(f, b.supportedTypes) && h.push(f);
                 h.length &&
                   (d.cancel(),
                   d.stop(),
-                  CKEDITOR.tools.array.forEach(h, function (d, f) {
+                  CKEDITOR.tools.array.forEach(h, (d, f) => {
                     var g = c._spawnLoader(a, d, b, d.name);
                     c._insertWidget(a, b, URL.createObjectURL(d), !0, { uploadId: g.id });
                     f !== h.length - 1 &&
-                      ((g = a.getSelection().getRanges()), g[0].enlarge(CKEDITOR.ENLARGE_ELEMENT), g[0].collapse(!1));
+                      ((g = a.getSelection().getRanges()),
+                      g[0].enlarge(CKEDITOR.ENLARGE_ELEMENT),
+                      g[0].collapse(!1));
                   }));
               }
             });
@@ -150,13 +167,13 @@
           init: function () {
             this.once("ready", function () {
               var a = this.data.uploadId;
-              "undefined" !== typeof a && (a = this.editor.uploadRepository.loaders[a]) && this._beginUpload(this, a);
+              "undefined" !== typeof a &&
+                (a = this.editor.uploadRepository.loaders[a]) &&
+                this._beginUpload(this, a);
             });
           },
-          _isLoaderDone: function (a) {
-            return a.xhr && 4 === a.xhr.readyState;
-          },
-          _spawnLoader: function (a, b, d, c) {
+          _isLoaderDone: (a) => a.xhr && 4 === a.xhr.readyState,
+          _spawnLoader: (a, b, d, c) => {
             var g = d.loadMethod || "loadAndUpload";
             a = a.uploadRepository.create(b, c, d.loaderType);
             a[g](d.uploadUrl, d.additionalRequestParameters);
@@ -172,7 +189,7 @@
               !1 !== a.fire("uploadFailed", { loader: b }) && a.editor.widgets.del(a);
             }
             var g = {
-                uploaded: function () {
+                uploaded: () => {
                   d();
                   a.fire("uploadDone", { loader: b });
                 },
@@ -183,8 +200,8 @@
             e.push(b.on("abort", g.abort));
             e.push(b.on("error", g.error));
             e.push(b.on("uploaded", g.uploaded));
-            this.on("destroy", function () {
-              CKEDITOR.tools.array.filter(e, function (a) {
+            this.on("destroy", () => {
+              CKEDITOR.tools.array.filter(e, (a) => {
                 a.removeListener();
                 return !1;
               });
@@ -198,7 +215,7 @@
                   g.bindLoader(b);
               else if (g[b.status]) g[b.status]();
           },
-          _insertWidget: function (a, b, c, f, g) {
+          _insertWidget: (a, b, c, f, g) => {
             var e = ("function" == typeof b.defaults ? b.defaults() : b.defaults) || {},
               e = CKEDITOR.tools.extend({}, e);
             e.src = c;
@@ -211,13 +228,17 @@
         };
         return c;
       })(),
-      link: (function () {
+      link: (() => {
         function c(a) {
           a.addMenuGroup("imagebase", 10);
-          a.addMenuItem("imagebase", { label: a.lang.link.menu, command: "link", group: "imagebase" });
+          a.addMenuItem("imagebase", {
+            label: a.lang.link.menu,
+            command: "link",
+            group: "imagebase",
+          });
         }
         function a(a, c, b) {
-          return function () {
+          return () => {
             if (b && l(b, "link")) {
               a.stop();
               var e = {};
@@ -229,7 +250,9 @@
         function b(a, c, b) {
           a.getCommand("unlink").on(c, function (c) {
             var f = p(a);
-            f && l(f, "link") && (c.stop(), b && "function" === typeof b && b(this, f, a), c.cancel());
+            f &&
+              l(f, "link") &&
+              (c.stop(), b && "function" === typeof b && b(this, f, a), c.cancel());
           });
         }
         return {
@@ -241,10 +264,10 @@
                 this.parts.link && (a.data.link = a.data.unlink = CKEDITOR.TRISTATE_OFF);
               });
           },
-          setUp: function (d) {
+          setUp: (d) => {
             d.plugins.link &&
               (d.contextMenu && c(d),
-              d.on("dialogShow", function (c) {
+              d.on("dialogShow", (c) => {
                 var b = p(d),
                   e = c.data,
                   h,
@@ -252,20 +275,24 @@
                 b &&
                   l(b, "link") &&
                   "link" === e._.name &&
-                  ((h = e.getContentElement("info", "linkDisplayText").getElement().getParent().getParent()),
+                  ((h = e
+                    .getContentElement("info", "linkDisplayText")
+                    .getElement()
+                    .getParent()
+                    .getParent()),
                   e.setupContent(b.data.link || {}),
                   h.hide(),
                   (k = e.once("ok", a(c, e, b), null, null, 9)),
-                  e.once("hide", function () {
+                  e.once("hide", () => {
                     k.removeListener();
                     h.show();
                   }));
               }),
-              b(d, "exec", function (a, c, b) {
+              b(d, "exec", (a, c, b) => {
                 c.setData("link", null);
                 a.refresh(b, b.elementPath());
               }),
-              b(d, "refresh", function (a, b) {
+              b(d, "refresh", (a, b) => {
                 a.setState(b.parts.link ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED);
               }));
           },
@@ -275,9 +302,13 @@
               e = this.element.findOne("img");
             "undefined" === typeof c &&
               this.parts.link &&
-              this.setData("link", CKEDITOR.plugins.link.parseLinkAttributes(this.editor, this.parts.link));
+              this.setData(
+                "link",
+                CKEDITOR.plugins.link.parseLinkAttributes(this.editor, this.parts.link)
+              );
             if ("undefined" !== typeof c)
-              if (null === c) this.parts.link.remove(!0), (this.parts.link = null), delete a.data.link;
+              if (null === c)
+                this.parts.link.remove(!0), (this.parts.link = null), delete a.data.link;
               else {
                 a = this.parts;
                 var h = e.getAscendant("a") || b.document.createElement("a"),
@@ -293,7 +324,7 @@
     },
     q = 100;
   m.prototype = {
-    updated: function () {},
+    updated: () => {},
     done: function () {
       this.remove();
     },
@@ -309,7 +340,7 @@
     bindLoader: function (c) {
       function a() {
         b &&
-          (CKEDITOR.tools.array.forEach(b, function (a) {
+          (CKEDITOR.tools.array.forEach(b, (a) => {
             a.removeListener();
           }),
           (b = null));
@@ -348,7 +379,7 @@
   });
   CKEDITOR.plugins.imagebase = {
     featuresDefinitions: v,
-    addImageWidget: function (c, a, b) {
+    addImageWidget: (c, a, b) => {
       a = c.widgets.add(a, u(c, b));
       c.addFeature(a);
     },

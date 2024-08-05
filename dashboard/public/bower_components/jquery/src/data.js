@@ -1,12 +1,10 @@
-define(["./core", "./core/access", "./core/camelCase", "./data/var/dataPriv", "./data/var/dataUser"], function (
-  jQuery,
-  access,
-  camelCase,
-  dataPriv,
-  dataUser
-) {
-  "use strict";
-
+define([
+  "./core",
+  "./core/access",
+  "./core/camelCase",
+  "./data/var/dataPriv",
+  "./data/var/dataUser",
+], (jQuery, access, camelCase, dataPriv, dataUser) => {
   //	Implementation Summary
   //
   //	1. Enforce API surface and semantic compatibility with 1.9.x branch
@@ -69,25 +67,19 @@ define(["./core", "./core/access", "./core/camelCase", "./data/var/dataPriv", ".
   }
 
   jQuery.extend({
-    hasData: function (elem) {
-      return dataUser.hasData(elem) || dataPriv.hasData(elem);
-    },
+    hasData: (elem) => dataUser.hasData(elem) || dataPriv.hasData(elem),
 
-    data: function (elem, name, data) {
-      return dataUser.access(elem, name, data);
-    },
+    data: (elem, name, data) => dataUser.access(elem, name, data),
 
-    removeData: function (elem, name) {
+    removeData: (elem, name) => {
       dataUser.remove(elem, name);
     },
 
     // TODO: Now that all calls to _data and _removeData have been replaced
     // with direct calls to dataPriv methods, these can be deprecated.
-    _data: function (elem, name, data) {
-      return dataPriv.access(elem, name, data);
-    },
+    _data: (elem, name, data) => dataPriv.access(elem, name, data),
 
-    _removeData: function (elem, name) {
+    _removeData: (elem, name) => {
       dataPriv.remove(elem, name);
     },
   });

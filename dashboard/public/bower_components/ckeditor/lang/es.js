@@ -150,7 +150,8 @@ CKEDITOR.lang["es"] = {
     title: "Pegar como Texto Plano",
   },
   pastefromword: {
-    confirmCleanup: "El texto que desea parece provenir de Word.\r\n¿Desea depurarlo antes de pegarlo?",
+    confirmCleanup:
+      "El texto que desea parece provenir de Word.\r\n¿Desea depurarlo antes de pegarlo?",
     error: "No ha sido posible limpiar los datos debido a un error interno",
     title: "Pegar desde Word",
     toolbar: "Pegar desde Word",
@@ -265,7 +266,8 @@ CKEDITOR.lang["es"] = {
   filetools: {
     loadError: "Ha ocurrido un error durante la lectura del archivo.",
     networkError: "Error de red ocurrido durante carga de archivo.",
-    httpError404: "Un error HTTP ha ocurrido durante la carga del archivo (404: Archivo no encontrado).",
+    httpError404:
+      "Un error HTTP ha ocurrido durante la carga del archivo (404: Archivo no encontrado).",
     httpError403: "Un error HTTP ha ocurrido durante la carga del archivo (403: Prohibido).",
     httpError: "Error HTTP ocurrido durante la carga del archivo (Estado del error: %1).",
     noUrlError: "URL cargada no está definida.",
@@ -348,7 +350,8 @@ CKEDITOR.lang["es"] = {
     validateNumberFailed: "El valor no es un número.",
     confirmNewPage:
       "Cualquier cambio que no se haya guardado se perderá.\r\n¿Está seguro de querer crear una nueva página?",
-    confirmCancel: "Algunas de las opciones se han cambiado.\r\n¿Está seguro de querer cerrar el diálogo?",
+    confirmCancel:
+      "Algunas de las opciones se han cambiado.\r\n¿Está seguro de querer cerrar el diálogo?",
     options: "Opciones",
     target: "Destino",
     targetNew: "Nueva ventana (_blank)",

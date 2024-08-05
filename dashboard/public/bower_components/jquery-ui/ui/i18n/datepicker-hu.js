@@ -1,5 +1,5 @@
 /* Hungarian initialisation for the jQuery UI date picker plugin. */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -7,7 +7,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["hu"] = {
     closeText: "bezár",
     prevText: "vissza",
@@ -27,7 +27,20 @@
       "November",
       "December",
     ],
-    monthNamesShort: ["Jan", "Feb", "Már", "Ápr", "Máj", "Jún", "Júl", "Aug", "Szep", "Okt", "Nov", "Dec"],
+    monthNamesShort: [
+      "Jan",
+      "Feb",
+      "Már",
+      "Ápr",
+      "Máj",
+      "Jún",
+      "Júl",
+      "Aug",
+      "Szep",
+      "Okt",
+      "Nov",
+      "Dec",
+    ],
     dayNames: ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"],
     dayNamesShort: ["Vas", "Hét", "Ked", "Sze", "Csü", "Pén", "Szo"],
     dayNamesMin: ["V", "H", "K", "Sze", "Cs", "P", "Szo"],

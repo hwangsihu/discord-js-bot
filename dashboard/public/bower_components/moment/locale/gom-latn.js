@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   function processRelativeTime(number, withoutSuffix, key, isFuture) {
     var format = {
       s: ["thodde secondanim", "thodde second"],
@@ -69,7 +67,7 @@
       yy: processRelativeTime,
     },
     dayOfMonthOrdinalParse: /\d{1,2}(er)/,
-    ordinal: function (number, period) {
+    ordinal: (number, period) => {
       switch (period) {
         // the ordinal 'er' only applies to day of the month
         case "D":
@@ -89,7 +87,7 @@
       doy: 4, // The week that contains Jan 4th is the first week of the year.
     },
     meridiemParse: /rati|sokalli|donparam|sanje/,
-    meridiemHour: function (hour, meridiem) {
+    meridiemHour: (hour, meridiem) => {
       if (hour === 12) {
         hour = 0;
       }
@@ -103,7 +101,7 @@
         return hour + 12;
       }
     },
-    meridiem: function (hour, minute, isLower) {
+    meridiem: (hour, minute, isLower) => {
       if (hour < 4) {
         return "rati";
       } else if (hour < 12) {

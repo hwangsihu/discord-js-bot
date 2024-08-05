@@ -14,7 +14,13 @@
     selected: "מסומן",
     required: "Required",
   },
-  form: { title: "מאפיני טופס", menu: "מאפיני טופס", action: "שלח אל", method: "סוג שליחה", encoding: "קידוד" },
+  form: {
+    title: "מאפיני טופס",
+    menu: "מאפיני טופס",
+    action: "שלח אל",
+    method: "סוג שליחה",
+    encoding: "קידוד",
+  },
   hidden: { title: "מאפיני שדה חבוי", name: "שם", value: "ערך" },
   select: {
     title: "מאפייני שדה בחירה",

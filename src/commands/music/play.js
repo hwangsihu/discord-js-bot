@@ -3,7 +3,7 @@ const prettyMs = require("pretty-ms");
 const { EMBED_COLORS, MUSIC } = require("@root/config");
 const { SpotifyItemType } = require("@lavaclient/spotify");
 
-const search_prefix = {
+const searchPrefix = {
   YT: "ytsearch",
   YTM: "ytmsearch",
   SC: "scsearch",
@@ -64,7 +64,7 @@ async function play({ member, guild, channel }, query) {
     return "🚫 You must be in the same voice channel as mine";
   }
 
-  let embed = new EmbedBuilder().setColor(EMBED_COLORS.BOT_EMBED);
+  const embed = new EmbedBuilder().setColor(EMBED_COLORS.BOT_EMBED);
   let tracks;
   let description = "";
 
@@ -105,7 +105,7 @@ async function play({ member, guild, channel }, query) {
       if (!tracks) guild.client.logger.debug({ query, item });
     } else {
       const res = await guild.client.musicManager.rest.loadTracks(
-        /^https?:\/\//.test(query) ? query : `${search_prefix[MUSIC.DEFAULT_SOURCE]}:${query}`
+        /^https?:\/\//.test(query) ? query : `${searchPrefix[MUSIC.DEFAULT_SOURCE]}:${query}`
       );
       switch (res.loadType) {
         case "LOAD_FAILED":
@@ -135,7 +135,10 @@ async function play({ member, guild, channel }, query) {
       if (!tracks) guild.client.logger.debug({ query, res });
     }
   } catch (error) {
-    guild.client.logger.error("Search Exception", typeof error === "object" ? JSON.stringify(error) : error);
+    guild.client.logger.error(
+      "Search Exception",
+      typeof error === "object" ? JSON.stringify(error) : error
+    );
     return "🚫 An error occurred while searching for the song";
   }
 

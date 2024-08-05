@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(r) {
       if (a[r]) return a[r].exports;
       var n = (a[r] = { i: r, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = a),
-      (t.d = function (e, a, r) {
+      (t.d = (e, a, r) => {
         t.o(e, a) || Object.defineProperty(e, a, { configurable: !1, enumerable: !0, get: r });
       }),
-      (t.n = function (e) {
-        var a =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var a = e && e.__esModule ? () => e.default : () => e;
         return t.d(a, "a", a), a;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 199))
     );
   })({
-    0: function (t, a) {
+    0: (t, a) => {
       t.exports = e;
     },
-    1: function (e, a) {
+    1: (e, a) => {
       e.exports = t;
     },
-    199: function (e, t, a) {
+    199: (e, t, a) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), a(200);
       var r = a(1);
       r.datepickerLocale("sr", "sr-SR", {
@@ -66,7 +57,20 @@
           "Novembar",
           "Decembar",
         ],
-        monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Avg", "Sep", "Okt", "Nov", "Dec"],
+        monthNamesShort: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "Maj",
+          "Jun",
+          "Jul",
+          "Avg",
+          "Sep",
+          "Okt",
+          "Nov",
+          "Dec",
+        ],
         dayNames: ["Nedelja", "Ponedeljak", "Utorak", "Sreda", "Četvrtak", "Petak", "Subota"],
         dayNamesShort: ["Ned", "Pon", "Uto", "Sre", "Čet", "Pet", "Sub"],
         dayNamesMin: ["Ne", "Po", "Ut", "Sr", "Če", "Pe", "Su"],
@@ -87,16 +91,14 @@
             list: "Planеr",
           },
           allDayText: "Cеo dan",
-          eventLimitText: function (e) {
-            return "+ još " + e;
-          },
+          eventLimitText: (e) => "+ još " + e,
           noEventsMessage: "Nеma događaja za prikaz",
         });
     },
-    200: function (e, t, a) {
-      !(function (e, t) {
+    200: (e, t, a) => {
+      !((e, t) => {
         t(a(0));
-      })(0, function (e) {
+      })(0, (e) => {
         var t = {
           words: {
             ss: ["sekunda", "sekunde", "sekundi"],
@@ -108,16 +110,17 @@
             MM: ["mesec", "meseca", "meseci"],
             yy: ["godina", "godine", "godina"],
           },
-          correctGrammaticalCase: function (e, t) {
-            return 1 === e ? t[0] : e >= 2 && e <= 4 ? t[1] : t[2];
-          },
-          translate: function (e, a, r) {
+          correctGrammaticalCase: (e, t) => (1 === e ? t[0] : e >= 2 && e <= 4 ? t[1] : t[2]),
+          translate: (e, a, r) => {
             var n = t.words[r];
             return 1 === r.length ? (a ? n[0] : n[1]) : e + " " + t.correctGrammaticalCase(e, n);
           },
         };
         return e.defineLocale("sr", {
-          months: "januar_februar_mart_april_maj_jun_jul_avgust_septembar_oktobar_novembar_decembar".split("_"),
+          months:
+            "januar_februar_mart_april_maj_jun_jul_avgust_septembar_oktobar_novembar_decembar".split(
+              "_"
+            ),
           monthsShort: "jan._feb._mar._apr._maj_jun_jul_avg._sep._okt._nov._dec.".split("_"),
           monthsParseExact: !0,
           weekdays: "nedelja_ponedeljak_utorak_sreda_četvrtak_petak_subota".split("_"),
@@ -186,5 +189,5 @@
         });
       });
     },
-  });
-});
+  })
+);

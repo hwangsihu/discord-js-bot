@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   CKEDITOR.plugins.add("language", {
     requires: "menubutton",
     lang: "ar,az,bg,ca,cs,cy,da,de,de-ch,el,en,en-au,en-gb,eo,es,es-mx,et,eu,fa,fi,fo,fr,gl,he,hr,hu,id,it,ja,km,ko,ku,lv,nb,nl,no,oc,pl,pt,pt-br,ro,ru,sk,sl,sq,sv,tr,tt,ug,uk,vi,zh,zh-cn",
@@ -21,7 +21,7 @@
         allowedContent: "span[!lang,!dir]",
         requiredContent: "span[lang,dir]",
         contextSensitive: !0,
-        exec: function (a, b) {
+        exec: (a, b) => {
           var c = e["language_" + b];
           if (c) a[c.style.checkActive(a.elementPath(), a) ? "removeStyle" : "applyStyle"](c.style);
         },
@@ -53,7 +53,7 @@
         group: "language_remove",
         state: CKEDITOR.TRISTATE_DISABLED,
         order: e.length,
-        onClick: function () {
+        onClick: () => {
           var b = c.getCurrentLangElement(a);
           b && a.execCommand("language", b.getAttribute("lang"));
         },
@@ -67,7 +67,7 @@
         requiredContent: "span[lang,dir]",
         toolbar: "bidi,30",
         command: "language",
-        onMenu: function () {
+        onMenu: () => {
           var b = {},
             d = c.getCurrentLangElement(a),
             f;
@@ -78,17 +78,22 @@
         },
       });
       a.addRemoveFormatFilter &&
-        a.addRemoveFormatFilter(function (a) {
-          return !(a.is("span") && a.getAttribute("dir") && a.getAttribute("lang"));
-        });
+        a.addRemoveFormatFilter(
+          (a) => !(a.is("span") && a.getAttribute("dir") && a.getAttribute("lang"))
+        );
     },
-    getCurrentLangElement: function (a) {
+    getCurrentLangElement: (a) => {
       var b = a.elementPath();
       a = b && b.elements;
       var c;
       if (b)
         for (var d = 0; d < a.length; d++)
-          (b = a[d]), !c && "span" == b.getName() && b.hasAttribute("dir") && b.hasAttribute("lang") && (c = b);
+          (b = a[d]),
+            !c &&
+              "span" == b.getName() &&
+              b.hasAttribute("dir") &&
+              b.hasAttribute("lang") &&
+              (c = b);
       return c;
     },
   });

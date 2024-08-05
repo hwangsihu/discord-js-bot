@@ -2,13 +2,13 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function q(a, c) {
     c = void 0 === c || c;
     var b;
     if (c) b = a.getComputedStyle("text-align");
     else {
-      for (; !a.hasAttribute || (!a.hasAttribute("align") && !a.getStyle("text-align")); ) {
+      while (!a.hasAttribute || (!a.hasAttribute("align") && !a.getStyle("text-align"))) {
         b = a.getParent();
         if (!b) break;
         a = b;
@@ -59,7 +59,8 @@
     b.setEndAfter(a.data.node);
     for (var f = new CKEDITOR.dom.walker(b), d; (d = f.next()); )
       if (d.type == CKEDITOR.NODE_ELEMENT)
-        if (!d.equals(a.data.node) && d.getDirection()) b.setStartAfter(d), (f = new CKEDITOR.dom.walker(b));
+        if (!d.equals(a.data.node) && d.getDirection())
+          b.setStartAfter(d), (f = new CKEDITOR.dom.walker(b));
         else {
           var e = c.config.justifyClasses;
           e &&
@@ -67,7 +68,9 @@
               ? (d.removeClass(e[0]), d.addClass(e[2]))
               : d.hasClass(e[2]) && (d.removeClass(e[2]), d.addClass(e[0])));
           e = d.getStyle("text-align");
-          "left" == e ? d.setStyle("text-align", "right") : "right" == e && d.setStyle("text-align", "left");
+          "left" == e
+            ? d.setStyle("text-align", "right")
+            : "right" == e && d.setStyle("text-align", "left");
         }
   }
   h.prototype = {
@@ -98,7 +101,11 @@
               if ((l = a.activeFilter.check(l + "(" + e + ")")) || p) {
                 g.removeAttribute("align");
                 g.removeStyle("text-align");
-                var m = e && (g.$.className = CKEDITOR.tools.ltrim(g.$.className.replace(this.cssClassRegex, ""))),
+                var m =
+                    e &&
+                    (g.$.className = CKEDITOR.tools.ltrim(
+                      g.$.className.replace(this.cssClassRegex, "")
+                    )),
                   r = this.state == CKEDITOR.TRISTATE_OFF && (!k || q(g, !0) != this.value);
                 e && l
                   ? r
@@ -123,7 +130,9 @@
         ? this.setState(CKEDITOR.TRISTATE_OFF)
         : !d && f
           ? this.setState(
-              q(b, this.editor.config.useComputedState) == this.value ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF
+              q(b, this.editor.config.useComputedState) == this.value
+                ? CKEDITOR.TRISTATE_ON
+                : CKEDITOR.TRISTATE_OFF
             )
           : this.setState(CKEDITOR.TRISTATE_DISABLED);
     },
@@ -131,7 +140,7 @@
   CKEDITOR.plugins.add("justify", {
     icons: "justifyblock,justifycenter,justifyleft,justifyright",
     hidpi: !0,
-    init: function (a) {
+    init: (a) => {
       if (!a.blockless) {
         var c = new h(a, "justifyleft", "left"),
           b = new h(a, "justifycenter", "center"),

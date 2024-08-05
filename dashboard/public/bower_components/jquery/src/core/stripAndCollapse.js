@@ -1,6 +1,4 @@
-define(["../var/rnothtmlwhite"], function (rnothtmlwhite) {
-  "use strict";
-
+define(["../var/rnothtmlwhite"], (rnothtmlwhite) => {
   // Strip and collapse whitespace according to HTML spec
   // https://infra.spec.whatwg.org/#strip-and-collapse-ascii-whitespace
   function stripAndCollapse(value) {

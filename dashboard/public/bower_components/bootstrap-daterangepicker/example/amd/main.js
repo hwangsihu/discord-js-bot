@@ -6,13 +6,13 @@ requirejs.config({
   },
 });
 
-requirejs(["jquery", "moment", "daterangepicker"], function ($, moment) {
-  $(document).ready(function () {
+requirejs(["jquery", "moment", "daterangepicker"], ($, moment) => {
+  $(document).ready(() => {
     $("#config-text").keyup(function () {
       eval($(this).val());
     });
 
-    $(".configurator input, .configurator select").change(function () {
+    $(".configurator input, .configurator select").change(() => {
       updateConfig();
     });
 
@@ -48,7 +48,7 @@ requirejs(["jquery", "moment", "daterangepicker"], function ($, moment) {
       if ($("#timePicker24Hour").is(":checked")) options.timePicker24Hour = true;
 
       if ($("#timePickerIncrement").val().length && $("#timePickerIncrement").val() != 1)
-        options.timePickerIncrement = parseInt($("#timePickerIncrement").val(), 10);
+        options.timePickerIncrement = Number.parseInt($("#timePickerIncrement").val(), 10);
 
       if ($("#timePickerSeconds").is(":checked")) options.timePickerSeconds = true;
 
@@ -63,7 +63,10 @@ requirejs(["jquery", "moment", "daterangepicker"], function ($, moment) {
           "Last 7 Days": [moment().subtract(6, "days"), moment()],
           "Last 30 Days": [moment().subtract(29, "days"), moment()],
           "This Month": [moment().startOf("month"), moment().endOf("month")],
-          "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")],
+          "Last Month": [
+            moment().subtract(1, "month").startOf("month"),
+            moment().subtract(1, "month").endOf("month"),
+          ],
         };
       }
 
@@ -111,9 +114,11 @@ requirejs(["jquery", "moment", "daterangepicker"], function ($, moment) {
 
       if ($("#maxDate").val().length) options.maxDate = $("#maxDate").val();
 
-      if ($("#opens").val().length && $("#opens").val() != "right") options.opens = $("#opens").val();
+      if ($("#opens").val().length && $("#opens").val() != "right")
+        options.opens = $("#opens").val();
 
-      if ($("#drops").val().length && $("#drops").val() != "down") options.drops = $("#drops").val();
+      if ($("#drops").val().length && $("#drops").val() != "down")
+        options.drops = $("#drops").val();
 
       if ($("#buttonClasses").val().length && $("#buttonClasses").val() != "btn btn-sm")
         options.buttonClasses = $("#buttonClasses").val();
@@ -130,7 +135,7 @@ requirejs(["jquery", "moment", "daterangepicker"], function ($, moment) {
           ", function(start, end, label) {\n  console.log(\"New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')\");\n});"
       );
 
-      $("#config-demo").daterangepicker(options, function (start, end, label) {
+      $("#config-demo").daterangepicker(options, (start, end, label) => {
         console.log(
           "New date range selected: " +
             start.format("YYYY-MM-DD") +

@@ -1,4 +1,4 @@
-initStyles = function () {
+initStyles = () => {
   addCSS(defaultStyles);
 };
 
@@ -24,7 +24,9 @@ $.fn.sparkline = function (userValues, userOptions) {
       }
 
       width =
-        options.get("width") === "auto" ? values.length * options.get("defaultPixelsPerValue") : options.get("width");
+        options.get("width") === "auto"
+          ? values.length * options.get("defaultPixelsPerValue")
+          : options.get("width");
       if (options.get("height") === "auto") {
         if (!options.get("composite") || !$.data(this, "_jqs_vcanvas")) {
           // must be a better way to get the line height
@@ -39,7 +41,9 @@ $.fn.sparkline = function (userValues, userOptions) {
         height = options.get("height");
       }
 
-      if (!options.get("disableInteraction")) {
+      if (options.get("disableInteraction")) {
+        mhandler = false;
+      } else {
         mhandler = $.data(this, "_jqs_mhandler");
         if (!mhandler) {
           mhandler = new MouseHandler(this, options);
@@ -47,13 +51,13 @@ $.fn.sparkline = function (userValues, userOptions) {
         } else if (!options.get("composite")) {
           mhandler.reset();
         }
-      } else {
-        mhandler = false;
       }
 
       if (options.get("composite") && !$.data(this, "_jqs_vcanvas")) {
         if (!$.data(this, "_jqs_errnotify")) {
-          alert("Attempted to attach a composite sparkline to an element with no existing sparkline");
+          alert(
+            "Attempted to attach a composite sparkline to an element with no existing sparkline"
+          );
           $.data(this, "_jqs_errnotify", true);
         }
         return;
@@ -89,7 +93,7 @@ $.fn.sparkline = function (userValues, userOptions) {
 
 $.fn.sparkline.defaults = getDefaults();
 
-$.sparkline_display_visible = function () {
+$.sparkline_display_visible = () => {
   var el, i, pl;
   var done = [];
   for (i = 0, pl = pending.length; i < pl; i++) {
@@ -123,7 +127,8 @@ $.fn.sparkline.options = createClass({
     this.tagValCache = {};
     defaults = $.fn.sparkline.defaults;
     base = defaults.common;
-    this.tagOptionsPrefix = userOptions.enableTagOptions && (userOptions.tagOptionsPrefix || base.tagOptionsPrefix);
+    this.tagOptionsPrefix =
+      userOptions.enableTagOptions && (userOptions.tagOptionsPrefix || base.tagOptionsPrefix);
 
     tagOptionType = this.getTagSetting("type");
     if (tagOptionType === UNSET_OPTION) {
@@ -159,7 +164,9 @@ $.fn.sparkline.options = createClass({
         val = {};
         for (i = pairs.length; i--; ) {
           keyval = pairs[i].split(":", 2);
-          val[keyval[0].replace(/(^\s*)|(\s*$)/g, "")] = normalizeValue(keyval[1].replace(/(^\s*)|(\s*$)/g, ""));
+          val[keyval[0].replace(/(^\s*)|(\s*$)/g, "")] = normalizeValue(
+            keyval[1].replace(/(^\s*)|(\s*$)/g, "")
+          );
         }
       } else {
         val = normalizeValue(val);
@@ -197,11 +204,18 @@ $.fn.sparkline._base = createClass({
    */
   initTarget: function () {
     var interactive = !this.options.get("disableInteraction");
-    if (!(this.target = this.$el.simpledraw(this.width, this.height, this.options.get("composite"), interactive))) {
-      this.disabled = true;
-    } else {
+    if (
+      (this.target = this.$el.simpledraw(
+        this.width,
+        this.height,
+        this.options.get("composite"),
+        interactive
+      ))
+    ) {
       this.canvasWidth = this.target.pixelWidth;
       this.canvasHeight = this.target.pixelHeight;
+    } else {
+      this.disabled = true;
     }
   },
 
@@ -219,7 +233,7 @@ $.fn.sparkline._base = createClass({
   /**
    * Return a region id for a given x/y co-ordinate
    */
-  getRegion: function (x, y) {},
+  getRegion: (x, y) => {},
 
   /**
    * Highlight an item based on the moused-over x,y co-ordinate
@@ -265,7 +279,7 @@ $.fn.sparkline._base = createClass({
     this.changeHighlight(false);
   },
 
-  changeHighlight: function (highlight) {},
+  changeHighlight: (highlight) => {},
 
   /**
    * Fetch the HTML to display as a tooltip
@@ -347,9 +361,9 @@ $.fn.sparkline._base = createClass({
     return "";
   },
 
-  getCurrentRegionFields: function () {},
+  getCurrentRegionFields: () => {},
 
-  calcHighlightColor: function (color, options) {
+  calcHighlightColor: (color, options) => {
     var highlightColor = options.get("highlightColor"),
       lighten = options.get("highlightLighten"),
       parse,
@@ -362,12 +376,17 @@ $.fn.sparkline._base = createClass({
     if (lighten) {
       // extract RGB values
       parse =
-        /^#([0-9a-f])([0-9a-f])([0-9a-f])$/i.exec(color) || /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(color);
+        /^#([0-9a-f])([0-9a-f])([0-9a-f])$/i.exec(color) ||
+        /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(color);
       if (parse) {
         rgbnew = [];
         mult = color.length === 4 ? 16 : 1;
         for (i = 0; i < 3; i++) {
-          rgbnew[i] = clipval(Math.round(parseInt(parse[i + 1], 16) * mult * lighten), 0, 255);
+          rgbnew[i] = clipval(
+            Math.round(Number.parseInt(parse[i + 1], 16) * mult * lighten),
+            0,
+            255
+          );
         }
         return "rgb(" + rgbnew.join(",") + ")";
       }
@@ -387,9 +406,7 @@ barHighlightMixin = {
       newShapes = this.renderRegion(currentRegion, highlight);
       if ($.isArray(newShapes) || $.isArray(shapeids)) {
         target.replaceWithShapes(shapeids, newShapes);
-        this.regionShapes[currentRegion] = $.map(newShapes, function (newShape) {
-          return newShape.id;
-        });
+        this.regionShapes[currentRegion] = $.map(newShapes, (newShape) => newShape.id);
       } else {
         target.replaceWithShape(shapeids, newShapes);
         this.regionShapes[currentRegion] = newShapes.id;

@@ -7,5 +7,6 @@
   fetchingFailedGiven: "Rekuperi enhavon por la indikitan URL malsukcesis.",
   fetchingFailed: "Rekuperi enhavon por  {url} malsukcesis.",
   fetchingOne: "La respondo de la enkorpigita objekto estas serĉata ...",
-  fetchingMany: "La respondoj de la enkorpigita objekto estas serĉataj, {current} el {max} faritaj...",
+  fetchingMany:
+    "La respondoj de la enkorpigita objekto estas serĉataj, {current} el {max} faritaj...",
 });

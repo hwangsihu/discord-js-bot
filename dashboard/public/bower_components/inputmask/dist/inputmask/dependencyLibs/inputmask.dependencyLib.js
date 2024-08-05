@@ -6,13 +6,13 @@
  * Version: 3.3.11
  */
 
-!(function (factory) {
+!((factory) => {
   "function" == typeof define && define.amd
     ? define(["../global/window", "../global/document"], factory)
     : "object" == typeof exports
       ? (module.exports = factory(require("../global/window"), require("../global/document")))
       : (window.dependencyLib = factory(window, document));
-})(function (window, document) {
+})((window, document) => {
   function indexOf(list, elem) {
     for (var i = 0, len = list.length; i < len; i++) if (list[i] === elem) return i;
     return -1;
@@ -55,7 +55,9 @@
               : void 0 !== elem[0] && elem[0].nodeName
                 ? elem[0]
                 : document.querySelector(elem)),
-            void 0 !== this[0] && null !== this[0] && (this[0].eventRegistry = this[0].eventRegistry || {}))
+            void 0 !== this[0] &&
+              null !== this[0] &&
+              (this[0].eventRegistry = this[0].eventRegistry || {}))
           )
         : new DependencyLib(elem);
   }
@@ -72,12 +74,15 @@
       on: function (events, handler) {
         if (isValidElement(this[0]))
           for (
-            var eventRegistry = this[0].eventRegistry, elem = this[0], _events = events.split(" "), endx = 0;
+            var eventRegistry = this[0].eventRegistry,
+              elem = this[0],
+              _events = events.split(" "),
+              endx = 0;
             endx < _events.length;
             endx++
           ) {
             var nsEvent = _events[endx].split(".");
-            !(function (ev, namespace) {
+            !((ev, namespace) => {
               elem.addEventListener
                 ? elem.addEventListener(ev, handler, !1)
                 : elem.attachEvent && elem.attachEvent("on" + ev, handler),
@@ -91,19 +96,26 @@
       off: function (events, handler) {
         if (isValidElement(this[0]))
           for (
-            var eventRegistry = this[0].eventRegistry, elem = this[0], _events = events.split(" "), endx = 0;
+            var eventRegistry = this[0].eventRegistry,
+              elem = this[0],
+              _events = events.split(" "),
+              endx = 0;
             endx < _events.length;
             endx++
           )
             for (
               var nsEvent = _events[endx].split("."),
-                offEvents = (function (ev, namespace) {
+                offEvents = ((ev, namespace) => {
                   var hndx,
                     hndL,
                     evts = [];
                   if (ev.length > 0)
                     if (void 0 === handler)
-                      for (hndx = 0, hndL = eventRegistry[ev][namespace].length; hndx < hndL; hndx++)
+                      for (
+                        hndx = 0, hndL = eventRegistry[ev][namespace].length;
+                        hndx < hndL;
+                        hndx++
+                      )
                         evts.push({
                           ev: ev,
                           namespace: namespace && namespace.length > 0 ? namespace : "global",
@@ -120,7 +132,11 @@
                       for (var nmsp in eventRegistry[evNdx])
                         if (nmsp === namespace)
                           if (void 0 === handler)
-                            for (hndx = 0, hndL = eventRegistry[evNdx][nmsp].length; hndx < hndL; hndx++)
+                            for (
+                              hndx = 0, hndL = eventRegistry[evNdx][nmsp].length;
+                              hndx < hndL;
+                              hndx++
+                            )
                               evts.push({
                                 ev: evNdx,
                                 namespace: nmsp,
@@ -139,7 +155,7 @@
               i < offEventsL;
               i++
             )
-              !(function (ev, namespace, handler) {
+              !((ev, namespace, handler) => {
                 if (ev in eventRegistry == 1)
                   if (
                     (elem.removeEventListener
@@ -149,7 +165,11 @@
                   )
                     for (var nmsp in eventRegistry[ev])
                       eventRegistry[ev][nmsp].splice(eventRegistry[ev][nmsp].indexOf(handler), 1);
-                  else eventRegistry[ev][namespace].splice(eventRegistry[ev][namespace].indexOf(handler), 1);
+                  else
+                    eventRegistry[ev][namespace].splice(
+                      eventRegistry[ev][namespace].indexOf(handler),
+                      1
+                    );
               })(offEvents[i].ev, offEvents[i].namespace, offEvents[i].handler);
         return this;
       },
@@ -192,7 +212,9 @@
                   elem.fireEvent("on" + evnt.eventType, evnt);
             } else if (void 0 !== eventRegistry[ev])
               if (
-                ((arguments[0] = arguments[0].type ? arguments[0] : DependencyLib.Event(arguments[0])),
+                ((arguments[0] = arguments[0].type
+                  ? arguments[0]
+                  : DependencyLib.Event(arguments[0])),
                 "global" === namespace)
               )
                 for (var nmsp in eventRegistry[ev])
@@ -205,23 +227,19 @@
         return this;
       },
     }),
-    (DependencyLib.isFunction = function (obj) {
-      return "function" === type(obj);
-    }),
-    (DependencyLib.noop = function () {}),
+    (DependencyLib.isFunction = (obj) => "function" === type(obj)),
+    (DependencyLib.noop = () => {}),
     (DependencyLib.isArray = Array.isArray),
-    (DependencyLib.inArray = function (elem, arr, i) {
-      return null == arr ? -1 : indexOf(arr, elem);
-    }),
+    (DependencyLib.inArray = (elem, arr, i) => (null == arr ? -1 : indexOf(arr, elem))),
     (DependencyLib.valHooks = void 0),
-    (DependencyLib.isPlainObject = function (obj) {
-      return (
-        "object" === type(obj) &&
-        !obj.nodeType &&
-        !isWindow(obj) &&
-        !(obj.constructor && !class2type.hasOwnProperty.call(obj.constructor.prototype, "isPrototypeOf"))
-      );
-    }),
+    (DependencyLib.isPlainObject = (obj) =>
+      "object" === type(obj) &&
+      !obj.nodeType &&
+      !isWindow(obj) &&
+      !(
+        obj.constructor &&
+        !class2type.hasOwnProperty.call(obj.constructor.prototype, "isPrototypeOf")
+      )),
     (DependencyLib.extend = function () {
       var options,
         name,
@@ -244,7 +262,9 @@
           for (name in options)
             (src = target[name]),
               target !== (copy = options[name]) &&
-                (deep && copy && (DependencyLib.isPlainObject(copy) || (copyIsArray = DependencyLib.isArray(copy)))
+                (deep &&
+                copy &&
+                (DependencyLib.isPlainObject(copy) || (copyIsArray = DependencyLib.isArray(copy)))
                   ? (copyIsArray
                       ? ((copyIsArray = !1), (clone = src && DependencyLib.isArray(src) ? src : []))
                       : (clone = src && DependencyLib.isPlainObject(src) ? src : {}),
@@ -252,28 +272,30 @@
                   : void 0 !== copy && (target[name] = copy));
       return target;
     }),
-    (DependencyLib.each = function (obj, callback) {
+    (DependencyLib.each = (obj, callback) => {
       var i = 0;
-      if (isArraylike(obj)) for (var length = obj.length; i < length && !1 !== callback.call(obj[i], i, obj[i]); i++);
+      if (isArraylike(obj))
+        for (var length = obj.length; i < length && !1 !== callback.call(obj[i], i, obj[i]); i++);
       else for (i in obj) if (!1 === callback.call(obj[i], i, obj[i])) break;
       return obj;
     }),
-    (DependencyLib.map = function (elems, callback) {
+    (DependencyLib.map = (elems, callback) => {
       var value,
         i = 0,
         length = elems.length,
         ret = [];
-      if (isArraylike(elems)) for (; i < length; i++) null != (value = callback(elems[i], i)) && ret.push(value);
+      if (isArraylike(elems))
+        for (; i < length; i++) null != (value = callback(elems[i], i)) && ret.push(value);
       else for (i in elems) null != (value = callback(elems[i], i)) && ret.push(value);
       return [].concat(ret);
     }),
-    (DependencyLib.data = function (owner, key, value) {
+    (DependencyLib.data = (owner, key, value) => {
       if (void 0 === value) return owner.__data ? owner.__data[key] : null;
       (owner.__data = owner.__data || {}), (owner.__data[key] = value);
     }),
     "function" == typeof window.CustomEvent
       ? (DependencyLib.Event = window.CustomEvent)
-      : ((DependencyLib.Event = function (event, params) {
+      : ((DependencyLib.Event = (event, params) => {
           params = params || {
             bubbles: !1,
             cancelable: !1,

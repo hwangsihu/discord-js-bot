@@ -10,15 +10,13 @@
  * controls using Bootstrap. See http://datatables.net/manual/styling/bootstrap
  * for further information.
  */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD
-    define(["jquery", "datatables.net"], function ($) {
-      return factory($, window, document);
-    });
+    define(["jquery", "datatables.net"], ($) => factory($, window, document));
   } else if (typeof exports === "object") {
     // CommonJS
-    module.exports = function (root, $) {
+    module.exports = (root, $) => {
       if (!root) {
         root = window;
       }
@@ -36,13 +34,15 @@
     // Browser
     factory(jQuery, window, document);
   }
-})(function ($, window, document, undefined) {
-  "use strict";
+})(($, window, document, undefined) => {
   var DataTable = $.fn.dataTable;
 
   /* Set the defaults for DataTables initialisation */
   $.extend(true, DataTable.defaults, {
-    dom: "<'row'<'col-sm-6'l><'col-sm-6'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+    dom:
+      "<'row'<'col-sm-6'l><'col-sm-6'f>>" +
+      "<'row'<'col-sm-12'tr>>" +
+      "<'row'<'col-sm-5'i><'col-sm-7'p>>",
     renderer: "bootstrap",
   });
 
@@ -55,7 +55,7 @@
   });
 
   /* Bootstrap paging button renderer */
-  DataTable.ext.renderer.pageButton.bootstrap = function (settings, host, idx, buttons, page, pages) {
+  DataTable.ext.renderer.pageButton.bootstrap = (settings, host, idx, buttons, page, pages) => {
     var api = new DataTable.Api(settings);
     var classes = settings.oClasses;
     var lang = settings.oLanguage.oPaginate;
@@ -64,9 +64,9 @@
       btnClass,
       counter = 0;
 
-    var attach = function (container, buttons) {
+    var attach = (container, buttons) => {
       var i, ien, node, button;
-      var clickHandler = function (e) {
+      var clickHandler = (e) => {
         e.preventDefault();
         if (!$(e.currentTarget).hasClass("disabled") && api.page() != e.data.action) {
           api.page(e.data.action).draw("page");

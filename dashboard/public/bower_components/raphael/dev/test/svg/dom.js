@@ -1,23 +1,29 @@
-(function () {
+(() => {
   var paper,
     url = "http://raphaeljs.com";
 
   module("DOM", {
-    setup: function () {
+    setup: () => {
       paper = new Raphael(document.getElementById("qunit-fixture"), 1000, 1000);
     },
-    teardown: function () {
+    teardown: () => {
       paper.remove();
     },
   });
 
-  var equalNodePosition = function (node, expectedParent, expectedPreviousSibling, expectedNextSibling) {
+  var equalNodePosition = (node, expectedParent, expectedPreviousSibling, expectedNextSibling) => {
     equal(node.parentNode, expectedParent);
     equal(node.previousSibling, expectedPreviousSibling);
     equal(node.nextSibling, expectedNextSibling);
   };
 
-  var equalNodePositionWrapped = function (node, anchor, expectedParent, expectedPreviousSibling, expectedNextSibling) {
+  var equalNodePositionWrapped = (
+    node,
+    anchor,
+    expectedParent,
+    expectedPreviousSibling,
+    expectedNextSibling
+  ) => {
     equal(node.parentNode, anchor);
     equalNodePosition(anchor, expectedParent, expectedPreviousSibling, expectedNextSibling);
   };
@@ -25,7 +31,7 @@
   // Element#insertBefore
   // --------------------
 
-  test("insertBefore: no element", function () {
+  test("insertBefore: no element", () => {
     var el = paper.rect();
 
     el.insertBefore(null);
@@ -33,7 +39,7 @@
     equalNodePosition(el.node, paper.canvas, paper.defs, null);
   });
 
-  test("insertBefore: first element", function () {
+  test("insertBefore: first element", () => {
     var x = paper.rect();
     var el = paper.rect();
 
@@ -42,7 +48,7 @@
     equalNodePosition(el.node, paper.canvas, paper.defs, x.node);
   });
 
-  test("insertBefore: middle element", function () {
+  test("insertBefore: middle element", () => {
     var x = paper.rect();
     var y = paper.rect();
     var el = paper.rect();
@@ -52,7 +58,7 @@
     equalNodePosition(el.node, paper.canvas, x.node, y.node);
   });
 
-  test("insertBefore: no element when wrapped in <a>", function () {
+  test("insertBefore: no element when wrapped in <a>", () => {
     var el = paper.rect().attr("href", url),
       anchor = el.node.parentNode;
 
@@ -61,7 +67,7 @@
     equalNodePositionWrapped(el.node, anchor, paper.canvas, paper.defs, null);
   });
 
-  test("insertBefore: first element when wrapped in <a>", function () {
+  test("insertBefore: first element when wrapped in <a>", () => {
     var x = paper.rect();
     var el = paper.rect().attr("href", url),
       anchor = el.node.parentNode;
@@ -71,7 +77,7 @@
     equalNodePositionWrapped(el.node, anchor, paper.canvas, paper.defs, x.node);
   });
 
-  test("insertBefore: first element wrapped in <a> and wrapped in <a>", function () {
+  test("insertBefore: first element wrapped in <a> and wrapped in <a>", () => {
     var x = paper.rect().attr("href", url),
       xAnchor = x.node.parentNode;
     var el = paper.rect().attr("href", url),
@@ -82,7 +88,7 @@
     equalNodePositionWrapped(el.node, anchor, paper.canvas, paper.defs, xAnchor);
   });
 
-  test("insertBefore: middle element when wrapped in <a>", function () {
+  test("insertBefore: middle element when wrapped in <a>", () => {
     var x = paper.rect();
     var y = paper.rect();
     var el = paper.rect().attr("href", url),
@@ -93,7 +99,7 @@
     equalNodePositionWrapped(el.node, anchor, paper.canvas, x.node, y.node);
   });
 
-  test("insertBefore: middle element wrapped in <a> and wrapped in <a>", function () {
+  test("insertBefore: middle element wrapped in <a> and wrapped in <a>", () => {
     var x = paper.rect().attr("href", url),
       xAnchor = x.node.parentNode;
     var y = paper.rect().attr("href", url),
@@ -113,7 +119,7 @@
   // Element#insertAfter
   // -------------------
 
-  test("insertAfter: no element", function () {
+  test("insertAfter: no element", () => {
     var el = paper.rect();
 
     el.insertAfter(null);
@@ -121,7 +127,7 @@
     equalNodePosition(el.node, paper.canvas, paper.defs, null);
   });
 
-  test("insertAfter: last element", function () {
+  test("insertAfter: last element", () => {
     var x = paper.rect();
     var el = paper.rect();
 
@@ -130,7 +136,7 @@
     equalNodePosition(el.node, paper.canvas, x.node, null);
   });
 
-  test("insertAfter: middle element", function () {
+  test("insertAfter: middle element", () => {
     var x = paper.rect();
     var y = paper.rect();
     var el = paper.rect();
@@ -140,7 +146,7 @@
     equalNodePosition(el.node, paper.canvas, x.node, y.node);
   });
 
-  test("insertAfter: no element when wrapped in <a>", function () {
+  test("insertAfter: no element when wrapped in <a>", () => {
     var el = paper.rect().attr("href", url),
       anchor = el.node.parentNode;
 
@@ -149,7 +155,7 @@
     equalNodePositionWrapped(el.node, anchor, paper.canvas, paper.defs, null);
   });
 
-  test("insertAfter: last element when wrapped in <a>", function () {
+  test("insertAfter: last element when wrapped in <a>", () => {
     var x = paper.rect();
     var el = paper.rect().attr("href", url),
       anchor = el.node.parentNode;
@@ -159,7 +165,7 @@
     equalNodePositionWrapped(el.node, anchor, paper.canvas, x.node, null);
   });
 
-  test("insertAfter: last element wrapped in <a> and wrapped in <a>", function () {
+  test("insertAfter: last element wrapped in <a> and wrapped in <a>", () => {
     var x = paper.rect().attr("href", url),
       xAnchor = x.node.parentNode;
     var el = paper.rect().attr("href", url),
@@ -170,7 +176,7 @@
     equalNodePositionWrapped(el.node, anchor, paper.canvas, xAnchor, null);
   });
 
-  test("insertAfter: middle element when wrapped in <a>", function () {
+  test("insertAfter: middle element when wrapped in <a>", () => {
     var x = paper.rect();
     var y = paper.rect();
     var el = paper.rect().attr("href", url),
@@ -181,7 +187,7 @@
     equalNodePositionWrapped(el.node, anchor, paper.canvas, x.node, y.node);
   });
 
-  test("insertAfter: middle element wrapped in <a> and wrapped in <a>", function () {
+  test("insertAfter: middle element wrapped in <a> and wrapped in <a>", () => {
     var x = paper.rect().attr("href", url),
       xAnchor = x.node.parentNode;
     var y = paper.rect().attr("href", url),
@@ -201,7 +207,7 @@
   // Element#remove
   // --------------
 
-  test("remove: after added", function () {
+  test("remove: after added", () => {
     var el = paper.rect(),
       node = el.node;
 
@@ -211,7 +217,7 @@
     equal(node.parentNode, null);
   });
 
-  test("remove: when wrapped in <a>", function () {
+  test("remove: when wrapped in <a>", () => {
     var el = paper.rect().attr("href", url),
       node = el.node,
       anchor = node.parentNode;
@@ -223,7 +229,7 @@
     equal(anchor.parentNode, null);
   });
 
-  test("remove: when already removed", function () {
+  test("remove: when already removed", () => {
     var el = paper.rect(),
       node = el.node;
 
@@ -234,7 +240,7 @@
     equal(node.parentNode, null);
   });
 
-  test("remove: when the canvas is removed", function () {
+  test("remove: when the canvas is removed", () => {
     var el = paper.rect(),
       node = el.node;
 
@@ -248,7 +254,7 @@
   // Element#toFront
   // --------------
 
-  test("toFront: normal", function () {
+  test("toFront: normal", () => {
     var el = paper.rect();
     var x = paper.rect();
 
@@ -257,7 +263,7 @@
     equalNodePosition(el.node, paper.canvas, x.node, null);
   });
 
-  test("toFront: when wrapped in <a>", function () {
+  test("toFront: when wrapped in <a>", () => {
     var el = paper.rect().attr("href", url),
       anchor = el.node.parentNode;
     var x = paper.rect();
@@ -270,7 +276,7 @@
   // Element#toBack
   // --------------
 
-  test("toBack: normal", function () {
+  test("toBack: normal", () => {
     var x = paper.rect();
     var el = paper.rect();
 
@@ -280,7 +286,7 @@
     equalNodePosition(x.node, paper.canvas, paper.defs, null);
   });
 
-  test("toBack: when wrapped in <a>", function () {
+  test("toBack: when wrapped in <a>", () => {
     var x = paper.rect();
     var el = paper.rect().attr("href", url),
       anchor = el.node.parentNode;

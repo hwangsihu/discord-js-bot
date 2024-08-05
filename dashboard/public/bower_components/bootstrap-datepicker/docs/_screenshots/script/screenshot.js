@@ -8,13 +8,13 @@ page.viewportSize = {
   height: 600,
 };
 
-page.open(sys.args[1], function (status) {
+page.open(sys.args[1], (status) => {
   if (status !== "success") {
     console.log("Bad status: %s", status);
     phantom.exit(1);
   }
-  window.setTimeout(function () {
-    var box = page.evaluate(function () {
+  window.setTimeout(() => {
+    var box = page.evaluate(() => {
       var lefts,
         rights,
         tops,

@@ -34,7 +34,7 @@ define([
   "./dropdown/closeOnSelect",
 
   "./i18n/en",
-], function (
+], (
   $,
   require,
 
@@ -49,7 +49,7 @@ define([
 
   Utils,
   Translation,
-  DIACRITICS,
+  diacritics,
 
   SelectData,
   ArrayData,
@@ -70,7 +70,7 @@ define([
   CloseOnSelect,
 
   EnglishTranslation
-) {
+) => {
   function Defaults() {
     this.reset();
   }
@@ -153,10 +153,14 @@ define([
         options.dropdownAdapter = Utils.Decorate(options.dropdownAdapter, CloseOnSelect);
       }
 
-      if (options.dropdownCssClass != null || options.dropdownCss != null || options.adaptDropdownCssClass != null) {
-        var DropdownCSS = require(options.amdBase + "compat/dropdownCss");
+      if (
+        options.dropdownCssClass != null ||
+        options.dropdownCss != null ||
+        options.adaptDropdownCssClass != null
+      ) {
+        var dropdownCss = require(options.amdBase + "compat/dropdownCss");
 
-        options.dropdownAdapter = Utils.Decorate(options.dropdownAdapter, DropdownCSS);
+        options.dropdownAdapter = Utils.Decorate(options.dropdownAdapter, dropdownCss);
       }
 
       options.dropdownAdapter = Utils.Decorate(options.dropdownAdapter, AttachBody);
@@ -182,10 +186,14 @@ define([
         options.selectionAdapter = Utils.Decorate(options.selectionAdapter, SelectionSearch);
       }
 
-      if (options.containerCssClass != null || options.containerCss != null || options.adaptContainerCssClass != null) {
-        var ContainerCSS = require(options.amdBase + "compat/containerCss");
+      if (
+        options.containerCssClass != null ||
+        options.containerCss != null ||
+        options.adaptContainerCssClass != null
+      ) {
+        var containerCss = require(options.amdBase + "compat/containerCss");
 
-        options.selectionAdapter = Utils.Decorate(options.selectionAdapter, ContainerCSS);
+        options.selectionAdapter = Utils.Decorate(options.selectionAdapter, containerCss);
       }
 
       options.selectionAdapter = Utils.Decorate(options.selectionAdapter, EventRelay);
@@ -259,7 +267,7 @@ define([
     function stripDiacritics(text) {
       // Used 'uni range + named function' from http://jsperf.com/diacritics/18
       function match(a) {
-        return DIACRITICS[a] || a;
+        return diacritics[a] || a;
       }
 
       return text.replace(/[^\u0000-\u007E]/g, match);
@@ -325,15 +333,9 @@ define([
       minimumResultsForSearch: 0,
       selectOnClose: false,
       scrollAfterSelect: false,
-      sorter: function (data) {
-        return data;
-      },
-      templateResult: function (result) {
-        return result.text;
-      },
-      templateSelection: function (selection) {
-        return selection.text;
-      },
+      sorter: (data) => data,
+      templateResult: (result) => result.text,
+      templateSelection: (selection) => selection.text,
       theme: "default",
       width: "resolve",
     };

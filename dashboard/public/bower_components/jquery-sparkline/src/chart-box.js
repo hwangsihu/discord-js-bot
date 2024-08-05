@@ -17,9 +17,7 @@ $.fn.sparkline.box = box = createClass($.fn.sparkline._base, {
   /**
    * Simulate a single region
    */
-  getRegion: function () {
-    return 1;
-  },
+  getRegion: () => 1,
 
   getCurrentRegionFields: function () {
     var result = [
@@ -50,9 +48,13 @@ $.fn.sparkline.box = box = createClass($.fn.sparkline._base, {
       canvasWidth = this.canvasWidth,
       canvasHeight = this.canvasHeight,
       minValue =
-        options.get("chartRangeMin") === undefined ? Math.min.apply(Math, values) : options.get("chartRangeMin"),
+        options.get("chartRangeMin") === undefined
+          ? Math.min.apply(Math, values)
+          : options.get("chartRangeMin"),
       maxValue =
-        options.get("chartRangeMax") === undefined ? Math.max.apply(Math, values) : options.get("chartRangeMax"),
+        options.get("chartRangeMax") === undefined
+          ? Math.max.apply(Math, values)
+          : options.get("chartRangeMax"),
       canvasLeft = 0,
       lwhisker,
       loutlier,
@@ -87,9 +89,7 @@ $.fn.sparkline.box = box = createClass($.fn.sparkline._base, {
         rwhisker = values[4];
       }
     } else {
-      values.sort(function (a, b) {
-        return a - b;
-      });
+      values.sort((a, b) => a - b);
       q1 = quartile(values, 1);
       q2 = quartile(values, 2);
       q3 = quartile(values, 3);

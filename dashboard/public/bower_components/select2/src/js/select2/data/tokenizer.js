@@ -1,4 +1,4 @@
-define(["jquery"], function ($) {
+define(["jquery"], ($) => {
   function Tokenizer(decorated, $element, options) {
     var tokenizer = options.get("tokenizer");
 
@@ -13,7 +13,9 @@ define(["jquery"], function ($) {
     decorated.call(this, container, $container);
 
     this.$search =
-      container.dropdown.$search || container.selection.$search || $container.find(".select2-search__field");
+      container.dropdown.$search ||
+      container.selection.$search ||
+      $container.find(".select2-search__field");
   };
 
   Tokenizer.prototype.query = function (decorated, params, callback) {
@@ -72,12 +74,10 @@ define(["jquery"], function ($) {
 
     var createTag =
       this.createTag ||
-      function (params) {
-        return {
-          id: params.term,
-          text: params.term,
-        };
-      };
+      ((params) => ({
+        id: params.term,
+        text: params.term,
+      }));
 
     while (i < term.length) {
       var termChar = term[i];

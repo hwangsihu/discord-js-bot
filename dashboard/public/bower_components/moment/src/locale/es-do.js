@@ -24,8 +24,11 @@ var monthsRegex =
   /^(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene\.?|feb\.?|mar\.?|abr\.?|may\.?|jun\.?|jul\.?|ago\.?|sep\.?|oct\.?|nov\.?|dic\.?)/i;
 
 export default moment.defineLocale("es-do", {
-  months: "enero_febrero_marzo_abril_mayo_junio_julio_agosto_septiembre_octubre_noviembre_diciembre".split("_"),
-  monthsShort: function (m, format) {
+  months:
+    "enero_febrero_marzo_abril_mayo_junio_julio_agosto_septiembre_octubre_noviembre_diciembre".split(
+      "_"
+    ),
+  monthsShort: (m, format) => {
     if (!m) {
       return monthsShortDot;
     } else if (/-MMM-/.test(format)) {
@@ -36,8 +39,10 @@ export default moment.defineLocale("es-do", {
   },
   monthsRegex: monthsRegex,
   monthsShortRegex: monthsRegex,
-  monthsStrictRegex: /^(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)/i,
-  monthsShortStrictRegex: /^(ene\.?|feb\.?|mar\.?|abr\.?|may\.?|jun\.?|jul\.?|ago\.?|sep\.?|oct\.?|nov\.?|dic\.?)/i,
+  monthsStrictRegex:
+    /^(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)/i,
+  monthsShortStrictRegex:
+    /^(ene\.?|feb\.?|mar\.?|abr\.?|may\.?|jun\.?|jul\.?|ago\.?|sep\.?|oct\.?|nov\.?|dic\.?)/i,
   monthsParse: monthsParse,
   longMonthsParse: monthsParse,
   shortMonthsParse: monthsParse,

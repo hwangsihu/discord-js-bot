@@ -6,9 +6,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
-+(function ($) {
-  "use strict";
-
++(($) => {
   // ALERT CLASS DEFINITION
   // ======================
 
@@ -51,7 +49,9 @@
     }
 
     $.support.transition && $parent.hasClass("fade")
-      ? $parent.one("bsTransitionEnd", removeElement).emulateTransitionEnd(Alert.TRANSITION_DURATION)
+      ? $parent
+          .one("bsTransitionEnd", removeElement)
+          .emulateTransitionEnd(Alert.TRANSITION_DURATION)
       : removeElement();
   };
 

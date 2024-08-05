@@ -6,14 +6,17 @@
  * Version: 3.3.11
  */
 
-!(function (factory) {
+!((factory) => {
   "function" == typeof define && define.amd
     ? define(["./dependencyLibs/inputmask.dependencyLib", "./inputmask"], factory)
     : "object" == typeof exports
-      ? (module.exports = factory(require("./dependencyLibs/inputmask.dependencyLib"), require("./inputmask")))
+      ? (module.exports = factory(
+          require("./dependencyLibs/inputmask.dependencyLib"),
+          require("./inputmask")
+        ))
       : factory(window.dependencyLib || jQuery, window.Inputmask);
-})(function ($, Inputmask) {
-  return (
+})(
+  ($, Inputmask) => (
     Inputmask.extendDefinitions({
       A: {
         validator: "[A-Za-zА-яЁёÀ-ÿµ]",
@@ -48,30 +51,27 @@
         mask: "i[i[i]].i[i[i]].i[i[i]].i[i[i]]",
         definitions: {
           i: {
-            validator: function (chrs, maskset, pos, strict, opts) {
-              return (
-                pos - 1 > -1 && "." !== maskset.buffer[pos - 1]
-                  ? ((chrs = maskset.buffer[pos - 1] + chrs),
-                    (chrs =
-                      pos - 2 > -1 && "." !== maskset.buffer[pos - 2] ? maskset.buffer[pos - 2] + chrs : "0" + chrs))
-                  : (chrs = "00" + chrs),
-                new RegExp("25[0-5]|2[0-4][0-9]|[01][0-9][0-9]").test(chrs)
-              );
-            },
+            validator: (chrs, maskset, pos, strict, opts) => (
+              pos - 1 > -1 && "." !== maskset.buffer[pos - 1]
+                ? ((chrs = maskset.buffer[pos - 1] + chrs),
+                  (chrs =
+                    pos - 2 > -1 && "." !== maskset.buffer[pos - 2]
+                      ? maskset.buffer[pos - 2] + chrs
+                      : "0" + chrs))
+                : (chrs = "00" + chrs),
+              /25[0-5]|2[0-4][0-9]|[01][0-9][0-9]/.test(chrs)
+            ),
             cardinality: 1,
           },
         },
-        onUnMask: function (maskedValue, unmaskedValue, opts) {
-          return maskedValue;
-        },
+        onUnMask: (maskedValue, unmaskedValue, opts) => maskedValue,
         inputmode: "numeric",
       },
       email: {
         mask: "*{1,64}[.*{1,64}][.*{1,64}][.*{1,63}]@-{1,63}.-{1,63}[.-{1,63}][.-{1,63}]",
         greedy: !1,
-        onBeforePaste: function (pastedValue, opts) {
-          return (pastedValue = pastedValue.toLowerCase()).replace("mailto:", "");
-        },
+        onBeforePaste: (pastedValue, opts) =>
+          (pastedValue = pastedValue.toLowerCase()).replace("mailto:", ""),
         definitions: {
           "*": {
             validator: "[0-9A-Za-z!#$%&'*+/=?^_`{|}~-]",
@@ -84,9 +84,7 @@
             casing: "lower",
           },
         },
-        onUnMask: function (maskedValue, unmaskedValue, opts) {
-          return maskedValue;
-        },
+        onUnMask: (maskedValue, unmaskedValue, opts) => maskedValue,
         inputmode: "email",
       },
       mac: {
@@ -106,5 +104,5 @@
       },
     }),
     Inputmask
-  );
-});
+  )
+);

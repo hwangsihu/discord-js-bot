@@ -127,7 +127,11 @@ CKEDITOR.lang["et"] = {
     panelTitle2: "Reasisesed stiilid",
     panelTitle3: "Objektistiilid",
   },
-  specialchar: { options: "Erimärkide valikud", title: "Erimärgi valimine", toolbar: "Erimärgi sisestamine" },
+  specialchar: {
+    options: "Erimärkide valikud",
+    title: "Erimärgi valimine",
+    toolbar: "Erimärgi sisestamine",
+  },
   sourcearea: { toolbar: "Lähtekood" },
   scayt: {
     btn_about: "SCAYT-ist lähemalt",
@@ -146,7 +150,8 @@ CKEDITOR.lang["et"] = {
     title: "Asetamine tavalise tekstina",
   },
   pastefromword: {
-    confirmCleanup: "Tekst, mida tahad asetada näib pärinevat Wordist. Kas tahad selle enne asetamist puhastada?",
+    confirmCleanup:
+      "Tekst, mida tahad asetada näib pärinevat Wordist. Kas tahad selle enne asetamist puhastada?",
     error: "Asetatud andmete puhastamine ei olnud sisemise vea tõttu võimalik",
     title: "Asetamine Wordist",
     toolbar: "Asetamine Wordist",
@@ -342,7 +347,8 @@ CKEDITOR.lang["et"] = {
     generalTab: "Üldine",
     advancedTab: "Täpsemalt",
     validateNumberFailed: "See väärtus pole number.",
-    confirmNewPage: "Kõik salvestamata muudatused lähevad kaotsi. Kas oled kindel, et tahad laadida uue lehe?",
+    confirmNewPage:
+      "Kõik salvestamata muudatused lähevad kaotsi. Kas oled kindel, et tahad laadida uue lehe?",
     confirmCancel: "Mõned valikud on muudetud. Kas oled kindel, et tahad dialoogi sulgeda?",
     options: "Valikud",
     target: "Sihtkoht",

@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function e(a, b) {
     this.editor = a;
     this.options = b;
@@ -18,14 +18,17 @@
     this._listeners = [];
     this._attachListeners();
   }
-  var k = (function () {
-    return CKEDITOR.tools.array.filter(
-      ["matches", "msMatchesSelector", "webkitMatchesSelector", "mozMatchesSelector", "oMatchesSelector"],
-      function (a) {
-        return window.HTMLElement ? a in HTMLElement.prototype : !1;
-      }
-    )[0];
-  })();
+  var k = (() =>
+    CKEDITOR.tools.array.filter(
+      [
+        "matches",
+        "msMatchesSelector",
+        "webkitMatchesSelector",
+        "mozMatchesSelector",
+        "oMatchesSelector",
+      ],
+      (a) => (window.HTMLElement ? a in HTMLElement.prototype : !1)
+    )[0])();
   CKEDITOR.ui.balloonToolbarView = function (a, b) {
     b = CKEDITOR.tools.extend(b || {}, { width: "auto", triangleWidth: 7, triangleHeight: 7 });
     CKEDITOR.ui.balloonPanel.call(this, a, b);
@@ -58,7 +61,8 @@
     this._items[a] && (delete this._items[a], this._view.renderItems(this._items));
   };
   CKEDITOR.ui.balloonToolbar.prototype.destroy = function () {
-    for (var a in this._items) this._items[a].destroy && this._items[a].destroy(), this.deleteItem(a);
+    for (var a in this._items)
+      this._items[a].destroy && this._items[a].destroy(), this.deleteItem(a);
     this._pointedElement = null;
     this._view.destroy();
   };
@@ -94,7 +98,8 @@
       var a = this.options.widgets,
         b = null;
       if (a) {
-        var c = this.editor.widgets && this.editor.widgets.focused && this.editor.widgets.focused.name;
+        var c =
+          this.editor.widgets && this.editor.widgets.focused && this.editor.widgets.focused.name;
         "string" === typeof a && (a = a.split(","));
         -1 !== CKEDITOR.tools.array.indexOf(a, c) && (b = this.editor.widgets.focused.element);
       }
@@ -128,7 +133,7 @@
     },
     check: function (a) {
       function b(a, b, c) {
-        n(a, function (a) {
+        n(a, (a) => {
           if (!h || h.options.priority > a.options.priority) {
             var d = b(a, c);
             d instanceof CKEDITOR.dom.element && ((e = d), (h = a));
@@ -140,7 +145,7 @@
       }
       a ||
         ((a = this.editor.getSelection()),
-        CKEDITOR.tools.array.forEach(a.getRanges(), function (a) {
+        CKEDITOR.tools.array.forEach(a.getRanges(), (a) => {
           a.shrink(CKEDITOR.SHRINK_ELEMENT, !0);
         }));
       if (a) {
@@ -149,12 +154,8 @@
           f = d && d.startPath(),
           e,
           h;
-        b(this._contexts, function (b) {
-          return b._matchRefresh(f, a);
-        });
-        b(this._contexts, function (a) {
-          return a._matchWidget();
-        });
+        b(this._contexts, (b) => b._matchRefresh(f, a));
+        b(this._contexts, (a) => a._matchWidget());
         if (f)
           for (
             (d = a.getSelectedElement()) && !d.isReadOnly() && b(this._contexts, c, d), d = 0;
@@ -169,25 +170,25 @@
       }
     },
     hide: function () {
-      CKEDITOR.tools.array.forEach(this._contexts, function (a) {
+      CKEDITOR.tools.array.forEach(this._contexts, (a) => {
         a.hide();
       });
     },
     destroy: function () {
-      CKEDITOR.tools.array.forEach(this._listeners, function (a) {
+      CKEDITOR.tools.array.forEach(this._listeners, (a) => {
         a.removeListener();
       });
       this._listeners.splice(0, this._listeners.length);
       this._clear();
     },
     _clear: function () {
-      CKEDITOR.tools.array.forEach(this._contexts, function (a) {
+      CKEDITOR.tools.array.forEach(this._contexts, (a) => {
         a.destroy();
       });
       this._contexts.splice(0, this._contexts.length);
     },
     _refresh: function () {
-      CKEDITOR.tools.array.forEach(this._contexts, function (a) {
+      CKEDITOR.tools.array.forEach(this._contexts, (a) => {
         a.refresh();
       });
     },
@@ -245,15 +246,20 @@
     beforeInit: function (a) {
       m ||
         (CKEDITOR.document.appendStyleSheet(this.path + "skins/default.css"),
-        CKEDITOR.document.appendStyleSheet(this.path + "skins/" + CKEDITOR.skin.name + "/balloontoolbar.css"),
+        CKEDITOR.document.appendStyleSheet(
+          this.path + "skins/" + CKEDITOR.skin.name + "/balloontoolbar.css"
+        ),
         (m = !0));
       a.balloonToolbars = new CKEDITOR.plugins.balloontoolbar.contextManager(a);
     },
-    init: function (a) {
+    init: (a) => {
       a.balloonToolbars = new CKEDITOR.plugins.balloontoolbar.contextManager(a);
       l ||
         ((l = !0),
-        (CKEDITOR.ui.balloonToolbarView.prototype = CKEDITOR.tools.extend({}, CKEDITOR.ui.balloonPanel.prototype)),
+        (CKEDITOR.ui.balloonToolbarView.prototype = CKEDITOR.tools.extend(
+          {},
+          CKEDITOR.ui.balloonPanel.prototype
+        )),
         (CKEDITOR.ui.balloonToolbarView.prototype.build = function () {
           CKEDITOR.ui.balloonPanel.prototype.build.call(this);
           this.parts.panel.addClass("cke_balloontoolbar");
@@ -288,7 +294,7 @@
         }),
         (CKEDITOR.ui.balloonToolbarView.prototype._detachListeners = function () {
           this._listeners.length &&
-            (CKEDITOR.tools.array.forEach(this._listeners, function (a) {
+            (CKEDITOR.tools.array.forEach(this._listeners, (a) => {
               a.removeListener();
             }),
             (this._listeners = []));
@@ -338,5 +344,9 @@
         }));
     },
   });
-  CKEDITOR.plugins.balloontoolbar = { context: e, contextManager: g, PRIORITY: { LOW: 999, MEDIUM: 500, HIGH: 10 } };
+  CKEDITOR.plugins.balloontoolbar = {
+    context: e,
+    contextManager: g,
+    PRIORITY: { LOW: 999, MEDIUM: 500, HIGH: 10 },
+  };
 })();

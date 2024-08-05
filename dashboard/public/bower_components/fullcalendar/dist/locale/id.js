@@ -1,4 +1,4 @@
-!(function (e, a) {
+!((e, a) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = a(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? a(require("moment"), require("fullcalendar"))
         : a(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, a) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, a) =>
+  ((e) => {
     function a(n) {
       if (t[n]) return t[n].exports;
       var r = (t[n] = { i: n, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (a.m = e),
       (a.c = t),
-      (a.d = function (e, t, n) {
+      (a.d = (e, t, n) => {
         a.o(e, t) || Object.defineProperty(e, t, { configurable: !1, enumerable: !0, get: n });
       }),
-      (a.n = function (e) {
-        var t =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (a.n = (e) => {
+        var t = e && e.__esModule ? () => e.default : () => e;
         return a.d(t, "a", t), t;
       }),
-      (a.o = function (e, a) {
-        return Object.prototype.hasOwnProperty.call(e, a);
-      }),
+      (a.o = (e, a) => Object.prototype.hasOwnProperty.call(e, a)),
       (a.p = ""),
       a((a.s = 147))
     );
   })({
-    0: function (a, t) {
+    0: (a, t) => {
       a.exports = e;
     },
-    1: function (e, t) {
+    1: (e, t) => {
       e.exports = a;
     },
-    147: function (e, a, t) {
+    147: (e, a, t) => {
       Object.defineProperty(a, "__esModule", { value: !0 }), t(148);
       var n = t(1);
       n.datepickerLocale("id", "id", {
@@ -66,7 +57,20 @@
           "Nopember",
           "Desember",
         ],
-        monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agus", "Sep", "Okt", "Nop", "Des"],
+        monthNamesShort: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "Mei",
+          "Jun",
+          "Jul",
+          "Agus",
+          "Sep",
+          "Okt",
+          "Nop",
+          "Des",
+        ],
         dayNames: ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"],
         dayNamesShort: ["Min", "Sen", "Sel", "Rab", "kam", "Jum", "Sab"],
         dayNamesMin: ["Mg", "Sn", "Sl", "Rb", "Km", "jm", "Sb"],
@@ -84,12 +88,15 @@
           noEventsMessage: "Tidak ada acara untuk ditampilkan",
         });
     },
-    148: function (e, a, t) {
-      !(function (e, a) {
+    148: (e, a, t) => {
+      !((e, a) => {
         a(t(0));
-      })(0, function (e) {
-        return e.defineLocale("id", {
-          months: "Januari_Februari_Maret_April_Mei_Juni_Juli_Agustus_September_Oktober_November_Desember".split("_"),
+      })(0, (e) =>
+        e.defineLocale("id", {
+          months:
+            "Januari_Februari_Maret_April_Mei_Juni_Juli_Agustus_September_Oktober_November_Desember".split(
+              "_"
+            ),
           monthsShort: "Jan_Feb_Mar_Apr_Mei_Jun_Jul_Agt_Sep_Okt_Nov_Des".split("_"),
           weekdays: "Minggu_Senin_Selasa_Rabu_Kamis_Jumat_Sabtu".split("_"),
           weekdaysShort: "Min_Sen_Sel_Rab_Kam_Jum_Sab".split("_"),
@@ -103,23 +110,19 @@
             LLLL: "dddd, D MMMM YYYY [pukul] HH.mm",
           },
           meridiemParse: /pagi|siang|sore|malam/,
-          meridiemHour: function (e, a) {
-            return (
-              12 === e && (e = 0),
-              "pagi" === a
-                ? e
-                : "siang" === a
-                  ? e >= 11
-                    ? e
-                    : e + 12
-                  : "sore" === a || "malam" === a
-                    ? e + 12
-                    : void 0
-            );
-          },
-          meridiem: function (e, a, t) {
-            return e < 11 ? "pagi" : e < 15 ? "siang" : e < 19 ? "sore" : "malam";
-          },
+          meridiemHour: (e, a) => (
+            12 === e && (e = 0),
+            "pagi" === a
+              ? e
+              : "siang" === a
+                ? e >= 11
+                  ? e
+                  : e + 12
+                : "sore" === a || "malam" === a
+                  ? e + 12
+                  : void 0
+          ),
+          meridiem: (e, a, t) => (e < 11 ? "pagi" : e < 15 ? "siang" : e < 19 ? "sore" : "malam"),
           calendar: {
             sameDay: "[Hari ini pukul] LT",
             nextDay: "[Besok pukul] LT",
@@ -145,8 +148,8 @@
             yy: "%d tahun",
           },
           week: { dow: 1, doy: 7 },
-        });
-      });
+        })
+      );
     },
-  });
-});
+  })
+);

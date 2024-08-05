@@ -1,4 +1,4 @@
-﻿(function () {
+﻿(() => {
   function e(a) {
     l.call(this, a);
     this.hintContainer = this.codeContainer = null;
@@ -39,12 +39,14 @@
         d = d.replace(/(['|"]\w*['|"])/g, "");
       b.charsBetween = d.match(/(^\w*)(['|"])/);
       b.charsBetween &&
-        ((b.endChar = b.charsBetween[2]), (b.charsBetween = b.charsBetween[1].split("").reverse().join("")));
+        ((b.endChar = b.charsBetween[2]),
+        (b.charsBetween = b.charsBetween[1].split("").reverse().join("")));
       return b;
     }
     function b(a) {
-      setTimeout(function () {
-        a.state.completionActive || CodeMirror.showHint(a, d, { hintsClass: "toolbar-modifier", completeSingle: !1 });
+      setTimeout(() => {
+        a.state.completionActive ||
+          CodeMirror.showHint(a, d, { hintsClass: "toolbar-modifier", completeSingle: !1 });
       }, 100);
       return CodeMirror.Pass;
     }
@@ -58,9 +60,9 @@
       ? "\tconfig.toolbar \x3d " +
         ("[\n\t\t" +
           g
-            .map(a, function (a) {
-              return l.stringifyJSONintoOneLine(a, { addSpaces: !0, noQuotesOnKey: !0, singleQuotes: !0 });
-            })
+            .map(a, (a) =>
+              l.stringifyJSONintoOneLine(a, { addSpaces: !0, noQuotesOnKey: !0, singleQuotes: !0 })
+            )
             .join(",\n\t\t") +
           "\n\t]") +
         ";"
@@ -73,20 +75,28 @@
       mode: { name: "javascript", json: !0 },
       lineNumbers: !1,
       lineWrapping: !0,
-      viewportMargin: Infinity,
+      viewportMargin: Number.POSITIVE_INFINITY,
       value: a,
       smartIndent: !1,
       indentWithTabs: !0,
       indentUnit: 4,
       tabSize: 4,
       theme: "neo",
-      extraKeys: { Left: b, Right: b, "'''": b, "'\"'": b, Backspace: b, Delete: b, "Shift-Tab": "indentLess" },
+      extraKeys: {
+        Left: b,
+        Right: b,
+        "'''": b,
+        "'\"'": b,
+        Backspace: b,
+        Delete: b,
+        "Shift-Tab": "indentLess",
+      },
     });
-    this.codeContainer.on("endCompletion", function (a, b) {
+    this.codeContainer.on("endCompletion", (a, b) => {
       var d = c(a);
       void 0 !== b && a.replaceSelection(d.endChar);
     });
-    this.codeContainer.on("change", function () {
+    this.codeContainer.on("change", () => {
       var a = k.codeContainer.getValue(),
         a = k._evaluateValue(a);
       null !== a
@@ -105,20 +115,24 @@
     var a = this.getUnusedButtonsArray(this.actualConfig.toolbar, !0),
       a = this.groupButtonNamesByGroup(a),
       d = g
-        .map(a, function (a) {
-          var b = g
-            .map(a.buttons, function (a) {
-              return "\x3ccode\x3e" + a + "\x3c/code\x3e ";
-            })
-            .join("");
-          return ["\x3cdt\x3e\x3ccode\x3e", a.name, "\x3c/code\x3e\x3c/dt\x3e\x3cdd\x3e", b, "\x3c/dd\x3e"].join("");
+        .map(a, (a) => {
+          var b = g.map(a.buttons, (a) => "\x3ccode\x3e" + a + "\x3c/code\x3e ").join("");
+          return [
+            "\x3cdt\x3e\x3ccode\x3e",
+            a.name,
+            "\x3c/code\x3e\x3c/dt\x3e\x3cdd\x3e",
+            b,
+            "\x3c/dd\x3e",
+          ].join("");
         })
         .join(" "),
       f =
         '\x3cdt class\x3d"list-header"\x3eToolbar group\x3c/dt\x3e\x3cdd class\x3d"list-header"\x3eUnused items\x3c/dd\x3e';
     a.length || (f = "\x3cp\x3eAll items are in use.\x3c/p\x3e");
     this.codeContainer.refresh();
-    this.hintContainer.setHtml("\x3ch3\x3eUnused toolbar items\x3c/h3\x3e\x3cdl\x3e" + f + d + "\x3c/dl\x3e");
+    this.hintContainer.setHtml(
+      "\x3ch3\x3eUnused toolbar items\x3c/h3\x3e\x3cdl\x3e" + f + d + "\x3c/dl\x3e"
+    );
   };
   e.prototype.getToolbarGroupByButtonName = function (a) {
     var d = this.fullToolbarEditor.buttonNamesByGroup,
@@ -130,14 +144,12 @@
     d = !0 === d ? !0 : !1;
     var c = e.mapToolbarCfgToElementsList(a);
     a = Object.keys(this.fullToolbarEditor.editorInstance.ui.items);
-    a = g.filter(a, function (a) {
+    a = g.filter(a, (a) => {
       var d = "-" === a;
       a = void 0 === f || 0 === a.toLowerCase().indexOf(f.toLowerCase());
       return !d && a;
     });
-    a = g.filter(a, function (a) {
-      return -1 == CKEDITOR.tools.indexOf(c, a);
-    });
+    a = g.filter(a, (a) => -1 == CKEDITOR.tools.indexOf(c, a));
     d && a.sort();
     return a;
   };
@@ -147,14 +159,12 @@
       c;
     for (c in f) {
       var b = f[c],
-        b = g.filter(b, function (b) {
-          return -1 !== CKEDITOR.tools.indexOf(a, b);
-        });
+        b = g.filter(b, (b) => -1 !== CKEDITOR.tools.indexOf(a, b));
       b.length && d.push({ name: c, buttons: b });
     }
     return d;
   };
-  e.mapToolbarCfgToElementsList = function (a) {
+  e.mapToolbarCfgToElementsList = (a) => {
     function d(a) {
       return "-" !== a;
     }
@@ -167,7 +177,10 @@
     CKEDITOR.tools.isArray(a.toolbar) ||
       (a.toolbarGroups || (a.toolbarGroups = this.fullToolbarEditor.getFullToolbarGroupsConfig(!0)),
       this._fixGroups(a),
-      (a.toolbar = this._mapToolbarGroupsToToolbar(a.toolbarGroups, this.actualConfig.removeButtons)),
+      (a.toolbar = this._mapToolbarGroupsToToolbar(
+        a.toolbarGroups,
+        this.actualConfig.removeButtons
+      )),
       (this.actualConfig.toolbar = a.toolbar),
       (this.actualConfig.removeButtons = ""));
   };
@@ -205,7 +218,7 @@
     }
     return a;
   };
-  e.prototype._evaluateValue = function (a) {
+  e.prototype._evaluateValue = (a) => {
     var d;
     try {
       var f = {};
@@ -246,7 +259,7 @@
         }
         b.push(m);
       }
-    c = (function (a, b) {
+    c = ((a, b) => {
       var c = [],
         e;
       for (e in a)

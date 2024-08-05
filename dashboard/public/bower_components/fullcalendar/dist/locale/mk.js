@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(r) {
       if (n[r]) return n[r].exports;
       var o = (n[r] = { i: r, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = n),
-      (t.d = function (e, n, r) {
+      (t.d = (e, n, r) => {
         t.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: r });
       }),
-      (t.n = function (e) {
-        var n =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var n = e && e.__esModule ? () => e.default : () => e;
         return t.d(n, "a", n), n;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 167))
     );
   })({
-    0: function (t, n) {
+    0: (t, n) => {
       t.exports = e;
     },
-    1: function (e, n) {
+    1: (e, n) => {
       e.exports = t;
     },
-    167: function (e, t, n) {
+    167: (e, t, n) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), n(168);
       var r = n(1);
       r.datepickerLocale("mk", "mk", {
@@ -66,7 +57,20 @@
           "Ноември",
           "Декември",
         ],
-        monthNamesShort: ["Јан", "Фев", "Мар", "Апр", "Мај", "Јун", "Јул", "Авг", "Сеп", "Окт", "Ное", "Дек"],
+        monthNamesShort: [
+          "Јан",
+          "Фев",
+          "Мар",
+          "Апр",
+          "Мај",
+          "Јун",
+          "Јул",
+          "Авг",
+          "Сеп",
+          "Окт",
+          "Ное",
+          "Дек",
+        ],
         dayNames: ["Недела", "Понеделник", "Вторник", "Среда", "Четврток", "Петок", "Сабота"],
         dayNamesShort: ["Нед", "Пон", "Вто", "Сре", "Чет", "Пет", "Саб"],
         dayNamesMin: ["Не", "По", "Вт", "Ср", "Че", "Пе", "Са"],
@@ -80,18 +84,19 @@
         r.locale("mk", {
           buttonText: { month: "Месец", week: "Недела", day: "Ден", list: "График" },
           allDayText: "Цел ден",
-          eventLimitText: function (e) {
-            return "+повеќе " + e;
-          },
+          eventLimitText: (e) => "+повеќе " + e,
           noEventsMessage: "Нема настани за прикажување",
         });
     },
-    168: function (e, t, n) {
-      !(function (e, t) {
+    168: (e, t, n) => {
+      !((e, t) => {
         t(n(0));
-      })(0, function (e) {
-        return e.defineLocale("mk", {
-          months: "јануари_февруари_март_април_мај_јуни_јули_август_септември_октомври_ноември_декември".split("_"),
+      })(0, (e) =>
+        e.defineLocale("mk", {
+          months:
+            "јануари_февруари_март_април_мај_јуни_јули_август_септември_октомври_ноември_декември".split(
+              "_"
+            ),
           monthsShort: "јан_фев_мар_апр_мај_јун_јул_авг_сеп_окт_ное_дек".split("_"),
           weekdays: "недела_понеделник_вторник_среда_четврток_петок_сабота".split("_"),
           weekdaysShort: "нед_пон_вто_сре_чет_пет_саб".split("_"),
@@ -141,7 +146,7 @@
             yy: "%d години",
           },
           dayOfMonthOrdinalParse: /\d{1,2}-(ев|ен|ти|ви|ри|ми)/,
-          ordinal: function (e) {
+          ordinal: (e) => {
             var t = e % 10,
               n = e % 100;
             return 0 === e
@@ -159,8 +164,8 @@
                         : e + "-ти";
           },
           week: { dow: 1, doy: 7 },
-        });
-      });
+        })
+      );
     },
-  });
-});
+  })
+);

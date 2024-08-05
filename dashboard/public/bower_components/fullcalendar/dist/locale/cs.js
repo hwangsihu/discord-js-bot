@@ -1,4 +1,4 @@
-!(function (e, n) {
+!((e, n) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = n(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? n(require("moment"), require("fullcalendar"))
         : n(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, n) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, n) =>
+  ((e) => {
     function n(r) {
       if (t[r]) return t[r].exports;
       var s = (t[r] = { i: r, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (n.m = e),
       (n.c = t),
-      (n.d = function (e, t, r) {
+      (n.d = (e, t, r) => {
         n.o(e, t) || Object.defineProperty(e, t, { configurable: !1, enumerable: !0, get: r });
       }),
-      (n.n = function (e) {
-        var t =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (n.n = (e) => {
+        var t = e && e.__esModule ? () => e.default : () => e;
         return n.d(t, "a", t), t;
       }),
-      (n.o = function (e, n) {
-        return Object.prototype.hasOwnProperty.call(e, n);
-      }),
+      (n.o = (e, n) => Object.prototype.hasOwnProperty.call(e, n)),
       (n.p = ""),
       n((n.s = 95))
     );
   })({
-    0: function (n, t) {
+    0: (n, t) => {
       n.exports = e;
     },
-    1: function (e, t) {
+    1: (e, t) => {
       e.exports = n;
     },
-    95: function (e, n, t) {
+    95: (e, n, t) => {
       Object.defineProperty(n, "__esModule", { value: !0 }), t(96);
       var r = t(1);
       r.datepickerLocale("cs", "cs", {
@@ -66,7 +57,20 @@
           "listopad",
           "prosinec",
         ],
-        monthNamesShort: ["led", "úno", "bře", "dub", "kvě", "čer", "čvc", "srp", "zář", "říj", "lis", "pro"],
+        monthNamesShort: [
+          "led",
+          "úno",
+          "bře",
+          "dub",
+          "kvě",
+          "čer",
+          "čvc",
+          "srp",
+          "zář",
+          "říj",
+          "lis",
+          "pro",
+        ],
         dayNames: ["neděle", "pondělí", "úterý", "středa", "čtvrtek", "pátek", "sobota"],
         dayNamesShort: ["ne", "po", "út", "st", "čt", "pá", "so"],
         dayNamesMin: ["ne", "po", "út", "st", "čt", "pá", "so"],
@@ -80,16 +84,14 @@
         r.locale("cs", {
           buttonText: { month: "Měsíc", week: "Týden", day: "Den", list: "Agenda" },
           allDayText: "Celý den",
-          eventLimitText: function (e) {
-            return "+další: " + e;
-          },
+          eventLimitText: (e) => "+další: " + e,
           noEventsMessage: "Žádné akce k zobrazení",
         });
     },
-    96: function (e, n, t) {
-      !(function (e, n) {
+    96: (e, n, t) => {
+      !((e, n) => {
         n(t(0));
-      })(0, function (e) {
+      })(0, (e) => {
         function n(e) {
           return e > 1 && e < 5 && 1 != ~~(e / 10);
         }
@@ -122,24 +124,27 @@
               return t || s ? o + (n(e) ? "roky" : "let") : o + "lety";
           }
         }
-        var r = "leden_únor_březen_duben_květen_červen_červenec_srpen_září_říjen_listopad_prosinec".split("_"),
+        var r =
+            "leden_únor_březen_duben_květen_červen_červenec_srpen_září_říjen_listopad_prosinec".split(
+              "_"
+            ),
           s = "led_úno_bře_dub_kvě_čvn_čvc_srp_zář_říj_lis_pro".split("_");
         return e.defineLocale("cs", {
           months: r,
           monthsShort: s,
-          monthsParse: (function (e, n) {
+          monthsParse: ((e, n) => {
             var t,
               r = [];
             for (t = 0; t < 12; t++) r[t] = new RegExp("^" + e[t] + "$|^" + n[t] + "$", "i");
             return r;
           })(r, s),
-          shortMonthsParse: (function (e) {
+          shortMonthsParse: ((e) => {
             var n,
               t = [];
             for (n = 0; n < 12; n++) t[n] = new RegExp("^" + e[n] + "$", "i");
             return t;
           })(s),
-          longMonthsParse: (function (e) {
+          longMonthsParse: ((e) => {
             var n,
               t = [];
             for (n = 0; n < 12; n++) t[n] = new RegExp("^" + e[n] + "$", "i");
@@ -218,5 +223,5 @@
         });
       });
     },
-  });
-});
+  })
+);

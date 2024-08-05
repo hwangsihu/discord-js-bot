@@ -75,8 +75,9 @@ module.exports = {
 
     let response;
     if (input === "limit") {
-      const max = parseInt(args[1]);
-      if (isNaN(max) || max < 1) return message.safeReply("Max Warnings must be a valid number greater than 0");
+      const max = Number.parseInt(args[1]);
+      if (isNaN(max) || max < 1)
+        return message.safeReply("Max Warnings must be a valid number greater than 0");
       response = await setLimit(max, data.settings);
     }
 
@@ -99,7 +100,11 @@ module.exports = {
     }
 
     if (sub === "action") {
-      response = await setAction(interaction.guild, interaction.options.getString("action"), data.settings);
+      response = await setAction(
+        interaction.guild,
+        interaction.options.getString("action"),
+        data.settings
+      );
     }
 
     await interaction.followUp(response);

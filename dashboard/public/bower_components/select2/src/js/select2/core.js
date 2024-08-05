@@ -1,4 +1,4 @@
-define(["jquery", "./options", "./utils", "./keys"], function ($, Options, Utils, KEYS) {
+define(["jquery", "./options", "./utils", "./keys"], ($, Options, Utils, keys) => {
   var Select2 = function ($element, options) {
     if (Utils.GetData($element[0], "select2") != null) {
       Utils.GetData($element[0], "select2").destroy();
@@ -47,10 +47,6 @@ define(["jquery", "./options", "./utils", "./keys"], function ($, Options, Utils
 
     this.results.position(this.$results, this.$dropdown);
 
-    // Bind events
-
-    var self = this;
-
     // Bind the container to all of the adapters
     this._bindAdapters();
 
@@ -65,8 +61,8 @@ define(["jquery", "./options", "./utils", "./keys"], function ($, Options, Utils
     this._registerEvents();
 
     // Set the initial state
-    this.dataAdapter.current(function (initialData) {
-      self.trigger("selection:update", {
+    this.dataAdapter.current((initialData) => {
+      this.trigger("selection:update", {
         data: initialData,
       });
     });
@@ -86,7 +82,7 @@ define(["jquery", "./options", "./utils", "./keys"], function ($, Options, Utils
 
   Utils.Extend(Select2, Utils.Observable);
 
-  Select2.prototype._generateId = function ($element) {
+  Select2.prototype._generateId = ($element) => {
     var id = "";
 
     if ($element.attr("id") != null) {
@@ -114,7 +110,7 @@ define(["jquery", "./options", "./utils", "./keys"], function ($, Options, Utils
   };
 
   Select2.prototype._resolveWidth = function ($element, method) {
-    var WIDTH = /^width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/i;
+    var width = /^width:(([-+]?([0-9]*\.)?[0-9]+)(px|em|ex|%|in|cm|mm|pt|pc))/i;
 
     if (method == "resolve") {
       var styleWidth = this._resolveWidth($element, "style");
@@ -147,7 +143,7 @@ define(["jquery", "./options", "./utils", "./keys"], function ($, Options, Utils
 
       for (var i = 0, l = attrs.length; i < l; i = i + 1) {
         var attr = attrs[i].replace(/\s/g, "");
-        var matches = attr.match(WIDTH);
+        var matches = attr.match(width);
 
         if (matches !== null && matches.length >= 1) {
           return matches[1];
@@ -169,18 +165,16 @@ define(["jquery", "./options", "./utils", "./keys"], function ($, Options, Utils
   };
 
   Select2.prototype._registerDomEvents = function () {
-    var self = this;
-
-    this.$element.on("change.select2", function () {
-      self.dataAdapter.current(function (data) {
-        self.trigger("selection:update", {
+    this.$element.on("change.select2", () => {
+      this.dataAdapter.current((data) => {
+        this.trigger("selection:update", {
           data: data,
         });
       });
     });
 
-    this.$element.on("focus.select2", function (evt) {
-      self.trigger("focus", evt);
+    this.$element.on("focus.select2", (evt) => {
+      this.trigger("focus", evt);
     });
 
     this._syncA = Utils.bind(this._syncAttributes, this);
@@ -190,12 +184,13 @@ define(["jquery", "./options", "./utils", "./keys"], function ($, Options, Utils
       this.$element[0].attachEvent("onpropertychange", this._syncA);
     }
 
-    var observer = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+    var observer =
+      window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
 
     if (observer != null) {
-      this._observer = new observer(function (mutations) {
-        $.each(mutations, self._syncA);
-        $.each(mutations, self._syncS);
+      this._observer = new observer((mutations) => {
+        $.each(mutations, this._syncA);
+        $.each(mutations, this._syncS);
       });
       this._observer.observe(this.$element[0], {
         attributes: true,
@@ -203,77 +198,70 @@ define(["jquery", "./options", "./utils", "./keys"], function ($, Options, Utils
         subtree: false,
       });
     } else if (this.$element[0].addEventListener) {
-      this.$element[0].addEventListener("DOMAttrModified", self._syncA, false);
-      this.$element[0].addEventListener("DOMNodeInserted", self._syncS, false);
-      this.$element[0].addEventListener("DOMNodeRemoved", self._syncS, false);
+      this.$element[0].addEventListener("DOMAttrModified", this._syncA, false);
+      this.$element[0].addEventListener("DOMNodeInserted", this._syncS, false);
+      this.$element[0].addEventListener("DOMNodeRemoved", this._syncS, false);
     }
   };
 
   Select2.prototype._registerDataEvents = function () {
-    var self = this;
-
-    this.dataAdapter.on("*", function (name, params) {
-      self.trigger(name, params);
+    this.dataAdapter.on("*", (name, params) => {
+      this.trigger(name, params);
     });
   };
 
   Select2.prototype._registerSelectionEvents = function () {
-    var self = this;
     var nonRelayEvents = ["toggle", "focus"];
 
-    this.selection.on("toggle", function () {
-      self.toggleDropdown();
+    this.selection.on("toggle", () => {
+      this.toggleDropdown();
     });
 
-    this.selection.on("focus", function (params) {
-      self.focus(params);
+    this.selection.on("focus", (params) => {
+      this.focus(params);
     });
 
-    this.selection.on("*", function (name, params) {
+    this.selection.on("*", (name, params) => {
       if ($.inArray(name, nonRelayEvents) !== -1) {
         return;
       }
 
-      self.trigger(name, params);
+      this.trigger(name, params);
     });
   };
 
   Select2.prototype._registerDropdownEvents = function () {
-    var self = this;
-
-    this.dropdown.on("*", function (name, params) {
-      self.trigger(name, params);
+    this.dropdown.on("*", (name, params) => {
+      this.trigger(name, params);
     });
   };
 
   Select2.prototype._registerResultsEvents = function () {
-    var self = this;
-
-    this.results.on("*", function (name, params) {
-      self.trigger(name, params);
+    this.results.on("*", (name, params) => {
+      this.trigger(name, params);
     });
   };
 
   Select2.prototype._registerEvents = function () {
     var self = this;
 
-    this.on("open", function () {
+    this.on("open", () => {
       self.$container.addClass("select2-container--open");
     });
 
-    this.on("close", function () {
+    this.on("close", () => {
       self.$container.removeClass("select2-container--open");
     });
 
-    this.on("enable", function () {
+    this.on("enable", () => {
       self.$container.removeClass("select2-container--disabled");
     });
 
-    this.on("disable", function () {
+    this.on("disable", () => {
       self.$container.addClass("select2-container--disabled");
     });
 
-    this.on("blur", function () {
+    this.on("blur", () => {
       self.$container.removeClass("select2-container--focus");
     });
 
@@ -282,7 +270,7 @@ define(["jquery", "./options", "./utils", "./keys"], function ($, Options, Utils
         self.trigger("open", {});
       }
 
-      this.dataAdapter.query(params, function (data) {
+      this.dataAdapter.query(params, (data) => {
         self.trigger("results:all", {
           data: data,
           query: params,
@@ -291,7 +279,7 @@ define(["jquery", "./options", "./utils", "./keys"], function ($, Options, Utils
     });
 
     this.on("query:append", function (params) {
-      this.dataAdapter.query(params, function (data) {
+      this.dataAdapter.query(params, (data) => {
         self.trigger("results:append", {
           data: data,
           query: params,
@@ -299,37 +287,35 @@ define(["jquery", "./options", "./utils", "./keys"], function ($, Options, Utils
       });
     });
 
-    this.on("keypress", function (evt) {
+    this.on("keypress", (evt) => {
       var key = evt.which;
 
       if (self.isOpen()) {
-        if (key === KEYS.ESC || key === KEYS.TAB || (key === KEYS.UP && evt.altKey)) {
+        if (key === keys.ESC || key === keys.TAB || (key === keys.UP && evt.altKey)) {
           self.close();
 
           evt.preventDefault();
-        } else if (key === KEYS.ENTER) {
+        } else if (key === keys.ENTER) {
           self.trigger("results:select", {});
 
           evt.preventDefault();
-        } else if (key === KEYS.SPACE && evt.ctrlKey) {
+        } else if (key === keys.SPACE && evt.ctrlKey) {
           self.trigger("results:toggle", {});
 
           evt.preventDefault();
-        } else if (key === KEYS.UP) {
+        } else if (key === keys.UP) {
           self.trigger("results:previous", {});
 
           evt.preventDefault();
-        } else if (key === KEYS.DOWN) {
+        } else if (key === keys.DOWN) {
           self.trigger("results:next", {});
 
           evt.preventDefault();
         }
-      } else {
-        if (key === KEYS.ENTER || key === KEYS.SPACE || (key === KEYS.DOWN && evt.altKey)) {
-          self.open();
+      } else if (key === keys.ENTER || key === keys.SPACE || (key === keys.DOWN && evt.altKey)) {
+        self.open();
 
-          evt.preventDefault();
-        }
+        evt.preventDefault();
       }
     });
   };
@@ -350,11 +336,15 @@ define(["jquery", "./options", "./utils", "./keys"], function ($, Options, Utils
 
   Select2.prototype._syncSubtree = function (evt, mutations) {
     var changed = false;
-    var self = this;
 
     // Ignore any mutation events raised for elements that aren't options or
     // optgroups. This handles the case when the select element is destroyed
-    if (evt && evt.target && evt.target.nodeName !== "OPTION" && evt.target.nodeName !== "OPTGROUP") {
+    if (
+      evt &&
+      evt.target &&
+      evt.target.nodeName !== "OPTION" &&
+      evt.target.nodeName !== "OPTGROUP"
+    ) {
       return;
     }
 
@@ -376,8 +366,8 @@ define(["jquery", "./options", "./utils", "./keys"], function ($, Options, Utils
 
     // Only re-pull the data if we think there is a change
     if (changed) {
-      this.dataAdapter.current(function (currentData) {
-        self.trigger("selection:update", {
+      this.dataAdapter.current((currentData) => {
+        this.trigger("selection:update", {
           data: currentData,
         });
       });
@@ -496,7 +486,7 @@ define(["jquery", "./options", "./utils", "./keys"], function ($, Options, Utils
 
     var data = [];
 
-    this.dataAdapter.current(function (currentData) {
+    this.dataAdapter.current((currentData) => {
       data = currentData;
     });
 
@@ -518,9 +508,7 @@ define(["jquery", "./options", "./utils", "./keys"], function ($, Options, Utils
     var newVal = args[0];
 
     if ($.isArray(newVal)) {
-      newVal = $.map(newVal, function (obj) {
-        return obj.toString();
-      });
+      newVal = $.map(newVal, (obj) => obj.toString());
     }
 
     this.$element.val(newVal).trigger("change");

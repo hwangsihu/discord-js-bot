@@ -266,7 +266,8 @@ CKEDITOR.lang["ca"] = {
   filetools: {
     loadError: "S'ha produït un error durant la lectura del fitxer.",
     networkError: "S'ha produït un error de xarxa durant la càrrega del fitxer.",
-    httpError404: "S'ha produït un error HTTP durant la càrrega del fitxer (404: Fitxer no trobat).",
+    httpError404:
+      "S'ha produït un error HTTP durant la càrrega del fitxer (404: Fitxer no trobat).",
     httpError403: "S'ha produït un error HTTP durant la càrrega del fitxer (403: Permís denegat).",
     httpError: "S'ha produït un error HTTP durant la càrrega del fitxer (estat d'error: %1).",
     noUrlError: "La URL de càrrega no està definida.",
@@ -349,7 +350,8 @@ CKEDITOR.lang["ca"] = {
     validateNumberFailed: "Aquest valor no és un número.",
     confirmNewPage:
       "Els canvis en aquest contingut que no es desin es perdran. Esteu segur que voleu carregar una pàgina nova?",
-    confirmCancel: "Algunes opcions s'han canviat. Esteu segur que voleu tancar el quadre de diàleg?",
+    confirmCancel:
+      "Algunes opcions s'han canviat. Esteu segur que voleu tancar el quadre de diàleg?",
     options: "Opcions",
     target: "Destí",
     targetNew: "Nova finestra (_blank)",

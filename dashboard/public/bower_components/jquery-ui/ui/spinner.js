@@ -8,7 +8,7 @@
  *
  * http://api.jqueryui.com/spinner/
  */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["jquery", "./core", "./widget", "./button"], factory);
@@ -16,8 +16,8 @@
     // Browser globals
     factory(jQuery);
   }
-})(function ($) {
-  function spinner_modifier(fn) {
+})(($) => {
+  function spinnerModifier(fn) {
     return function () {
       var previous = this.element.val();
       fn.apply(this, arguments);
@@ -82,7 +82,7 @@
       var options = {},
         element = this.element;
 
-      $.each(["min", "max", "step"], function (i, option) {
+      $.each(["min", "max", "step"], (i, option) => {
         var value = element.attr(option);
         if (value !== undefined && value.length) {
           options[option] = value;
@@ -139,7 +139,8 @@
         // If the input is focused then this.previous is properly set from
         // when the input first received focus. If the input is not focused
         // then we need to set this.previous based on the value before spinning.
-        previous = this.element[0] === this.document[0].activeElement ? this.previous : this.element.val();
+        previous =
+          this.element[0] === this.document[0].activeElement ? this.previous : this.element.val();
         function checkFocus() {
           var isActive = this.element[0] === this.document[0].activeElement;
           if (!isActive) {
@@ -204,7 +205,11 @@
       this.element.attr("role", "spinbutton");
 
       // button bindings
-      this.buttons = uiSpinner.find(".ui-spinner-button").attr("tabIndex", -1).button().removeClass("ui-corner-all");
+      this.buttons = uiSpinner
+        .find(".ui-spinner-button")
+        .attr("tabIndex", -1)
+        .button()
+        .removeClass("ui-corner-all");
 
       // IE 6 doesn't understand height: 50% for the buttons
       // unless the wrapper has an explicit height
@@ -240,9 +245,8 @@
       return false;
     },
 
-    _uiSpinnerHtml: function () {
-      return "<span class='ui-spinner ui-widget ui-widget-content ui-corner-all'></span>";
-    },
+    _uiSpinnerHtml: () =>
+      "<span class='ui-spinner ui-widget ui-widget-content ui-corner-all'></span>",
 
     _buttonHtml: function () {
       return (
@@ -318,7 +322,7 @@
       return precision;
     },
 
-    _precisionOf: function (num) {
+    _precisionOf: (num) => {
       var str = num.toString(),
         decimal = str.indexOf(".");
       return decimal === -1 ? 0 : str.length - decimal - 1;
@@ -339,7 +343,7 @@
       value = base + aboveMin;
 
       // fix precision from bad JS floating point math
-      value = parseFloat(value.toFixed(this._precision()));
+      value = Number.parseFloat(value.toFixed(this._precision()));
 
       // clamp the value
       if (options.max !== null && value > options.max) {
@@ -379,7 +383,11 @@
       }
       if (key === "icons") {
         this.buttons.first().find(".ui-icon").removeClass(this.options.icons.up).addClass(value.up);
-        this.buttons.last().find(".ui-icon").removeClass(this.options.icons.down).addClass(value.down);
+        this.buttons
+          .last()
+          .find(".ui-icon")
+          .removeClass(this.options.icons.down)
+          .addClass(value.down);
       }
 
       this._super(key, value);
@@ -391,14 +399,16 @@
       }
     },
 
-    _setOptions: spinner_modifier(function (options) {
+    _setOptions: spinnerModifier(function (options) {
       this._super(options);
     }),
 
     _parse: function (val) {
       if (typeof val === "string" && val !== "") {
         val =
-          window.Globalize && this.options.numberFormat ? Globalize.parseFloat(val, 10, this.options.culture) : +val;
+          window.Globalize && this.options.numberFormat
+            ? Globalize.parseFloat(val, 10, this.options.culture)
+            : +val;
       }
       return val === "" || isNaN(val) ? null : val;
     },
@@ -461,7 +471,7 @@
       this.uiSpinner.replaceWith(this.element);
     },
 
-    stepUp: spinner_modifier(function (steps) {
+    stepUp: spinnerModifier(function (steps) {
       this._stepUp(steps);
     }),
     _stepUp: function (steps) {
@@ -471,7 +481,7 @@
       }
     },
 
-    stepDown: spinner_modifier(function (steps) {
+    stepDown: spinnerModifier(function (steps) {
       this._stepDown(steps);
     }),
     _stepDown: function (steps) {
@@ -481,11 +491,11 @@
       }
     },
 
-    pageUp: spinner_modifier(function (pages) {
+    pageUp: spinnerModifier(function (pages) {
       this._stepUp((pages || 1) * this.options.page);
     }),
 
-    pageDown: spinner_modifier(function (pages) {
+    pageDown: spinnerModifier(function (pages) {
       this._stepDown((pages || 1) * this.options.page);
     }),
 
@@ -493,7 +503,7 @@
       if (!arguments.length) {
         return this._parse(this.element.val());
       }
-      spinner_modifier(this._value).call(this, newVal);
+      spinnerModifier(this._value).call(this, newVal);
     },
 
     widget: function () {

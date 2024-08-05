@@ -1,7 +1,4 @@
-define(function () {
-  "use strict";
-
-  return function isWindow(obj) {
+define(() =>
+  function isWindow(obj) {
     return obj != null && obj === obj.window;
-  };
-});
+  });

@@ -1,10 +1,8 @@
-define(function () {
+define(() => {
   // Hindi
   return {
-    errorLoading: function () {
-      return "परिणामों को लोड नहीं किया जा सका।";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "परिणामों को लोड नहीं किया जा सका।",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = overChars + " अक्षर को हटा दें";
@@ -15,28 +13,20 @@ define(function () {
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "कृपया " + remainingChars + " या अधिक अक्षर दर्ज करें";
 
       return message;
     },
-    loadingMore: function () {
-      return "अधिक परिणाम लोड हो रहे है...";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "अधिक परिणाम लोड हो रहे है...",
+    maximumSelected: (args) => {
       var message = "आप केवल " + args.maximum + " आइटम का चयन कर सकते हैं";
       return message;
     },
-    noResults: function () {
-      return "कोई परिणाम नहीं मिला";
-    },
-    searching: function () {
-      return "खोज रहा है...";
-    },
-    removeAllItems: function () {
-      return "सभी वस्तुओं को हटा दें";
-    },
+    noResults: () => "कोई परिणाम नहीं मिला",
+    searching: () => "खोज रहा है...",
+    removeAllItems: () => "सभी वस्तुओं को हटा दें",
   };
 });

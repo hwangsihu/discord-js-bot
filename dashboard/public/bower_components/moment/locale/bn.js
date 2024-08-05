@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var symbolMap = {
       1: "১",
       2: "২",
@@ -72,28 +70,24 @@
       y: "এক বছর",
       yy: "%d বছর",
     },
-    preparse: function (string) {
-      return string.replace(/[১২৩৪৫৬৭৮৯০]/g, function (match) {
-        return numberMap[match];
-      });
-    },
-    postformat: function (string) {
-      return string.replace(/\d/g, function (match) {
-        return symbolMap[match];
-      });
-    },
+    preparse: (string) => string.replace(/[১২৩৪৫৬৭৮৯০]/g, (match) => numberMap[match]),
+    postformat: (string) => string.replace(/\d/g, (match) => symbolMap[match]),
     meridiemParse: /রাত|সকাল|দুপুর|বিকাল|রাত/,
-    meridiemHour: function (hour, meridiem) {
+    meridiemHour: (hour, meridiem) => {
       if (hour === 12) {
         hour = 0;
       }
-      if ((meridiem === "রাত" && hour >= 4) || (meridiem === "দুপুর" && hour < 5) || meridiem === "বিকাল") {
+      if (
+        (meridiem === "রাত" && hour >= 4) ||
+        (meridiem === "দুপুর" && hour < 5) ||
+        meridiem === "বিকাল"
+      ) {
         return hour + 12;
       } else {
         return hour;
       }
     },
-    meridiem: function (hour, minute, isLower) {
+    meridiem: (hour, minute, isLower) => {
       if (hour < 4) {
         return "রাত";
       } else if (hour < 10) {

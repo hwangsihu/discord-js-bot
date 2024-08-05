@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(n) {
       if (o[n]) return o[n].exports;
       var r = (o[n] = { i: n, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = o),
-      (t.d = function (e, o, n) {
+      (t.d = (e, o, n) => {
         t.o(e, o) || Object.defineProperty(e, o, { configurable: !1, enumerable: !0, get: n });
       }),
-      (t.n = function (e) {
-        var o =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var o = e && e.__esModule ? () => e.default : () => e;
         return t.d(o, "a", o), o;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 151))
     );
   })({
-    0: function (t, o) {
+    0: (t, o) => {
       t.exports = e;
     },
-    1: function (e, o) {
+    1: (e, o) => {
       e.exports = t;
     },
-    151: function (e, t, o) {
+    151: (e, t, o) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), o(152);
       var n = o(1);
       n.datepickerLocale("it", "it", {
@@ -66,7 +57,20 @@
           "Novembre",
           "Dicembre",
         ],
-        monthNamesShort: ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"],
+        monthNamesShort: [
+          "Gen",
+          "Feb",
+          "Mar",
+          "Apr",
+          "Mag",
+          "Giu",
+          "Lug",
+          "Ago",
+          "Set",
+          "Ott",
+          "Nov",
+          "Dic",
+        ],
         dayNames: ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"],
         dayNamesShort: ["Dom", "Lun", "Mar", "Mer", "Gio", "Ven", "Sab"],
         dayNamesMin: ["Do", "Lu", "Ma", "Me", "Gi", "Ve", "Sa"],
@@ -80,20 +84,19 @@
         n.locale("it", {
           buttonText: { month: "Mese", week: "Settimana", day: "Giorno", list: "Agenda" },
           allDayHtml: "Tutto il<br/>giorno",
-          eventLimitText: function (e) {
-            return "+altri " + e;
-          },
+          eventLimitText: (e) => "+altri " + e,
           noEventsMessage: "Non ci sono eventi da visualizzare",
         });
     },
-    152: function (e, t, o) {
-      !(function (e, t) {
+    152: (e, t, o) => {
+      !((e, t) => {
         t(o(0));
-      })(0, function (e) {
-        return e.defineLocale("it", {
-          months: "gennaio_febbraio_marzo_aprile_maggio_giugno_luglio_agosto_settembre_ottobre_novembre_dicembre".split(
-            "_"
-          ),
+      })(0, (e) =>
+        e.defineLocale("it", {
+          months:
+            "gennaio_febbraio_marzo_aprile_maggio_giugno_luglio_agosto_settembre_ottobre_novembre_dicembre".split(
+              "_"
+            ),
           monthsShort: "gen_feb_mar_apr_mag_giu_lug_ago_set_ott_nov_dic".split("_"),
           weekdays: "domenica_lunedì_martedì_mercoledì_giovedì_venerdì_sabato".split("_"),
           weekdaysShort: "dom_lun_mar_mer_gio_ven_sab".split("_"),
@@ -122,9 +125,7 @@
             sameElse: "L",
           },
           relativeTime: {
-            future: function (e) {
-              return (/^[0-9].+$/.test(e) ? "tra" : "in") + " " + e;
-            },
+            future: (e) => (/^[0-9].+$/.test(e) ? "tra" : "in") + " " + e,
             past: "%s fa",
             s: "alcuni secondi",
             ss: "%d secondi",
@@ -142,8 +143,8 @@
           dayOfMonthOrdinalParse: /\d{1,2}º/,
           ordinal: "%dº",
           week: { dow: 1, doy: 4 },
-        });
-      });
+        })
+      );
     },
-  });
-});
+  })
+);

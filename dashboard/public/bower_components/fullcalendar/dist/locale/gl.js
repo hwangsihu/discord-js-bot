@@ -1,4 +1,4 @@
-!(function (e, o) {
+!((e, o) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = o(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? o(require("moment"), require("fullcalendar"))
         : o(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, o) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, o) =>
+  ((e) => {
     function o(n) {
       if (t[n]) return t[n].exports;
       var r = (t[n] = { i: n, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (o.m = e),
       (o.c = t),
-      (o.d = function (e, t, n) {
+      (o.d = (e, t, n) => {
         o.o(e, t) || Object.defineProperty(e, t, { configurable: !1, enumerable: !0, get: n });
       }),
-      (o.n = function (e) {
-        var t =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (o.n = (e) => {
+        var t = e && e.__esModule ? () => e.default : () => e;
         return o.d(t, "a", t), t;
       }),
-      (o.o = function (e, o) {
-        return Object.prototype.hasOwnProperty.call(e, o);
-      }),
+      (o.o = (e, o) => Object.prototype.hasOwnProperty.call(e, o)),
       (o.p = ""),
       o((o.s = 137))
     );
   })({
-    0: function (o, t) {
+    0: (o, t) => {
       o.exports = e;
     },
-    1: function (e, t) {
+    1: (e, t) => {
       e.exports = o;
     },
-    137: function (e, o, t) {
+    137: (e, o, t) => {
       Object.defineProperty(o, "__esModule", { value: !0 }), t(138);
       var n = t(1);
       n.datepickerLocale("gl", "gl", {
@@ -66,7 +57,20 @@
           "Novembro",
           "Decembro",
         ],
-        monthNamesShort: ["Xan", "Feb", "Mar", "Abr", "Mai", "Xuñ", "Xul", "Ago", "Set", "Out", "Nov", "Dec"],
+        monthNamesShort: [
+          "Xan",
+          "Feb",
+          "Mar",
+          "Abr",
+          "Mai",
+          "Xuñ",
+          "Xul",
+          "Ago",
+          "Set",
+          "Out",
+          "Nov",
+          "Dec",
+        ],
         dayNames: ["Domingo", "Luns", "Martes", "Mércores", "Xoves", "Venres", "Sábado"],
         dayNamesShort: ["Dom", "Lun", "Mar", "Mér", "Xov", "Ven", "Sáb"],
         dayNamesMin: ["Do", "Lu", "Ma", "Mé", "Xo", "Ve", "Sá"],
@@ -84,12 +88,15 @@
           noEventsMessage: "Non hai eventos para amosar",
         });
     },
-    138: function (e, o, t) {
-      !(function (e, o) {
+    138: (e, o, t) => {
+      !((e, o) => {
         o(t(0));
-      })(0, function (e) {
-        return e.defineLocale("gl", {
-          months: "xaneiro_febreiro_marzo_abril_maio_xuño_xullo_agosto_setembro_outubro_novembro_decembro".split("_"),
+      })(0, (e) =>
+        e.defineLocale("gl", {
+          months:
+            "xaneiro_febreiro_marzo_abril_maio_xuño_xullo_agosto_setembro_outubro_novembro_decembro".split(
+              "_"
+            ),
           monthsShort: "xan._feb._mar._abr._mai._xuñ._xul._ago._set._out._nov._dec.".split("_"),
           monthsParseExact: !0,
           weekdays: "domingo_luns_martes_mércores_xoves_venres_sábado".split("_"),
@@ -123,9 +130,7 @@
             sameElse: "L",
           },
           relativeTime: {
-            future: function (e) {
-              return 0 === e.indexOf("un") ? "n" + e : "en " + e;
-            },
+            future: (e) => (0 === e.indexOf("un") ? "n" + e : "en " + e),
             past: "hai %s",
             s: "uns segundos",
             ss: "%d segundos",
@@ -143,8 +148,8 @@
           dayOfMonthOrdinalParse: /\d{1,2}º/,
           ordinal: "%dº",
           week: { dow: 1, doy: 4 },
-        });
-      });
+        })
+      );
     },
-  });
-});
+  })
+);

@@ -59,10 +59,8 @@ export default moment.defineLocale("ku", {
     LLLL: "dddd, D MMMM YYYY HH:mm",
   },
   meridiemParse: /ئێواره‌|به‌یانی/,
-  isPM: function (input) {
-    return /ئێواره‌/.test(input);
-  },
-  meridiem: function (hour, minute, isLower) {
+  isPM: (input) => /ئێواره‌/.test(input),
+  meridiem: (hour, minute, isLower) => {
     if (hour < 12) {
       return "به‌یانی";
     } else {
@@ -93,20 +91,9 @@ export default moment.defineLocale("ku", {
     y: "یه‌ك ساڵ",
     yy: "%d ساڵ",
   },
-  preparse: function (string) {
-    return string
-      .replace(/[١٢٣٤٥٦٧٨٩٠]/g, function (match) {
-        return numberMap[match];
-      })
-      .replace(/،/g, ",");
-  },
-  postformat: function (string) {
-    return string
-      .replace(/\d/g, function (match) {
-        return symbolMap[match];
-      })
-      .replace(/,/g, "،");
-  },
+  preparse: (string) =>
+    string.replace(/[١٢٣٤٥٦٧٨٩٠]/g, (match) => numberMap[match]).replace(/،/g, ","),
+  postformat: (string) => string.replace(/\d/g, (match) => symbolMap[match]).replace(/,/g, "،"),
   week: {
     dow: 6, // Saturday is the first day of the week.
     doy: 12, // The week that contains Jan 12th is the first week of the year.

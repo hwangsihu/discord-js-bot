@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-CKEDITOR.dialog.add("form", function (a) {
+CKEDITOR.dialog.add("form", (a) => {
   var d = { action: 1, id: 1, method: 1, enctype: 1, target: 1 };
   return {
     title: a.lang.forms.form.title,
@@ -28,7 +28,7 @@ CKEDITOR.dialog.add("form", function (a) {
       function e(a) {
         this.getValue() ? a.setAttribute(this.id, this.getValue()) : a.removeAttribute(this.id);
       }
-      this.foreach(function (c) {
+      this.foreach((c) => {
         d[c.id] && ((c.setup = a), (c.commit = e));
       });
     },
@@ -54,7 +54,13 @@ CKEDITOR.dialog.add("form", function (a) {
                 : (a.data("cke-saved-name", !1), a.removeAttribute("name"));
             },
           },
-          { id: "action", type: "text", label: a.lang.forms.form.action, default: "", accessKey: "T" },
+          {
+            id: "action",
+            type: "text",
+            label: a.lang.forms.form.action,
+            default: "",
+            accessKey: "T",
+          },
           {
             type: "hbox",
             widths: ["45%", "55%"],
@@ -67,7 +73,12 @@ CKEDITOR.dialog.add("form", function (a) {
                 style: "width:100%",
                 accessKey: "E",
                 default: "",
-                items: [[""], ["text/plain"], ["multipart/form-data"], ["application/x-www-form-urlencoded"]],
+                items: [
+                  [""],
+                  ["text/plain"],
+                  ["multipart/form-data"],
+                  ["application/x-www-form-urlencoded"],
+                ],
               },
             ],
           },

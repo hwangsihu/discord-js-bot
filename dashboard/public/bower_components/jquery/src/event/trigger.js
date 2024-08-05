@@ -7,16 +7,14 @@ define([
   "../var/isFunction",
   "../var/isWindow",
   "../event",
-], function (jQuery, document, dataPriv, acceptData, hasOwn, isFunction, isWindow) {
-  "use strict";
-
+], (jQuery, document, dataPriv, acceptData, hasOwn, isFunction, isWindow) => {
   var rfocusMorph = /^(?:focusinfocus|focusoutblur)$/,
-    stopPropagationCallback = function (e) {
+    stopPropagationCallback = (e) => {
       e.stopPropagation();
     };
 
   jQuery.extend(jQuery.event, {
-    trigger: function (event, data, elem, onlyHandlers) {
+    trigger: (event, data, elem, onlyHandlers) => {
       var i,
         cur,
         tmp,
@@ -50,12 +48,16 @@ define([
       ontype = type.indexOf(":") < 0 && "on" + type;
 
       // Caller can pass in a jQuery.Event object, Object, or just an event type string
-      event = event[jQuery.expando] ? event : new jQuery.Event(type, typeof event === "object" && event);
+      event = event[jQuery.expando]
+        ? event
+        : new jQuery.Event(type, typeof event === "object" && event);
 
       // Trigger bitmask: & 1 for native handlers; & 2 for jQuery (always true)
       event.isTrigger = onlyHandlers ? 2 : 3;
       event.namespace = namespaces.join(".");
-      event.rnamespace = event.namespace ? new RegExp("(^|\\.)" + namespaces.join("\\.(?:.*\\.|)") + "(\\.|$)") : null;
+      event.rnamespace = event.namespace
+        ? new RegExp("(^|\\.)" + namespaces.join("\\.(?:.*\\.|)") + "(\\.|$)")
+        : null;
 
       // Clean up the event in case it is being reused
       event.result = undefined;
@@ -115,7 +117,10 @@ define([
 
       // If nobody prevented the default action, do it now
       if (!onlyHandlers && !event.isDefaultPrevented()) {
-        if ((!special._default || special._default.apply(eventPath.pop(), data) === false) && acceptData(elem)) {
+        if (
+          (!special._default || special._default.apply(eventPath.pop(), data) === false) &&
+          acceptData(elem)
+        ) {
           // Call a native DOM method on the target with the same name as the event.
           // Don't do default actions on window, that's where global variables be (#6170)
           if (ontype && isFunction(elem[type]) && !isWindow(elem)) {
@@ -153,7 +158,7 @@ define([
 
     // Piggyback on a donor event to simulate a different one
     // Used only for `focus(in | out)` events
-    simulate: function (type, elem, event) {
+    simulate: (type, elem, event) => {
       var e = jQuery.extend(new jQuery.Event(), event, {
         type: type,
         isSimulated: true,

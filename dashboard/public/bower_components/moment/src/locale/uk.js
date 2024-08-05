@@ -59,10 +59,14 @@ function processHoursFunction(str) {
 
 export default moment.defineLocale("uk", {
   months: {
-    format: "січня_лютого_березня_квітня_травня_червня_липня_серпня_вересня_жовтня_листопада_грудня".split("_"),
-    standalone: "січень_лютий_березень_квітень_травень_червень_липень_серпень_вересень_жовтень_листопад_грудень".split(
-      "_"
-    ),
+    format:
+      "січня_лютого_березня_квітня_травня_червня_липня_серпня_вересня_жовтня_листопада_грудня".split(
+        "_"
+      ),
+    standalone:
+      "січень_лютий_березень_квітень_травень_червень_липень_серпень_вересень_жовтень_листопад_грудень".split(
+        "_"
+      ),
   },
   monthsShort: "січ_лют_бер_квіт_трав_черв_лип_серп_вер_жовт_лист_груд".split("_"),
   weekdays: weekdaysCaseReplace,
@@ -114,10 +118,8 @@ export default moment.defineLocale("uk", {
   },
   // M. E.: those two are virtually unused but a user might want to implement them for his/her website for some reason
   meridiemParse: /ночі|ранку|дня|вечора/,
-  isPM: function (input) {
-    return /^(дня|вечора)$/.test(input);
-  },
-  meridiem: function (hour, minute, isLower) {
+  isPM: (input) => /^(дня|вечора)$/.test(input),
+  meridiem: (hour, minute, isLower) => {
     if (hour < 4) {
       return "ночі";
     } else if (hour < 12) {
@@ -129,7 +131,7 @@ export default moment.defineLocale("uk", {
     }
   },
   dayOfMonthOrdinalParse: /\d{1,2}-(й|го)/,
-  ordinal: function (number, period) {
+  ordinal: (number, period) => {
     switch (period) {
       case "M":
       case "d":

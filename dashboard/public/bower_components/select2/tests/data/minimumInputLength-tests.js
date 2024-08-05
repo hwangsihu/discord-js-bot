@@ -15,14 +15,14 @@ StubData.prototype.query = function (params, callback) {
 
 var MinimumData = Utils.Decorate(StubData, MinimumInputLength);
 
-test("0 never displays the notice", function (assert) {
+test("0 never displays the notice", (assert) => {
   var zeroOptions = new Options({
     minimumInputLength: 0,
   });
 
   var data = new MinimumData(null, zeroOptions);
 
-  data.trigger = function () {
+  data.trigger = () => {
     assert.ok(false, "No events should be triggered");
   };
 
@@ -41,14 +41,14 @@ test("0 never displays the notice", function (assert) {
   assert.ok(data.called);
 });
 
-test("< 0 never displays the notice", function (assert) {
+test("< 0 never displays the notice", (assert) => {
   var negativeOptions = new Options({
     minimumInputLength: -1,
   });
 
   var data = new MinimumData(null, negativeOptions);
 
-  data.trigger = function () {
+  data.trigger = () => {
     assert.ok(false, "No events should be triggered");
   };
 
@@ -67,14 +67,14 @@ test("< 0 never displays the notice", function (assert) {
   assert.ok(data.called);
 });
 
-test("triggers when input is not long enough", function (assert) {
+test("triggers when input is not long enough", (assert) => {
   var options = new Options({
     minimumInputLength: 10,
   });
 
   var data = new MinimumData(null, options);
 
-  data.trigger = function () {
+  data.trigger = () => {
     assert.ok(true, "The event should be triggered.");
   };
 
@@ -85,14 +85,14 @@ test("triggers when input is not long enough", function (assert) {
   assert.ok(!data.called);
 });
 
-test("does not trigger when equal", function (assert) {
+test("does not trigger when equal", (assert) => {
   var options = new Options({
     minimumInputLength: 10,
   });
 
   var data = new MinimumData(null, options);
 
-  data.trigger = function () {
+  data.trigger = () => {
     assert.ok(false, "The event should not be triggered.");
   };
 
@@ -103,14 +103,14 @@ test("does not trigger when equal", function (assert) {
   assert.ok(data.called);
 });
 
-test("does not trigger when greater", function (assert) {
+test("does not trigger when greater", (assert) => {
   var options = new Options({
     minimumInputLength: 10,
   });
 
   var data = new MinimumData(null, options);
 
-  data.trigger = function () {
+  data.trigger = () => {
     assert.ok(false, "The event should not be triggered.");
   };
 
@@ -121,14 +121,14 @@ test("does not trigger when greater", function (assert) {
   assert.ok(data.called);
 });
 
-test("works with null term", function (assert) {
+test("works with null term", (assert) => {
   var options = new Options({
     minimumInputLength: 1,
   });
 
   var data = new MinimumData(null, options);
 
-  data.trigger = function () {
+  data.trigger = () => {
     assert.ok(true, "The event should be triggered");
   };
 

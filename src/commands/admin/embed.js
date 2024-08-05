@@ -43,7 +43,8 @@ module.exports = {
   async messageRun(message, args) {
     const channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0]);
     if (!channel) return message.reply("Please provide a valid channel");
-    if (channel.type !== ChannelType.GuildText) return message.reply("Please provide a valid channel");
+    if (channel.type !== ChannelType.GuildText)
+      return message.reply("Please provide a valid channel");
     if (!channel.canSendEmbeds()) {
       return message.reply("I don't have permission to send embeds in that channel");
     }
@@ -70,7 +71,10 @@ async function embedSetup(channel, member) {
     content: "Click the button below to get started",
     components: [
       new ActionRowBuilder().addComponents(
-        new ButtonBuilder().setCustomId("EMBED_ADD").setLabel("Create Embed").setStyle(ButtonStyle.Primary)
+        new ButtonBuilder()
+          .setCustomId("EMBED_ADD")
+          .setLabel("Create Embed")
+          .setStyle(ButtonStyle.Primary)
       ),
     ],
   });
@@ -78,7 +82,8 @@ async function embedSetup(channel, member) {
   const btnInteraction = await channel
     .awaitMessageComponent({
       componentType: ComponentType.Button,
-      filter: (i) => i.customId === "EMBED_ADD" && i.member.id === member.id && i.message.id === sentMsg.id,
+      filter: (i) =>
+        i.customId === "EMBED_ADD" && i.member.id === member.id && i.message.id === sentMsg.id,
       time: 20000,
     })
     .catch((ex) => {});
@@ -133,11 +138,13 @@ async function embedSetup(channel, member) {
   const modal = await btnInteraction
     .awaitModalSubmit({
       time: 1 * 60 * 1000,
-      filter: (m) => m.customId === "EMBED_MODAL" && m.member.id === member.id && m.message.id === sentMsg.id,
+      filter: (m) =>
+        m.customId === "EMBED_MODAL" && m.member.id === member.id && m.message.id === sentMsg.id,
     })
     .catch((ex) => {});
 
-  if (!modal) return sentMsg.edit({ content: "No response received, cancelling setup", components: [] });
+  if (!modal)
+    return sentMsg.edit({ content: "No response received, cancelling setup", components: [] });
 
   modal.reply({ content: "Embed sent", ephemeral: true }).catch((ex) => {});
 
@@ -159,9 +166,18 @@ async function embedSetup(channel, member) {
 
   // add/remove field button
   const buttonRow = new ActionRowBuilder().addComponents(
-    new ButtonBuilder().setCustomId("EMBED_FIELD_ADD").setLabel("Add Field").setStyle(ButtonStyle.Success),
-    new ButtonBuilder().setCustomId("EMBED_FIELD_REM").setLabel("Remove Field").setStyle(ButtonStyle.Danger),
-    new ButtonBuilder().setCustomId("EMBED_FIELD_DONE").setLabel("Done").setStyle(ButtonStyle.Primary)
+    new ButtonBuilder()
+      .setCustomId("EMBED_FIELD_ADD")
+      .setLabel("Add Field")
+      .setStyle(ButtonStyle.Success),
+    new ButtonBuilder()
+      .setCustomId("EMBED_FIELD_REM")
+      .setLabel("Remove Field")
+      .setStyle(ButtonStyle.Danger),
+    new ButtonBuilder()
+      .setCustomId("EMBED_FIELD_DONE")
+      .setLabel("Done")
+      .setStyle(ButtonStyle.Primary)
   );
 
   await sentMsg.edit({

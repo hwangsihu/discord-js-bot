@@ -1,4 +1,4 @@
-﻿CKEDITOR.dialog.add("scaytDialog", function (c) {
+﻿CKEDITOR.dialog.add("scaytDialog", (c) => {
   var d = c.scayt,
     k =
       '\x3cp\x3e\x3cimg alt\x3d"logo" title\x3d"logo" src\x3d"' +
@@ -30,12 +30,12 @@
       {
         id: "options",
         label: d.getLocal("tab_options"),
-        onShow: function () {},
+        onShow: () => {},
         elements: [
           {
             type: "vbox",
             id: "scaytOptions",
-            children: (function () {
+            children: (() => {
               var b = d.getApplicationConfig(),
                 a = [],
                 e = {
@@ -45,7 +45,8 @@
                   "ignore-words-with-numbers": "label_mixedWithDigits",
                 },
                 h;
-              for (h in b) (b = { type: "checkbox" }), (b.id = h), (b.label = d.getLocal(e[h])), a.push(b);
+              for (h in b)
+                (b = { type: "checkbox" }), (b.id = h), (b.label = d.getLocal(e[h])), a.push(b);
               return a;
             })(),
             onShow: function () {
@@ -76,7 +77,7 @@
                   '" class\x3d"scayt-lang-list"\x3e\x3c/div\x3e\x3cdiv style\x3d"float:left;width:45%;margin-left:15px;" id\x3d"right-col-' +
                   c.name +
                   '" class\x3d"scayt-lang-list"\x3e\x3c/div\x3e\x3c/div\x3e',
-                onShow: function () {
+                onShow: () => {
                   var b = c.scayt.getLang();
                   n.getById("scaytLang_" + c.name + "_" + b).$.checked = !0;
                 },
@@ -98,17 +99,19 @@
                 type: "text",
                 id: "dictionaryName",
                 label: d.getLocal("label_fieldNameDic") || "Dictionary name",
-                onShow: function (b) {
+                onShow: (b) => {
                   var a = b.sender,
                     e = c.scayt;
                   b = SCAYT.prototype.UILib;
                   var h = a.getContentElement("dictionaries", "dictionaryName").getInputElement().$;
                   e.isLicensed() || ((h.disabled = !0), b.css(h, { cursor: "not-allowed" }));
-                  setTimeout(function () {
+                  setTimeout(() => {
                     a.getContentElement("dictionaries", "dictionaryNote").getElement().setText("");
                     null != e.getUserDictionaryName() &&
                       "" != e.getUserDictionaryName() &&
-                      a.getContentElement("dictionaries", "dictionaryName").setValue(e.getUserDictionaryName());
+                      a
+                        .getContentElement("dictionaries", "dictionaryName")
+                        .setValue(e.getUserDictionaryName());
                   }, 0);
                 },
               },
@@ -130,7 +133,8 @@
                         a = SCAYT.prototype.UILib,
                         e = this.getElement().$,
                         h = this.getElement().getChild(0).$;
-                      b.isLicensed() || (a.css(e, { cursor: "not-allowed" }), a.css(h, { cursor: "not-allowed" }));
+                      b.isLicensed() ||
+                        (a.css(e, { cursor: "not-allowed" }), a.css(h, { cursor: "not-allowed" }));
                     },
                     onClick: function () {
                       var b = this.getDialog(),
@@ -140,14 +144,14 @@
                       e.isLicensed() &&
                         e.createUserDictionary(
                           h,
-                          function (f) {
+                          (f) => {
                             f.error || a.toggleDictionaryState.call(b, "dictionaryState");
                             f.dialog = b;
                             f.command = "create";
                             f.name = h;
                             c.fire("scaytUserDictionaryAction", f);
                           },
-                          function (a) {
+                          (a) => {
                             a.dialog = b;
                             a.command = "create";
                             a.name = h;
@@ -167,7 +171,8 @@
                         a = SCAYT.prototype.UILib,
                         e = this.getElement().$,
                         h = this.getElement().getChild(0).$;
-                      b.isLicensed() || (a.css(e, { cursor: "not-allowed" }), a.css(h, { cursor: "not-allowed" }));
+                      b.isLicensed() ||
+                        (a.css(e, { cursor: "not-allowed" }), a.css(h, { cursor: "not-allowed" }));
                     },
                     onClick: function () {
                       var b = this.getDialog(),
@@ -177,14 +182,14 @@
                       a.isLicensed() &&
                         a.restoreUserDictionary(
                           h,
-                          function (a) {
+                          (a) => {
                             a.dialog = b;
                             a.error || e.toggleDictionaryState.call(b, "dictionaryState");
                             a.command = "restore";
                             a.name = h;
                             c.fire("scaytUserDictionaryAction", a);
                           },
-                          function (a) {
+                          (a) => {
                             a.dialog = b;
                             a.command = "restore";
                             a.name = h;
@@ -208,7 +213,11 @@
                         (a.disconnectFromUserDictionary({}),
                         h.setValue(""),
                         e.toggleDictionaryState.call(b, "initialState"),
-                        c.fire("scaytUserDictionaryAction", { dialog: b, command: "disconnect", name: f }));
+                        c.fire("scaytUserDictionaryAction", {
+                          dialog: b,
+                          command: "disconnect",
+                          name: f,
+                        }));
                     },
                   },
                   {
@@ -225,7 +234,7 @@
                       a.isLicensed() &&
                         a.removeUserDictionary(
                           f,
-                          function (a) {
+                          (a) => {
                             h.setValue("");
                             a.error || e.toggleDictionaryState.call(b, "initialState");
                             a.dialog = b;
@@ -233,7 +242,7 @@
                             a.name = f;
                             c.fire("scaytUserDictionaryAction", a);
                           },
-                          function (a) {
+                          (a) => {
                             a.dialog = b;
                             a.command = "remove";
                             a.name = f;
@@ -254,13 +263,13 @@
                       a.isLicensed() &&
                         a.renameUserDictionary(
                           e,
-                          function (a) {
+                          (a) => {
                             a.dialog = b;
                             a.command = "rename";
                             a.name = e;
                             c.fire("scaytUserDictionaryAction", a);
                           },
-                          function (a) {
+                          (a) => {
                             a.dialog = b;
                             a.command = "rename";
                             a.name = e;
@@ -319,7 +328,9 @@
                     id: "addWord",
                     type: "vbox",
                     style: "min-width: 150px;",
-                    children: [{ type: "text", id: "addWordField", label: "Add word", maxLength: "64" }],
+                    children: [
+                      { type: "text", id: "addWordField", label: "Add word", maxLength: "64" },
+                    ],
                   },
                   {
                     id: "addWordButtons",
@@ -342,8 +353,7 @@
                                 e = b.getContentElement("dictionaries", "itemList"),
                                 h = b.getContentElement("dictionaries", "addWordField"),
                                 f = h.getValue(),
-                                d = a.getOption("wordBoundaryRegex"),
-                                g = this;
+                                d = a.getOption("wordBoundaryRegex");
                               f &&
                                 (-1 !== f.search(d)
                                   ? c.fire("scaytUserDictionaryAction", {
@@ -362,19 +372,19 @@
                                     : (this.disable(),
                                       a.addWordToUserDictionary(
                                         f,
-                                        function (a) {
+                                        (a) => {
                                           a.error || (h.setValue(""), e.addChild(f, !0));
                                           a.dialog = b;
                                           a.command = "addWord";
                                           a.name = f;
-                                          g.enable();
+                                          this.enable();
                                           c.fire("scaytUserDictionaryAction", a);
                                         },
-                                        function (a) {
+                                        (a) => {
                                           a.dialog = b;
                                           a.command = "addWord";
                                           a.name = f;
-                                          g.enable();
+                                          this.enable();
                                           c.fire("scaytUserDictionaryActionError", a);
                                         }
                                       )));
@@ -418,23 +428,22 @@
                         h = e.parent(a)[0],
                         f = e.attr(h, "data-cke-scayt-ud-word"),
                         d = this.getDialog(),
-                        g = d.getContentElement("dictionaries", "itemList"),
-                        q = this;
+                        g = d.getContentElement("dictionaries", "itemList");
                       e.hasClass(a, "cke_scaytItemList_remove") &&
                         !this.isBlocked() &&
                         (this.block(),
                         b.deleteWordFromUserDictionary(
                           f,
-                          function (a) {
+                          (a) => {
                             a.error || g.removeChild(h, f);
-                            q.unblock();
+                            this.unblock();
                             a.dialog = d;
                             a.command = "deleteWord";
                             a.name = f;
                             c.fire("scaytUserDictionaryAction", a);
                           },
-                          function (a) {
-                            q.unblock();
+                          (a) => {
+                            this.unblock();
                             a.dialog = d;
                             a.command = "deleteWord";
                             a.name = f;
@@ -462,7 +471,7 @@
         ],
       },
     ];
-  c.on("scaytUserDictionaryAction", function (b) {
+  c.on("scaytUserDictionaryAction", (b) => {
     var a = SCAYT.prototype.UILib,
       e = b.data.dialog,
       c = e.getContentElement("dictionaries", "dictionaryNote").getElement(),
@@ -480,10 +489,12 @@
             c.setText(d)),
         a.css(c.$, { color: "red" }),
         null != f.getUserDictionaryName() && "" != f.getUserDictionaryName()
-          ? e.getContentElement("dictionaries", "dictionaryName").setValue(f.getUserDictionaryName())
+          ? e
+              .getContentElement("dictionaries", "dictionaryName")
+              .setValue(f.getUserDictionaryName())
           : e.getContentElement("dictionaries", "dictionaryName").setValue(""));
   });
-  c.on("scaytUserDictionaryActionError", function (b) {
+  c.on("scaytUserDictionaryActionError", (b) => {
     var a = SCAYT.prototype.UILib,
       e = b.data.dialog,
       c = e.getContentElement("dictionaries", "dictionaryNote").getElement(),
@@ -491,7 +502,9 @@
       g;
     "" === b.data.name
       ? c.setText(d.getLocal("message_info_emptyDic"))
-      : ((g = d.getLocal("message_error_" + b.data.command + "Dic")), (g = g.replace("%s", b.data.name)), c.setText(g));
+      : ((g = d.getLocal("message_error_" + b.data.command + "Dic")),
+        (g = g.replace("%s", b.data.name)),
+        c.setText(g));
     a.css(c.$, { color: "red" });
     null != d.getUserDictionaryName() && "" != d.getUserDictionaryName()
       ? e.getContentElement("dictionaries", "dictionaryName").setValue(d.getUserDictionaryName())
@@ -513,10 +526,10 @@
         this.resize(this.definition.minWidth, this.definition.minHeight);
       }
     },
-    onCancel: function () {
+    onCancel: () => {
       l.reset();
     },
-    onHide: function () {
+    onHide: () => {
       c.unlockSelection();
     },
     onShow: function () {
@@ -544,28 +557,37 @@
     getChangedOption: function () {
       var b = {};
       if (1 == c.config.scayt_uiTabs[0])
-        for (var a = this.getContentElement("options", "scaytOptions").getChild(), e = 0; e < a.length; e++)
+        for (
+          var a = this.getContentElement("options", "scaytOptions").getChild(), e = 0;
+          e < a.length;
+          e++
+        )
           a[e].isChanged() && (b[a[e].id] = a[e].getValue());
       l.isChanged() && (b[l.id] = c.config.scayt_sLang = l.currentLang = l.newLang);
       return b;
     },
-    buildRadioInputs: function (b, a, e) {
+    buildRadioInputs: (b, a, e) => {
       e = new CKEDITOR.dom.element("div");
       var d = "scaytLang_" + c.name + "_" + a,
         f = CKEDITOR.dom.element.createFromHtml(
-          '\x3cinput id\x3d"' + d + '" type\x3d"radio"  value\x3d"' + a + '" name\x3d"scayt_lang" /\x3e'
+          '\x3cinput id\x3d"' +
+            d +
+            '" type\x3d"radio"  value\x3d"' +
+            a +
+            '" name\x3d"scayt_lang" /\x3e'
         ),
         g = new CKEDITOR.dom.element("label"),
         k = c.scayt;
       e.setStyles({ "white-space": "normal", position: "relative", "padding-bottom": "2px" });
-      f.on("click", function (a) {
+      f.on("click", (a) => {
         l.newLang = a.sender.getValue();
       });
       g.appendText(b);
       g.setAttribute("for", d);
       e.append(f);
       e.append(g);
-      a === k.getLang() && (f.setAttribute("checked", !0), f.setAttribute("defaultChecked", "defaultChecked"));
+      a === k.getLang() &&
+        (f.setAttribute("checked", !0), f.setAttribute("defaultChecked", "defaultChecked"));
       return e;
     },
     renderLangList: function (b) {
@@ -581,7 +603,7 @@
       for (m in e.ltr) f[m] = e.ltr[m];
       for (m in e.rtl) f[m] = e.rtl[m];
       for (m in f) g.push([m, f[m]]);
-      g.sort(function (a, b) {
+      g.sort((a, b) => {
         var c = 0;
         a[1] > b[1] ? (c = 1) : a[1] < b[1] && (c = -1);
         return c;
@@ -589,7 +611,10 @@
       f = {};
       for (l = 0; l < g.length; l++) f[g[l][0]] = g[l][1];
       g = Math.round(g.length / 2);
-      for (m in f) k++, (l = m in h.ltr || m in h.rtl), this.buildRadioInputs(f[m], m, l).appendTo(k <= g ? a : b);
+      for (m in f)
+        k++,
+          (l = m in h.ltr || m in h.rtl),
+          this.buildRadioInputs(f[m], m, l).appendTo(k <= g ? a : b);
     },
     getLangBoxes: function () {
       return this.getContentElement("langs", "langBox").getElement();
@@ -626,23 +651,32 @@
           p.show();
           break;
         case "dictionaryState":
-          a.show(), c.show(), d.hide(), f.hide(), g.show(), l.show(), k.show(), m.show(), n.hide(), p.hide();
+          a.show(),
+            c.show(),
+            d.hide(),
+            f.hide(),
+            g.show(),
+            l.show(),
+            k.show(),
+            m.show(),
+            n.hide(),
+            p.hide();
       }
     },
     clearWordList: function () {
       this.getContentElement("dictionaries", "itemList").removeAllChild();
     },
     getUserDictionary: function () {
-      var b = this,
-        a = c.scayt;
-      a.getUserDictionary(a.getUserDictionaryName(), function (a) {
-        a.error || g.renderItemList.call(b, a.wordlist);
+      var a = c.scayt;
+      a.getUserDictionary(a.getUserDictionaryName(), (a) => {
+        a.error || g.renderItemList.call(this, a.wordlist);
       });
     },
     renderItemList: function (b) {
-      for (var a = this.getContentElement("dictionaries", "itemList"), c = 0; c < b.length; c++) a.addChild(b[c]);
+      for (var a = this.getContentElement("dictionaries", "itemList"), c = 0; c < b.length; c++)
+        a.addChild(b[c]);
     },
-    contents: (function (b, a) {
+    contents: ((b, a) => {
       var c = [],
         d = a.config.scayt_uiTabs;
       if (d) {
@@ -657,11 +691,10 @@
 CKEDITOR.tools.extend(CKEDITOR.ui.dialog, {
   scaytItemList: function (c, d, k) {
     if (arguments.length) {
-      var n = this;
-      c.on("load", function () {
-        n.getElement().on("click", function (c) {});
+      c.on("load", () => {
+        this.getElement().on("click", (c) => {});
       });
-      CKEDITOR.ui.dialog.uiElement.call(this, c, d, k, "", null, null, function () {
+      CKEDITOR.ui.dialog.uiElement.call(this, c, d, k, "", null, null, () => {
         var c = ['\x3cp class\x3d"cke_dialog_ui_', d.type, '"'];
         d.style && c.push('style\x3d"' + d.style + '" ');
         c.push("\x3e");
@@ -671,49 +704,50 @@ CKEDITOR.tools.extend(CKEDITOR.ui.dialog, {
     }
   },
 });
-CKEDITOR.ui.dialog.scaytItemList.prototype = CKEDITOR.tools.extend(new CKEDITOR.ui.dialog.uiElement(), {
-  children: [],
-  blocked: !1,
-  addChild: function (c, d) {
-    var k = new CKEDITOR.dom.element("p"),
-      n = new CKEDITOR.dom.element("a"),
-      l = this.getElement().getChildren().getItem(0);
-    this.children.push(c);
-    k.addClass("cke_scaytItemList-child");
-    k.setAttribute("data-cke-scayt-ud-word", c);
-    k.appendText(c);
-    n.addClass("cke_scaytItemList_remove");
-    n.addClass("cke_dialog_close_button");
-    n.setAttribute("href", "javascript:void(0)");
-    k.append(n);
-    l.append(k, d ? !0 : !1);
-  },
-  inChildren: function (c) {
-    return SCAYT.prototype.Utils.inArray(this.children, c);
-  },
-  removeChild: function (c, d) {
-    this.children.splice(SCAYT.prototype.Utils.indexOf(this.children, d), 1);
-    this.getElement().getChildren().getItem(0).$.removeChild(c);
-  },
-  removeAllChild: function () {
-    this.children = [];
-    this.getElement().getChildren().getItem(0).setHtml("");
-  },
-  block: function () {
-    this.blocked = !0;
-  },
-  unblock: function () {
-    this.blocked = !1;
-  },
-  isBlocked: function () {
-    return this.blocked;
-  },
-});
-(function () {
-  commonBuilder = {
-    build: function (c, d, k) {
-      return new CKEDITOR.ui.dialog[d.type](c, d, k);
+CKEDITOR.ui.dialog.scaytItemList.prototype = CKEDITOR.tools.extend(
+  new CKEDITOR.ui.dialog.uiElement(),
+  {
+    children: [],
+    blocked: !1,
+    addChild: function (c, d) {
+      var k = new CKEDITOR.dom.element("p"),
+        n = new CKEDITOR.dom.element("a"),
+        l = this.getElement().getChildren().getItem(0);
+      this.children.push(c);
+      k.addClass("cke_scaytItemList-child");
+      k.setAttribute("data-cke-scayt-ud-word", c);
+      k.appendText(c);
+      n.addClass("cke_scaytItemList_remove");
+      n.addClass("cke_dialog_close_button");
+      n.setAttribute("href", "javascript:void(0)");
+      k.append(n);
+      l.append(k, d ? !0 : !1);
     },
+    inChildren: function (c) {
+      return SCAYT.prototype.Utils.inArray(this.children, c);
+    },
+    removeChild: function (c, d) {
+      this.children.splice(SCAYT.prototype.Utils.indexOf(this.children, d), 1);
+      this.getElement().getChildren().getItem(0).$.removeChild(c);
+    },
+    removeAllChild: function () {
+      this.children = [];
+      this.getElement().getChildren().getItem(0).setHtml("");
+    },
+    block: function () {
+      this.blocked = !0;
+    },
+    unblock: function () {
+      this.blocked = !1;
+    },
+    isBlocked: function () {
+      return this.blocked;
+    },
+  }
+);
+(() => {
+  commonBuilder = {
+    build: (c, d, k) => new CKEDITOR.ui.dialog[d.type](c, d, k),
   };
   CKEDITOR.dialog.addUIElement("scaytItemList", commonBuilder);
 })();

@@ -2,10 +2,10 @@
  Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
 */
-CKEDITOR.dialog.add("checkspell", function (a) {
+CKEDITOR.dialog.add("checkspell", (a) => {
   function c(a, c) {
     var d = 0;
-    return function () {
+    return () => {
       "function" == typeof window.doSpell
         ? ("undefined" != typeof e && window.clearInterval(e), l(a))
         : 180 == d++ && window._cancelOnError(c);
@@ -22,10 +22,10 @@ CKEDITOR.dialog.add("checkspell", function (a) {
       lang: a.config.wsc_lang || f.getSPLangCode(a.langCode),
       intLang: a.config.wsc_uiLang || f.getSPLangCode(a.langCode),
       winType: d,
-      onCancel: function () {
+      onCancel: () => {
         c.hide();
       },
-      onFinish: function (b) {
+      onFinish: (b) => {
         a.focus();
         c.getParentEditor().setData(b.value);
         c.hide();
@@ -35,7 +35,8 @@ CKEDITOR.dialog.add("checkspell", function (a) {
       iframePath: b + "ciframe.html",
       schemaURI: b + "wsc.css",
       userDictionaryName: a.config.wsc_userDictionaryName,
-      customDictionaryName: a.config.wsc_customDictionaryIds && a.config.wsc_customDictionaryIds.split(","),
+      customDictionaryName:
+        a.config.wsc_customDictionaryIds && a.config.wsc_customDictionaryIds.split(","),
       domainName: a.config.wsc_domainName,
     });
     CKEDITOR.document.getById(h).setStyle("display", "none");
@@ -69,7 +70,7 @@ CKEDITOR.dialog.add("checkspell", function (a) {
       '\x3cp style\x3d"color:#000;font-size:11px;font-weight: normal;text-align:center;padding-top:10px"\x3e' +
       a.lang.wsc.errorLoading.replace(/%s/g, a.config.wsc_customLoaderScript) +
       "\x3c/p\x3e");
-  window._cancelOnError = function (c) {
+  window._cancelOnError = (c) => {
     if ("undefined" == typeof window.WSC_Error) {
       CKEDITOR.document.getById(d).setStyle("display", "none");
       var b = CKEDITOR.document.getById(h);
@@ -87,14 +88,16 @@ CKEDITOR.dialog.add("checkspell", function (a) {
       b.setHtml(m);
       b.getChild(2).setStyle("height", this._.contentSize.height + "px");
       "function" != typeof window.doSpell &&
-        CKEDITOR.document
-          .getHead()
-          .append(CKEDITOR.document.createElement("script", { attributes: { type: "text/javascript", src: n } }));
+        CKEDITOR.document.getHead().append(
+          CKEDITOR.document.createElement("script", {
+            attributes: { type: "text/javascript", src: n },
+          })
+        );
       b = a.getData();
       CKEDITOR.document.getById(g).setValue(b);
       e = window.setInterval(c(this, k), 250);
     },
-    onHide: function () {
+    onHide: () => {
       window.ooo = void 0;
       window.int_framsetLoaded = void 0;
       window.framesetLoaded = void 0;
@@ -110,7 +113,7 @@ CKEDITOR.dialog.add("checkspell", function (a) {
     ],
   };
 });
-CKEDITOR.dialog.on("resize", function (a) {
+CKEDITOR.dialog.on("resize", (a) => {
   a = a.data;
   var c = a.dialog;
   "checkspell" == c._.name &&

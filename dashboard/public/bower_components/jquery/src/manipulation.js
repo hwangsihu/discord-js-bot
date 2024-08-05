@@ -23,7 +23,7 @@ define([
   "./traversing",
   "./selector",
   "./event",
-], function (
+], (
   jQuery,
   concat,
   isFunction,
@@ -40,15 +40,14 @@ define([
   dataPriv,
   dataUser,
   acceptData,
-  DOMEval,
+  domEval,
   nodeName
-) {
-  "use strict";
-
+) => {
   var /* eslint-disable max-len */
 
     // See https://github.com/eslint/eslint/issues/3229
-    rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi,
+    rxhtmlTag =
+      /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi,
     /* eslint-enable */
 
     // Support: IE <=10 - 11, Edge 12 - 13 only
@@ -61,7 +60,10 @@ define([
 
   // Prefer a tbody over its parent table for containing new rows
   function manipulationTarget(elem, content) {
-    if (nodeName(elem, "table") && nodeName(content.nodeType !== 11 ? content : content.firstChild, "tr")) {
+    if (
+      nodeName(elem, "table") &&
+      nodeName(content.nodeType !== 11 ? content : content.firstChild, "tr")
+    ) {
       return jQuery(elem).children("tbody")[0] || elem;
     }
 
@@ -148,7 +150,10 @@ define([
       valueIsFunction = isFunction(value);
 
     // We can't cloneNode fragments that contain checked, in WebKit
-    if (valueIsFunction || (l > 1 && typeof value === "string" && !support.checkClone && rchecked.test(value))) {
+    if (
+      valueIsFunction ||
+      (l > 1 && typeof value === "string" && !support.checkClone && rchecked.test(value))
+    ) {
       return collection.each(function (index) {
         var self = collection.eq(index);
         if (valueIsFunction) {
@@ -211,7 +216,7 @@ define([
                   jQuery._evalUrl(node.src);
                 }
               } else {
-                DOMEval(node.textContent.replace(rcleanScript, ""), doc, node);
+                domEval(node.textContent.replace(rcleanScript, ""), doc, node);
               }
             }
           }
@@ -244,11 +249,9 @@ define([
   }
 
   jQuery.extend({
-    htmlPrefilter: function (html) {
-      return html.replace(rxhtmlTag, "<$1></$2>");
-    },
+    htmlPrefilter: (html) => html.replace(rxhtmlTag, "<$1></$2>"),
 
-    clone: function (elem, dataAndEvents, deepDataAndEvents) {
+    clone: (elem, dataAndEvents, deepDataAndEvents) => {
       var i,
         l,
         srcElements,
@@ -257,7 +260,11 @@ define([
         inPage = jQuery.contains(elem.ownerDocument, elem);
 
       // Fix IE cloning issues
-      if (!support.noCloneChecked && (elem.nodeType === 1 || elem.nodeType === 11) && !jQuery.isXMLDoc(elem)) {
+      if (
+        !support.noCloneChecked &&
+        (elem.nodeType === 1 || elem.nodeType === 11) &&
+        !jQuery.isXMLDoc(elem)
+      ) {
         // We eschew Sizzle here for performance reasons: https://jsperf.com/getall-vs-sizzle/2
         destElements = getAll(clone);
         srcElements = getAll(elem);
@@ -291,7 +298,7 @@ define([
       return clone;
     },
 
-    cleanData: function (elems) {
+    cleanData: (elems) => {
       var data,
         elem,
         type,
@@ -493,7 +500,7 @@ define([
       insertAfter: "after",
       replaceAll: "replaceWith",
     },
-    function (name, original) {
+    (name, original) => {
       jQuery.fn[name] = function (selector) {
         var elems,
           ret = [],

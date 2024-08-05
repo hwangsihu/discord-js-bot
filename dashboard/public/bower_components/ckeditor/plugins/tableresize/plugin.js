@@ -2,26 +2,27 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function x(b) {
-    return CKEDITOR.env.ie ? b.$.clientWidth : parseInt(b.getComputedStyle("width"), 10);
+    return CKEDITOR.env.ie ? b.$.clientWidth : Number.parseInt(b.getComputedStyle("width"), 10);
   }
   function r(b, d) {
     var a = b.getComputedStyle("border-" + d + "-width"),
       l = { thin: "0px", medium: "1px", thick: "2px" };
     0 > a.indexOf("px") && (a = a in l && "none" != b.getComputedStyle("border-style") ? l[a] : 0);
-    return parseInt(a, 10);
+    return Number.parseInt(a, 10);
   }
   function A(b) {
     var d = [],
       a = {},
       l = "rtl" == b.getComputedStyle("direction");
-    CKEDITOR.tools.array.forEach(b.$.rows, function (f, B) {
+    CKEDITOR.tools.array.forEach(b.$.rows, (f, B) => {
       var e = -1,
         g = 0,
         c = null;
       f
-        ? ((g = new CKEDITOR.dom.element(f)), (c = { height: g.$.offsetHeight, position: g.getDocumentPosition() }))
+        ? ((g = new CKEDITOR.dom.element(f)),
+          (c = { height: g.$.offsetHeight, position: g.getDocumentPosition() }))
         : (c = void 0);
       for (var g = c.height, c = c.position, m = 0, k = f.cells.length; m < k; m++) {
         var h = new CKEDITOR.dom.element(f.cells[m]),
@@ -32,7 +33,8 @@
           n = h.getDocumentPosition().x;
         l ? (u = n + r(h, "left")) : (t = n + h.$.offsetWidth - r(h, "right"));
         p
-          ? ((n = p.getDocumentPosition().x), l ? (t = n + p.$.offsetWidth - r(p, "right")) : (u = n + r(p, "left")))
+          ? ((n = p.getDocumentPosition().x),
+            l ? (t = n + p.$.offsetWidth - r(p, "right")) : (u = n + r(p, "left")))
           : ((n = b.getDocumentPosition().x), l ? (t = n) : (u = n + b.$.offsetWidth));
         h = Math.max(u - t, 3);
         h = { table: b, index: e, x: t, y: c.y, width: h, height: g, rtl: l };
@@ -53,7 +55,7 @@
       c.setOpacity(0);
       h && a();
       var b = e.table;
-      setTimeout(function () {
+      setTimeout(() => {
         b.removeCustomData("_cke_table_pillars");
       }, 0);
       g.removeListener("dragstart", z);
@@ -64,7 +66,7 @@
           d = u[f],
           m = e.table;
         CKEDITOR.tools.setTimeout(
-          function (e, f, g, d, h, n) {
+          (e, f, g, d, h, n) => {
             e && e.setStyle("width", k(Math.max(f + n, 1)));
             g && g.setStyle("width", k(Math.max(d - n, 1)));
             h && m.setStyle("width", k(h + n * (c ? -1 : 1)));
@@ -97,14 +99,15 @@
           q = q[l + (w ? 0 : 1)],
           v = v && new CKEDITOR.dom.element(v),
           q = q && new CKEDITOR.dom.element(q);
-        (v && q && v.equals(q)) || (v && (p = Math.min(p, x(v))), q && (r = Math.min(r, x(q))), d.push(v), k.push(q));
+        (v && q && v.equals(q)) ||
+          (v && (p = Math.min(p, x(v))), q && (r = Math.min(r, x(q))), d.push(v), k.push(q));
       }
       t = d;
       u = k;
       n = e.x - p;
       D = e.x + r;
       c.setOpacity(0.5);
-      y = parseInt(c.getStyle("left"), 10);
+      y = Number.parseInt(c.getStyle("left"), 10);
       h = 0;
       m = 1;
       c.on("mousemove", B);
@@ -124,7 +127,7 @@
       '\x3cdiv data-cke-temp\x3d1 contenteditable\x3dfalse unselectable\x3don style\x3d"position:absolute;cursor:col-resize;filter:alpha(opacity\x3d0);opacity:0;padding:0;background-color:#004;background-image:none;border:0px none;z-index:10"\x3e\x3c/div\x3e',
       g
     );
-    b.on("destroy", function () {
+    b.on("destroy", () => {
       c.remove();
     });
     w || g.getDocumentElement().append(c);
@@ -143,7 +146,7 @@
         g.getBody().setStyle("cursor", "col-resize"),
         c.show());
     };
-    p = this.move = function (b, a) {
+    p = this.move = (b, a) => {
       if (!e) return 0;
       if (!(m || (b >= e.x && b <= e.x + e.width && a >= e.y && a <= e.y + e.height)))
         return (
@@ -185,11 +188,11 @@
     w = CKEDITOR.env.ie && (CKEDITOR.env.ie7Compat || CKEDITOR.env.quirks);
   CKEDITOR.plugins.add("tableresize", {
     requires: "tabletools",
-    init: function (b) {
-      b.on("contentDom", function () {
+    init: (b) => {
+      b.on("contentDom", () => {
         var d,
           a = b.editable();
-        a.attachListener(a.isInline() ? a : b.document, "mousemove", function (a) {
+        a.attachListener(a.isInline() ? a : b.document, "mousemove", (a) => {
           a = a.data;
           var f = a.getTarget();
           if (f.type == CKEDITOR.NODE_ELEMENT) {
@@ -199,7 +202,9 @@
             else if (f.is("table") || f.getAscendant({ thead: 1, tbody: 1, tfoot: 1 }, 1))
               if (((a = f.getAscendant("table", 1)), b.editable().contains(a))) {
                 (f = a.getCustomData("_cke_table_pillars")) ||
-                  (a.setCustomData("_cke_table_pillars", (f = A(a))), a.on("mouseout", y), a.on("mousedown", y));
+                  (a.setCustomData("_cke_table_pillars", (f = A(a))),
+                  a.on("mouseout", y),
+                  a.on("mousedown", y));
                 a: {
                   a = f;
                   for (var f = 0, g = a.length; f < g; f++) {

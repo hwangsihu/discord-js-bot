@@ -1,9 +1,4 @@
-define(["../core", "../selector", "../effects"], function (jQuery) {
-  "use strict";
-
-  jQuery.expr.pseudos.animated = function (elem) {
-    return jQuery.grep(jQuery.timers, function (fn) {
-      return elem === fn.elem;
-    }).length;
-  };
+define(["../core", "../selector", "../effects"], (jQuery) => {
+  jQuery.expr.pseudos.animated = (elem) =>
+    jQuery.grep(jQuery.timers, (fn) => elem === fn.elem).length;
 });

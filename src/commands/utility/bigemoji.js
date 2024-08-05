@@ -50,7 +50,9 @@ function getEmoji(user, emoji) {
     .setFooter({ text: `Requested by ${user.username}` });
 
   if (custom.id) {
-    embed.setImage(`https://cdn.discordapp.com/emojis/${custom.id}.${custom.animated ? "gif" : "png"}`);
+    embed.setImage(
+      `https://cdn.discordapp.com/emojis/${custom.id}.${custom.animated ? "gif" : "png"}`
+    );
     return { embeds: [embed] };
   }
   const parsed = parse(emoji, { assetType: "png" });

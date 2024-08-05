@@ -9,7 +9,7 @@ var $ = require("jquery");
 var Options = require("select2/options");
 var options = new Options({});
 
-test("title is carried over from original element", function (assert) {
+test("title is carried over from original element", (assert) => {
   var $select = $("#qunit-fixture .single");
 
   var selection = new BaseSelection($select, options);
@@ -22,7 +22,7 @@ test("title is carried over from original element", function (assert) {
   );
 });
 
-test("aria-expanded reflects the state of the container", function (assert) {
+test("aria-expanded reflects the state of the container", (assert) => {
   var $select = $("#qunit-fixture .single");
 
   var selection = new BaseSelection($select, options);
@@ -32,14 +32,22 @@ test("aria-expanded reflects the state of the container", function (assert) {
 
   selection.bind(container, $("<span></span>"));
 
-  assert.equal($selection.attr("aria-expanded"), "false", "The container should not be expanded when it is closed");
+  assert.equal(
+    $selection.attr("aria-expanded"),
+    "false",
+    "The container should not be expanded when it is closed"
+  );
 
   container.trigger("open");
 
-  assert.equal($selection.attr("aria-expanded"), "true", "The container should be expanded when it is opened");
+  assert.equal(
+    $selection.attr("aria-expanded"),
+    "true",
+    "The container should be expanded when it is opened"
+  );
 });
 
-test("static aria attributes are present", function (assert) {
+test("static aria attributes are present", (assert) => {
   var $select = $("#qunit-fixture .single");
 
   var selection = new BaseSelection($select, options);
@@ -47,10 +55,14 @@ test("static aria attributes are present", function (assert) {
 
   assert.equal($selection.attr("role"), "combobox", "The container should identify as a combobox");
 
-  assert.equal($selection.attr("aria-haspopup"), "true", "The dropdown is considered a popup of the container");
+  assert.equal(
+    $selection.attr("aria-haspopup"),
+    "true",
+    "The dropdown is considered a popup of the container"
+  );
 });
 
-test("the container should be in the tab order", function (assert) {
+test("the container should be in the tab order", (assert) => {
   var $select = $("#qunit-fixture .single");
 
   var selection = new BaseSelection($select, options);
@@ -59,18 +71,30 @@ test("the container should be in the tab order", function (assert) {
   var container = new MockContainer();
   selection.bind(container, $("<span></span>"));
 
-  assert.equal($selection.attr("tabindex"), "0", "The tab index should allow it to fit in the natural tab order");
+  assert.equal(
+    $selection.attr("tabindex"),
+    "0",
+    "The tab index should allow it to fit in the natural tab order"
+  );
 
   container.trigger("disable");
 
-  assert.equal($selection.attr("tabindex"), "-1", "The selection should be dropped out of the tab order when disabled");
+  assert.equal(
+    $selection.attr("tabindex"),
+    "-1",
+    "The selection should be dropped out of the tab order when disabled"
+  );
 
   container.trigger("enable");
 
-  assert.equal($selection.attr("tabindex"), "0", "The tab index should be restored when re-enabled");
+  assert.equal(
+    $selection.attr("tabindex"),
+    "0",
+    "The tab index should be restored when re-enabled"
+  );
 });
 
-test("a custom tabindex is copied", function (assert) {
+test("a custom tabindex is copied", (assert) => {
   var $select = $("#qunit-fixture .single");
   $select.attr("tabindex", "999");
 
@@ -80,20 +104,32 @@ test("a custom tabindex is copied", function (assert) {
   var container = new MockContainer();
   selection.bind(container, $("<span></span>"));
 
-  assert.equal($selection.attr("tabindex"), "999", "The tab index should match the original tab index");
+  assert.equal(
+    $selection.attr("tabindex"),
+    "999",
+    "The tab index should match the original tab index"
+  );
 
   container.trigger("disable");
 
-  assert.equal($selection.attr("tabindex"), "-1", "The selection should be dropped out of the tab order when disabled");
+  assert.equal(
+    $selection.attr("tabindex"),
+    "-1",
+    "The selection should be dropped out of the tab order when disabled"
+  );
 
   container.trigger("enable");
 
-  assert.equal($selection.attr("tabindex"), "999", "The tab index should be restored when re-enabled");
+  assert.equal(
+    $selection.attr("tabindex"),
+    "999",
+    "The tab index should be restored when re-enabled"
+  );
 });
 
 module("Accessibility - Single");
 
-test("aria-labelledby should match the rendered container", function (assert) {
+test("aria-labelledby should match the rendered container", (assert) => {
   var $select = $("#qunit-fixture .single");
 
   var selection = new SingleSelection($select, options);

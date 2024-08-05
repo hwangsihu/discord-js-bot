@@ -9,21 +9,17 @@
  */
 
 (function () {
-  "use strict";
-
   //Declare root variable - window in the browser, global on the server
-  var root = this,
-    previous = root.Chart;
+  var previous = this.Chart;
 
   //Occupy the global variable of Chart, and create a simple base class
   var Chart = function (context) {
-    var chart = this;
     this.canvas = context.canvas;
 
     this.ctx = context;
 
     //Variables global to the chart
-    var computeDimension = function (element, dimension) {
+    var computeDimension = (element, dimension) => {
       if (element["offset" + dimension]) {
         return element["offset" + dimension];
       } else {
@@ -169,10 +165,10 @@
       multiTooltipKeyBackground: "#fff",
 
       // Function - Will fire on animation progression.
-      onAnimationProgress: function () {},
+      onAnimationProgress: () => {},
 
       // Function - Will fire on animation completion.
-      onAnimationComplete: function () {},
+      onAnimationComplete: () => {},
     },
   };
 
@@ -183,7 +179,7 @@
   var helpers = (Chart.helpers = {});
 
   //-- Basic js utility methods
-  var each = (helpers.each = function (loopable, callback, self) {
+  var each = (helpers.each = (loopable, callback, self) => {
       var additionalArgs = Array.prototype.slice.call(arguments, 3);
       // Check to see if null or undefined firstly.
       if (loopable) {
@@ -199,28 +195,28 @@
         }
       }
     }),
-    clone = (helpers.clone = function (obj) {
+    clone = (helpers.clone = (obj) => {
       var objClone = {};
-      each(obj, function (value, key) {
+      each(obj, (value, key) => {
         if (obj.hasOwnProperty(key)) objClone[key] = value;
       });
       return objClone;
     }),
-    extend = (helpers.extend = function (base) {
-      each(Array.prototype.slice.call(arguments, 1), function (extensionObject) {
-        each(extensionObject, function (value, key) {
+    extend = (helpers.extend = (base) => {
+      each(Array.prototype.slice.call(arguments, 1), (extensionObject) => {
+        each(extensionObject, (value, key) => {
           if (extensionObject.hasOwnProperty(key)) base[key] = value;
         });
       });
       return base;
     }),
-    merge = (helpers.merge = function (base, master) {
+    merge = (helpers.merge = (base, master) => {
       //Merge properties in left object over to a shallow clone of object right.
       var args = Array.prototype.slice.call(arguments, 0);
       args.unshift({});
       return extend.apply(null, args);
     }),
-    indexOf = (helpers.indexOf = function (arrayToSearch, item) {
+    indexOf = (helpers.indexOf = (arrayToSearch, item) => {
       if (Array.prototype.indexOf) {
         return arrayToSearch.indexOf(item);
       } else {
@@ -230,10 +226,10 @@
         return -1;
       }
     }),
-    where = (helpers.where = function (collection, filterCallback) {
+    where = (helpers.where = (collection, filterCallback) => {
       var filtered = [];
 
-      helpers.each(collection, function (item) {
+      helpers.each(collection, (item) => {
         if (filterCallback(item)) {
           filtered.push(item);
         }
@@ -241,7 +237,7 @@
 
       return filtered;
     }),
-    findNextWhere = (helpers.findNextWhere = function (arrayToSearch, filterCallback, startIndex) {
+    findNextWhere = (helpers.findNextWhere = (arrayToSearch, filterCallback, startIndex) => {
       // Default to start of the array
       if (!startIndex) {
         startIndex = -1;
@@ -253,7 +249,11 @@
         }
       }
     }),
-    findPreviousWhere = (helpers.findPreviousWhere = function (arrayToSearch, filterCallback, startIndex) {
+    findPreviousWhere = (helpers.findPreviousWhere = (
+      arrayToSearch,
+      filterCallback,
+      startIndex
+    ) => {
       // Default to end of the array
       if (!startIndex) {
         startIndex = arrayToSearch.length;
@@ -289,29 +289,21 @@
 
       return ChartElement;
     }),
-    noop = (helpers.noop = function () {}),
-    uid = (helpers.uid = (function () {
+    noop = (helpers.noop = () => {}),
+    uid = (helpers.uid = (() => {
       var id = 0;
-      return function () {
-        return "chart-" + id++;
-      };
+      return () => "chart-" + id++;
     })()),
-    warn = (helpers.warn = function (str) {
+    warn = (helpers.warn = (str) => {
       //Method for warning of errors
       if (window.console && typeof window.console.warn == "function") console.warn(str);
     }),
     amd = (helpers.amd = typeof define == "function" && define.amd),
     //-- Math methods
-    isNumber = (helpers.isNumber = function (n) {
-      return !isNaN(parseFloat(n)) && isFinite(n);
-    }),
-    max = (helpers.max = function (array) {
-      return Math.max.apply(Math, array);
-    }),
-    min = (helpers.min = function (array) {
-      return Math.min.apply(Math, array);
-    }),
-    cap = (helpers.cap = function (valueToCap, maxValue, minValue) {
+    isNumber = (helpers.isNumber = (n) => !isNaN(Number.parseFloat(n)) && isFinite(n)),
+    max = (helpers.max = (array) => Math.max.apply(Math, array)),
+    min = (helpers.min = (array) => Math.min.apply(Math, array)),
+    cap = (helpers.cap = (valueToCap, maxValue, minValue) => {
       if (isNumber(maxValue)) {
         if (valueToCap > maxValue) {
           return maxValue;
@@ -323,18 +315,16 @@
       }
       return valueToCap;
     }),
-    getDecimalPlaces = (helpers.getDecimalPlaces = function (num) {
+    getDecimalPlaces = (helpers.getDecimalPlaces = (num) => {
       if (num % 1 !== 0 && isNumber(num)) {
         return num.toString().split(".")[1].length;
       } else {
         return 0;
       }
     }),
-    toRadians = (helpers.radians = function (degrees) {
-      return degrees * (Math.PI / 180);
-    }),
+    toRadians = (helpers.radians = (degrees) => degrees * (Math.PI / 180)),
     // Gets the angle from vertical upright to the point about a centre.
-    getAngleFromPoint = (helpers.getAngleFromPoint = function (centrePoint, anglePoint) {
+    getAngleFromPoint = (helpers.getAngleFromPoint = (centrePoint, anglePoint) => {
       var distanceFromXCenter = anglePoint.x - centrePoint.x,
         distanceFromYCenter = anglePoint.y - centrePoint.y,
         radialDistanceFromCenter = Math.sqrt(
@@ -353,14 +343,16 @@
         distance: radialDistanceFromCenter,
       };
     }),
-    aliasPixel = (helpers.aliasPixel = function (pixelWidth) {
-      return pixelWidth % 2 === 0 ? 0 : 0.5;
-    }),
-    splineCurve = (helpers.splineCurve = function (FirstPoint, MiddlePoint, AfterPoint, t) {
+    aliasPixel = (helpers.aliasPixel = (pixelWidth) => (pixelWidth % 2 === 0 ? 0 : 0.5)),
+    splineCurve = (helpers.splineCurve = (FirstPoint, MiddlePoint, AfterPoint, t) => {
       //Props to Rob Spencer at scaled innovation for his post on splining between points
       //http://scaledinnovation.com/analytics/splines/aboutSplines.html
-      var d01 = Math.sqrt(Math.pow(MiddlePoint.x - FirstPoint.x, 2) + Math.pow(MiddlePoint.y - FirstPoint.y, 2)),
-        d12 = Math.sqrt(Math.pow(AfterPoint.x - MiddlePoint.x, 2) + Math.pow(AfterPoint.y - MiddlePoint.y, 2)),
+      var d01 = Math.sqrt(
+          Math.pow(MiddlePoint.x - FirstPoint.x, 2) + Math.pow(MiddlePoint.y - FirstPoint.y, 2)
+        ),
+        d12 = Math.sqrt(
+          Math.pow(AfterPoint.x - MiddlePoint.x, 2) + Math.pow(AfterPoint.y - MiddlePoint.y, 2)
+        ),
         fa = (t * d01) / (d01 + d12), // scaling factor for triangle Ta
         fb = (t * d12) / (d01 + d12);
       return {
@@ -374,16 +366,15 @@
         },
       };
     }),
-    calculateOrderOfMagnitude = (helpers.calculateOrderOfMagnitude = function (val) {
-      return Math.floor(Math.log(val) / Math.LN10);
-    }),
-    calculateScaleRange = (helpers.calculateScaleRange = function (
+    calculateOrderOfMagnitude = (helpers.calculateOrderOfMagnitude = (val) =>
+      Math.floor(Math.log(val) / Math.LN10)),
+    calculateScaleRange = (helpers.calculateScaleRange = (
       valuesArray,
       drawingSize,
       textSize,
       startFromZero,
       integersOnly
-    ) {
+    ) => {
       //Set a minimum step of two - a point at the top of the graph, and a point at the base
       var minSteps = 2,
         maxSteps = Math.floor(drawingSize / (textSize * 1.5)),
@@ -408,10 +399,12 @@
       var valueRange = Math.abs(maxValue - minValue),
         rangeOrderOfMagnitude = calculateOrderOfMagnitude(valueRange),
         graphMax =
-          Math.ceil(maxValue / (1 * Math.pow(10, rangeOrderOfMagnitude))) * Math.pow(10, rangeOrderOfMagnitude),
+          Math.ceil(maxValue / (1 * Math.pow(10, rangeOrderOfMagnitude))) *
+          Math.pow(10, rangeOrderOfMagnitude),
         graphMin = startFromZero
           ? 0
-          : Math.floor(minValue / (1 * Math.pow(10, rangeOrderOfMagnitude))) * Math.pow(10, rangeOrderOfMagnitude),
+          : Math.floor(minValue / (1 * Math.pow(10, rangeOrderOfMagnitude))) *
+            Math.pow(10, rangeOrderOfMagnitude),
         graphRange = graphMax - graphMin,
         stepValue = Math.pow(10, rangeOrderOfMagnitude),
         numberOfSteps = Math.round(graphRange / stepValue);
@@ -464,7 +457,7 @@
     // Blows up jshint errors based on the new Function constructor
     //Templating methods
     //Javascript micro templating by John Resig - source at http://ejohn.org/blog/javascript-micro-templating/
-    template = (helpers.template = function (templateString, valuesObject) {
+    template = (helpers.template = (templateString, valuesObject) => {
       // If templateString is function rather than string-template - call the function for valuesObject
 
       if (templateString instanceof Function) {
@@ -475,10 +468,8 @@
       function tmpl(str, data) {
         // Figure out if we're getting a template, or if we need to
         // load the template - and be sure to cache the result.
-        var fn = !/\W/.test(str)
-          ? (cache[str] = cache[str])
-          : // Generate a reusable function that will serve as a template
-            // generator (and which will be cached).
+        var fn = /\W/.test(str)
+          ? // generator (and which will be cached).
             new Function(
               "obj",
               "var p=[],print=function(){p.push.apply(p,arguments);};" +
@@ -498,7 +489,8 @@
                   .split("\r")
                   .join("\\'") +
                 "');}return p.join('');"
-            );
+            )
+          : (cache[str] = cache[str]);
 
         // Provide some basic currying to the user
         return data ? fn(data) : fn;
@@ -506,11 +498,18 @@
       return tmpl(templateString, valuesObject);
     }),
     /* jshint ignore:end */
-    generateLabels = (helpers.generateLabels = function (templateString, numberOfSteps, graphMin, stepValue) {
+    generateLabels = (helpers.generateLabels = (
+      templateString,
+      numberOfSteps,
+      graphMin,
+      stepValue
+    ) => {
       var labelsArray = new Array(numberOfSteps);
       if (labelTemplateString) {
-        each(labelsArray, function (val, index) {
-          labelsArray[index] = template(templateString, { value: graphMin + stepValue * (index + 1) });
+        each(labelsArray, (val, index) => {
+          labelsArray[index] = template(templateString, {
+            value: graphMin + stepValue * (index + 1),
+          });
         });
       }
       return labelsArray;
@@ -519,82 +518,52 @@
     //Easing functions adapted from Robert Penner's easing equations
     //http://www.robertpenner.com/easing/
     easingEffects = (helpers.easingEffects = {
-      linear: function (t) {
-        return t;
-      },
-      easeInQuad: function (t) {
-        return t * t;
-      },
-      easeOutQuad: function (t) {
-        return -1 * t * (t - 2);
-      },
-      easeInOutQuad: function (t) {
+      linear: (t) => t,
+      easeInQuad: (t) => t * t,
+      easeOutQuad: (t) => -1 * t * (t - 2),
+      easeInOutQuad: (t) => {
         if ((t /= 1 / 2) < 1) return (1 / 2) * t * t;
         return (-1 / 2) * (--t * (t - 2) - 1);
       },
-      easeInCubic: function (t) {
-        return t * t * t;
-      },
-      easeOutCubic: function (t) {
-        return 1 * ((t = t / 1 - 1) * t * t + 1);
-      },
-      easeInOutCubic: function (t) {
+      easeInCubic: (t) => t * t * t,
+      easeOutCubic: (t) => 1 * ((t = t / 1 - 1) * t * t + 1),
+      easeInOutCubic: (t) => {
         if ((t /= 1 / 2) < 1) return (1 / 2) * t * t * t;
         return (1 / 2) * ((t -= 2) * t * t + 2);
       },
-      easeInQuart: function (t) {
-        return t * t * t * t;
-      },
-      easeOutQuart: function (t) {
-        return -1 * ((t = t / 1 - 1) * t * t * t - 1);
-      },
-      easeInOutQuart: function (t) {
+      easeInQuart: (t) => t * t * t * t,
+      easeOutQuart: (t) => -1 * ((t = t / 1 - 1) * t * t * t - 1),
+      easeInOutQuart: (t) => {
         if ((t /= 1 / 2) < 1) return (1 / 2) * t * t * t * t;
         return (-1 / 2) * ((t -= 2) * t * t * t - 2);
       },
-      easeInQuint: function (t) {
-        return 1 * (t /= 1) * t * t * t * t;
-      },
-      easeOutQuint: function (t) {
-        return 1 * ((t = t / 1 - 1) * t * t * t * t + 1);
-      },
-      easeInOutQuint: function (t) {
+      easeInQuint: (t) => 1 * (t /= 1) * t * t * t * t,
+      easeOutQuint: (t) => 1 * ((t = t / 1 - 1) * t * t * t * t + 1),
+      easeInOutQuint: (t) => {
         if ((t /= 1 / 2) < 1) return (1 / 2) * t * t * t * t * t;
         return (1 / 2) * ((t -= 2) * t * t * t * t + 2);
       },
-      easeInSine: function (t) {
-        return -1 * Math.cos((t / 1) * (Math.PI / 2)) + 1;
-      },
-      easeOutSine: function (t) {
-        return 1 * Math.sin((t / 1) * (Math.PI / 2));
-      },
-      easeInOutSine: function (t) {
-        return (-1 / 2) * (Math.cos((Math.PI * t) / 1) - 1);
-      },
-      easeInExpo: function (t) {
-        return t === 0 ? 1 : 1 * Math.pow(2, 10 * (t / 1 - 1));
-      },
-      easeOutExpo: function (t) {
-        return t === 1 ? 1 : 1 * (-Math.pow(2, (-10 * t) / 1) + 1);
-      },
-      easeInOutExpo: function (t) {
+      easeInSine: (t) => -1 * Math.cos((t / 1) * (Math.PI / 2)) + 1,
+      easeOutSine: (t) => 1 * Math.sin((t / 1) * (Math.PI / 2)),
+      easeInOutSine: (t) => (-1 / 2) * (Math.cos((Math.PI * t) / 1) - 1),
+      easeInExpo: (t) => (t === 0 ? 1 : 1 * Math.pow(2, 10 * (t / 1 - 1))),
+      easeOutExpo: (t) => (t === 1 ? 1 : 1 * (-Math.pow(2, (-10 * t) / 1) + 1)),
+      easeInOutExpo: (t) => {
         if (t === 0) return 0;
         if (t === 1) return 1;
         if ((t /= 1 / 2) < 1) return (1 / 2) * Math.pow(2, 10 * (t - 1));
         return (1 / 2) * (-Math.pow(2, -10 * --t) + 2);
       },
-      easeInCirc: function (t) {
+      easeInCirc: (t) => {
         if (t >= 1) return t;
         return -1 * (Math.sqrt(1 - (t /= 1) * t) - 1);
       },
-      easeOutCirc: function (t) {
-        return 1 * Math.sqrt(1 - (t = t / 1 - 1) * t);
-      },
-      easeInOutCirc: function (t) {
+      easeOutCirc: (t) => 1 * Math.sqrt(1 - (t = t / 1 - 1) * t),
+      easeInOutCirc: (t) => {
         if ((t /= 1 / 2) < 1) return (-1 / 2) * (Math.sqrt(1 - t * t) - 1);
         return (1 / 2) * (Math.sqrt(1 - (t -= 2) * t) + 1);
       },
-      easeInElastic: function (t) {
+      easeInElastic: (t) => {
         var s = 1.70158;
         var p = 0;
         var a = 1;
@@ -607,7 +576,7 @@
         } else s = (p / (2 * Math.PI)) * Math.asin(1 / a);
         return -(a * Math.pow(2, 10 * (t -= 1)) * Math.sin(((t * 1 - s) * (2 * Math.PI)) / p));
       },
-      easeOutElastic: function (t) {
+      easeOutElastic: (t) => {
         var s = 1.70158;
         var p = 0;
         var a = 1;
@@ -620,7 +589,7 @@
         } else s = (p / (2 * Math.PI)) * Math.asin(1 / a);
         return a * Math.pow(2, -10 * t) * Math.sin(((t * 1 - s) * (2 * Math.PI)) / p) + 1;
       },
-      easeInOutElastic: function (t) {
+      easeInOutElastic: (t) => {
         var s = 1.70158;
         var p = 0;
         var a = 1;
@@ -631,26 +600,29 @@
           a = 1;
           s = p / 4;
         } else s = (p / (2 * Math.PI)) * Math.asin(1 / a);
-        if (t < 1) return -0.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin(((t * 1 - s) * (2 * Math.PI)) / p));
-        return a * Math.pow(2, -10 * (t -= 1)) * Math.sin(((t * 1 - s) * (2 * Math.PI)) / p) * 0.5 + 1;
+        if (t < 1)
+          return (
+            -0.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin(((t * 1 - s) * (2 * Math.PI)) / p))
+          );
+        return (
+          a * Math.pow(2, -10 * (t -= 1)) * Math.sin(((t * 1 - s) * (2 * Math.PI)) / p) * 0.5 + 1
+        );
       },
-      easeInBack: function (t) {
+      easeInBack: (t) => {
         var s = 1.70158;
         return 1 * (t /= 1) * t * ((s + 1) * t - s);
       },
-      easeOutBack: function (t) {
+      easeOutBack: (t) => {
         var s = 1.70158;
         return 1 * ((t = t / 1 - 1) * t * ((s + 1) * t + s) + 1);
       },
-      easeInOutBack: function (t) {
+      easeInOutBack: (t) => {
         var s = 1.70158;
         if ((t /= 1 / 2) < 1) return (1 / 2) * (t * t * (((s *= 1.525) + 1) * t - s));
         return (1 / 2) * ((t -= 2) * t * (((s *= 1.525) + 1) * t + s) + 2);
       },
-      easeInBounce: function (t) {
-        return 1 - easingEffects.easeOutBounce(1 - t);
-      },
-      easeOutBounce: function (t) {
+      easeInBounce: (t) => 1 - easingEffects.easeOutBounce(1 - t),
+      easeOutBounce: (t) => {
         if ((t /= 1) < 1 / 2.75) {
           return 1 * (7.5625 * t * t);
         } else if (t < 2 / 2.75) {
@@ -661,48 +633,38 @@
           return 1 * (7.5625 * (t -= 2.625 / 2.75) * t + 0.984375);
         }
       },
-      easeInOutBounce: function (t) {
+      easeInOutBounce: (t) => {
         if (t < 1 / 2) return easingEffects.easeInBounce(t * 2) * 0.5;
         return easingEffects.easeOutBounce(t * 2 - 1) * 0.5 + 1 * 0.5;
       },
     }),
     //Request animation polyfill - http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
-    requestAnimFrame = (helpers.requestAnimFrame = (function () {
-      return (
-        window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        window.oRequestAnimationFrame ||
-        window.msRequestAnimationFrame ||
-        function (callback) {
-          return window.setTimeout(callback, 1000 / 60);
-        }
-      );
-    })()),
-    cancelAnimFrame = (helpers.cancelAnimFrame = (function () {
-      return (
-        window.cancelAnimationFrame ||
-        window.webkitCancelAnimationFrame ||
-        window.mozCancelAnimationFrame ||
-        window.oCancelAnimationFrame ||
-        window.msCancelAnimationFrame ||
-        function (callback) {
-          return window.clearTimeout(callback, 1000 / 60);
-        }
-      );
-    })()),
-    animationLoop = (helpers.animationLoop = function (
+    requestAnimFrame = (helpers.requestAnimFrame = (() =>
+      window.requestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.oRequestAnimationFrame ||
+      window.msRequestAnimationFrame ||
+      ((callback) => window.setTimeout(callback, 1000 / 60)))()),
+    cancelAnimFrame = (helpers.cancelAnimFrame = (() =>
+      window.cancelAnimationFrame ||
+      window.webkitCancelAnimationFrame ||
+      window.mozCancelAnimationFrame ||
+      window.oCancelAnimationFrame ||
+      window.msCancelAnimationFrame ||
+      ((callback) => window.clearTimeout(callback, 1000 / 60)))()),
+    animationLoop = (helpers.animationLoop = (
       callback,
       totalSteps,
       easingString,
       onProgress,
       onComplete,
       chartInstance
-    ) {
+    ) => {
       var currentStep = 0,
         easingFunction = easingEffects[easingString] || easingEffects.linear;
 
-      var animationFrame = function () {
+      var animationFrame = () => {
         currentStep++;
         var stepDecimal = currentStep / totalSteps;
         var easeDecimal = easingFunction(stepDecimal);
@@ -718,7 +680,7 @@
       requestAnimFrame(animationFrame);
     }),
     //-- DOM methods
-    getRelativePosition = (helpers.getRelativePosition = function (evt) {
+    getRelativePosition = (helpers.getRelativePosition = (evt) => {
       var mouseX, mouseY;
       var e = evt.originalEvent || evt,
         canvas = evt.currentTarget || evt.srcElement,
@@ -737,7 +699,7 @@
         y: mouseY,
       };
     }),
-    addEvent = (helpers.addEvent = function (node, eventType, method) {
+    addEvent = (helpers.addEvent = (node, eventType, method) => {
       if (node.addEventListener) {
         node.addEventListener(eventType, method);
       } else if (node.attachEvent) {
@@ -746,7 +708,7 @@
         node["on" + eventType] = method;
       }
     }),
-    removeEvent = (helpers.removeEvent = function (node, eventType, handler) {
+    removeEvent = (helpers.removeEvent = (node, eventType, handler) => {
       if (node.removeEventListener) {
         node.removeEventListener(eventType, handler, false);
       } else if (node.detachEvent) {
@@ -755,34 +717,34 @@
         node["on" + eventType] = noop;
       }
     }),
-    bindEvents = (helpers.bindEvents = function (chartInstance, arrayOfEvents, handler) {
+    bindEvents = (helpers.bindEvents = (chartInstance, arrayOfEvents, handler) => {
       // Create the events object if it's not already present
       if (!chartInstance.events) chartInstance.events = {};
 
-      each(arrayOfEvents, function (eventName) {
-        chartInstance.events[eventName] = function () {
+      each(arrayOfEvents, (eventName) => {
+        chartInstance.events[eventName] = () => {
           handler.apply(chartInstance, arguments);
         };
         addEvent(chartInstance.chart.canvas, eventName, chartInstance.events[eventName]);
       });
     }),
-    unbindEvents = (helpers.unbindEvents = function (chartInstance, arrayOfEvents) {
-      each(arrayOfEvents, function (handler, eventName) {
+    unbindEvents = (helpers.unbindEvents = (chartInstance, arrayOfEvents) => {
+      each(arrayOfEvents, (handler, eventName) => {
         removeEvent(chartInstance.chart.canvas, eventName, handler);
       });
     }),
-    getMaximumWidth = (helpers.getMaximumWidth = function (domNode) {
+    getMaximumWidth = (helpers.getMaximumWidth = (domNode) => {
       var container = domNode.parentNode;
       // TODO = check cross browser stuff with this.
       return container.clientWidth;
     }),
-    getMaximumHeight = (helpers.getMaximumHeight = function (domNode) {
+    getMaximumHeight = (helpers.getMaximumHeight = (domNode) => {
       var container = domNode.parentNode;
       // TODO = check cross browser stuff with this.
       return container.clientHeight;
     }),
     getMaximumSize = (helpers.getMaximumSize = helpers.getMaximumWidth), // legacy support
-    retinaScale = (helpers.retinaScale = function (chart) {
+    retinaScale = (helpers.retinaScale = (chart) => {
       var ctx = chart.ctx,
         width = chart.canvas.width,
         height = chart.canvas.height;
@@ -796,22 +758,21 @@
       }
     }),
     //-- Canvas methods
-    clear = (helpers.clear = function (chart) {
+    clear = (helpers.clear = (chart) => {
       chart.ctx.clearRect(0, 0, chart.width, chart.height);
     }),
-    fontString = (helpers.fontString = function (pixelSize, fontStyle, fontFamily) {
-      return fontStyle + " " + pixelSize + "px " + fontFamily;
-    }),
-    longestText = (helpers.longestText = function (ctx, font, arrayOfStrings) {
+    fontString = (helpers.fontString = (pixelSize, fontStyle, fontFamily) =>
+      fontStyle + " " + pixelSize + "px " + fontFamily),
+    longestText = (helpers.longestText = (ctx, font, arrayOfStrings) => {
       ctx.font = font;
       var longest = 0;
-      each(arrayOfStrings, function (string) {
+      each(arrayOfStrings, (string) => {
         var textWidth = ctx.measureText(string).width;
         longest = textWidth > longest ? textWidth : longest;
       });
       return longest;
     }),
-    drawRoundedRectangle = (helpers.drawRoundedRectangle = function (ctx, x, y, width, height, radius) {
+    drawRoundedRectangle = (helpers.drawRoundedRectangle = (ctx, x, y, width, height, radius) => {
       ctx.beginPath();
       ctx.moveTo(x + radius, y);
       ctx.lineTo(x + width - radius, y);
@@ -958,7 +919,8 @@
           var dataArray, dataIndex;
 
           for (var i = this.datasets.length - 1; i >= 0; i--) {
-            dataArray = this.datasets[i].points || this.datasets[i].bars || this.datasets[i].segments;
+            dataArray =
+              this.datasets[i].points || this.datasets[i].bars || this.datasets[i].segments;
             dataIndex = indexOf(dataArray, ChartElements[0]);
             if (dataIndex !== -1) {
               break;
@@ -976,7 +938,7 @@
                 yMax,
                 xMin,
                 yMin;
-              helpers.each(this.datasets, function (dataset) {
+              helpers.each(this.datasets, (dataset) => {
                 dataCollection = dataset.points || dataset.bars || dataset.segments;
                 if (dataCollection[dataIndex] && dataCollection[dataIndex].hasValue()) {
                   Elements.push(dataCollection[dataIndex]);
@@ -1090,7 +1052,9 @@
       //I.e. if we extend a line chart, we'll use the defaults from the line chart if our new chart
       //doesn't define some defaults of their own.
 
-      var baseDefaults = Chart.defaults[parent.prototype.name] ? clone(Chart.defaults[parent.prototype.name]) : {};
+      var baseDefaults = Chart.defaults[parent.prototype.name]
+        ? clone(Chart.defaults[parent.prototype.name])
+        : {};
 
       Chart.defaults[chartName] = extend(baseDefaults, extensions.defaults);
 
@@ -1113,11 +1077,9 @@
     this.save();
   };
   extend(Chart.Element.prototype, {
-    initialize: function () {},
+    initialize: () => {},
     restore: function (props) {
-      if (!props) {
-        extend(this, this._saved);
-      } else {
+      if (props) {
         each(
           props,
           function (key) {
@@ -1125,6 +1087,8 @@
           },
           this
         );
+      } else {
+        extend(this, this._saved);
       }
       return this;
     },
@@ -1171,7 +1135,9 @@
     display: true,
     inRange: function (chartX, chartY) {
       var hitDetectionRange = this.hitDetectionRadius + this.radius;
-      return Math.pow(chartX - this.x, 2) + Math.pow(chartY - this.y, 2) < Math.pow(hitDetectionRange, 2);
+      return (
+        Math.pow(chartX - this.x, 2) + Math.pow(chartY - this.y, 2) < Math.pow(hitDetectionRange, 2)
+      );
     },
     draw: function () {
       if (this.display) {
@@ -1223,9 +1189,11 @@
 
       //Check if within the range of the open/close angle
       var betweenAngles =
-          pointRelativePosition.angle >= this.startAngle && pointRelativePosition.angle <= this.endAngle,
+          pointRelativePosition.angle >= this.startAngle &&
+          pointRelativePosition.angle <= this.endAngle,
         withinRadius =
-          pointRelativePosition.distance >= this.innerRadius && pointRelativePosition.distance <= this.outerRadius;
+          pointRelativePosition.distance >= this.innerRadius &&
+          pointRelativePosition.distance <= this.outerRadius;
 
       return betweenAngles && withinRadius;
       //Ensure within the outside of the arc centre, but inside arc outer
@@ -1377,7 +1345,14 @@
             break;
         }
 
-        drawRoundedRectangle(ctx, tooltipX, tooltipY, tooltipWidth, tooltipRectHeight, this.cornerRadius);
+        drawRoundedRectangle(
+          ctx,
+          tooltipX,
+          tooltipY,
+          tooltipWidth,
+          tooltipRectHeight,
+          this.cornerRadius
+        );
 
         ctx.fill();
 
@@ -1434,7 +1409,11 @@
       if (index === 0) {
         return baseLineHeight + this.titleFontSize / 2;
       } else {
-        return baseLineHeight + (this.fontSize * 1.5 * afterTitleIndex + this.fontSize / 2) + this.titleFontSize * 1.5;
+        return (
+          baseLineHeight +
+          (this.fontSize * 1.5 * afterTitleIndex + this.fontSize / 2) +
+          this.titleFontSize * 1.5
+        );
       }
     },
     draw: function () {
@@ -1442,7 +1421,14 @@
       if (this.custom) {
         this.custom(this);
       } else {
-        drawRoundedRectangle(this.ctx, this.x, this.y - this.height / 2, this.width, this.height, this.cornerRadius);
+        drawRoundedRectangle(
+          this.ctx,
+          this.x,
+          this.y - this.height / 2,
+          this.width,
+          this.height,
+          this.cornerRadius
+        );
         var ctx = this.ctx;
         ctx.fillStyle = this.fillColor;
         ctx.fill();
@@ -1460,7 +1446,11 @@
           this.labels,
           function (label, index) {
             ctx.fillStyle = this.textColor;
-            ctx.fillText(label, this.x + this.xPadding + this.fontSize + 3, this.getLineHeight(index + 1));
+            ctx.fillText(
+              label,
+              this.x + this.xPadding + this.fontSize + 3,
+              this.getLineHeight(index + 1)
+            );
 
             //A bit gnarly, but clearing this rectangle breaks when using explorercanvas (clears whole canvas)
             //ctx.clearRect(this.x + this.xPadding, this.getLineHeight(index + 1) - this.fontSize/2, this.fontSize, this.fontSize);
@@ -1499,10 +1489,13 @@
 
       for (var i = 0; i <= this.steps; i++) {
         this.yLabels.push(
-          template(this.templateString, { value: (this.min + i * this.stepValue).toFixed(stepDecimalPlaces) })
+          template(this.templateString, {
+            value: (this.min + i * this.stepValue).toFixed(stepDecimalPlaces),
+          })
         );
       }
-      this.yLabelWidth = this.display && this.showLabels ? longestText(this.ctx, this.font, this.yLabels) : 0;
+      this.yLabelWidth =
+        this.display && this.showLabels ? longestText(this.ctx, this.font, this.yLabels) : 0;
     },
     addXLabel: function (label) {
       this.xLabels.push(label);
@@ -1573,7 +1566,8 @@
         lastRotated;
 
       this.xScalePaddingRight = lastWidth / 2 + 3;
-      this.xScalePaddingLeft = firstWidth / 2 > this.yLabelWidth + 10 ? firstWidth / 2 : this.yLabelWidth + 10;
+      this.xScalePaddingLeft =
+        firstWidth / 2 > this.yLabelWidth + 10 ? firstWidth / 2 : this.yLabelWidth + 10;
 
       this.xLabelRotation = 0;
       if (this.display) {
@@ -1703,7 +1697,9 @@
           function (label, index) {
             var xPos = this.calculateX(index) + aliasPixel(this.lineWidth),
               // Check to see if line/bar here and decide where to place the line
-              linePos = this.calculateX(index - (this.offsetGridLines ? 0.5 : 0)) + aliasPixel(this.lineWidth),
+              linePos =
+                this.calculateX(index - (this.offsetGridLines ? 0.5 : 0)) +
+                aliasPixel(this.lineWidth),
               isRotated = this.xLabelRotation > 0,
               drawVerticalLine = this.showVerticalLines;
 
@@ -1761,7 +1757,9 @@
   Chart.RadialScale = Chart.Element.extend({
     initialize: function () {
       this.size = min([this.height, this.width]);
-      this.drawingArea = this.display ? this.size / 2 - (this.fontSize / 2 + this.backdropPaddingY) : this.size / 2;
+      this.drawingArea = this.display
+        ? this.size / 2 - (this.fontSize / 2 + this.backdropPaddingY)
+        : this.size / 2;
     },
     calculateCenterOffset: function (value) {
       // Take into account half font size + the yPadding of the top value
@@ -1770,10 +1768,12 @@
       return (value - this.min) * scalingFactor;
     },
     update: function () {
-      if (!this.lineArc) {
-        this.setScaleSize();
+      if (this.lineArc) {
+        this.drawingArea = this.display
+          ? this.size / 2 - (this.fontSize / 2 + this.backdropPaddingY)
+          : this.size / 2;
       } else {
-        this.drawingArea = this.display ? this.size / 2 - (this.fontSize / 2 + this.backdropPaddingY) : this.size / 2;
+        this.setScaleSize();
       }
       this.buildYLabels();
     },
@@ -1784,7 +1784,9 @@
 
       for (var i = 0; i <= this.steps; i++) {
         this.yLabels.push(
-          template(this.templateString, { value: (this.min + i * this.stepValue).toFixed(stepDecimalPlaces) })
+          template(this.templateString, {
+            value: (this.min + i * this.stepValue).toFixed(stepDecimalPlaces),
+          })
         );
       }
     },
@@ -1822,7 +1824,10 @@
 
       // Get maximum radius of the polygon. Either half the height (minus the text width) or half the width.
       // Use this to calculate the offset + change. - Make sure L/R protrusion is at least 0 to stop issues with centre points
-      var largestPossibleRadius = min([this.height / 2 - this.pointLabelFontSize - 5, this.width / 2]),
+      var largestPossibleRadius = min([
+          this.height / 2 - this.pointLabelFontSize - 5,
+          this.width / 2,
+        ]),
         pointPosition,
         i,
         textWidth,
@@ -1838,11 +1843,16 @@
         radiusReductionRight,
         radiusReductionLeft,
         maxWidthRadius;
-      this.ctx.font = fontString(this.pointLabelFontSize, this.pointLabelFontStyle, this.pointLabelFontFamily);
+      this.ctx.font = fontString(
+        this.pointLabelFontSize,
+        this.pointLabelFontStyle,
+        this.pointLabelFontFamily
+      );
       for (i = 0; i < this.valuesCount; i++) {
         // 5px to space the text slightly out - similar to what we do in the draw function.
         pointPosition = this.getPointPosition(i, largestPossibleRadius);
-        textWidth = this.ctx.measureText(template(this.templateString, { value: this.labels[i] })).width + 5;
+        textWidth =
+          this.ctx.measureText(template(this.templateString, { value: this.labels[i] })).width + 5;
         if (i === 0 || i === this.valuesCount / 2) {
           // If we're at index zero, or exactly the middle, we're at exactly the top/bottom
           // of the radar chart, so text will be aligned centrally, so we'll half it and compare
@@ -1988,8 +1998,15 @@
               ctx.closePath();
             }
             // Extra 3px out for some label spacing
-            var pointLabelPosition = this.getPointPosition(i, this.calculateCenterOffset(this.max) + 5);
-            ctx.font = fontString(this.pointLabelFontSize, this.pointLabelFontStyle, this.pointLabelFontFamily);
+            var pointLabelPosition = this.getPointPosition(
+              i,
+              this.calculateCenterOffset(this.max) + 5
+            );
+            ctx.font = fontString(
+              this.pointLabelFontSize,
+              this.pointLabelFontStyle,
+              this.pointLabelFontFamily
+            );
             ctx.fillStyle = this.pointLabelFontColor;
 
             var labelsCount = this.labels.length,
@@ -2027,13 +2044,13 @@
   helpers.addEvent(
     window,
     "resize",
-    (function () {
+    (() => {
       // Basic debounce of resize function so it doesn't hurt performance when resizing browser.
       var timeout;
-      return function () {
+      return () => {
         clearTimeout(timeout);
-        timeout = setTimeout(function () {
-          each(Chart.instances, function (instance) {
+        timeout = setTimeout(() => {
+          each(Chart.instances, (instance) => {
             // If the responsive flag is set in the chart instance config
             // Cascade the resize event down to the chart.
             if (instance.options.responsive) {
@@ -2046,17 +2063,15 @@
   );
 
   if (amd) {
-    define(function () {
-      return Chart;
-    });
+    define(() => Chart);
   } else if (typeof module === "object" && module.exports) {
     module.exports = Chart;
   }
 
-  root.Chart = Chart;
+  this.Chart = Chart;
 
-  Chart.noConflict = function () {
-    root.Chart = previous;
+  Chart.noConflict = () => {
+    this.Chart = previous;
     return Chart;
   };
 }).call(this);

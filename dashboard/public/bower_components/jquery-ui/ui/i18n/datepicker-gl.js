@@ -1,6 +1,6 @@
 /* Galician localization for 'UI date picker' jQuery extension. */
 /* Translated by Jorge Barreiro <yortx.barry@gmail.com>. */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["gl"] = {
     closeText: "Pechar",
     prevText: "&#x3C;Ant",
@@ -28,7 +28,20 @@
       "Novembro",
       "Decembro",
     ],
-    monthNamesShort: ["Xan", "Feb", "Mar", "Abr", "Mai", "Xuñ", "Xul", "Ago", "Set", "Out", "Nov", "Dec"],
+    monthNamesShort: [
+      "Xan",
+      "Feb",
+      "Mar",
+      "Abr",
+      "Mai",
+      "Xuñ",
+      "Xul",
+      "Ago",
+      "Set",
+      "Out",
+      "Nov",
+      "Dec",
+    ],
     dayNames: ["Domingo", "Luns", "Martes", "Mércores", "Xoves", "Venres", "Sábado"],
     dayNamesShort: ["Dom", "Lun", "Mar", "Mér", "Xov", "Ven", "Sáb"],
     dayNamesMin: ["Do", "Lu", "Ma", "Mé", "Xo", "Ve", "Sá"],

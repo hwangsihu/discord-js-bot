@@ -1,6 +1,6 @@
 /* Turkish initialisation for the jQuery UI date picker plugin. */
 /* Written by Izzet Emre Erkan (kara@karalamalar.net). */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["tr"] = {
     closeText: "kapat",
     prevText: "&#x3C;geri",
@@ -28,7 +28,20 @@
       "Kasım",
       "Aralık",
     ],
-    monthNamesShort: ["Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"],
+    monthNamesShort: [
+      "Oca",
+      "Şub",
+      "Mar",
+      "Nis",
+      "May",
+      "Haz",
+      "Tem",
+      "Ağu",
+      "Eyl",
+      "Eki",
+      "Kas",
+      "Ara",
+    ],
     dayNames: ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"],
     dayNamesShort: ["Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"],
     dayNamesMin: ["Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"],

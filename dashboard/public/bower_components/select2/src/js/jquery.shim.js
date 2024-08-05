@@ -1,5 +1,5 @@
 /* global jQuery:false, $:false */
-define(function () {
+define(() => {
   var _$ = jQuery || $;
 
   if (_$ == null && console && console.error) {

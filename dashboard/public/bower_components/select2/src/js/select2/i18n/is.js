@@ -1,7 +1,7 @@
-define(function () {
+define(() => {
   // Icelandic
   return {
-    inputTooLong: function (args) {
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "Vinsamlegast styttið texta um " + overChars + " staf";
@@ -12,7 +12,7 @@ define(function () {
 
       return message + "i";
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "Vinsamlegast skrifið " + remainingChars + " staf";
@@ -25,20 +25,10 @@ define(function () {
 
       return message;
     },
-    loadingMore: function () {
-      return "Sæki fleiri niðurstöður…";
-    },
-    maximumSelected: function (args) {
-      return "Þú getur aðeins valið " + args.maximum + " atriði";
-    },
-    noResults: function () {
-      return "Ekkert fannst";
-    },
-    searching: function () {
-      return "Leita…";
-    },
-    removeAllItems: function () {
-      return "Fjarlægðu öll atriði";
-    },
+    loadingMore: () => "Sæki fleiri niðurstöður…",
+    maximumSelected: (args) => "Þú getur aðeins valið " + args.maximum + " atriði",
+    noResults: () => "Ekkert fannst",
+    searching: () => "Leita…",
+    removeAllItems: () => "Fjarlægðu öll atriði",
   };
 });

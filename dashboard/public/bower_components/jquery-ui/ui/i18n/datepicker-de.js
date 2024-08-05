@@ -1,6 +1,6 @@
 /* German initialisation for the jQuery UI date picker plugin. */
 /* Written by Milian Wolff (mail@milianw.de). */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["de"] = {
     closeText: "Schließen",
     prevText: "&#x3C;Zurück",
@@ -28,7 +28,20 @@
       "November",
       "Dezember",
     ],
-    monthNamesShort: ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
+    monthNamesShort: [
+      "Jan",
+      "Feb",
+      "Mär",
+      "Apr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Dez",
+    ],
     dayNames: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
     dayNamesShort: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
     dayNamesMin: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],

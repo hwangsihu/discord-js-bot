@@ -127,7 +127,11 @@ CKEDITOR.lang["nb"] = {
     panelTitle2: "Inlinestiler",
     panelTitle3: "Objektstiler",
   },
-  specialchar: { options: "Alternativer for spesialtegn", title: "Velg spesialtegn", toolbar: "Sett inn spesialtegn" },
+  specialchar: {
+    options: "Alternativer for spesialtegn",
+    title: "Velg spesialtegn",
+    toolbar: "Sett inn spesialtegn",
+  },
   sourcearea: { toolbar: "Kilde" },
   scayt: {
     btn_about: "Om SCAYT",
@@ -146,7 +150,8 @@ CKEDITOR.lang["nb"] = {
     title: "Lim inn som ren tekst",
   },
   pastefromword: {
-    confirmCleanup: "Teksten du limer inn ser ut til å være kopiert fra Word. Vil du renske den før du limer den inn?",
+    confirmCleanup:
+      "Teksten du limer inn ser ut til å være kopiert fra Word. Vil du renske den før du limer den inn?",
     error: "Det var ikke mulig å renske den innlimte teksten på grunn av en intern feil",
     title: "Lim inn fra Word",
     toolbar: "Lim inn fra Word",
@@ -154,7 +159,10 @@ CKEDITOR.lang["nb"] = {
   notification: { closed: "Varsling lukket." },
   maximize: { maximize: "Maksimer", minimize: "Minimer" },
   magicline: { title: "Sett inn nytt avsnitt her" },
-  list: { bulletedlist: "Legg til / fjern punktliste", numberedlist: "Legg til / fjern nummerert liste" },
+  list: {
+    bulletedlist: "Legg til / fjern punktliste",
+    numberedlist: "Legg til / fjern nummerert liste",
+  },
   link: {
     acccessKey: "Aksessknapp",
     advanced: "Avansert",
@@ -344,7 +352,8 @@ CKEDITOR.lang["nb"] = {
     validateNumberFailed: "Denne verdien er ikke et tall.",
     confirmNewPage:
       "Alle ulagrede endringer som er gjort i dette innholdet vil gå tapt. Er du sikker på at du vil laste en ny side?",
-    confirmCancel: "Du har endret noen alternativer. Er du sikker på at du vil lukke dialogvinduet?",
+    confirmCancel:
+      "Du har endret noen alternativer. Er du sikker på at du vil lukke dialogvinduet?",
     options: "Valg",
     target: "Mål",
     targetNew: "Nytt vindu (_blank)",

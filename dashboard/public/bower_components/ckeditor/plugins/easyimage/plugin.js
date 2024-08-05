@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function g(a) {
     return CKEDITOR.tools.capitalize(a, !0);
   }
@@ -11,7 +11,9 @@
       return function (b, d) {
         var c = b.widgets.focused,
           e = CKEDITOR.TRISTATE_DISABLED;
-        c && "easyimage" === c.name && (e = a && a.call(this, c, b, d) ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF);
+        c &&
+          "easyimage" === c.name &&
+          (e = a && a.call(this, c, b, d) ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF);
         this.setState(e);
       };
     }
@@ -29,15 +31,19 @@
       });
       a.addCommand(f, c);
       c = a.getCommand(f);
-      c.enable = function () {};
+      c.enable = () => {};
       c.refresh(a, a.elementPath());
       return c;
     }
     a.addCommand(
       "easyimageAlt",
-      new CKEDITOR.dialogCommand("easyimageAlt", { startDisabled: !0, contextSensitive: !0, refresh: b() })
+      new CKEDITOR.dialogCommand("easyimageAlt", {
+        startDisabled: !0,
+        contextSensitive: !0,
+        refresh: b(),
+      })
     );
-    (function (b) {
+    ((b) => {
       function c(a, b) {
         var d = a.match(/^easyimage(.+)$/);
         if (d) {
@@ -47,11 +53,13 @@
         }
         return null;
       }
-      a.on("afterCommandExec", function (d) {
+      a.on("afterCommandExec", (d) => {
         c(d.data.name, b) && (a.forceNextSelectionCheck(), a.selectionChange(!0));
       });
-      a.on("beforeCommandExec", function (d) {
-        c(d.data.name, b) && d.data.command.style.checkActive(d.editor.elementPath(), a) && (d.cancel(), a.focus());
+      a.on("beforeCommandExec", (d) => {
+        c(d.data.name, b) &&
+          d.data.command.style.checkActive(d.editor.elementPath(), a) &&
+          (d.cancel(), a.focus());
       });
       for (var d in b) e(a, d, b[d], "easyimage" + g(d));
     })(c);
@@ -61,7 +69,7 @@
     a.plugins.contextmenu &&
       (c.split && (c = c.split(",")),
       a.addMenuGroup("easyimage"),
-      CKEDITOR.tools.array.forEach(c, function (b) {
+      CKEDITOR.tools.array.forEach(c, (b) => {
         b = a.ui.items[b];
         a.addMenuItem(b.name, { label: b.label, command: b.command, group: "easyimage" });
       }));
@@ -70,7 +78,7 @@
     var c = a.sender.editor,
       b = c.config.easyimage_toolbar;
     b.split && (b = b.split(","));
-    CKEDITOR.tools.array.forEach(b, function (b) {
+    CKEDITOR.tools.array.forEach(b, (b) => {
       b = c.ui.items[b];
       a.data[b.name] = c.getCommand(b.command).state;
     });
@@ -90,7 +98,7 @@
         loaderType: CKEDITOR.plugins.cloudservices.cloudServicesLoader,
         progressReporterType: CKEDITOR.plugins.imagebase.progressBar,
         upcasts: {
-          figure: function (a) {
+          figure: (a) => {
             if ((!e || a.hasClass(e)) && 1 === a.find("img", !0).length) return a;
           },
         },
@@ -98,28 +106,28 @@
           function b(a, c) {
             var e = a.$;
             if (e.complete && e.naturalWidth) return c(e.naturalWidth);
-            a.once("load", function () {
+            a.once("load", () => {
               c(e.naturalWidth);
             });
           }
           var c = this.parts.image;
           c &&
             !c.$.complete &&
-            b(c, function () {
+            b(c, () => {
               var b = a._.easyImageToolbarContext.toolbar._view;
               b.rect.visible && b.attach(b._pointedElement, { focusElement: !1 });
             });
           c = this.element.data("cke-upload-id");
-          "undefined" !== typeof c && (this.setData("uploadId", c), this.element.data("cke-upload-id", !1));
+          "undefined" !== typeof c &&
+            (this.setData("uploadId", c), this.element.data("cke-upload-id", !1));
           this.on("contextMenu", q);
           a.config.easyimage_class && this.addClass(a.config.easyimage_class);
           this.on("uploadStarted", function () {
-            var a = this;
-            b(a.parts.image, function (b) {
-              a.parts.image.hasAttribute("width") ||
-                (a.editor.fire("lockSnapshot"),
-                a.parts.image.setAttribute("width", b),
-                a.editor.fire("unlockSnapshot"));
+            b(this.parts.image, (b) => {
+              this.parts.image.hasAttribute("width") ||
+                (this.editor.fire("lockSnapshot"),
+                this.parts.image.setAttribute("width", b),
+                this.editor.fire("unlockSnapshot"));
             });
           });
           this.on("uploadDone", function (a) {
@@ -150,7 +158,10 @@
               this.checkStyleActive(f.style) &&
               (b = !0);
           }
-          !b && e && a.getCommand("easyimage" + g(e)) && this.applyStyle(a.getCommand("easyimage" + g(e)).style);
+          !b &&
+            e &&
+            a.getCommand("easyimage" + g(e)) &&
+            this.applyStyle(a.getCommand("easyimage" + g(e)).style);
         },
       };
     e &&
@@ -162,7 +173,7 @@
     CKEDITOR.plugins.imagebase.addImageWidget(a, "easyimage", b);
   }
   function t(a) {
-    a.on("paste", function (c) {
+    a.on("paste", (c) => {
       if (!a.isReadOnly && c.data.dataValue.match(/<img[\s\S]+data:/i)) {
         c = c.data;
         var b = document.implementation.createHTMLDocument(""),
@@ -184,7 +195,10 @@
             m &&
             !f.isReadOnly(1) &&
             (g++,
-            1 < g && ((k = a.getSelection().getRanges()), k[0].enlarge(CKEDITOR.ENLARGE_ELEMENT), k[0].collapse(!1)),
+            1 < g &&
+              ((k = a.getSelection().getRanges()),
+              k[0].enlarge(CKEDITOR.ENLARGE_ELEMENT),
+              k[0].collapse(!1)),
             h.match(/image\/([a-z]+?);/i),
             (k = e._spawnLoader(a, h, e)),
             (h = e._insertWidget(a, e, h, !1, { uploadId: k.id })),
@@ -202,11 +216,11 @@
       toolbar: "insert,1",
     });
     a.addCommand("easyimageUpload", {
-      exec: function () {
+      exec: () => {
         var c = CKEDITOR.dom.element.createFromHtml(
           '\x3cinput type\x3d"file" accept\x3d"image/*" multiple\x3d"multiple"\x3e'
         );
-        c.once("change", function (b) {
+        c.once("change", (b) => {
           b = b.data.getTarget();
           b.$.files.length &&
             a.fire("paste", {
@@ -221,7 +235,7 @@
   }
   var m = !1;
   CKEDITOR.plugins.easyimage = {
-    _parseSrcSet: function (a) {
+    _parseSrcSet: (a) => {
       var c = [],
         b;
       for (b in a) "default" !== b && c.push(a[b] + " " + b + "w");
@@ -242,16 +256,31 @@
         m || (CKEDITOR.document.appendStyleSheet(this.path + "styles/easyimage.css"), (m = !0)),
           a.addContentsCss && a.addContentsCss(this.path + "styles/easyimage.css");
     },
-    afterInit: function (a) {
+    afterInit: (a) => {
       if (!CKEDITOR.env.ie || 11 <= CKEDITOR.env.version) {
         var c;
         c = CKEDITOR.tools.object.merge(
           {
-            full: { attributes: { class: "easyimage-full" }, label: a.lang.easyimage.commands.fullImage },
-            side: { attributes: { class: "easyimage-side" }, label: a.lang.easyimage.commands.sideImage },
-            alignLeft: { attributes: { class: "easyimage-align-left" }, label: a.lang.common.alignLeft },
-            alignCenter: { attributes: { class: "easyimage-align-center" }, label: a.lang.common.alignCenter },
-            alignRight: { attributes: { class: "easyimage-align-right" }, label: a.lang.common.alignRight },
+            full: {
+              attributes: { class: "easyimage-full" },
+              label: a.lang.easyimage.commands.fullImage,
+            },
+            side: {
+              attributes: { class: "easyimage-side" },
+              label: a.lang.easyimage.commands.sideImage,
+            },
+            alignLeft: {
+              attributes: { class: "easyimage-align-left" },
+              label: a.lang.common.alignLeft,
+            },
+            alignCenter: {
+              attributes: { class: "easyimage-align-center" },
+              label: a.lang.common.alignCenter,
+            },
+            alignRight: {
+              attributes: { class: "easyimage-align-right" },
+              label: a.lang.common.alignRight,
+            },
           },
           a.config.easyimage_styles
         );

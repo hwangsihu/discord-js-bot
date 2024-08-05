@@ -2,7 +2,7 @@
  * Montenegrin translation for bootstrap-datepicker
  * Miodrag Nikač <miodrag@restartit.me>
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["me"] = {
     days: ["Nedjelja", "Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak", "Subota"],
     daysShort: ["Ned", "Pon", "Uto", "Sri", "Čet", "Pet", "Sub"],
@@ -21,7 +21,20 @@
       "Novembar",
       "Decembar",
     ],
-    monthsShort: ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Avg", "Sep", "Okt", "Nov", "Dec"],
+    monthsShort: [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Maj",
+      "Jun",
+      "Jul",
+      "Avg",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Dec",
+    ],
     today: "Danas",
     weekStart: 1,
     clear: "Izbriši",

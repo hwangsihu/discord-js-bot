@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function b(a, b, c) {
     var h = n[this.id];
     if (h)
@@ -41,7 +41,11 @@
   function c(a, b, c) {
     var h = n[this.id];
     if (h)
-      for (var f = "" === this.getValue(), e = this instanceof CKEDITOR.ui.dialog.checkbox, d = 0; d < h.length; d++) {
+      for (
+        var f = "" === this.getValue(), e = this instanceof CKEDITOR.ui.dialog.checkbox, d = 0;
+        d < h.length;
+        d++
+      ) {
         var g = h[d];
         switch (g.type) {
           case 1:
@@ -55,7 +59,10 @@
             if (f || (e && m === g["default"])) g.name in c && c[g.name].remove();
             else if (g.name in c) c[g.name].setAttribute("value", m);
             else {
-              var p = CKEDITOR.dom.element.createFromHtml("\x3ccke:param\x3e\x3c/cke:param\x3e", a.getDocument());
+              var p = CKEDITOR.dom.element.createFromHtml(
+                "\x3ccke:param\x3e\x3c/cke:param\x3e",
+                a.getDocument()
+              );
               p.setAttributes({ name: g.name, value: m });
               1 > a.getChildCount() ? p.appendTo(a) : p.insertBefore(a.getFirst());
             }
@@ -106,9 +113,10 @@
         ],
         type: [{ type: 4, name: "type" }],
       },
-      k = "play loop menu quality scale salign wmode bgcolor base flashvars allowScriptAccess allowFullScreen".split(
-        " "
-      ),
+      k =
+        "play loop menu quality scale salign wmode bgcolor base flashvars allowScriptAccess allowFullScreen".split(
+          " "
+        ),
       l = 0;
     l < k.length;
     l++
@@ -119,7 +127,7 @@
     ];
   k = ["play", "loop", "menu"];
   for (l = 0; l < k.length; l++) n[k[l]][0]["default"] = n[k[l]][1]["default"] = !0;
-  CKEDITOR.dialog.add("flash", function (a) {
+  CKEDITOR.dialog.add("flash", (a) => {
     var l = !a.config.flashEmbedTagOnly,
       k = a.config.flashAddEmbedTag || a.config.flashEmbedTagOnly,
       h,
@@ -168,13 +176,20 @@
         this.fakeImage
           ? ((e = this.objectNode), (d = this.embedNode))
           : (l &&
-              ((e = CKEDITOR.dom.element.createFromHtml("\x3ccke:object\x3e\x3c/cke:object\x3e", a.document)),
+              ((e = CKEDITOR.dom.element.createFromHtml(
+                "\x3ccke:object\x3e\x3c/cke:object\x3e",
+                a.document
+              )),
               e.setAttributes({
                 classid: "clsid:d27cdb6e-ae6d-11cf-96b8-444553540000",
-                codebase: "http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version\x3d6,0,40,0",
+                codebase:
+                  "http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version\x3d6,0,40,0",
               })),
             k &&
-              ((d = CKEDITOR.dom.element.createFromHtml("\x3ccke:embed\x3e\x3c/cke:embed\x3e", a.document)),
+              ((d = CKEDITOR.dom.element.createFromHtml(
+                "\x3ccke:embed\x3e\x3c/cke:embed\x3e",
+                a.document
+              )),
               d.setAttributes({
                 type: "application/x-shockwave-flash",
                 pluginspage: "http://www.macromedia.com/go/getflashplayer",
@@ -189,7 +204,9 @@
         e = a.createFakeElement(e || d, "cke_flash", "flash", !0);
         e.setAttributes(f);
         e.setStyles(c);
-        this.fakeImage ? (e.replace(this.fakeImage), a.getSelection().selectElement(e)) : a.insertElement(e);
+        this.fakeImage
+          ? (e.replace(this.fakeImage), a.getSelection().selectElement(e))
+          : a.insertElement(e);
       },
       onHide: function () {
         this.preview && this.preview.setHtml("");
@@ -220,7 +237,7 @@
                       commit: c,
                       onLoad: function () {
                         var a = this.getDialog(),
-                          b = function (b) {
+                          b = (b) => {
                             h.setAttribute("src", b);
                             a.preview.setHtml(
                               '\x3cembed height\x3d"100%" width\x3d"100%" src\x3d"' +
@@ -229,7 +246,7 @@
                             );
                           };
                         a.preview = a.getContentElement("info", "preview").getElement().getChild(3);
-                        this.on("change", function (a) {
+                        this.on("change", (a) => {
                           a.data && a.data.value && b(a.data.value);
                         });
                         this.getInputElement().on(
@@ -303,7 +320,10 @@
                 },
               ],
             },
-            { type: "vbox", children: [{ type: "html", id: "preview", style: "width:95%;", html: f }] },
+            {
+              type: "vbox",
+              children: [{ type: "html", id: "preview", style: "width:95%;", html: f }],
+            },
           ],
         },
         {
@@ -446,9 +466,30 @@
                   type: "vbox",
                   padding: 0,
                   children: [
-                    { type: "checkbox", id: "menu", label: a.lang.flash.chkMenu, default: !0, setup: b, commit: c },
-                    { type: "checkbox", id: "play", label: a.lang.flash.chkPlay, default: !0, setup: b, commit: c },
-                    { type: "checkbox", id: "loop", label: a.lang.flash.chkLoop, default: !0, setup: b, commit: c },
+                    {
+                      type: "checkbox",
+                      id: "menu",
+                      label: a.lang.flash.chkMenu,
+                      default: !0,
+                      setup: b,
+                      commit: c,
+                    },
+                    {
+                      type: "checkbox",
+                      id: "play",
+                      label: a.lang.flash.chkPlay,
+                      default: !0,
+                      setup: b,
+                      commit: c,
+                    },
+                    {
+                      type: "checkbox",
+                      id: "loop",
+                      label: a.lang.flash.chkLoop,
+                      default: !0,
+                      setup: b,
+                      commit: c,
+                    },
                     {
                       type: "checkbox",
                       id: "allowFullScreen",
@@ -470,7 +511,14 @@
             {
               type: "hbox",
               children: [
-                { type: "text", id: "id", requiredContent: "object[id]", label: a.lang.common.id, setup: b, commit: c },
+                {
+                  type: "text",
+                  id: "id",
+                  requiredContent: "object[id]",
+                  label: a.lang.common.id,
+                  setup: b,
+                  commit: c,
+                },
               ],
             },
             {

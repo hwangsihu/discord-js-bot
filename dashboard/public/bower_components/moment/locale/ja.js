@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var ja = moment.defineLocale("ja", {
     months: "一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月".split("_"),
     monthsShort: "1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月".split("_"),
@@ -28,10 +26,8 @@
       llll: "YYYY年M月D日(ddd) HH:mm",
     },
     meridiemParse: /午前|午後/i,
-    isPM: function (input) {
-      return input === "午後";
-    },
-    meridiem: function (hour, minute, isLower) {
+    isPM: (input) => input === "午後",
+    meridiem: (hour, minute, isLower) => {
       if (hour < 12) {
         return "午前";
       } else {
@@ -59,7 +55,7 @@
       sameElse: "L",
     },
     dayOfMonthOrdinalParse: /\d{1,2}日/,
-    ordinal: function (number, period) {
+    ordinal: (number, period) => {
       switch (period) {
         case "d":
         case "D":

@@ -1,38 +1,30 @@
-define(["../core", "../var/indexOf", "../var/isFunction", "./var/rneedsContext", "../selector"], function (
+define(["../core", "../var/indexOf", "../var/isFunction", "./var/rneedsContext", "../selector"], (
   jQuery,
   indexOf,
   isFunction,
   rneedsContext
-) {
-  "use strict";
-
+) => {
   // Implement the identical functionality for filter and not
   function winnow(elements, qualifier, not) {
     if (isFunction(qualifier)) {
-      return jQuery.grep(elements, function (elem, i) {
-        return !!qualifier.call(elem, i, elem) !== not;
-      });
+      return jQuery.grep(elements, (elem, i) => !!qualifier.call(elem, i, elem) !== not);
     }
 
     // Single element
     if (qualifier.nodeType) {
-      return jQuery.grep(elements, function (elem) {
-        return (elem === qualifier) !== not;
-      });
+      return jQuery.grep(elements, (elem) => (elem === qualifier) !== not);
     }
 
     // Arraylike of elements (jQuery, arguments, Array)
     if (typeof qualifier !== "string") {
-      return jQuery.grep(elements, function (elem) {
-        return indexOf.call(qualifier, elem) > -1 !== not;
-      });
+      return jQuery.grep(elements, (elem) => indexOf.call(qualifier, elem) > -1 !== not);
     }
 
     // Filtered directly for both simple and complex selectors
     return jQuery.filter(qualifier, elements, not);
   }
 
-  jQuery.filter = function (expr, elems, not) {
+  jQuery.filter = (expr, elems, not) => {
     var elem = elems[0];
 
     if (not) {
@@ -45,9 +37,7 @@ define(["../core", "../var/indexOf", "../var/isFunction", "./var/rneedsContext",
 
     return jQuery.find.matches(
       expr,
-      jQuery.grep(elems, function (elem) {
-        return elem.nodeType === 1;
-      })
+      jQuery.grep(elems, (elem) => elem.nodeType === 1)
     );
   };
 
@@ -90,7 +80,9 @@ define(["../core", "../var/indexOf", "../var/isFunction", "./var/rneedsContext",
 
         // If this is a positional/relative selector, check membership in the returned set
         // so $("p:first").is("p:last") won't return true for a doc with two "p".
-        typeof selector === "string" && rneedsContext.test(selector) ? jQuery(selector) : selector || [],
+        typeof selector === "string" && rneedsContext.test(selector)
+          ? jQuery(selector)
+          : selector || [],
         false
       ).length;
     },

@@ -1,24 +1,16 @@
-define(function () {
+define(() => {
   // Slovak
 
   // use text for the numbers 2 through 4
   var smallNumbers = {
-    2: function (masc) {
-      return masc ? "dva" : "dve";
-    },
-    3: function () {
-      return "tri";
-    },
-    4: function () {
-      return "štyri";
-    },
+    2: (masc) => (masc ? "dva" : "dve"),
+    3: () => "tri",
+    4: () => "štyri",
   };
 
   return {
-    errorLoading: function () {
-      return "Výsledky sa nepodarilo načítať.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "Výsledky sa nepodarilo načítať.",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       if (overChars == 1) {
@@ -29,7 +21,7 @@ define(function () {
         return "Prosím, zadajte o " + overChars + " znakov menej";
       }
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       if (remainingChars == 1) {
@@ -40,10 +32,8 @@ define(function () {
         return "Prosím, zadajte ešte ďalších " + remainingChars + " znakov";
       }
     },
-    loadingMore: function () {
-      return "Načítanie ďalších výsledkov…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Načítanie ďalších výsledkov…",
+    maximumSelected: (args) => {
       if (args.maximum == 1) {
         return "Môžete zvoliť len jednu položku";
       } else if (args.maximum >= 2 && args.maximum <= 4) {
@@ -52,14 +42,8 @@ define(function () {
         return "Môžete zvoliť najviac " + args.maximum + " položiek";
       }
     },
-    noResults: function () {
-      return "Nenašli sa žiadne položky";
-    },
-    searching: function () {
-      return "Vyhľadávanie…";
-    },
-    removeAllItems: function () {
-      return "Odstráňte všetky položky";
-    },
+    noResults: () => "Nenašli sa žiadne položky",
+    searching: () => "Vyhľadávanie…",
+    removeAllItems: () => "Odstráňte všetky položky",
   };
 });

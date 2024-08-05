@@ -1,12 +1,11 @@
-define(["../core", "../core/access", "../core/nodeName", "./support", "../var/rnothtmlwhite", "../selector"], function (
-  jQuery,
-  access,
-  nodeName,
-  support,
-  rnothtmlwhite
-) {
-  "use strict";
-
+define([
+  "../core",
+  "../core/access",
+  "../core/nodeName",
+  "./support",
+  "../var/rnothtmlwhite",
+  "../selector",
+], (jQuery, access, nodeName, support, rnothtmlwhite) => {
   var boolHook,
     attrHandle = jQuery.expr.attrHandle;
 
@@ -23,7 +22,7 @@ define(["../core", "../core/access", "../core/nodeName", "./support", "../var/rn
   });
 
   jQuery.extend({
-    attr: function (elem, name, value) {
+    attr: (elem, name, value) => {
       var ret,
         hooks,
         nType = elem.nodeType;
@@ -41,7 +40,9 @@ define(["../core", "../core/access", "../core/nodeName", "./support", "../var/rn
       // Attribute hooks are determined by the lowercase version
       // Grab necessary hook if one is defined
       if (nType !== 1 || !jQuery.isXMLDoc(elem)) {
-        hooks = jQuery.attrHooks[name.toLowerCase()] || (jQuery.expr.match.bool.test(name) ? boolHook : undefined);
+        hooks =
+          jQuery.attrHooks[name.toLowerCase()] ||
+          (jQuery.expr.match.bool.test(name) ? boolHook : undefined);
       }
 
       if (value !== undefined) {
@@ -70,7 +71,7 @@ define(["../core", "../core/access", "../core/nodeName", "./support", "../var/rn
 
     attrHooks: {
       type: {
-        set: function (elem, value) {
+        set: (elem, value) => {
           if (!support.radioValue && value === "radio" && nodeName(elem, "input")) {
             var val = elem.value;
             elem.setAttribute("type", value);
@@ -83,7 +84,7 @@ define(["../core", "../core/access", "../core/nodeName", "./support", "../var/rn
       },
     },
 
-    removeAttr: function (elem, value) {
+    removeAttr: (elem, value) => {
       var name,
         i = 0,
         // Attribute names can contain non-HTML whitespace characters
@@ -100,7 +101,7 @@ define(["../core", "../core/access", "../core/nodeName", "./support", "../var/rn
 
   // Hooks for boolean attributes
   boolHook = {
-    set: function (elem, value, name) {
+    set: (elem, value, name) => {
       if (value === false) {
         // Remove boolean attributes when set to false
         jQuery.removeAttr(elem, name);
@@ -111,19 +112,19 @@ define(["../core", "../core/access", "../core/nodeName", "./support", "../var/rn
     },
   };
 
-  jQuery.each(jQuery.expr.match.bool.source.match(/\w+/g), function (i, name) {
+  jQuery.each(jQuery.expr.match.bool.source.match(/\w+/g), (i, name) => {
     var getter = attrHandle[name] || jQuery.find.attr;
 
-    attrHandle[name] = function (elem, name, isXML) {
+    attrHandle[name] = (elem, name, isXml) => {
       var ret,
         handle,
         lowercaseName = name.toLowerCase();
 
-      if (!isXML) {
+      if (!isXml) {
         // Avoid an infinite loop by temporarily removing this function from the getter
         handle = attrHandle[lowercaseName];
         attrHandle[lowercaseName] = ret;
-        ret = getter(elem, name, isXML) != null ? lowercaseName : null;
+        ret = getter(elem, name, isXml) != null ? lowercaseName : null;
         attrHandle[lowercaseName] = handle;
       }
       return ret;

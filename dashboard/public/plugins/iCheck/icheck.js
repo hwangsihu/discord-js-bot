@@ -7,7 +7,7 @@
  * MIT Licensed
  */
 
-(function ($) {
+(($) => {
   // Cached vars
   var _iCheck = "iCheck",
     _iCheckHelper = _iCheck + "-helper",
@@ -27,14 +27,16 @@
     _callback = "trigger",
     _label = "label",
     _cursor = "cursor",
-    _mobile = /ipad|iphone|ipod|android|blackberry|windows phone|opera mini|silk/i.test(navigator.userAgent);
+    _mobile = /ipad|iphone|ipod|android|blackberry|windows phone|opera mini|silk/i.test(
+      navigator.userAgent
+    );
 
   // Plugin init
   $.fn[_iCheck] = function (options, fire) {
     // Walker
     var handle = 'input[type="' + _checkbox + '"], input[type="' + _radio + '"]',
       stack = $(),
-      walker = function (object) {
+      walker = (object) => {
         object.each(function () {
           var self = $(this);
 
@@ -47,7 +49,11 @@
       };
 
     // Check if we should operate with some method
-    if (/^(check|uncheck|toggle|indeterminate|determinate|disable|enable|update|destroy)$/i.test(options)) {
+    if (
+      /^(check|uncheck|toggle|indeterminate|determinate|disable|enable|update|destroy)$/i.test(
+        options
+      )
+    ) {
       // Normalize method's name
       options = options.toLowerCase();
 
@@ -139,13 +145,15 @@
                 },
           // Get proper class
           className =
-            node[_type] == _checkbox ? settings.checkboxClass || "i" + _checkbox : settings.radioClass || "i" + _radio,
+            node[_type] == _checkbox
+              ? settings.checkboxClass || "i" + _checkbox
+              : settings.radioClass || "i" + _radio,
           // Find assigned labels
           label = $(_label + '[for="' + id + '"]').add(self.closest(_label)),
           // Check ARIA option
           aria = !!settings.aria,
           // Set ARIA placeholder
-          ariaID = _iCheck + "-" + Math.random().toString(36).replace("0.", ""),
+          ariaId = _iCheck + "-" + Math.random().toString(36).replace("0.", ""),
           // Parent & helper
           parent = '<div class="' + className + '" ' + (aria ? 'role="' + node[_type] + '" ' : ""),
           helper;
@@ -158,8 +166,8 @@
             if (this.id) {
               parent += this.id;
             } else {
-              this.id = ariaID;
-              parent += ariaID;
+              this.id = ariaId;
+              parent += ariaId;
             }
 
             parent += '"';
@@ -219,7 +227,7 @@
           });
         }
         // Input events
-        self.on(_click + ".i focus.i blur.i keyup.i keydown.i keypress.i", function (event) {
+        self.on(_click + ".i focus.i blur.i keyup.i keydown.i keypress.i", (event) => {
           var type = event[_type],
             key = event.keyCode;
 
@@ -249,7 +257,7 @@
         });
 
         // Helper events
-        helper.on(_click + " mousedown mouseup mouseover mouseout " + _touch, function (event) {
+        helper.on(_click + " mousedown mouseup mouseover mouseout " + _touch, (event) => {
           var type = event[_type],
             // mousedown|mouseup
             toggle = /wn|up/.test(type) ? activeClass : hoverClass;
@@ -299,7 +307,8 @@
           ? {
               checked: node[_checked],
               disabled: node[_disabled],
-              indeterminate: input.attr(_indeterminate) == "true" || input.attr(_determinate) == "false",
+              indeterminate:
+                input.attr(_indeterminate) == "true" || input.attr(_determinate) == "false",
             }
           : node[state];
 
@@ -393,7 +402,9 @@
     parent[_add](specific || option(input, state) || "");
 
     // Set ARIA attribute
-    disabled ? parent.attr("aria-disabled", "true") : parent.attr("aria-checked", indeterminate ? "mixed" : "true");
+    disabled
+      ? parent.attr("aria-disabled", "true")
+      : parent.attr("aria-checked", indeterminate ? "mixed" : "true");
 
     // Remove regular state class
     parent[_remove](regular || option(input, callback) || "");

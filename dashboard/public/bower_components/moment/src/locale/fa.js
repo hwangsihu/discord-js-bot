@@ -45,10 +45,8 @@ export default moment.defineLocale("fa", {
     LLLL: "dddd, D MMMM YYYY HH:mm",
   },
   meridiemParse: /قبل از ظهر|بعد از ظهر/,
-  isPM: function (input) {
-    return /بعد از ظهر/.test(input);
-  },
-  meridiem: function (hour, minute, isLower) {
+  isPM: (input) => /بعد از ظهر/.test(input),
+  meridiem: (hour, minute, isLower) => {
     if (hour < 12) {
       return "قبل از ظهر";
     } else {
@@ -79,20 +77,8 @@ export default moment.defineLocale("fa", {
     y: "یک سال",
     yy: "%d سال",
   },
-  preparse: function (string) {
-    return string
-      .replace(/[۰-۹]/g, function (match) {
-        return numberMap[match];
-      })
-      .replace(/،/g, ",");
-  },
-  postformat: function (string) {
-    return string
-      .replace(/\d/g, function (match) {
-        return symbolMap[match];
-      })
-      .replace(/,/g, "،");
-  },
+  preparse: (string) => string.replace(/[۰-۹]/g, (match) => numberMap[match]).replace(/،/g, ","),
+  postformat: (string) => string.replace(/\d/g, (match) => symbolMap[match]).replace(/,/g, "،"),
   dayOfMonthOrdinalParse: /\d{1,2}م/,
   ordinal: "%dم",
   week: {

@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-CKEDITOR.dialog.add("textfield", function (b) {
+CKEDITOR.dialog.add("textfield", (b) => {
   function e(a) {
     a = a.element;
     var b = this.getValue();
@@ -36,7 +36,7 @@ CKEDITOR.dialog.add("textfield", function (b) {
       c || a.getSelection().selectElement(b.element);
     },
     onLoad: function () {
-      this.foreach(function (a) {
+      this.foreach((a) => {
         a.getValue && (a.setup || (a.setup = f), a.commit || (a.commit = e));
       });
     },
@@ -154,7 +154,9 @@ CKEDITOR.dialog.add("textfield", function (b) {
             setup: CKEDITOR.plugins.forms._setupRequiredAttribute,
             commit: function (a) {
               a = a.element;
-              this.getValue() ? a.setAttribute("required", "required") : a.removeAttribute("required");
+              this.getValue()
+                ? a.setAttribute("required", "required")
+                : a.removeAttribute("required");
             },
           },
         ],

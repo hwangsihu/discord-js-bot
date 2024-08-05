@@ -11,7 +11,8 @@ CKEDITOR.lang["lv"] = {
     btnUndo: "Atcelt",
     changeTo: "Nomainīt uz",
     errorLoading: "Kļūda ielādējot aplikācijas servisa adresi: %s.",
-    ieSpellDownload: "Pareizrakstības pārbaudītājs nav pievienots. Vai vēlaties to lejupielādēt tagad?",
+    ieSpellDownload:
+      "Pareizrakstības pārbaudītājs nav pievienots. Vai vēlaties to lejupielādēt tagad?",
     manyChanges: "Pareizrakstības pārbaude pabeigta: %1 vārdi tika mainīti",
     noChanges: "Pareizrakstības pārbaude pabeigta: nekas netika labots",
     noMispell: "Pareizrakstības pārbaude pabeigta: kļūdas netika atrastas",
@@ -347,7 +348,8 @@ CKEDITOR.lang["lv"] = {
     generalTab: "Vispārīgi",
     advancedTab: "Izvērstais",
     validateNumberFailed: "Šī vērtība nav skaitlis",
-    confirmNewPage: "Jebkuras nesaglabātās izmaiņas tiks zaudētas. Vai tiešām vēlaties atvērt jaunu lapu?",
+    confirmNewPage:
+      "Jebkuras nesaglabātās izmaiņas tiks zaudētas. Vai tiešām vēlaties atvērt jaunu lapu?",
     confirmCancel: "Daži no uzstādījumiem ir mainīti. Vai tiešām vēlaties aizvērt šo dialogu?",
     options: "Uzstādījumi",
     target: "Mērķis",
@@ -376,7 +378,8 @@ CKEDITOR.lang["lv"] = {
     invalidValue: "Nekorekta vērtība",
     invalidHeight: "Augstumam jābūt skaitlim.",
     invalidWidth: "Platumam jābūt skaitlim",
-    invalidLength: 'Laukam "%1" norādītajai vērtībai jābūt pozitīvam skaitlim ar vai bez korektām mērvienībām (%2).',
+    invalidLength:
+      'Laukam "%1" norādītajai vērtībai jābūt pozitīvam skaitlim ar vai bez korektām mērvienībām (%2).',
     invalidCssLength:
       'Laukam "%1" norādītajai vērtībai jābūt pozitīvam skaitlim ar vai bez korektām CSS mērvienībām (px, %, in, cm, mm, em, ex, pt, vai pc).',
     invalidHtmlLength:

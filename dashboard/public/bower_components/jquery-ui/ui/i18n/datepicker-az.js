@@ -1,6 +1,6 @@
 /* Azerbaijani (UTF-8) initialisation for the jQuery UI date picker plugin. */
 /* Written by Jamil Najafov (necefov33@gmail.com). */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["az"] = {
     closeText: "Bağla",
     prevText: "&#x3C;Geri",
@@ -28,8 +28,29 @@
       "Noyabr",
       "Dekabr",
     ],
-    monthNamesShort: ["Yan", "Fev", "Mar", "Apr", "May", "İyun", "İyul", "Avq", "Sen", "Okt", "Noy", "Dek"],
-    dayNames: ["Bazar", "Bazar ertəsi", "Çərşənbə axşamı", "Çərşənbə", "Cümə axşamı", "Cümə", "Şənbə"],
+    monthNamesShort: [
+      "Yan",
+      "Fev",
+      "Mar",
+      "Apr",
+      "May",
+      "İyun",
+      "İyul",
+      "Avq",
+      "Sen",
+      "Okt",
+      "Noy",
+      "Dek",
+    ],
+    dayNames: [
+      "Bazar",
+      "Bazar ertəsi",
+      "Çərşənbə axşamı",
+      "Çərşənbə",
+      "Cümə axşamı",
+      "Cümə",
+      "Şənbə",
+    ],
     dayNamesShort: ["B", "Be", "Ça", "Ç", "Ca", "C", "Ş"],
     dayNamesMin: ["B", "B", "Ç", "С", "Ç", "C", "Ş"],
     weekHeader: "Hf",

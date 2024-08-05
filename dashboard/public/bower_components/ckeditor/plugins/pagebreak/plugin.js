@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function e(a) {
     return {
       "aria-label": a,
@@ -27,20 +27,24 @@
       ).replace(/;/g, " !important;");
       CKEDITOR.addCss("div.cke_pagebreak{" + a + "}");
     },
-    init: function (a) {
+    init: (a) => {
       a.blockless ||
         (a.addCommand("pagebreak", CKEDITOR.plugins.pagebreakCmd),
         a.ui.addButton &&
-          a.ui.addButton("PageBreak", { label: a.lang.pagebreak.toolbar, command: "pagebreak", toolbar: "insert,70" }),
+          a.ui.addButton("PageBreak", {
+            label: a.lang.pagebreak.toolbar,
+            command: "pagebreak",
+            toolbar: "insert,70",
+          }),
         CKEDITOR.env.webkit &&
-          a.on("contentDom", function () {
-            a.document.on("click", function (b) {
+          a.on("contentDom", () => {
+            a.document.on("click", (b) => {
               b = b.data.getTarget();
               b.is("div") && b.hasClass("cke_pagebreak") && a.getSelection().selectElement(b);
             });
           }));
     },
-    afterInit: function (a) {
+    afterInit: (a) => {
       function b(f) {
         CKEDITOR.tools.extend(f.attributes, e(a.lang.pagebreak.alt), !0);
         f.children.length = 0;
@@ -54,7 +58,7 @@
         c.addRules(
           {
             attributes: {
-              class: function (a, b) {
+              class: (a, b) => {
                 var c = a.replace("cke_pagebreak", "");
                 if (c != a) {
                   var d = CKEDITOR.htmlParser.fragment.fromHtml(
@@ -76,7 +80,7 @@
       g &&
         g.addRules({
           elements: {
-            div: function (a) {
+            div: (a) => {
               if (a.attributes["data-cke-pagebreak"]) b(a);
               else if (h.test(a.attributes.style)) {
                 var c = a.children[0];
@@ -88,7 +92,7 @@
     },
   });
   CKEDITOR.plugins.pagebreakCmd = {
-    exec: function (a) {
+    exec: (a) => {
       var b = a.document.createElement("div", { attributes: e(a.lang.pagebreak.alt) });
       a.insertElement(b);
     },
@@ -96,9 +100,7 @@
     allowedContent: {
       div: { styles: "!page-break-after" },
       span: {
-        match: function (a) {
-          return (a = a.parent) && "div" == a.name && a.styles && a.styles["page-break-after"];
-        },
+        match: (a) => (a = a.parent) && "div" == a.name && a.styles && a.styles["page-break-after"],
         styles: "display",
       },
     },

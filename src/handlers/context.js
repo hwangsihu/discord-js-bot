@@ -8,7 +8,7 @@ module.exports = {
    * @param {import('discord.js').ContextMenuInteraction} interaction
    * @param {import("@structures/BaseContext")} context
    */
-  handleContext: async function (interaction, context) {
+  handleContext: async (interaction, context) => {
     // check cooldown
     if (context.cooldown) {
       const remaining = getRemainingCooldown(interaction.user.id, context);

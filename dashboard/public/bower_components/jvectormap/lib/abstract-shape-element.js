@@ -70,7 +70,7 @@ jvm.AbstractShapeElement.prototype.updateStyle = function () {
   this.set(attrs);
 };
 
-jvm.AbstractShapeElement.mergeStyles = function (styles, newStyles) {
+jvm.AbstractShapeElement.mergeStyles = (styles, newStyles) => {
   var key;
 
   newStyles = newStyles || {};

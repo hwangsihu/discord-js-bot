@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-CKEDITOR.dialog.add("embedBase", function (b) {
+CKEDITOR.dialog.add("embedBase", (b) => {
   var c = b.lang.embedbase;
   return {
     title: c.title,
@@ -17,20 +17,20 @@ CKEDITOR.dialog.add("embedBase", function (b) {
         d = null;
       this.on(
         "ok",
-        function (f) {
+        (f) => {
           f.data.hide = !1;
           f.stop();
           a.setState(CKEDITOR.DIALOG_STATE_BUSY);
           var c = a.getValueOf("info", "url");
           d = a.widget.loadContent(c, {
             noNotifications: !0,
-            callback: function () {
+            callback: () => {
               a.widget.isReady() || b.widgets.finalizeCreation(a.widget.wrapper.getParent(!0));
               b.fire("saveSnapshot");
               a.hide();
               e();
             },
-            errorCallback: function (b) {
+            errorCallback: (b) => {
               a.getContentElement("info", "url").select();
               alert(a.widget.getErrorMessage(b, c, "Given"));
               e();
@@ -41,7 +41,7 @@ CKEDITOR.dialog.add("embedBase", function (b) {
         null,
         15
       );
-      this.on("cancel", function (a) {
+      this.on("cancel", (a) => {
         a.data.hide && d && (d.cancel(), e());
       });
     },
@@ -58,7 +58,9 @@ CKEDITOR.dialog.add("embedBase", function (b) {
               this.setValue(b.data.url);
             },
             validate: function () {
-              return this.getDialog().widget.isUrlValid(this.getValue()) ? !0 : c.unsupportedUrlGiven;
+              return this.getDialog().widget.isUrlValid(this.getValue())
+                ? !0
+                : c.unsupportedUrlGiven;
             },
           },
         ],

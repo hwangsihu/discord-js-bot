@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function h(b, d) {
     for (var a = b.length, c = 0, e = 0; e < a; e += 1) {
       var g = b[e];
@@ -17,13 +17,14 @@
   }
   CKEDITOR.plugins.add("textmatch", {});
   CKEDITOR.plugins.textMatch = {};
-  CKEDITOR.plugins.textMatch.match = function (b, d) {
+  CKEDITOR.plugins.textMatch.match = (b, d) => {
     var a = CKEDITOR.plugins.textMatch.getTextAndOffset(b),
       c = CKEDITOR.dom.selection.FILLING_CHAR_SEQUENCE,
       e = 0;
     if (a)
       return (
-        0 == a.text.indexOf(c) && ((e = c.length), (a.text = a.text.replace(c, "")), (a.offset -= e)),
+        0 == a.text.indexOf(c) &&
+          ((e = c.length), (a.text = a.text.replace(c, "")), (a.offset -= e)),
         (c = d(a.text, a.offset))
           ? {
               range: CKEDITOR.plugins.textMatch.getRangeInText(b, c.start, c.end + e),
@@ -32,7 +33,7 @@
           : null
       );
   };
-  CKEDITOR.plugins.textMatch.getTextAndOffset = function (b) {
+  CKEDITOR.plugins.textMatch.getTextAndOffset = (b) => {
     if (!b.collapsed) return null;
     var d = "",
       a = 0,
@@ -40,11 +41,7 @@
       e = !1,
       g,
       h = b.startContainer.type != CKEDITOR.NODE_ELEMENT;
-    g = h
-      ? m(c, function (a) {
-          return b.startContainer.equals(a);
-        })
-      : b.startOffset - (c[0] ? c[0].getIndex() : 0);
+    g = h ? m(c, (a) => b.startContainer.equals(a)) : b.startOffset - (c[0] ? c[0].getIndex() : 0);
     for (var k = c.length, f = 0; f < k; f += 1) {
       var l = c[f],
         d = d + l.getText();
@@ -59,7 +56,7 @@
     }
     return { text: d, offset: a };
   };
-  CKEDITOR.plugins.textMatch.getRangeInText = function (b, d, a) {
+  CKEDITOR.plugins.textMatch.getRangeInText = (b, d, a) => {
     var c = new CKEDITOR.dom.range(b.root);
     b = CKEDITOR.plugins.textMatch.getAdjacentTextNodes(b);
     d = h(b, d);
@@ -68,7 +65,7 @@
     c.setEnd(a.element, a.offset);
     return c;
   };
-  CKEDITOR.plugins.textMatch.getAdjacentTextNodes = function (b) {
+  CKEDITOR.plugins.textMatch.getAdjacentTextNodes = (b) => {
     if (!b.collapsed) return [];
     var d = [],
       a,

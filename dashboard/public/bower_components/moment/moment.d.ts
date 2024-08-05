@@ -11,9 +11,40 @@ declare function moment(
 ): moment.Moment;
 
 declare namespace moment {
-  type RelativeTimeKey = "s" | "ss" | "m" | "mm" | "h" | "hh" | "d" | "dd" | "M" | "MM" | "y" | "yy";
-  type CalendarKey = "sameDay" | "nextDay" | "lastDay" | "nextWeek" | "lastWeek" | "sameElse" | string;
-  type LongDateFormatKey = "LTS" | "LT" | "L" | "LL" | "LLL" | "LLLL" | "lts" | "lt" | "l" | "ll" | "lll" | "llll";
+  type RelativeTimeKey =
+    | "s"
+    | "ss"
+    | "m"
+    | "mm"
+    | "h"
+    | "hh"
+    | "d"
+    | "dd"
+    | "M"
+    | "MM"
+    | "y"
+    | "yy";
+  type CalendarKey =
+    | "sameDay"
+    | "nextDay"
+    | "lastDay"
+    | "nextWeek"
+    | "lastWeek"
+    | "sameElse"
+    | string;
+  type LongDateFormatKey =
+    | "LTS"
+    | "LT"
+    | "L"
+    | "LL"
+    | "LLL"
+    | "LLLL"
+    | "lts"
+    | "lt"
+    | "l"
+    | "ll"
+    | "lll"
+    | "llll";
 
   interface Locale {
     calendar(key?: CalendarKey, m?: Moment, now?: Moment): string;
@@ -24,7 +55,12 @@ declare namespace moment {
 
     preparse(inp: string): string;
     postformat(inp: string): string;
-    relativeTime(n: number, withoutSuffix: boolean, key: RelativeTimeKey, isFuture: boolean): string;
+    relativeTime(
+      n: number,
+      withoutSuffix: boolean,
+      key: RelativeTimeKey,
+      isFuture: boolean
+    ): string;
     pastFuture(diff: number, absRelTime: string): string;
     set(config: Object): void;
 
@@ -316,24 +352,24 @@ declare namespace moment {
       | "milliseconds"
       | "ms";
 
-    type _quarter = "quarter" | "quarters" | "Q";
-    type _isoWeek = "isoWeek" | "isoWeeks" | "W";
-    type _date = "date" | "dates" | "D";
-    type DurationConstructor = Base | _quarter;
+    type _Quarter = "quarter" | "quarters" | "Q";
+    type _IsoWeek = "isoWeek" | "isoWeeks" | "W";
+    type _Date = "date" | "dates" | "D";
+    type DurationConstructor = Base | _Quarter;
 
     type DurationAs = Base;
 
-    type StartOf = Base | _quarter | _isoWeek | _date | void; // null
+    type StartOf = Base | _Quarter | _IsoWeek | _Date | void; // null
 
-    type Diff = Base | _quarter;
+    type Diff = Base | _Quarter;
 
-    type MomentConstructor = Base | _date;
+    type MomentConstructor = Base | _Date;
 
     type All =
       | Base
-      | _quarter
-      | _isoWeek
-      | _date
+      | _Quarter
+      | _IsoWeek
+      | _Date
       | "weekYear"
       | "weekYears"
       | "gg"
@@ -434,7 +470,14 @@ declare namespace moment {
     to: MomentInput;
   }
 
-  type MomentInput = Moment | Date | string | number | (number | string)[] | MomentInputObject | void; // null | undefined
+  type MomentInput =
+    | Moment
+    | Date
+    | string
+    | number
+    | (number | string)[]
+    | MomentInputObject
+    | void; // null | undefined
   type DurationInputArg1 = Duration | number | string | FromTo | DurationInputObject | void; // null | undefined
   type DurationInputArg2 = unitOfTime.DurationConstructor;
   type LocaleSpecifier = string | Moment | Duration | string[] | boolean;
@@ -638,7 +681,12 @@ declare namespace moment {
     /**
      * @deprecated as of 2.7.0, use moment.min/max
      */
-    max(inp?: MomentInput, format?: MomentFormatSpecification, language?: string, strict?: boolean): Moment;
+    max(
+      inp?: MomentInput,
+      format?: MomentFormatSpecification,
+      language?: string,
+      strict?: boolean
+    ): Moment;
 
     // NOTE(constructor): Same as moment constructor
     /**
@@ -648,7 +696,12 @@ declare namespace moment {
     /**
      * @deprecated as of 2.7.0, use moment.min/max
      */
-    min(inp?: MomentInput, format?: MomentFormatSpecification, language?: string, strict?: boolean): Moment;
+    min(
+      inp?: MomentInput,
+      format?: MomentFormatSpecification,
+      language?: string,
+      strict?: boolean
+    ): Moment;
 
     get(unit: unitOfTime.All): number;
     set(unit: unitOfTime.All, value: number): Moment;
@@ -661,7 +714,11 @@ declare namespace moment {
   export var fn: Moment;
 
   // NOTE(constructor): Same as moment constructor
-  export function utc(inp?: MomentInput, format?: MomentFormatSpecification, strict?: boolean): Moment;
+  export function utc(
+    inp?: MomentInput,
+    format?: MomentFormatSpecification,
+    strict?: boolean
+  ): Moment;
   export function utc(
     inp?: MomentInput,
     format?: MomentFormatSpecification,
@@ -694,7 +751,11 @@ declare namespace moment {
   export function duration(inp?: DurationInputArg1, unit?: DurationInputArg2): Duration;
 
   // NOTE(constructor): Same as moment constructor
-  export function parseZone(inp?: MomentInput, format?: MomentFormatSpecification, strict?: boolean): Moment;
+  export function parseZone(
+    inp?: MomentInput,
+    format?: MomentFormatSpecification,
+    strict?: boolean
+  ): Moment;
   export function parseZone(
     inp?: MomentInput,
     format?: MomentFormatSpecification,

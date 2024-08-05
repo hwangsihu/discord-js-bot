@@ -1,6 +1,4 @@
-define(["../var/class2type", "../var/toString"], function (class2type, toString) {
-  "use strict";
-
+define(["../var/class2type", "../var/toString"], (class2type, toString) => {
   function toType(obj) {
     if (obj == null) {
       return obj + "";

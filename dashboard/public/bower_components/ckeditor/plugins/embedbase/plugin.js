@@ -2,9 +2,9 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   var l = {
-    _attachScript: function (e, c) {
+    _attachScript: (e, c) => {
       var d = new CKEDITOR.dom.element("script");
       d.setAttribute("src", e);
       d.on("error", c);
@@ -20,13 +20,13 @@
       var h = CKEDITOR.tools.getNextNumber(),
         g;
       c.callback = "CKEDITOR._.jsonpCallbacks[" + h + "]";
-      CKEDITOR._.jsonpCallbacks[h] = function (a) {
-        setTimeout(function () {
+      CKEDITOR._.jsonpCallbacks[h] = (a) => {
+        setTimeout(() => {
           b();
           d(a);
         });
       };
-      g = this._attachScript(e.output(c), function () {
+      g = this._attachScript(e.output(c), () => {
         b();
         a && a();
       });
@@ -37,7 +37,7 @@
   CKEDITOR.plugins.add("embedbase", {
     lang: "ar,az,bg,ca,cs,da,de,de-ch,en,en-au,eo,es,es-mx,eu,fr,gl,hr,hu,id,it,ja,ko,ku,lv,nb,nl,oc,pl,pt,pt-br,ro,ru,sk,sq,sv,tr,ug,uk,zh,zh-cn",
     requires: "dialog,widget,notificationaggregator",
-    onLoad: function () {
+    onLoad: () => {
       CKEDITOR._.jsonpCallbacks = {};
     },
     init: function () {
@@ -45,7 +45,7 @@
     },
   });
   CKEDITOR.plugins.embedBase = {
-    createWidgetBaseDefinition: function (e) {
+    createWidgetBaseDefinition: (e) => {
       var c,
         d = e.lang.embedbase;
       return {
@@ -76,7 +76,9 @@
             function (a) {
               if (!a.data.html) {
                 var b = this._responseToHtml(a.data.url, a.data.response);
-                null !== b ? (a.data.html = b) : ((a.data.errorMessage = "unsupportedUrl"), a.cancel());
+                null !== b
+                  ? (a.data.html = b)
+                  : ((a.data.errorMessage = "unsupportedUrl"), a.cancel());
               }
             },
             this,
@@ -92,38 +94,44 @@
               : (CKEDITOR.warn("embedbase-widget-invalid"), f.task && f.task.done());
           }
           b = b || {};
-          var d = this,
-            e = this._getCachedResponse(a),
+          var e = this._getCachedResponse(a),
             f = {
               noNotifications: b.noNotifications,
               url: a,
               callback: c,
-              errorCallback: function (a) {
-                d._handleError(f, a);
+              errorCallback: (a) => {
+                this._handleError(f, a);
                 b.errorCallback && b.errorCallback(a);
               },
             };
           if (e)
-            setTimeout(function () {
+            setTimeout(() => {
               c(e);
             });
-          else return b.noNotifications || (f.task = this._createTask()), this.fire("sendRequest", f), f;
+          else
+            return (
+              b.noNotifications || (f.task = this._createTask()), this.fire("sendRequest", f), f
+            );
         },
         isUrlValid: function (a) {
           return this.urlRegExp.test(a) && !1 !== this.fire("validateUrl", a);
         },
-        getErrorMessage: function (a, b, c) {
+        getErrorMessage: (a, b, c) => {
           (c = e.lang.embedbase[a + (c || "")]) || (c = a);
           return new CKEDITOR.template(c).output({ url: b || "" });
         },
         _sendRequest: function (a) {
-          var b = this,
-            c = l.sendRequest(this.providerUrl, { url: encodeURIComponent(a.url) }, a.callback, function () {
+          var c = l.sendRequest(
+            this.providerUrl,
+            { url: encodeURIComponent(a.url) },
+            a.callback,
+            () => {
               a.errorCallback("fetchingFailed");
-            });
-          a.cancel = function () {
+            }
+          );
+          a.cancel = () => {
             c.cancel();
-            b.fire("requestCanceled", a);
+            this.fire("requestCanceled", a);
           };
         },
         _handleResponse: function (a) {
@@ -135,27 +143,27 @@
         },
         _handleError: function (a, b) {
           a.task &&
-            (a.task.cancel(), a.noNotifications || e.showNotification(this.getErrorMessage(b, a.url), "warning"));
+            (a.task.cancel(),
+            a.noNotifications || e.showNotification(this.getErrorMessage(b, a.url), "warning"));
         },
-        _responseToHtml: function (a, b) {
-          return "photo" == b.type
+        _responseToHtml: (a, b) =>
+          "photo" == b.type
             ? '\x3cimg src\x3d"' +
-                CKEDITOR.tools.htmlEncodeAttr(b.url) +
-                '" alt\x3d"' +
-                CKEDITOR.tools.htmlEncodeAttr(b.title || "") +
-                '" style\x3d"max-width:100%;height:auto" /\x3e'
+              CKEDITOR.tools.htmlEncodeAttr(b.url) +
+              '" alt\x3d"' +
+              CKEDITOR.tools.htmlEncodeAttr(b.title || "") +
+              '" style\x3d"max-width:100%;height:auto" /\x3e'
             : "video" == b.type || "rich" == b.type
               ? ((b.html = b.html.replace(/<iframe/g, '\x3ciframe tabindex\x3d"-1"')), b.html)
-              : null;
-        },
+              : null,
         _setContent: function (a, b) {
           this.setData("url", a);
           this.element.setHtml(b);
         },
-        _createTask: function () {
+        _createTask: () => {
           if (!c || c.isFinished())
             (c = new CKEDITOR.plugins.notificationAggregator(e, d.fetchingMany, d.fetchingOne)),
-              c.on("finished", function () {
+              c.on("finished", () => {
                 c.notification.hide();
               });
           return c.createTask();

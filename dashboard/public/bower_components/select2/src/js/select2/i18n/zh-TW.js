@@ -1,36 +1,28 @@
-define(function () {
+define(() => {
   // Chinese (Traditional)
   return {
-    inputTooLong: function (args) {
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "請刪掉" + overChars + "個字元";
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "請再輸入" + remainingChars + "個字元";
 
       return message;
     },
-    loadingMore: function () {
-      return "載入中…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "載入中…",
+    maximumSelected: (args) => {
       var message = "你只能選擇最多" + args.maximum + "項";
 
       return message;
     },
-    noResults: function () {
-      return "沒有找到相符的項目";
-    },
-    searching: function () {
-      return "搜尋中…";
-    },
-    removeAllItems: function () {
-      return "刪除所有項目";
-    },
+    noResults: () => "沒有找到相符的項目",
+    searching: () => "搜尋中…",
+    removeAllItems: () => "刪除所有項目",
   };
 });

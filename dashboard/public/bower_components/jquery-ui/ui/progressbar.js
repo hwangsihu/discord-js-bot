@@ -8,7 +8,7 @@
  *
  * http://api.jqueryui.com/progressbar/
  */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["jquery", "./core", "./widget"], factory);
@@ -16,8 +16,8 @@
     // Browser globals
     factory(jQuery);
   }
-})(function ($) {
-  return $.widget("ui.progressbar", {
+})(($) =>
+  $.widget("ui.progressbar", {
     version: "1.11.4",
     options: {
       max: 100,
@@ -40,9 +40,9 @@
         "aria-valuemin": this.min,
       });
 
-      this.valueDiv = $("<div class='ui-progressbar-value ui-widget-header ui-corner-left'></div>").appendTo(
-        this.element
-      );
+      this.valueDiv = $(
+        "<div class='ui-progressbar-value ui-widget-header ui-corner-left'></div>"
+      ).appendTo(this.element);
 
       this._refreshValue();
     },
@@ -105,7 +105,9 @@
     },
 
     _percentage: function () {
-      return this.indeterminate ? 100 : (100 * (this.options.value - this.min)) / (this.options.max - this.min);
+      return this.indeterminate
+        ? 100
+        : (100 * (this.options.value - this.min)) / (this.options.max - this.min);
     },
 
     _refreshValue: function () {
@@ -143,5 +145,5 @@
         this._trigger("complete");
       }
     },
-  });
-});
+  })
+);

@@ -115,25 +115,29 @@ module.exports = {
 
 async function getRandomEmbed(choice) {
   const subReddits = ["meme", "Memes_Of_The_Dank", "memes", "dankmemes"];
-  let rand = choice ? choice : subReddits[getRandomInt(subReddits.length)];
+  const rand = choice ? choice : subReddits[getRandomInt(subReddits.length)];
 
   const response = await getJson(`https://www.reddit.com/r/${rand}/random/.json`);
   if (!response.success) {
-    return new EmbedBuilder().setColor(EMBED_COLORS.ERROR).setDescription("Failed to fetch meme. Try again!");
+    return new EmbedBuilder()
+      .setColor(EMBED_COLORS.ERROR)
+      .setDescription("Failed to fetch meme. Try again!");
   }
 
   const json = response.data;
   if (!Array.isArray(json) || json.length === 0) {
-    return new EmbedBuilder().setColor(EMBED_COLORS.ERROR).setDescription(`No meme found matching ${choice}`);
+    return new EmbedBuilder()
+      .setColor(EMBED_COLORS.ERROR)
+      .setDescription(`No meme found matching ${choice}`);
   }
 
   try {
-    let permalink = json[0].data.children[0].data.permalink;
-    let memeUrl = `https://reddit.com${permalink}`;
-    let memeImage = json[0].data.children[0].data.url;
-    let memeTitle = json[0].data.children[0].data.title;
-    let memeUpvotes = json[0].data.children[0].data.ups;
-    let memeNumComments = json[0].data.children[0].data.num_comments;
+    const permalink = json[0].data.children[0].data.permalink;
+    const memeUrl = `https://reddit.com${permalink}`;
+    const memeImage = json[0].data.children[0].data.url;
+    const memeTitle = json[0].data.children[0].data.title;
+    const memeUpvotes = json[0].data.children[0].data.ups;
+    const memeNumComments = json[0].data.children[0].data.num_comments;
 
     return new EmbedBuilder()
       .setAuthor({ name: memeTitle, url: memeUrl })
@@ -141,6 +145,8 @@ async function getRandomEmbed(choice) {
       .setColor("Random")
       .setFooter({ text: `👍 ${memeUpvotes} | 💬 ${memeNumComments}` });
   } catch (error) {
-    return new EmbedBuilder().setColor(EMBED_COLORS.ERROR).setDescription("Failed to fetch meme. Try again!");
+    return new EmbedBuilder()
+      .setColor(EMBED_COLORS.ERROR)
+      .setDescription("Failed to fetch meme. Try again!");
   }
 }

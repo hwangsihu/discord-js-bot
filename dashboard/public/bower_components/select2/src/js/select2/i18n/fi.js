@@ -1,33 +1,21 @@
-define(function () {
+define(() => {
   // Finnish
   return {
-    errorLoading: function () {
-      return "Tuloksia ei saatu ladattua.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "Tuloksia ei saatu ladattua.",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       return "Ole hyvä ja anna " + overChars + " merkkiä vähemmän";
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       return "Ole hyvä ja anna " + remainingChars + " merkkiä lisää";
     },
-    loadingMore: function () {
-      return "Ladataan lisää tuloksia…";
-    },
-    maximumSelected: function (args) {
-      return "Voit valita ainoastaan " + args.maximum + " kpl";
-    },
-    noResults: function () {
-      return "Ei tuloksia";
-    },
-    searching: function () {
-      return "Haetaan…";
-    },
-    removeAllItems: function () {
-      return "Poista kaikki kohteet";
-    },
+    loadingMore: () => "Ladataan lisää tuloksia…",
+    maximumSelected: (args) => "Voit valita ainoastaan " + args.maximum + " kpl",
+    noResults: () => "Ei tuloksia",
+    searching: () => "Haetaan…",
+    removeAllItems: () => "Poista kaikki kohteet",
   };
 });

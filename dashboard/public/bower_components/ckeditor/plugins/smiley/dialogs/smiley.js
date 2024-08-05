@@ -2,14 +2,14 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-CKEDITOR.dialog.add("smiley", function (f) {
+CKEDITOR.dialog.add("smiley", (f) => {
   for (
     var e = f.config,
       a = f.lang.smiley,
       h = e.smiley_images,
       g = e.smiley_columns || 8,
       k,
-      m = function (l) {
+      m = (l) => {
         var c = l.data.getTarget(),
           b = c.getName();
         if ("a" == b) c = c.getChild(0);
@@ -17,13 +17,20 @@ CKEDITOR.dialog.add("smiley", function (f) {
         var b = c.getAttribute("cke_src"),
           a = c.getAttribute("title"),
           c = f.document.createElement("img", {
-            attributes: { src: b, "data-cke-saved-src": b, title: a, alt: a, width: c.$.width, height: c.$.height },
+            attributes: {
+              src: b,
+              "data-cke-saved-src": b,
+              title: a,
+              alt: a,
+              width: c.$.width,
+              height: c.$.height,
+            },
           });
         f.insertElement(c);
         k.hide();
         l.data.preventDefault();
       },
-      q = CKEDITOR.tools.addFunction(function (a, c) {
+      q = CKEDITOR.tools.addFunction((a, c) => {
         a = new CKEDITOR.dom.event(a);
         c = new CKEDITOR.dom.element(c);
         var b;
@@ -36,7 +43,9 @@ CKEDITOR.dialog.add("smiley", function (f) {
             a.preventDefault();
             break;
           case 40:
-            (b = c.getParent().getParent().getNext()) && (b = b.getChild([c.getParent().getIndex(), 0])) && b.focus();
+            (b = c.getParent().getParent().getNext()) &&
+              (b = b.getChild([c.getParent().getIndex(), 0])) &&
+              b.focus();
             a.preventDefault();
             break;
           case 32:
@@ -49,14 +58,19 @@ CKEDITOR.dialog.add("smiley", function (f) {
               (b = b.getChild([0, 0])) && b.focus(), a.preventDefault(!0);
             break;
           case d ? 39 : 37:
-            if ((b = c.getParent().getPrevious())) (b = b.getChild(0)), b.focus(), a.preventDefault(!0);
+            if ((b = c.getParent().getPrevious()))
+              (b = b.getChild(0)), b.focus(), a.preventDefault(!0);
             else if ((b = c.getParent().getParent().getPrevious()))
               (b = b.getLast().getChild(0)), b.focus(), a.preventDefault(!0);
         }
       }),
       d = CKEDITOR.tools.getNextId() + "_smiley_emtions_label",
       d = [
-        '\x3cdiv\x3e\x3cspan id\x3d"' + d + '" class\x3d"cke_voice_label"\x3e' + a.options + "\x3c/span\x3e",
+        '\x3cdiv\x3e\x3cspan id\x3d"' +
+          d +
+          '" class\x3d"cke_voice_label"\x3e' +
+          a.options +
+          "\x3c/span\x3e",
         '\x3ctable role\x3d"listbox" aria-labelledby\x3d"' +
           d +
           '" style\x3d"width:100%;height:100%;border-collapse:separate;" cellspacing\x3d"2" cellpadding\x3d"2"',
@@ -88,7 +102,9 @@ CKEDITOR.dialog.add("smiley", function (f) {
       ' src\x3d"',
       CKEDITOR.tools.htmlEncode(e.smiley_path + h[a]),
       '"',
-      CKEDITOR.env.ie ? " onload\x3d\"this.setAttribute('width', 2); this.removeAttribute('width');\" " : "",
+      CKEDITOR.env.ie
+        ? " onload\x3d\"this.setAttribute('width', 2); this.removeAttribute('width');\" "
+        : "",
       '\x3e\x3cspan id\x3d"' +
         p +
         '" class\x3d"cke_voice_label"\x3e' +
@@ -107,13 +123,12 @@ CKEDITOR.dialog.add("smiley", function (f) {
     type: "html",
     id: "smileySelector",
     html: d.join(""),
-    onLoad: function (a) {
+    onLoad: (a) => {
       k = a.sender;
     },
     focus: function () {
-      var a = this;
-      setTimeout(function () {
-        a.getElement().getElementsByTag("a").getItem(0).focus();
+      setTimeout(() => {
+        this.getElement().getElementsByTag("a").getItem(0).focus();
       }, 0);
     },
     onClick: m,

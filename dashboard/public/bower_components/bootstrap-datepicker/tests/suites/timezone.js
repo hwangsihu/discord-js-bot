@@ -1,6 +1,8 @@
 module("Component", {
   setup: function () {
-    this.component = $('<div class="input-append date" id="datepicker">' + '<input type="text">' + "</div>")
+    this.component = $(
+      '<div class="input-append date" id="datepicker">' + '<input type="text">' + "</div>"
+    )
       .appendTo("#qunit-fixture")
       .datepicker();
     this.dp = this.component.data("datepicker");

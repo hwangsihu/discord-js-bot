@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var ko = moment.defineLocale("ko", {
     months: "1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월".split("_"),
     monthsShort: "1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월".split("_"),
@@ -52,7 +50,7 @@
       yy: "%d년",
     },
     dayOfMonthOrdinalParse: /\d{1,2}(일|월|주)/,
-    ordinal: function (number, period) {
+    ordinal: (number, period) => {
       switch (period) {
         case "d":
         case "D":
@@ -68,12 +66,8 @@
       }
     },
     meridiemParse: /오전|오후/,
-    isPM: function (token) {
-      return token === "오후";
-    },
-    meridiem: function (hour, minute, isUpper) {
-      return hour < 12 ? "오전" : "오후";
-    },
+    isPM: (token) => token === "오후",
+    meridiem: (hour, minute, isUpper) => (hour < 12 ? "오전" : "오후"),
   });
 
   return ko;

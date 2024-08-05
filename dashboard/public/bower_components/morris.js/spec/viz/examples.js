@@ -1,32 +1,32 @@
 var webpage = require("webpage"),
   fs = require("fs");
 
-var html_path = fs.absolute("test.html");
+var htmlPath = fs.absolute("test.html");
 var examples = [];
 
-function run_example(example_index) {
-  if (example_index >= examples.length) {
+function runExample(exampleIndex) {
+  if (exampleIndex >= examples.length) {
     phantom.exit(0);
     return;
   }
 
-  var example = examples[example_index];
-  var snapshot_index = 0;
+  var example = examples[exampleIndex];
+  var snapshotIndex = 0;
   var page = webpage.create();
 
   page.viewportSize = { width: 500, height: 300 };
   page.clipRect = { width: 500, height: 300 };
-  page.onAlert = function (msg) {
+  page.onAlert = (msg) => {
     var e = JSON.parse(msg);
     if (e.fn == "snapshot") {
-      page.render("output/" + example.name + snapshot_index + ".png");
-      snapshot_index += 1;
+      page.render("output/" + example.name + snapshotIndex + ".png");
+      snapshotIndex += 1;
     } else if (e.fn == "mousemove") {
       page.sendEvent("mousemove", e.x, e.y);
     }
   };
 
-  page.open(html_path, function (status) {
+  page.open(htmlPath, (status) => {
     if (status == "fail") {
       console.log("Failed to load test page: " + example.name);
       phantom.exit(1);
@@ -34,17 +34,17 @@ function run_example(example_index) {
       page.evaluate(example.runner);
     }
     page.close();
-    run_example(example_index + 1);
+    runExample(exampleIndex + 1);
   });
 }
 
-exports.def = function (name, runner) {
+exports.def = (name, runner) => {
   examples.push({ name: name, runner: runner });
 };
 
-exports.run = function () {
+exports.run = () => {
   if (fs.isDirectory("output")) {
-    fs.list("output").forEach(function (path) {
+    fs.list("output").forEach((path) => {
       if (path != "." && path != "..") {
         fs.remove("output/" + path);
       }
@@ -52,5 +52,5 @@ exports.run = function () {
   } else {
     fs.makeDirectory("output");
   }
-  run_example(0);
+  runExample(0);
 };

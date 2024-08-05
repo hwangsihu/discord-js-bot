@@ -26,7 +26,9 @@ module.exports = async (self, target, coins) => {
   const embed = new EmbedBuilder()
     .setColor(EMBED_COLORS.BOT_EMBED)
     .setAuthor({ name: "Updated Balance" })
-    .setDescription(`You have successfully transferred ${coins}${ECONOMY.CURRENCY} to ${target.username}`)
+    .setDescription(
+      `You have successfully transferred ${coins}${ECONOMY.CURRENCY} to ${target.username}`
+    )
     .setTimestamp(Date.now());
 
   return { embeds: [embed] };

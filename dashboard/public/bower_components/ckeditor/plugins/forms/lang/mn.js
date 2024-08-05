@@ -14,7 +14,13 @@
     selected: "Сонгогдсон",
     required: "Required",
   },
-  form: { title: "Форм шинж чанар", menu: "Форм шинж чанар", action: "Үйлдэл", method: "Арга", encoding: "Encoding" },
+  form: {
+    title: "Форм шинж чанар",
+    menu: "Форм шинж чанар",
+    action: "Үйлдэл",
+    method: "Арга",
+    encoding: "Encoding",
+  },
   hidden: { title: "Нууц талбарын шинж чанар", name: "Нэр", value: "Утга" },
   select: {
     title: "Согогч талбарын шинж чанар",

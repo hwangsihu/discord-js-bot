@@ -45,18 +45,10 @@ export default moment.defineLocale("ne", {
     LLL: "D MMMM YYYY, Aको h:mm बजे",
     LLLL: "dddd, D MMMM YYYY, Aको h:mm बजे",
   },
-  preparse: function (string) {
-    return string.replace(/[१२३४५६७८९०]/g, function (match) {
-      return numberMap[match];
-    });
-  },
-  postformat: function (string) {
-    return string.replace(/\d/g, function (match) {
-      return symbolMap[match];
-    });
-  },
+  preparse: (string) => string.replace(/[१२३४५६७८९०]/g, (match) => numberMap[match]),
+  postformat: (string) => string.replace(/\d/g, (match) => symbolMap[match]),
   meridiemParse: /राति|बिहान|दिउँसो|साँझ/,
-  meridiemHour: function (hour, meridiem) {
+  meridiemHour: (hour, meridiem) => {
     if (hour === 12) {
       hour = 0;
     }
@@ -70,7 +62,7 @@ export default moment.defineLocale("ne", {
       return hour + 12;
     }
   },
-  meridiem: function (hour, minute, isLower) {
+  meridiem: (hour, minute, isLower) => {
     if (hour < 3) {
       return "राति";
     } else if (hour < 12) {

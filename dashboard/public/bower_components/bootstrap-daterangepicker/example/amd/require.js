@@ -3,7 +3,7 @@
  Released under MIT license, http://github.com/requirejs/requirejs/LICENSE
 */
 var requirejs, require, define;
-(function (ga) {
+((ga) => {
   function ka(b, c, d, g) {
     return g || "";
   }
@@ -36,7 +36,7 @@ var requirejs, require, define;
   }
   function Y(b, c, d, g) {
     c &&
-      D(c, function (c, e) {
+      D(c, (c, e) => {
         if (d || !x(b, e))
           !g || "object" !== typeof c || !c || L(c) || K(c) || c instanceof RegExp
             ? (b[e] = c)
@@ -45,9 +45,7 @@ var requirejs, require, define;
     return b;
   }
   function z(b, c) {
-    return function () {
-      return c.apply(b, arguments);
-    };
+    return () => c.apply(b, arguments);
   }
   function ha(b) {
     throw b;
@@ -55,7 +53,7 @@ var requirejs, require, define;
   function ia(b) {
     if (!b) return b;
     var c = ga;
-    y(b.split("."), function (b) {
+    y(b.split("."), (b) => {
       c = c[b];
     });
     return c;
@@ -113,8 +111,11 @@ var requirejs, require, define;
     }
     function d(a) {
       E &&
-        y(document.getElementsByTagName("script"), function (n) {
-          if (n.getAttribute("data-requiremodule") === a && n.getAttribute("data-requirecontext") === l.contextName)
+        y(document.getElementsByTagName("script"), (n) => {
+          if (
+            n.getAttribute("data-requiremodule") === a &&
+            n.getAttribute("data-requirecontext") === l.contextName
+          )
             return n.parentNode.removeChild(n), !0;
         });
     }
@@ -146,9 +147,7 @@ var requirejs, require, define;
         (d
           ? (m =
               f && f.normalize
-                ? f.normalize(a, function (a) {
-                    return c(a, g, h);
-                  })
+                ? f.normalize(a, (a) => c(a, g, h))
                 : -1 === a.indexOf("!")
                   ? c(a, g, h)
                   : a)
@@ -184,7 +183,7 @@ var requirejs, require, define;
         h = !1;
       if (b) b(a);
       else if (
-        (y(c, function (b) {
+        (y(c, (b) => {
           if ((b = e(t, b))) (b.error = a), b.events.error && ((h = !0), b.emit("error", a));
         }),
         !h)
@@ -193,7 +192,7 @@ var requirejs, require, define;
     }
     function B() {
       V.length &&
-        (y(V, function (a) {
+        (y(V, (a) => {
           var b = a[0];
           "string" === typeof b && (l.defQueueMap[b] = !0);
           G.push(a);
@@ -209,10 +208,13 @@ var requirejs, require, define;
       a.error
         ? a.emit("error", a.error)
         : ((b[h] = !0),
-          y(a.depMaps, function (h, f) {
+          y(a.depMaps, (h, f) => {
             var d = h.id,
               g = e(t, d);
-            !g || a.depMatched[f] || c[d] || (e(b, d) ? (a.defineDep(f, v[d]), a.check()) : J(g, b, c));
+            !g ||
+              a.depMatched[f] ||
+              c[d] ||
+              (e(b, d) ? (a.defineDep(f, v[d]), a.check()) : J(g, b, c));
           }),
           (c[h] = !0));
     }
@@ -226,7 +228,7 @@ var requirejs, require, define;
         g = !0;
       if (!aa) {
         aa = !0;
-        D(Z, function (a) {
+        D(Z, (a) => {
           var l = a.map,
             e = l.id;
           if (a.enabled && (l.isDefine || k.push(a), !a.error))
@@ -234,16 +236,20 @@ var requirejs, require, define;
             else if (!a.inited && a.fetched && l.isDefine && ((f = !0), !l.prefix)) return (g = !1);
         });
         if (c && h.length)
-          return (a = F("timeout", "Load timeout for modules: " + h, null, h)), (a.contextName = l.contextName), A(a);
+          return (
+            (a = F("timeout", "Load timeout for modules: " + h, null, h)),
+            (a.contextName = l.contextName),
+            A(a)
+          );
         g &&
-          y(k, function (a) {
+          y(k, (a) => {
             J(a, {}, {});
           });
         (c && !b) ||
           !f ||
           (!E && !ja) ||
           ba ||
-          (ba = setTimeout(function () {
+          (ba = setTimeout(() => {
             ba = 0;
             H();
           }, 50));
@@ -256,7 +262,9 @@ var requirejs, require, define;
     function O(a) {
       a = a.currentTarget || a.srcElement;
       var b = l.onScriptLoad;
-      a.detachEvent && !ca ? a.detachEvent("onreadystatechange", b) : a.removeEventListener("load", b, !1);
+      a.detachEvent && !ca
+        ? a.detachEvent("onreadystatechange", b)
+        : a.removeEventListener("load", b, !1);
       b = l.onScriptError;
       (a.detachEvent && !ca) || a.removeEventListener("error", b, !1);
       return { node: a, id: a && a.getAttribute("data-requiremodule") };
@@ -265,7 +273,8 @@ var requirejs, require, define;
       var a;
       for (B(); G.length; ) {
         a = G.shift();
-        if (null === a[0]) return A(F("mismatch", "Mismatched anonymous define() module: " + a[a.length - 1]));
+        if (null === a[0])
+          return A(F("mismatch", "Mismatched anonymous define() module: " + a[a.length - 1]));
         I(a);
       }
       l.defQueueMap = {};
@@ -286,25 +295,21 @@ var requirejs, require, define;
       Q = 1,
       T = 1;
     R = {
-      require: function (a) {
-        return a.require ? a.require : (a.require = l.makeRequire(a.map));
-      },
-      exports: function (a) {
+      require: (a) => (a.require ? a.require : (a.require = l.makeRequire(a.map))),
+      exports: (a) => {
         a.usingExports = !0;
-        if (a.map.isDefine) return a.exports ? (v[a.map.id] = a.exports) : (a.exports = v[a.map.id] = {});
+        if (a.map.isDefine)
+          return a.exports ? (v[a.map.id] = a.exports) : (a.exports = v[a.map.id] = {});
       },
-      module: function (a) {
-        return a.module
+      module: (a) =>
+        a.module
           ? a.module
           : (a.module = {
               id: a.map.id,
               uri: a.map.url,
-              config: function () {
-                return e(p.config, a.map.id) || {};
-              },
+              config: () => e(p.config, a.map.id) || {},
               exports: a.exports || (a.exports = {}),
-            });
-      },
+            }),
     };
     da = function (a) {
       this.events = e(ea, a.id) || {};
@@ -335,7 +340,8 @@ var requirejs, require, define;
         }
       },
       defineDep: function (a, b) {
-        this.depMatched[a] || ((this.depMatched[a] = !0), --this.depCount, (this.depExports[a] = b));
+        this.depMatched[a] ||
+          ((this.depMatched[a] = !0), --this.depCount, (this.depExports[a] = b));
       },
       fetch: function () {
         if (!this.fetched) {
@@ -391,7 +397,7 @@ var requirejs, require, define;
               this.exports = h;
               if (this.map.isDefine && !this.ignore && ((v[c] = h), g.onResourceLoad)) {
                 var f = [];
-                y(this.depMaps, function (a) {
+                y(this.depMaps, (a) => {
                   f.push(a.normalizedMap || a);
                 });
                 g.onResourceLoad(l, this.map, f);
@@ -402,7 +408,9 @@ var requirejs, require, define;
             this.defining = !1;
             this.defined &&
               !this.defineEmitted &&
-              ((this.defineEmitted = !0), this.emit("defined", this.exports), (this.defineEmitComplete = !0));
+              ((this.defineEmitted = !0),
+              this.emit("defined", this.exports),
+              (this.defineEmitComplete = !0));
           }
         }
       },
@@ -423,25 +431,14 @@ var requirejs, require, define;
               m = l.makeRequire(a.parentMap, { enableBuildCallback: !0 });
             if (this.map.unnormalized) {
               if (
-                (h.normalize &&
-                  (M =
-                    h.normalize(M, function (a) {
-                      return c(a, r, !0);
-                    }) || ""),
+                (h.normalize && (M = h.normalize(M, (a) => c(a, r, !0)) || ""),
                 (f = q(a.prefix + "!" + M, this.map.parentMap)),
                 w(
                   f,
                   "defined",
                   z(this, function (a) {
                     this.map.normalizedMap = f;
-                    this.init(
-                      [],
-                      function () {
-                        return a;
-                      },
-                      null,
-                      { enabled: !0, ignore: !0 }
-                    );
+                    this.init([], () => a, null, { enabled: !0, ignore: !0 });
                   })
                 ),
                 (h = e(t, f.id)))
@@ -460,20 +457,13 @@ var requirejs, require, define;
               d
                 ? ((this.map.url = l.nameToUrl(d)), this.load())
                 : ((k = z(this, function (a) {
-                    this.init(
-                      [],
-                      function () {
-                        return a;
-                      },
-                      null,
-                      { enabled: !0 }
-                    );
+                    this.init([], () => a, null, { enabled: !0 });
                   })),
                   (k.error = z(this, function (a) {
                     this.inited = !0;
                     this.error = a;
                     a.requireModules = [b];
-                    D(t, function (a) {
+                    D(t, (a) => {
                       0 === a.map.id.indexOf(b + "_unnormalized") && C(a.map.id);
                     });
                     A(a);
@@ -489,7 +479,9 @@ var requirejs, require, define;
                     try {
                       g.exec(h);
                     } catch (e) {
-                      return A(F("fromtexteval", "fromText eval for " + b + " failed: " + e, e, [b]));
+                      return A(
+                        F("fromtexteval", "fromText eval for " + b + " failed: " + e, e, [b])
+                      );
                     }
                     M && (S = !0);
                     this.depMaps.push(f);
@@ -556,7 +548,7 @@ var requirejs, require, define;
         c.push(b);
       },
       emit: function (a, b) {
-        y(this.events[a], function (a) {
+        y(this.events[a], (a) => {
           a(b);
         });
         "error" === a && delete this.events[a];
@@ -574,53 +566,49 @@ var requirejs, require, define;
       makeModuleMap: q,
       nextTick: g.nextTick,
       onError: A,
-      configure: function (a) {
+      configure: (a) => {
         a.baseUrl && "/" !== a.baseUrl.charAt(a.baseUrl.length - 1) && (a.baseUrl += "/");
         if ("string" === typeof a.urlArgs) {
           var b = a.urlArgs;
-          a.urlArgs = function (a, c) {
-            return (-1 === c.indexOf("?") ? "?" : "&") + b;
-          };
+          a.urlArgs = (a, c) => (-1 === c.indexOf("?") ? "?" : "&") + b;
         }
         var c = p.shim,
           h = { paths: !0, bundles: !0, config: !0, map: !0 };
-        D(a, function (a, b) {
+        D(a, (a, b) => {
           h[b] ? (p[b] || (p[b] = {}), Y(p[b], a, !0, !0)) : (p[b] = a);
         });
         a.bundles &&
-          D(a.bundles, function (a, b) {
-            y(a, function (a) {
+          D(a.bundles, (a, b) => {
+            y(a, (a) => {
               a !== b && (fa[a] = b);
             });
           });
         a.shim &&
-          (D(a.shim, function (a, b) {
+          (D(a.shim, (a, b) => {
             L(a) && (a = { deps: a });
             (!a.exports && !a.init) || a.exportsFn || (a.exportsFn = l.makeShimExports(a));
             c[b] = a;
           }),
           (p.shim = c));
         a.packages &&
-          y(a.packages, function (a) {
+          y(a.packages, (a) => {
             var b;
             a = "string" === typeof a ? { name: a } : a;
             b = a.name;
             a.location && (p.paths[b] = a.location);
             p.pkgs[b] = a.name + "/" + (a.main || "main").replace(na, "").replace(U, "");
           });
-        D(t, function (a, b) {
+        D(t, (a, b) => {
           a.inited || a.map.unnormalized || (a.map = q(b, null, !0));
         });
         (a.deps || a.callback) && l.require(a.deps || [], a.callback);
       },
-      makeShimExports: function (a) {
-        return function () {
-          var b;
-          a.init && (b = a.init.apply(ga, arguments));
-          return b || (a.exports && ia(a.exports));
-        };
+      makeShimExports: (a) => () => {
+        var b;
+        a.init && (b = a.init.apply(ga, arguments));
+        return b || (a.exports && ia(a.exports));
       },
-      makeRequire: function (a, n) {
+      makeRequire: (a, n) => {
         function m(c, d, f) {
           var e, r;
           n.enableBuildCallback && d && K(d) && (d.__requireJsBuild = !0);
@@ -635,12 +623,16 @@ var requirejs, require, define;
               : A(
                   F(
                     "notloaded",
-                    'Module name "' + e + '" has not been loaded yet for context: ' + b + (a ? "" : ". Use require([])")
+                    'Module name "' +
+                      e +
+                      '" has not been loaded yet for context: ' +
+                      b +
+                      (a ? "" : ". Use require([])")
                   )
                 );
           }
           P();
-          l.nextTick(function () {
+          l.nextTick(() => {
             P();
             r = u(q(null, a));
             r.skipMap = n.skipMap;
@@ -652,7 +644,7 @@ var requirejs, require, define;
         n = n || {};
         Y(m, {
           isBrowser: E,
-          toUrl: function (b) {
+          toUrl: (b) => {
             var d,
               f = b.lastIndexOf("."),
               g = b.split("/")[0];
@@ -661,16 +653,14 @@ var requirejs, require, define;
               ((d = b.substring(f, b.length)), (b = b.substring(0, f)));
             return l.nameToUrl(c(b, a && a.id, !0), d, !0);
           },
-          defined: function (b) {
-            return x(v, q(b, a, !1, !0).id);
-          },
-          specified: function (b) {
+          defined: (b) => x(v, q(b, a, !1, !0).id),
+          specified: (b) => {
             b = q(b, a, !1, !0).id;
             return x(v, b) || x(t, b);
           },
         });
         a ||
-          (m.undef = function (b) {
+          (m.undef = (b) => {
             B();
             var c = q(b, a, !0),
               f = e(t, b);
@@ -679,7 +669,7 @@ var requirejs, require, define;
             delete v[b];
             delete W[c.url];
             delete ea[b];
-            X(G, function (a, c) {
+            X(G, (a, c) => {
               a[0] === b && G.splice(c, 1);
             });
             delete l.defQueueMap[b];
@@ -687,10 +677,10 @@ var requirejs, require, define;
           });
         return m;
       },
-      enable: function (a) {
+      enable: (a) => {
         e(t, a.id) && u(a).enable();
       },
-      completeLoad: function (a) {
+      completeLoad: (a) => {
         var b,
           c,
           d = e(p.shim, a) || {},
@@ -711,7 +701,7 @@ var requirejs, require, define;
           else return m(a) ? void 0 : A(F("nodefine", "No define call for " + a, null, [a]));
         H();
       },
-      nameToUrl: function (a, b, c) {
+      nameToUrl: (a, b, c) => {
         var d, k, f, m;
         (d = e(p.pkgs, a)) && (a = d);
         if ((d = e(fa, a))) return l.nameToUrl(d, b, c);
@@ -731,30 +721,31 @@ var requirejs, require, define;
         }
         return p.urlArgs && !/^blob\:/.test(d) ? d + p.urlArgs(a, d) : d;
       },
-      load: function (a, b) {
+      load: (a, b) => {
         g.load(l, a, b);
       },
-      execCb: function (a, b, c, d) {
-        return b.apply(d, c);
-      },
-      onScriptLoad: function (a) {
+      execCb: (a, b, c, d) => b.apply(d, c),
+      onScriptLoad: (a) => {
         if ("load" === a.type || oa.test((a.currentTarget || a.srcElement).readyState))
           (N = null), (a = O(a)), l.completeLoad(a.id);
       },
-      onScriptError: function (a) {
+      onScriptError: (a) => {
         var b = O(a);
         if (!m(b.id)) {
           var c = [];
-          D(t, function (a, d) {
+          D(t, (a, d) => {
             0 !== d.indexOf("_@r") &&
-              y(a.depMaps, function (a) {
+              y(a.depMaps, (a) => {
                 if (a.id === b.id) return c.push(d), !0;
               });
           });
           return A(
-            F("scripterror", 'Script error for "' + b.id + (c.length ? '", needed by: ' + c.join(", ") : '"'), a, [
-              b.id,
-            ])
+            F(
+              "scripterror",
+              'Script error for "' + b.id + (c.length ? '", needed by: ' + c.join(", ") : '"'),
+              a,
+              [b.id]
+            )
           );
         }
       },
@@ -764,7 +755,7 @@ var requirejs, require, define;
   }
   function pa() {
     if (N && "interactive" === N.readyState) return N;
-    X(document.getElementsByTagName("script"), function (b) {
+    X(document.getElementsByTagName("script"), (b) => {
       if ("interactive" === b.readyState) return (N = b);
     });
     return N;
@@ -801,7 +792,7 @@ var requirejs, require, define;
       requirejs = void 0;
     }
     "undefined" === typeof require || K(require) || ((w = require), (require = void 0));
-    g = requirejs = function (b, c, d, m) {
+    g = requirejs = (b, c, d, m) => {
       var r,
         q = "_";
       L(b) || "string" === typeof b || ((r = b), L(c) ? ((b = c), (c = d), (d = m)) : (b = []));
@@ -810,15 +801,13 @@ var requirejs, require, define;
       r && m.configure(r);
       return m.require(b, c, d);
     };
-    g.config = function (b) {
-      return g(b);
-    };
+    g.config = (b) => g(b);
     g.nextTick =
       "undefined" !== typeof setTimeout
-        ? function (b) {
+        ? (b) => {
             setTimeout(b, 4);
           }
-        : function (b) {
+        : (b) => {
             b();
           };
     require || (require = g);
@@ -827,17 +816,18 @@ var requirejs, require, define;
     g.isBrowser = E;
     B = g.s = { contexts: J, newContext: ma };
     g({});
-    y(["toUrl", "undef", "defined", "specified"], function (b) {
-      g[b] = function () {
+    y(["toUrl", "undef", "defined", "specified"], (b) => {
+      g[b] = () => {
         var c = J._;
         return c.require[b].apply(c, arguments);
       };
     });
     E &&
-      ((C = B.head = document.getElementsByTagName("head")[0]), (H = document.getElementsByTagName("base")[0])) &&
+      ((C = B.head = document.getElementsByTagName("head")[0]),
+      (H = document.getElementsByTagName("base")[0])) &&
       (C = B.head = H.parentNode);
     g.onError = ha;
-    g.createNode = function (b, c, d) {
+    g.createNode = (b, c, d) => {
       c = b.xhtml
         ? document.createElementNS("http://www.w3.org/1999/xhtml", "html:script")
         : document.createElement("script");
@@ -846,15 +836,18 @@ var requirejs, require, define;
       c.async = !0;
       return c;
     };
-    g.load = function (b, c, d) {
+    g.load = (b, c, d) => {
       var m = (b && b.config) || {},
         e;
       if (E) {
         e = g.createNode(m, c, d);
         e.setAttribute("data-requirecontext", b.contextName);
         e.setAttribute("data-requiremodule", c);
-        !e.attachEvent || (e.attachEvent.toString && 0 > e.attachEvent.toString().indexOf("[native code")) || ca
-          ? (e.addEventListener("load", b.onScriptLoad, !1), e.addEventListener("error", b.onScriptError, !1))
+        !e.attachEvent ||
+        (e.attachEvent.toString && 0 > e.attachEvent.toString().indexOf("[native code")) ||
+        ca
+          ? (e.addEventListener("load", b.onScriptLoad, !1),
+            e.addEventListener("error", b.onScriptError, !1))
           : ((S = !0), e.attachEvent("onreadystatechange", b.onScriptLoad));
         e.src = d;
         if (m.onNodeCreated) m.onNodeCreated(e, m, c, d);
@@ -865,28 +858,31 @@ var requirejs, require, define;
       }
       if (ja)
         try {
-          setTimeout(function () {}, 0), importScripts(d), b.completeLoad(c);
+          setTimeout(() => {}, 0), importScripts(d), b.completeLoad(c);
         } catch (q) {
           b.onError(F("importscripts", "importScripts failed for " + c + " at " + d, q, [c]));
         }
     };
     E &&
       !w.skipDataMain &&
-      X(document.getElementsByTagName("script"), function (b) {
+      X(document.getElementsByTagName("script"), (b) => {
         C || (C = b.parentNode);
         if ((O = b.getAttribute("data-main")))
           return (
             (u = O),
             w.baseUrl ||
               -1 !== u.indexOf("!") ||
-              ((I = u.split("/")), (u = I.pop()), (T = I.length ? I.join("/") + "/" : "./"), (w.baseUrl = T)),
+              ((I = u.split("/")),
+              (u = I.pop()),
+              (T = I.length ? I.join("/") + "/" : "./"),
+              (w.baseUrl = T)),
             (u = u.replace(U, "")),
             g.jsExtRegExp.test(u) && (u = O),
             (w.deps = w.deps ? w.deps.concat(u) : [u]),
             !0
           );
       });
-    define = function (b, c, d) {
+    define = (b, c, d) => {
       var e, g;
       "string" !== typeof b && ((d = c), (c = b), (b = null));
       L(c) || ((d = c), (c = null));
@@ -897,19 +893,18 @@ var requirejs, require, define;
           (d
             .toString()
             .replace(qa, ka)
-            .replace(ra, function (b, d) {
+            .replace(ra, (b, d) => {
               c.push(d);
             }),
           (c = (1 === d.length ? ["require"] : ["require", "exports", "module"]).concat(c))));
       S &&
         (e = P || pa()) &&
-        (b || (b = e.getAttribute("data-requiremodule")), (g = J[e.getAttribute("data-requirecontext")]));
+        (b || (b = e.getAttribute("data-requiremodule")),
+        (g = J[e.getAttribute("data-requirecontext")]));
       g ? (g.defQueue.push([b, c, d]), (g.defQueueMap[b] = !0)) : V.push([b, c, d]);
     };
     define.amd = { jQuery: !0 };
-    g.exec = function (b) {
-      return eval(b);
-    };
+    g.exec = (b) => eval(b);
     g(w);
   }
 })(this);

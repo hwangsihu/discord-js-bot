@@ -41,7 +41,9 @@ module.exports = {
     // check user permissions
     if (cmd.userPermissions && cmd.userPermissions?.length > 0) {
       if (!message.channel.permissionsFor(message.member).has(cmd.userPermissions)) {
-        return message.safeReply(`You need ${parsePermissions(cmd.userPermissions)} for this command`);
+        return message.safeReply(
+          `You need ${parsePermissions(cmd.userPermissions)} for this command`
+        );
       }
     }
 
@@ -62,7 +64,9 @@ module.exports = {
     if (cmd.cooldown > 0) {
       const remaining = getRemainingCooldown(message.author.id, cmd);
       if (remaining > 0) {
-        return message.safeReply(`You are on cooldown. You can again use the command in \`${timeformat(remaining)}\``);
+        return message.safeReply(
+          `You are on cooldown. You can again use the command in \`${timeformat(remaining)}\``
+        );
       }
     }
 
@@ -79,9 +83,12 @@ module.exports = {
   /**
    * @param {import('discord.js').ChatInputCommandInteraction} interaction
    */
-  handleSlashCommand: async function (interaction) {
+  handleSlashCommand: async (interaction) => {
     const cmd = interaction.client.slashCommands.get(interaction.commandName);
-    if (!cmd) return interaction.reply({ content: "An error has occurred", ephemeral: true }).catch(() => {});
+    if (!cmd)
+      return interaction
+        .reply({ content: "An error has occurred", ephemeral: true })
+        .catch(() => {});
 
     // callback validations
     if (cmd.validations) {
@@ -179,7 +186,9 @@ module.exports = {
   getSlashUsage(cmd) {
     let desc = "";
     if (cmd.slashCommand.options?.find((o) => o.type === ApplicationCommandOptionType.Subcommand)) {
-      const subCmds = cmd.slashCommand.options.filter((opt) => opt.type === ApplicationCommandOptionType.Subcommand);
+      const subCmds = cmd.slashCommand.options.filter(
+        (opt) => opt.type === ApplicationCommandOptionType.Subcommand
+      );
       subCmds.forEach((sub) => {
         desc += `\`/${cmd.name} ${sub.name}\`\n❯ ${sub.description}\n\n`;
       });

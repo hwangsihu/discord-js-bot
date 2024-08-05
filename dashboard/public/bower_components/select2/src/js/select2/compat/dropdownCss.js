@@ -1,12 +1,12 @@
-define(["jquery", "./utils"], function ($, CompatUtils) {
+define(["jquery", "./utils"], ($, CompatUtils) => {
   // No-op CSS adapter that discards all classes by default
   function _dropdownAdapter(clazz) {
     return null;
   }
 
-  function DropdownCSS() {}
+  function dropdownCss() {}
 
-  DropdownCSS.prototype.render = function (decorated) {
+  dropdownCss.prototype.render = function (decorated) {
     var $dropdown = decorated.call(this);
 
     var dropdownCssClass = this.options.get("dropdownCssClass") || "";
@@ -23,7 +23,7 @@ define(["jquery", "./utils"], function ($, CompatUtils) {
 
       var _cssAdapter = dropdownCssAdapter;
 
-      dropdownCssAdapter = function (clazz) {
+      dropdownCssAdapter = (clazz) => {
         var adapted = _cssAdapter(clazz);
 
         if (adapted != null) {
@@ -49,5 +49,5 @@ define(["jquery", "./utils"], function ($, CompatUtils) {
     return $dropdown;
   };
 
-  return DropdownCSS;
+  return dropdownCss;
 });

@@ -1,18 +1,19 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   // After the year there should be a slash and the amount of years since December 26, 1979 in Roman numerals.
   // This is currently too difficult (maybe even impossible) to add.
   var tzl = moment.defineLocale("tzl", {
-    months: "Januar_Fevraglh_Març_Avrïu_Mai_Gün_Julia_Guscht_Setemvar_Listopäts_Noemvar_Zecemvar".split("_"),
+    months:
+      "Januar_Fevraglh_Març_Avrïu_Mai_Gün_Julia_Guscht_Setemvar_Listopäts_Noemvar_Zecemvar".split(
+        "_"
+      ),
     monthsShort: "Jan_Fev_Mar_Avr_Mai_Gün_Jul_Gus_Set_Lis_Noe_Zec".split("_"),
     weekdays: "Súladi_Lúneçi_Maitzi_Márcuri_Xhúadi_Viénerçi_Sáturi".split("_"),
     weekdaysShort: "Súl_Lún_Mai_Már_Xhú_Vié_Sát".split("_"),
@@ -26,10 +27,8 @@
       LLLL: "dddd, [li] D. MMMM [dallas] YYYY HH.mm",
     },
     meridiemParse: /d\'o|d\'a/i,
-    isPM: function (input) {
-      return "d'o" === input.toLowerCase();
-    },
-    meridiem: function (hours, minutes, isLower) {
+    isPM: (input) => "d'o" === input.toLowerCase(),
+    meridiem: (hours, minutes, isLower) => {
       if (hours > 11) {
         return isLower ? "d'o" : "D'O";
       } else {

@@ -2,7 +2,7 @@
  * Brazilian translation for bootstrap-datepicker
  * Cauan Cabral <cauan@radig.com.br>
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["pt-BR"] = {
     days: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
     daysShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
@@ -21,7 +21,20 @@
       "Novembro",
       "Dezembro",
     ],
-    monthsShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+    monthsShort: [
+      "Jan",
+      "Fev",
+      "Mar",
+      "Abr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Set",
+      "Out",
+      "Nov",
+      "Dez",
+    ],
     today: "Hoje",
     monthsTitle: "Meses",
     clear: "Limpar",

@@ -56,7 +56,8 @@ VCanvas_vml = createClass(VCanvas_base, {
       lineColor === undefined
         ? ' stroked="false" '
         : ' strokeWeight="' + lineWidth + 'px" strokeColor="' + lineColor + '" ';
-    fill = fillColor === undefined ? ' filled="false"' : ' fillColor="' + fillColor + '" filled="true" ';
+    fill =
+      fillColor === undefined ? ' filled="false"' : ' fillColor="' + fillColor + '" filled="true" ';
     closed = vpath[0] === vpath[vpath.length - 1] ? "x " : "";
     vel =
       '<v:shape coordorigin="0 0" coordsize="' +
@@ -85,7 +86,7 @@ VCanvas_vml = createClass(VCanvas_base, {
     return vel;
   },
 
-  _drawCircle: function (shapeid, x, y, radius, lineColor, fillColor, lineWidth) {
+  _drawCircle: (shapeid, x, y, radius, lineColor, fillColor, lineWidth) => {
     var stroke, fill, vel;
     x -= radius;
     y -= radius;
@@ -93,7 +94,8 @@ VCanvas_vml = createClass(VCanvas_base, {
       lineColor === undefined
         ? ' stroked="false" '
         : ' strokeWeight="' + lineWidth + 'px" strokeColor="' + lineColor + '" ';
-    fill = fillColor === undefined ? ' filled="false"' : ' fillColor="' + fillColor + '" filled="true" ';
+    fill =
+      fillColor === undefined ? ' filled="false"' : ' fillColor="' + fillColor + '" filled="true" ';
     vel =
       "<v:oval " +
       ' id="jqsshape' +
@@ -143,8 +145,12 @@ VCanvas_vml = createClass(VCanvas_base, {
     }
 
     vpath = [x - radius, y - radius, x + radius, y + radius, startx, starty, endx, endy];
-    stroke = lineColor === undefined ? ' stroked="false" ' : ' strokeWeight="1px" strokeColor="' + lineColor + '" ';
-    fill = fillColor === undefined ? ' filled="false"' : ' fillColor="' + fillColor + '" filled="true" ';
+    stroke =
+      lineColor === undefined
+        ? ' stroked="false" '
+        : ' strokeWeight="1px" strokeColor="' + lineColor + '" ';
+    fill =
+      fillColor === undefined ? ' filled="false"' : ' fillColor="' + fillColor + '" filled="true" ';
     vel =
       '<v:shape coordorigin="0 0" coordsize="' +
       this.pixelWidth +
@@ -234,7 +240,7 @@ VCanvas_vml = createClass(VCanvas_base, {
     this.group.removeChild(existing[0]);
   },
 
-  getShapeAt: function (el, x, y) {
+  getShapeAt: (el, x, y) => {
     var shapeid = el.id.substr(8);
     return shapeid;
   },

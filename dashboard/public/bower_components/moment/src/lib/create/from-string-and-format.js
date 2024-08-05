@@ -9,10 +9,10 @@ import { configFromISO, configFromRFC2822 } from "./from-string";
 import getParsingFlags from "./parsing-flags";
 
 // constant that refers to the ISO standard
-hooks.ISO_8601 = function () {};
+hooks.ISO_8601 = () => {};
 
 // constant that refers to the RFC 2822 form
-hooks.RFC_2822 = function () {};
+hooks.RFC_2822 = () => {};
 
 // date from string and format string
 export function configFromStringAndFormat(config) {

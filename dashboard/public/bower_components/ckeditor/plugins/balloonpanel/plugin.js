@@ -2,24 +2,34 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   var f = !1;
   CKEDITOR.plugins.add("balloonpanel", {
     init: function () {
       f ||
-        (CKEDITOR.document.appendStyleSheet(this.path + "skins/" + CKEDITOR.skin.name + "/balloonpanel.css"), (f = !0));
+        (CKEDITOR.document.appendStyleSheet(
+          this.path + "skins/" + CKEDITOR.skin.name + "/balloonpanel.css"
+        ),
+        (f = !0));
     },
   });
   CKEDITOR.ui.balloonPanel = function (a, b) {
     this.editor = a;
     CKEDITOR.tools.extend(
       this,
-      { width: 360, height: "auto", triangleWidth: 20, triangleHeight: 20, triangleMinDistance: 40 },
+      {
+        width: 360,
+        height: "auto",
+        triangleWidth: 20,
+        triangleHeight: 20,
+        triangleMinDistance: 40,
+      },
       b,
       !0
     );
     this.templates = {};
-    for (var c in this.templateDefinitions) this.templates[c] = new CKEDITOR.template(this.templateDefinitions[c]);
+    for (var c in this.templateDefinitions)
+      this.templates[c] = new CKEDITOR.template(this.templateDefinitions[c]);
     this.parts = {};
     this.focusables = {};
     this.showListeners = {};
@@ -46,13 +56,17 @@
       title: '\x3cdiv class\x3d"cke_balloon_title" role\x3d"presentation"\x3e{title}\x3c/div\x3e',
       close:
         '\x3ca class\x3d"cke_balloon_close_button" href\x3d"javascript:void(0)" title\x3d"Close" role\x3d"button" tabindex\x3d"-1"\x3e\x3cspan class\x3d"cke_label"\x3eX\x3c/span\x3e\x3c/a\x3e',
-      triangleOuter: '\x3cspan class\x3d"cke_balloon_triangle cke_balloon_triangle_outer"\x3e\x3c/span\x3e',
-      triangleInner: '\x3cspan class\x3d"cke_balloon_triangle cke_balloon_triangle_inner"\x3e\x26#8203;\x3c/span\x3e',
+      triangleOuter:
+        '\x3cspan class\x3d"cke_balloon_triangle cke_balloon_triangle_outer"\x3e\x3c/span\x3e',
+      triangleInner:
+        '\x3cspan class\x3d"cke_balloon_triangle cke_balloon_triangle_inner"\x3e\x26#8203;\x3c/span\x3e',
     },
     build: function () {
       var a = this.editor;
       this.parts = {
-        title: CKEDITOR.dom.element.createFromHtml(this.templates.title.output({ title: this.title })),
+        title: CKEDITOR.dom.element.createFromHtml(
+          this.templates.title.output({ title: this.title })
+        ),
         close: CKEDITOR.dom.element.createFromHtml(this.templates.close.output()),
         panel: CKEDITOR.dom.element.createFromHtml(
           this.templates.panel.output({
@@ -64,7 +78,9 @@
             voiceLabel: a.lang.editorPanel + ", " + a.name,
           })
         ),
-        content: CKEDITOR.dom.element.createFromHtml(this.templates.content.output({ content: this.content || "" })),
+        content: CKEDITOR.dom.element.createFromHtml(
+          this.templates.content.output({ content: this.content || "" })
+        ),
         triangleOuter: CKEDITOR.dom.element.createFromHtml(this.templates.triangleOuter.output()),
         triangleInner: CKEDITOR.dom.element.createFromHtml(this.templates.triangleInner.output()),
       };
@@ -94,7 +110,8 @@
       this.rect.visible || ((this.rect.visible = !0), this.parts.panel.show(), this.fire("show"));
     },
     hide: function () {
-      this.rect.visible && ((this.rect.visible = !1), this.parts.panel.hide(), this.blur(), this.fire("hide"));
+      this.rect.visible &&
+        ((this.rect.visible = !1), this.parts.panel.hide(), this.blur(), this.fire("hide"));
     },
     blur: function () {
       this.editor.focus();
@@ -102,9 +119,12 @@
     move: function (a, b) {
       this.rect.left = b;
       this.rect.top = a;
-      this.parts.panel.setStyles({ left: CKEDITOR.tools.cssLength(b), top: CKEDITOR.tools.cssLength(a) });
+      this.parts.panel.setStyles({
+        left: CKEDITOR.tools.cssLength(b),
+        top: CKEDITOR.tools.cssLength(a),
+      });
     },
-    attach: (function () {
+    attach: (() => {
       function a(a, b) {
         var d = Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left)),
           c = Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
@@ -137,7 +157,7 @@
       function f(a, b) {
         var c = b ? a[0] : a[a.length - 1],
           e = b ? "top" : "bottom";
-        return CKEDITOR.tools.array.filter(a, function (a) {
+        return CKEDITOR.tools.array.filter(a, (a) => {
           if (a[e] === c[e]) return a;
         });
       }
@@ -160,9 +180,7 @@
           var d = p.getRanges(),
             d =
               p.isFake && p.isInTable()
-                ? CKEDITOR.tools.array.map(d, function (a) {
-                    return a.getClientRects(!0)[0];
-                  })
+                ? CKEDITOR.tools.array.map(d, (a) => a.getClientRects(!0)[0])
                 : d[d.length - 1].getClientRects(!0),
             e = d[0],
             f = d[d.length - 1],
@@ -195,7 +213,9 @@
           };
         t &&
           this.editor.elementMode === CKEDITOR.ELEMENT_MODE_INLINE &&
-          ((m = this._getViewPaneRect(u)), (m.right += this.triangleWidth), (m.bottom += this.triangleHeight));
+          ((m = this._getViewPaneRect(u)),
+          (m.right += this.triangleWidth),
+          (m.bottom += this.triangleHeight));
         q
           ? (CKEDITOR.tools.array.forEach(
               q,
@@ -205,7 +225,8 @@
               this
             ),
             (g = this._getAlignments(q[0], d, e)),
-            1 < q.length && (g["bottom hcenter"] = this._getAlignments(q[1], d, e)["bottom hcenter"]),
+            1 < q.length &&
+              (g["bottom hcenter"] = this._getAlignments(q[1], d, e)["bottom hcenter"]),
             (h = { "top hcenter": !0, "bottom hcenter": !0 }))
           : (this._adjustElementRect(g, t ? m : r), (g = this._getAlignments(g, d, e)));
         for (var n in h || g) {
@@ -218,12 +239,12 @@
           k || (k = n);
           h < g[k].areaDifference && (k = n);
         }
-        n = (h = this.parts.panel.getAscendant(function (a) {
-          return a instanceof CKEDITOR.dom.document ? !1 : "static" !== a.getComputedStyle("position");
-        }))
-          ? parseInt(h.getComputedStyle("margin-left"), 10)
+        n = (h = this.parts.panel.getAscendant((a) =>
+          a instanceof CKEDITOR.dom.document ? !1 : "static" !== a.getComputedStyle("position")
+        ))
+          ? Number.parseInt(h.getComputedStyle("margin-left"), 10)
           : 0;
-        h = h ? parseInt(h.getComputedStyle("margin-top"), 10) : 0;
+        h = h ? Number.parseInt(h.getComputedStyle("margin-top"), 10) : 0;
         this.move(g[k].top - h, g[k].left - n);
         k = k.split(" ");
         this.setTriangle(A[k[0]], k[1]);
@@ -233,13 +254,18 @@
     resize: function (a, b) {
       this.rect.width = a;
       this.rect.height = b;
-      this.parts.panel.setStyles({ width: CKEDITOR.tools.cssLength(a), height: CKEDITOR.tools.cssLength(b) });
+      this.parts.panel.setStyles({
+        width: CKEDITOR.tools.cssLength(a),
+        height: CKEDITOR.tools.cssLength(b),
+      });
     },
     getWidth: function () {
       return "auto" === this.rect.width ? this.parts.panel.getClientRect().width : this.rect.width;
     },
     getHeight: function () {
-      return "auto" === this.rect.height ? this.parts.panel.getClientRect().height : this.rect.height;
+      return "auto" === this.rect.height
+        ? this.parts.panel.getClientRect().height
+        : this.rect.height;
     },
     setTriangle: function (a, b) {
       var c = this.parts.triangleOuter,
@@ -266,10 +292,9 @@
       var b = CKEDITOR.tools.getNextNumber();
       this.showListeners[b] = a;
       this.rect.visible && this.activateShowListener(b);
-      var c = this;
       return {
-        removeListener: function () {
-          c.removeShowListener(b);
+        removeListener: () => {
+          this.removeShowListener(b);
         },
       };
     },
@@ -300,28 +325,40 @@
     _getAlignments: function (a, b, c) {
       return {
         "right vcenter": { top: a.top + a.height / 2 - c / 2, left: a.right + this.triangleWidth },
-        "left vcenter": { top: a.top + a.height / 2 - c / 2, left: a.left - b - this.triangleWidth },
+        "left vcenter": {
+          top: a.top + a.height / 2 - c / 2,
+          left: a.left - b - this.triangleWidth,
+        },
         "top hcenter": { top: a.top - c - this.triangleHeight, left: a.left + a.width / 2 - b / 2 },
-        "top left": { top: a.top - c - this.triangleHeight, left: a.left + a.width / 2 - this.triangleMinDistance },
+        "top left": {
+          top: a.top - c - this.triangleHeight,
+          left: a.left + a.width / 2 - this.triangleMinDistance,
+        },
         "top right": {
           top: a.top - c - this.triangleHeight,
           left: a.right - a.width / 2 - b + this.triangleMinDistance,
         },
-        "bottom hcenter": { top: a.bottom + this.triangleHeight, left: a.left + a.width / 2 - b / 2 },
-        "bottom left": { top: a.bottom + this.triangleHeight, left: a.left + a.width / 2 - this.triangleMinDistance },
+        "bottom hcenter": {
+          top: a.bottom + this.triangleHeight,
+          left: a.left + a.width / 2 - b / 2,
+        },
+        "bottom left": {
+          top: a.bottom + this.triangleHeight,
+          left: a.left + a.width / 2 - this.triangleMinDistance,
+        },
         "bottom right": {
           top: a.bottom + this.triangleHeight,
           left: a.right - a.width / 2 - b + this.triangleMinDistance,
         },
       };
     },
-    _adjustElementRect: function (a, b) {
+    _adjustElementRect: (a, b) => {
       a.left = Math.max(b.left, Math.min(b.right - 1, a.left));
       a.right = Math.max(b.left, Math.min(b.right, a.right));
       a.top = Math.max(b.top, Math.min(b.bottom - 1, a.top));
       a.bottom = Math.max(b.top, Math.min(b.bottom, a.bottom));
     },
-    _getViewPaneRect: function (a) {
+    _getViewPaneRect: (a) => {
       var b = a.getScrollPosition();
       a = a.getViewPaneSize();
       return { top: b.y, bottom: b.y + a.height, left: b.x, right: b.x + a.width };

@@ -4,7 +4,9 @@
 
 import moment from "../moment";
 
-var numbersPast = "nolla yksi kaksi kolme neljä viisi kuusi seitsemän kahdeksan yhdeksän".split(" "),
+var numbersPast = "nolla yksi kaksi kolme neljä viisi kuusi seitsemän kahdeksan yhdeksän".split(
+    " "
+  ),
   numbersFuture = [
     "nolla",
     "yhden",

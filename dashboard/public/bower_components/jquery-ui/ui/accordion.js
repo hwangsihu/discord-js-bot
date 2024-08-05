@@ -8,7 +8,7 @@
  *
  * http://api.jqueryui.com/accordion/
  */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["jquery", "./core", "./widget"], factory);
@@ -16,8 +16,8 @@
     // Browser globals
     factory(jQuery);
   }
-})(function ($) {
-  return $.widget("ui.accordion", {
+})(($) =>
+  $.widget("ui.accordion", {
     version: "1.11.4",
     options: {
       active: 0,
@@ -76,7 +76,7 @@
     _getCreateEventData: function () {
       return {
         header: this.active,
-        panel: !this.active.length ? $() : this.active.next(),
+        panel: this.active.length ? this.active.next() : $(),
       };
     },
 
@@ -86,7 +86,10 @@
         $("<span>")
           .addClass("ui-accordion-header-icon ui-icon " + icons.header)
           .prependTo(this.headers);
-        this.active.children(".ui-accordion-header-icon").removeClass(icons.header).addClass(icons.activeHeader);
+        this.active
+          .children(".ui-accordion-header-icon")
+          .removeClass(icons.header)
+          .addClass(icons.activeHeader);
         this.headers.addClass("ui-accordion-icons");
       }
     },
@@ -209,7 +212,7 @@
       }
     },
 
-    _panelKeyDown: function (event) {
+    _panelKeyDown: (event) => {
       if (event.keyCode === $.ui.keyCode.UP && event.ctrlKey) {
         $(event.currentTarget).prev().focus();
       }
@@ -306,9 +309,7 @@
         .hide();
 
       // make sure at least one header is in the tab order
-      if (!this.active.length) {
-        this.headers.eq(0).attr("tabIndex", 0);
-      } else {
+      if (this.active.length) {
         this.active
           .attr({
             "aria-selected": "true",
@@ -319,6 +320,8 @@
           .attr({
             "aria-hidden": "false",
           });
+      } else {
+        this.headers.eq(0).attr("tabIndex", 0);
       }
 
       this._createIcons();
@@ -385,7 +388,7 @@
         keydown: "_keydown",
       };
       if (event) {
-        $.each(event.split(" "), function (index, eventName) {
+        $.each(event.split(" "), (index, eventName) => {
           events[eventName] = "_eventHandler";
         });
       }
@@ -441,7 +444,9 @@
       }
 
       if (!clickedIsActive) {
-        clicked.removeClass("ui-corner-all").addClass("ui-accordion-header-active ui-state-active ui-corner-top");
+        clicked
+          .removeClass("ui-corner-all")
+          .addClass("ui-accordion-header-active ui-state-active ui-corner-top");
         if (options.icons) {
           clicked
             .children(".ui-accordion-header-icon")
@@ -488,7 +493,7 @@
       } else if (toShow.length) {
         this.headers
           .filter(function () {
-            return parseInt($(this).attr("tabIndex"), 10) === 0;
+            return Number.parseInt($(this).attr("tabIndex"), 10) === 0;
           })
           .attr("tabIndex", -1);
       }
@@ -504,14 +509,13 @@
       var total,
         easing,
         duration,
-        that = this,
         adjust = 0,
         boxSizing = toShow.css("box-sizing"),
         down = toShow.length && (!toHide.length || toShow.index() < toHide.index()),
         animate = this.options.animate || {},
         options = (down && animate.down) || animate,
-        complete = function () {
-          that._toggleComplete(data);
+        complete = () => {
+          this._toggleComplete(data);
         };
 
       if (typeof options === "number") {
@@ -535,7 +539,7 @@
       toHide.animate(this.hideProps, {
         duration: duration,
         easing: easing,
-        step: function (now, fx) {
+        step: (now, fx) => {
           fx.now = Math.round(now);
         },
       });
@@ -543,13 +547,13 @@
         duration: duration,
         easing: easing,
         complete: complete,
-        step: function (now, fx) {
+        step: (now, fx) => {
           fx.now = Math.round(now);
           if (fx.prop !== "height") {
             if (boxSizing === "content-box") {
               adjust += fx.now;
             }
-          } else if (that.options.heightStyle !== "content") {
+          } else if (this.options.heightStyle !== "content") {
             fx.now = Math.round(total - toHide.outerHeight() - adjust);
             adjust = 0;
           }
@@ -560,7 +564,11 @@
     _toggleComplete: function (data) {
       var toHide = data.oldPanel;
 
-      toHide.removeClass("ui-accordion-content-active").prev().removeClass("ui-corner-top").addClass("ui-corner-all");
+      toHide
+        .removeClass("ui-accordion-content-active")
+        .prev()
+        .removeClass("ui-corner-top")
+        .addClass("ui-corner-all");
 
       // Work around for rendering bug in IE (#5421)
       if (toHide.length) {
@@ -568,5 +576,5 @@
       }
       this._trigger("activate", null, data);
     },
-  });
-});
+  })
+);

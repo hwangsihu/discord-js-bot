@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-CKEDITOR.dialog.add("mathjax", function (d) {
+CKEDITOR.dialog.add("mathjax", (d) => {
   var c,
     b = d.lang.mathjax;
   return {
@@ -18,10 +18,9 @@ CKEDITOR.dialog.add("mathjax", function (d) {
             type: "textarea",
             label: b.dialogInput,
             onLoad: function () {
-              var a = this;
               if (!CKEDITOR.env.ie || 8 != CKEDITOR.env.version)
-                this.getInputElement().on("keyup", function () {
-                  c.setValue("\\(" + a.getInputElement().getValue() + "\\)");
+                this.getInputElement().on("keyup", () => {
+                  c.setValue("\\(" + this.getInputElement().getValue() + "\\)");
                 });
             },
             setup: function (a) {
@@ -52,7 +51,7 @@ CKEDITOR.dialog.add("mathjax", function (d) {
               var a = CKEDITOR.document.getById(this.domId).getChild(0);
               c = new CKEDITOR.plugins.mathjax.frameWrapper(a, d);
             },
-            setup: function (a) {
+            setup: (a) => {
               c.setValue(a.data.math);
             },
           },

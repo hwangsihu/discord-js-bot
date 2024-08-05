@@ -72,11 +72,11 @@ VCanvas_base = createClass({
   /**
    * Clear and reset the canvas
    */
-  reset: function () {
+  reset: () => {
     alert("reset not implemented");
   },
 
-  _insert: function (el, target) {
+  _insert: (el, target) => {
     $(target).html(el);
   },
 
@@ -112,42 +112,42 @@ VCanvas_base = createClass({
   /**
    * Add a shape to the end of the render queue
    */
-  appendShape: function (shape) {
+  appendShape: (shape) => {
     alert("appendShape not implemented");
   },
 
   /**
    * Replace one shape with another
    */
-  replaceWithShape: function (shapeid, shape) {
+  replaceWithShape: (shapeid, shape) => {
     alert("replaceWithShape not implemented");
   },
 
   /**
    * Insert one shape after another in the render queue
    */
-  insertAfterShape: function (shapeid, shape) {
+  insertAfterShape: (shapeid, shape) => {
     alert("insertAfterShape not implemented");
   },
 
   /**
    * Remove a shape from the queue
    */
-  removeShapeId: function (shapeid) {
+  removeShapeId: (shapeid) => {
     alert("removeShapeId not implemented");
   },
 
   /**
    * Find a shape at the specified x/y co-ordinates
    */
-  getShapeAt: function (el, x, y) {
+  getShapeAt: (el, x, y) => {
     alert("getShapeAt not implemented");
   },
 
   /**
    * Render all queued shapes onto the canvas
    */
-  render: function () {
+  render: () => {
     alert("render not implemented");
   },
 });

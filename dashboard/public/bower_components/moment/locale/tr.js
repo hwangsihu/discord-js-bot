@@ -1,12 +1,10 @@
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var suffixes = {
     1: "'inci",
     5: "'inci",
@@ -66,7 +64,7 @@
       y: "bir yıl",
       yy: "%d yıl",
     },
-    ordinal: function (number, period) {
+    ordinal: (number, period) => {
       switch (period) {
         case "d":
         case "D":

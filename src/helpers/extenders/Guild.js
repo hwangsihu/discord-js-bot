@@ -9,7 +9,10 @@ const MEMBER_MENTION = /<?@?!?(\d{17,20})>?/;
  * @param {string} query
  * @param {import("discord.js").GuildChannelTypes[]} type
  */
-Guild.prototype.findMatchingChannels = function (query, type = [ChannelType.GuildText, ChannelType.GuildAnnouncement]) {
+Guild.prototype.findMatchingChannels = function (
+  query,
+  type = [ChannelType.GuildText, ChannelType.GuildAnnouncement]
+) {
   if (!this || !query || typeof query !== "string") return [];
 
   const channelManager = this.channels.cache.filter((ch) => type.includes(ch.type));

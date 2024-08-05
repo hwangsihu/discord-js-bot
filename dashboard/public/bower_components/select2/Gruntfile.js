@@ -1,4 +1,4 @@
-module.exports = function (grunt) {
+module.exports = (grunt) => {
   // Full list of files that must be included by RequireJS
   includes = [
     "jquery.select2",
@@ -35,9 +35,7 @@ module.exports = function (grunt) {
   );
 
   var testFiles = grunt.file.expand("tests/**/*.html");
-  var testUrls = testFiles.map(function (filePath) {
-    return "http://localhost:9999/" + filePath;
-  });
+  var testUrls = testFiles.map((filePath) => "http://localhost:9999/" + filePath);
 
   var testBuildNumber = "unknown";
 

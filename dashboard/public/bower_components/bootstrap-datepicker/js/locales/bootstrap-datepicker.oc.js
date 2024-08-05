@@ -1,7 +1,7 @@
 /**
  * Occitan translation for bootstrap-datepicker
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["oc"] = {
     days: ["Dimenge", "Diluns", "Dimars", "Dimècres", "Dijòus", "Divendres", "Dissabte"],
     daysShort: ["Dim", "Dil", "Dmr", "Dmc", "Dij", "Div", "Dis"],
@@ -20,7 +20,20 @@
       "Novembre",
       "Decembre",
     ],
-    monthsShort: ["Gen", "Feb", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Oct", "Nov", "Dec"],
+    monthsShort: [
+      "Gen",
+      "Feb",
+      "Mar",
+      "Abr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Set",
+      "Oct",
+      "Nov",
+      "Dec",
+    ],
     today: "Uèi",
     monthsTitle: "Meses",
     clear: "Escafar",

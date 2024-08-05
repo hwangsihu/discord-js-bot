@@ -9,15 +9,11 @@
  * Date: 2016-04-12T17:29Z
  */
 
-(function (global) {
-  var QUnit = {};
+((global) => {
+  var qUnit = {};
 
   var Date = global.Date;
-  var now =
-    Date.now ||
-    function () {
-      return new Date().getTime();
-    };
+  var now = Date.now || (() => new Date().getTime());
 
   var setTimeout = global.setTimeout;
   var clearTimeout = global.clearTimeout;
@@ -28,7 +24,7 @@
   var defined = {
     document: window && window.document !== undefined,
     setTimeout: setTimeout !== undefined,
-    sessionStorage: (function () {
+    sessionStorage: (() => {
       var x = "qunit-test-string";
       try {
         sessionStorage.setItem(x, x);
@@ -90,7 +86,7 @@
   function objectValues(obj) {
     var key,
       val,
-      vals = QUnit.is("array", obj) ? [] : {};
+      vals = qUnit.is("array", obj) ? [] : {};
     for (key in obj) {
       if (hasOwn.call(obj, key)) {
         val = obj[key];
@@ -156,7 +152,7 @@
 
   // Safe object type checking
   function is(type, obj) {
-    return QUnit.objectType(obj) === type;
+    return qUnit.objectType(obj) === type;
   }
 
   // Doesn't support IE6 to IE9, it will return undefined on these browsers
@@ -273,12 +269,22 @@
     var i,
       l,
       key,
-      callbackNames = ["begin", "done", "log", "testStart", "testDone", "moduleStart", "moduleDone"];
+      callbackNames = [
+        "begin",
+        "done",
+        "log",
+        "testStart",
+        "testDone",
+        "moduleStart",
+        "moduleDone",
+      ];
 
     function registerLoggingCallback(key) {
-      var loggingCallback = function (callback) {
+      var loggingCallback = (callback) => {
         if (objectType(callback) !== "function") {
-          throw new Error("QUnit logging methods require a callback function as their first parameters.");
+          throw new Error(
+            "QUnit logging methods require a callback function as their first parameters."
+          );
         }
 
         config.callbacks[key].push(callback);
@@ -320,14 +326,14 @@
     var loggingCallback, userCallback;
 
     for (loggingCallback in loggingCallbacks) {
-      if (QUnit[loggingCallback] !== loggingCallbacks[loggingCallback]) {
-        userCallback = QUnit[loggingCallback];
+      if (qUnit[loggingCallback] !== loggingCallbacks[loggingCallback]) {
+        userCallback = qUnit[loggingCallback];
 
         // Restore the callback function
-        QUnit[loggingCallback] = loggingCallbacks[loggingCallback];
+        qUnit[loggingCallback] = loggingCallbacks[loggingCallback];
 
         // Assign the deprecated given callback
-        QUnit[loggingCallback](userCallback);
+        qUnit[loggingCallback](userCallback);
 
         if (global.console && global.console.warn) {
           global.console.warn(
@@ -342,7 +348,7 @@
     }
   }
 
-  (function () {
+  (() => {
     if (!defined.document) {
       return;
     }
@@ -354,7 +360,7 @@
     // Cover uncaught exceptions
     // Returning true will suppress the default browser handler,
     // returning false will let it run.
-    window.onerror = function (error, filePath, linerNr) {
+    window.onerror = (error, filePath, linerNr) => {
       var ret = false;
       if (onErrorFnPrev) {
         ret = onErrorFnPrev(error, filePath, linerNr);
@@ -363,17 +369,17 @@
       // Treat return value as window.onerror itself does,
       // Only do our handling if not suppressed.
       if (ret !== true) {
-        if (QUnit.config.current) {
-          if (QUnit.config.current.ignoreGlobalErrors) {
+        if (qUnit.config.current) {
+          if (qUnit.config.current.ignoreGlobalErrors) {
             return true;
           }
-          QUnit.pushFailure(error, filePath + ":" + linerNr);
+          qUnit.pushFailure(error, filePath + ":" + linerNr);
         } else {
-          QUnit.test(
+          qUnit.test(
             "global failure",
             extend(
-              function () {
-                QUnit.pushFailure(error, filePath + ":" + linerNr);
+              () => {
+                qUnit.pushFailure(error, filePath + ":" + linerNr);
               },
               { validTest: true }
             )
@@ -387,14 +393,14 @@
   })();
 
   // Figure out if we're running the tests from a server or not
-  QUnit.isLocal = !(defined.document && window.location.protocol !== "file:");
+  qUnit.isLocal = !(defined.document && window.location.protocol !== "file:");
 
   // Expose the current QUnit version
-  QUnit.version = "1.23.1";
+  qUnit.version = "1.23.1";
 
-  extend(QUnit, {
+  extend(qUnit, {
     // Call on start of module test to prepend name to all tests
-    module: function (name, testEnvironment, executeNow) {
+    module: (name, testEnvironment, executeNow) => {
       var module, moduleFns;
       var currentModule = config.currentModule;
 
@@ -472,24 +478,10 @@
 
     // DEPRECATED: The functionality of QUnit.start() will be altered in QUnit 2.0.
     // In QUnit 2.0, invoking it will ONLY affect the `QUnit.config.autostart` blocking behavior.
-    start: function (count) {
+    start: (count) => {
       var globalStartAlreadyCalled = globalStartCalled;
 
-      if (!config.current) {
-        globalStartCalled = true;
-
-        if (runStarted) {
-          throw new Error("Called start() outside of a test context while already started");
-        } else if (globalStartAlreadyCalled || count > 1) {
-          throw new Error("Called start() outside of a test context too many times");
-        } else if (config.autostart) {
-          throw new Error("Called start() outside of a test context when " + "QUnit.config.autostart was true");
-        } else if (!config.pageLoaded) {
-          // The page isn't completely loaded yet, so bail out and let `QUnit.load` handle it
-          config.autostart = true;
-          return;
-        }
-      } else {
+      if (config.current) {
         // If a test is running, adjust its semaphore
         config.current.semaphore -= count || 1;
 
@@ -497,7 +489,10 @@
         if (isNaN(config.current.semaphore)) {
           config.current.semaphore = 0;
 
-          QUnit.pushFailure("Called start() with a non-numeric decrement.", sourceFromStacktrace(2));
+          qUnit.pushFailure(
+            "Called start() with a non-numeric decrement.",
+            sourceFromStacktrace(2)
+          );
           return;
         }
 
@@ -510,10 +505,26 @@
         if (config.current.semaphore < 0) {
           config.current.semaphore = 0;
 
-          QUnit.pushFailure(
+          qUnit.pushFailure(
             "Called start() while already started (test's semaphore was 0 already)",
             sourceFromStacktrace(2)
           );
+          return;
+        }
+      } else {
+        globalStartCalled = true;
+
+        if (runStarted) {
+          throw new Error("Called start() outside of a test context while already started");
+        } else if (globalStartAlreadyCalled || count > 1) {
+          throw new Error("Called start() outside of a test context too many times");
+        } else if (config.autostart) {
+          throw new Error(
+            "Called start() outside of a test context when " + "QUnit.config.autostart was true"
+          );
+        } else if (!config.pageLoaded) {
+          // The page isn't completely loaded yet, so bail out and let `QUnit.load` handle it
+          config.autostart = true;
           return;
         }
       }
@@ -522,7 +533,7 @@
     },
 
     // DEPRECATED: QUnit.stop() will be removed in QUnit 2.0.
-    stop: function (count) {
+    stop: (count) => {
       // If there isn't a test running, don't allow QUnit.stop() to be called
       if (!config.current) {
         throw new Error("Called stop() outside of a test context");
@@ -542,7 +553,7 @@
 
     extend: extend,
 
-    load: function () {
+    load: () => {
       config.pageLoaded = true;
 
       // Initialize the configuration options
@@ -566,13 +577,13 @@
       }
     },
 
-    stack: function (offset) {
+    stack: (offset) => {
       offset = (offset || 0) + 2;
       return sourceFromStacktrace(offset);
     },
   });
 
-  registerLoggingCallbacks(QUnit);
+  registerLoggingCallbacks(qUnit);
 
   function begin() {
     var i,
@@ -640,10 +651,10 @@
 
     if (config.testTimeout && defined.setTimeout) {
       clearTimeout(config.timeout);
-      config.timeout = setTimeout(function () {
+      config.timeout = setTimeout(() => {
         if (config.current) {
           config.current.semaphore = 0;
-          QUnit.pushFailure("Test timed out", sourceFromStacktrace(2));
+          qUnit.pushFailure("Test timed out", sourceFromStacktrace(2));
         } else {
           throw new Error("Test timed out");
         }
@@ -657,7 +668,7 @@
 
     // A slight delay to allow this iteration of the event loop to finish (more assertions, etc.)
     if (defined.setTimeout) {
-      setTimeout(function () {
+      setTimeout(() => {
         if (config.current && config.current.semaphore > 0) {
           return;
         }
@@ -706,7 +717,7 @@
       module.testEnvironment = {};
     }
 
-    return function (callback) {
+    return (callback) => {
       module.testEnvironment[hookName] = callback;
     };
   }
@@ -743,7 +754,7 @@
 
     if (settings.skip) {
       // Skipped tests will fully ignore any sent callback
-      this.callback = function () {};
+      this.callback = () => {};
       this.async = false;
       this.expected = 0;
     } else {
@@ -808,7 +819,7 @@
       config.current = this;
 
       if (this.async) {
-        QUnit.stop();
+        qUnit.stop();
       }
 
       this.callbackStarted = now();
@@ -822,7 +833,12 @@
         runTest(this);
       } catch (e) {
         this.pushFailure(
-          "Died on test #" + (this.assertions.length + 1) + " " + this.stack + ": " + (e.message || e),
+          "Died on test #" +
+            (this.assertions.length + 1) +
+            " " +
+            this.stack +
+            ": " +
+            (e.message || e),
           extractStacktrace(e, 0)
         );
 
@@ -831,7 +847,7 @@
 
         // Restart the tests if they're blocking
         if (config.blocking) {
-          QUnit.start();
+          qUnit.start();
         }
       }
 
@@ -841,7 +857,7 @@
       }
     },
 
-    after: function () {
+    after: () => {
       checkPollution();
     },
 
@@ -878,7 +894,10 @@
         if (module.parentModule) {
           processHooks(test, module.parentModule);
         }
-        if (module.testEnvironment && QUnit.objectType(module.testEnvironment[handler]) === "function") {
+        if (
+          module.testEnvironment &&
+          qUnit.objectType(module.testEnvironment[handler]) === "function"
+        ) {
           hooks.push(test.queueHook(module.testEnvironment[handler], handler));
         }
       }
@@ -893,7 +912,10 @@
     finish: function () {
       config.current = this;
       if (config.requireExpects && this.expected === null) {
-        this.pushFailure("Expected number of assertions to be defined, but expect() was " + "not called.", this.stack);
+        this.pushFailure(
+          "Expected number of assertions to be defined, but expect() was " + "not called.",
+          this.stack
+        );
       } else if (this.expected !== null && this.expected !== this.assertions.length) {
         this.pushFailure(
           "Expected " + this.expected + " assertions, but " + this.assertions.length + " were run",
@@ -901,7 +923,8 @@
         );
       } else if (this.expected === null && !this.assertions.length) {
         this.pushFailure(
-          "Expected at least one assertion, but none were run - call " + "expect(0) to accept zero assertions.",
+          "Expected at least one assertion, but none were run - call " +
+            "expect(0) to accept zero assertions.",
           this.stack
         );
       }
@@ -944,7 +967,7 @@
       // QUnit.reset() is deprecated and will be replaced for a new
       // fixture reset function on QUnit 2.0/2.1.
       // It's still called here for backwards compatibility handling
-      QUnit.reset();
+      qUnit.reset();
 
       config.current = undefined;
     },
@@ -960,21 +983,21 @@
       function run() {
         // Each of these can by async
         synchronize([
-          function () {
+          () => {
             test.before();
           },
 
           test.hooks("beforeEach"),
-          function () {
+          () => {
             test.run();
           },
 
           test.hooks("afterEach").reverse(),
 
-          function () {
+          () => {
             test.after();
           },
-          function () {
+          () => {
             test.finish();
           },
         ]);
@@ -982,7 +1005,7 @@
 
       // Prioritize previously failed tests, detected from sessionStorage
       priority =
-        QUnit.config.reorder &&
+        qUnit.config.reorder &&
         defined.sessionStorage &&
         +sessionStorage.getItem("qunit-test-" + this.module.name + "-" + this.testName);
 
@@ -1022,7 +1045,9 @@
 
     pushFailure: function (message, source, actual) {
       if (!(this instanceof Test)) {
-        throw new Error("pushFailure() assertion outside test context, was " + sourceFromStacktrace(2));
+        throw new Error(
+          "pushFailure() assertion outside test context, was " + sourceFromStacktrace(2)
+        );
       }
 
       var details = {
@@ -1048,33 +1073,31 @@
     },
 
     resolvePromise: function (promise, phase) {
-      var then,
-        message,
-        test = this;
+      var then, message;
       if (promise != null) {
         then = promise.then;
-        if (QUnit.objectType(then) === "function") {
-          QUnit.stop();
+        if (qUnit.objectType(then) === "function") {
+          qUnit.stop();
           then.call(
             promise,
-            function () {
-              QUnit.start();
+            () => {
+              qUnit.start();
             },
-            function (error) {
+            (error) => {
               message =
                 "Promise rejected " +
-                (!phase ? "during" : phase.replace(/Each$/, "")) +
+                (phase ? phase.replace(/Each$/, "") : "during") +
                 " " +
-                test.testName +
+                this.testName +
                 ": " +
                 (error.message || error);
-              test.pushFailure(message, extractStacktrace(error, 0));
+              this.pushFailure(message, extractStacktrace(error, 0));
 
               // Else next test will carry the responsibility
               saveGlobal();
 
               // Unblock
-              QUnit.start();
+              qUnit.start();
             }
           );
         }
@@ -1131,14 +1154,14 @@
         : this.stringFilter(filter, fullName);
     },
 
-    regexFilter: function (exclude, pattern, flags, fullName) {
+    regexFilter: (exclude, pattern, flags, fullName) => {
       var regex = new RegExp(pattern, flags);
       var match = regex.test(fullName);
 
       return match !== exclude;
     },
 
-    stringFilter: function (filter, fullName) {
+    stringFilter: (filter, fullName) => {
       filter = filter.toLowerCase();
       fullName = fullName.toLowerCase();
 
@@ -1163,27 +1186,30 @@ DEPRECATED: Use multiple tests instead of resetting inside a test.
 Use testStart or testDone for custom cleanup.
 This method will throw an error in 2.0, and will be removed in 2.1
 */
-  QUnit.reset = function () {
+  qUnit.reset = () => {
     // Return on non-browser environments
     // This is necessary to not break on node tests
     if (!defined.document) {
       return;
     }
 
-    var fixture = defined.document && document.getElementById && document.getElementById("qunit-fixture");
+    var fixture =
+      defined.document && document.getElementById && document.getElementById("qunit-fixture");
 
     if (fixture) {
       fixture.innerHTML = config.fixture;
     }
   };
 
-  QUnit.pushFailure = function () {
-    if (!QUnit.config.current) {
-      throw new Error("pushFailure() assertion outside test context, in " + sourceFromStacktrace(2));
+  qUnit.pushFailure = () => {
+    if (!qUnit.config.current) {
+      throw new Error(
+        "pushFailure() assertion outside test context, in " + sourceFromStacktrace(2)
+      );
     }
 
     // Gets current test obj
-    var currentTest = QUnit.config.current;
+    var currentTest = qUnit.config.current;
 
     return currentTest.pushFailure.apply(currentTest, arguments);
   };
@@ -1216,7 +1242,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
     var last = !priority,
       index;
 
-    if (QUnit.objectType(callback) === "array") {
+    if (qUnit.objectType(callback) === "array") {
       while (callback.length) {
         synchronize(callback.shift());
       }
@@ -1245,8 +1271,8 @@ This method will throw an error in 2.0, and will be removed in 2.1
   function unitSamplerGenerator(seed) {
     // 32-bit xorshift, requires only a nonzero seed
     // http://excamera.com/sphinx/article-xorshift.html
-    var sample = parseInt(generateHash(seed), 16) || -1;
-    return function () {
+    var sample = Number.parseInt(generateHash(seed), 16) || -1;
+    return () => {
       sample ^= sample << 13;
       sample ^= sample >>> 17;
       sample ^= sample << 5;
@@ -1285,12 +1311,12 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
     newGlobals = diff(config.pollution, old);
     if (newGlobals.length > 0) {
-      QUnit.pushFailure("Introduced global variable(s): " + newGlobals.join(", "));
+      qUnit.pushFailure("Introduced global variable(s): " + newGlobals.join(", "));
     }
 
     deletedGlobals = diff(old, config.pollution);
     if (deletedGlobals.length > 0) {
-      QUnit.pushFailure("Deleted global variable(s): " + deletedGlobals.join(", "));
+      qUnit.pushFailure("Deleted global variable(s): " + deletedGlobals.join(", "));
     }
   }
 
@@ -1301,7 +1327,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
       expected = null;
     }
 
-    QUnit.test(testName, expected, callback, true);
+    qUnit.test(testName, expected, callback, true);
   }
 
   // Will be exposed as QUnit.test
@@ -1349,7 +1375,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
       return;
     }
 
-    QUnit.config.queue.length = 0;
+    qUnit.config.queue.length = 0;
     focused = true;
 
     if (arguments.length === 2) {
@@ -1372,7 +1398,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
   }
 
   // Assert helpers
-  QUnit.assert = Assert.prototype = {
+  qUnit.assert = Assert.prototype = {
     // Specify the number of expected assertions to guarantee that failed test
     // (no assertions are run at all) don't slip through.
     expect: function (asserts) {
@@ -1400,7 +1426,10 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
       return function done() {
         if (popped) {
-          test.pushFailure("Too many calls to the `assert.async` callback", sourceFromStacktrace(2));
+          test.pushFailure(
+            "Too many calls to the `assert.async` callback",
+            sourceFromStacktrace(2)
+          );
           return;
         }
         acceptCallCount -= 1;
@@ -1417,7 +1446,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
     // Exports test.push() to the user API
     // Alias of pushResult.
     push: function (result, actual, expected, message, negative) {
-      var currentAssert = this instanceof Assert ? this : QUnit.config.current.assert;
+      var currentAssert = this instanceof Assert ? this : qUnit.config.current.assert;
       return currentAssert.pushResult({
         result: result,
         actual: actual,
@@ -1430,7 +1459,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
     pushResult: function (resultInfo) {
       // Destructure of resultInfo = { result, actual, expected, message, negative }
       var assert = this,
-        currentTest = (assert instanceof Assert && assert.test) || QUnit.config.current;
+        currentTest = (assert instanceof Assert && assert.test) || qUnit.config.current;
 
       // Backwards compatibility fix.
       // Allows the direct use of global exported assertions and QUnit.assert.*
@@ -1442,7 +1471,10 @@ This method will throw an error in 2.0, and will be removed in 2.1
       }
 
       if (currentTest.usedAsync === true && currentTest.semaphore === 0) {
-        currentTest.pushFailure("Assertion after the final `assert.async` was resolved", sourceFromStacktrace(2));
+        currentTest.pushFailure(
+          "Assertion after the final `assert.async` was resolved",
+          sourceFromStacktrace(2)
+        );
 
         // Allow this assertion to continue running anyway...
       }
@@ -1456,7 +1488,10 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
     ok: function (result, message) {
       message =
-        message || (result ? "okay" : "failed, expected argument to be truthy, was: " + QUnit.dump.parse(result));
+        message ||
+        (result
+          ? "okay"
+          : "failed, expected argument to be truthy, was: " + qUnit.dump.parse(result));
       this.pushResult({
         result: !!result,
         actual: result,
@@ -1467,7 +1502,10 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
     notOk: function (result, message) {
       message =
-        message || (!result ? "okay" : "failed, expected argument to be falsy, was: " + QUnit.dump.parse(result));
+        message ||
+        (result
+          ? "failed, expected argument to be falsy, was: " + qUnit.dump.parse(result)
+          : "okay");
       this.pushResult({
         result: !result,
         actual: result,
@@ -1501,7 +1539,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
       actual = objectValues(actual);
       expected = objectValues(expected);
       this.pushResult({
-        result: QUnit.equiv(actual, expected),
+        result: qUnit.equiv(actual, expected),
         actual: actual,
         expected: expected,
         message: message,
@@ -1512,7 +1550,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
       actual = objectValues(actual);
       expected = objectValues(expected);
       this.pushResult({
-        result: !QUnit.equiv(actual, expected),
+        result: !qUnit.equiv(actual, expected),
         actual: actual,
         expected: expected,
         message: message,
@@ -1522,7 +1560,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
     deepEqual: function (actual, expected, message) {
       this.pushResult({
-        result: QUnit.equiv(actual, expected),
+        result: qUnit.equiv(actual, expected),
         actual: actual,
         expected: expected,
         message: message,
@@ -1531,7 +1569,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
     notDeepEqual: function (actual, expected, message) {
       this.pushResult({
-        result: !QUnit.equiv(actual, expected),
+        result: !qUnit.equiv(actual, expected),
         actual: actual,
         expected: expected,
         message: message,
@@ -1563,7 +1601,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
         expectedType,
         expectedOutput = expected,
         ok = false,
-        currentTest = (this instanceof Assert && this.test) || QUnit.config.current;
+        currentTest = (this instanceof Assert && this.test) || qUnit.config.current;
 
       // 'expected' is optional unless doing string comparison
       if (message == null && typeof expected === "string") {
@@ -1580,7 +1618,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
       currentTest.ignoreGlobalErrors = false;
 
       if (actual) {
-        expectedType = QUnit.objectType(expected);
+        expectedType = qUnit.objectType(expected);
 
         // We don't want to validate thrown error
         if (!expected) {
@@ -1624,7 +1662,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
   // Provide an alternative to assert.throws(), for environments that consider throws a reserved word
   // Known to us are: Closure Compiler, Narwhal
-  (function () {
+  (() => {
     /*jshint sub:true */
     Assert.prototype.raises = Assert.prototype["throws"]; //jscs:ignore requireDotNotation
   })();
@@ -1652,7 +1690,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
   // Test for equality any JavaScript type.
   // Author: Philippe Rathé <prathe@gmail.com>
-  QUnit.equiv = (function () {
+  qUnit.equiv = (() => {
     // Stack to decide between skip/abort functions
     var callers = [];
 
@@ -1662,10 +1700,10 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
     var getProto =
       Object.getPrototypeOf ||
-      function (obj) {
+      ((obj) => {
         /*jshint proto: true */
         return obj.__proto__;
-      };
+      });
 
     function useStrictEquality(b, a) {
       // To catch short annotation VS 'new' annotation of a declaration. e.g.:
@@ -1702,7 +1740,10 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
       // Allow objects with no prototype to be equivalent to
       // objects with Object as their constructor.
-      if ((protoA === null && protoB === Object.prototype) || (protoB === null && protoA === Object.prototype)) {
+      if (
+        (protoA === null && protoB === Object.prototype) ||
+        (protoB === null && protoA === Object.prototype)
+      ) {
         return true;
       }
 
@@ -1722,27 +1763,22 @@ This method will throw an error in 2.0, and will be removed in 2.1
       symbol: useStrictEquality,
       date: useStrictEquality,
 
-      nan: function () {
-        return true;
-      },
+      nan: () => true,
 
-      regexp: function (b, a) {
-        return (
-          a.source === b.source &&
-          // Include flags in the comparison
-          getRegExpFlags(a) === getRegExpFlags(b)
-        );
-      },
+      regexp: (b, a) =>
+        a.source === b.source &&
+        // Include flags in the comparison
+        getRegExpFlags(a) === getRegExpFlags(b),
 
       // - skip when the property is a method of an instance (OOP)
       // - abort otherwise,
       // initial === would have catch identical references anyway
-      function: function () {
+      function: () => {
         var caller = callers[callers.length - 1];
         return caller !== Object && typeof caller !== "undefined";
       },
 
-      array: function (b, a) {
+      array: (b, a) => {
         var i, j, len, loop, aCircular, bCircular;
 
         len = a.length;
@@ -1780,7 +1816,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
         return true;
       },
 
-      set: function (b, a) {
+      set: (b, a) => {
         var innerEq,
           outerEq = true;
 
@@ -1788,10 +1824,10 @@ This method will throw an error in 2.0, and will be removed in 2.1
           return false;
         }
 
-        a.forEach(function (aVal) {
+        a.forEach((aVal) => {
           innerEq = false;
 
-          b.forEach(function (bVal) {
+          b.forEach((bVal) => {
             if (innerEquiv(bVal, aVal)) {
               innerEq = true;
             }
@@ -1805,7 +1841,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
         return outerEq;
       },
 
-      map: function (b, a) {
+      map: (b, a) => {
         var innerEq,
           outerEq = true;
 
@@ -1813,10 +1849,10 @@ This method will throw an error in 2.0, and will be removed in 2.1
           return false;
         }
 
-        a.forEach(function (aVal, aKey) {
+        a.forEach((aVal, aKey) => {
           innerEq = false;
 
-          b.forEach(function (bVal, bKey) {
+          b.forEach((bVal, bKey) => {
             if (innerEquiv([bVal, bKey], [aVal, aKey])) {
               innerEq = true;
             }
@@ -1830,7 +1866,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
         return outerEq;
       },
 
-      object: function (b, a) {
+      object: (b, a) => {
         var i, j, loop, aCircular, bCircular;
 
         // Default to true
@@ -1888,8 +1924,8 @@ This method will throw an error in 2.0, and will be removed in 2.1
     };
 
     function typeEquiv(a, b) {
-      var type = QUnit.objectType(a);
-      return QUnit.objectType(b) === type && callbacks[type](b, a);
+      var type = qUnit.objectType(a);
+      return qUnit.objectType(b) === type && callbacks[type](b, a);
     }
 
     // The real equiv function
@@ -1912,7 +1948,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
   // Based on jsDump by Ariel Flesler
   // http://flesler.blogspot.com/2008/05/jsdump-pretty-dump-of-any-javascript.html
-  QUnit.dump = (function () {
+  qUnit.dump = (() => {
     function quote(str) {
       return '"' + str.toString().replace(/\\/g, "\\\\").replace(/"/g, '\\"') + '"';
     }
@@ -1973,19 +2009,23 @@ This method will throw an error in 2.0, and will be removed in 2.1
           }
           return parserType === "string" ? parser : this.parsers.error;
         },
-        typeOf: function (obj) {
+        typeOf: (obj) => {
           var type;
           if (obj === null) {
             type = "null";
           } else if (typeof obj === "undefined") {
             type = "undefined";
-          } else if (QUnit.is("regexp", obj)) {
+          } else if (qUnit.is("regexp", obj)) {
             type = "regexp";
-          } else if (QUnit.is("date", obj)) {
+          } else if (qUnit.is("date", obj)) {
             type = "date";
-          } else if (QUnit.is("function", obj)) {
+          } else if (qUnit.is("function", obj)) {
             type = "function";
-          } else if (obj.setInterval !== undefined && obj.document !== undefined && obj.nodeType === undefined) {
+          } else if (
+            obj.setInterval !== undefined &&
+            obj.document !== undefined &&
+            obj.nodeType === undefined
+          ) {
             type = "window";
           } else if (obj.nodeType === 9) {
             type = "document";
@@ -2038,19 +2078,17 @@ This method will throw an error in 2.0, and will be removed in 2.1
         literal: literal,
         join: join,
         depth: 1,
-        maxDepth: QUnit.config.maxDepth,
+        maxDepth: qUnit.config.maxDepth,
 
         // This is the list of parsers, to modify them, use dump.setParser
         parsers: {
           window: "[Window]",
           document: "[Document]",
-          error: function (error) {
-            return 'Error("' + error.message + '")';
-          },
+          error: (error) => 'Error("' + error.message + '")',
           unknown: "[Unknown]",
           null: "null",
           undefined: "undefined",
-          function: function (fn) {
+          function: (fn) => {
             var ret = "function",
               // Functions never have name in IE
               name = "name" in fn ? fn.name : (reName.exec(fn) || [])[1];
@@ -2066,7 +2104,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
           array: array,
           nodelist: array,
           arguments: array,
-          object: function (map, stack) {
+          object: (map, stack) => {
             var keys,
               key,
               val,
@@ -2101,7 +2139,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
             dump.down();
             return join("{", ret, "}");
           },
-          node: function (node) {
+          node: (node) => {
             var len,
               i,
               val,
@@ -2134,7 +2172,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
           },
 
           // Function calls it internally, it's the arguments part of the function
-          functionArgs: function (fn) {
+          functionArgs: (fn) => {
             var args,
               l = fn.length;
 
@@ -2179,29 +2217,29 @@ This method will throw an error in 2.0, and will be removed in 2.1
   })();
 
   // Back compat
-  QUnit.jsDump = QUnit.dump;
+  qUnit.jsDump = qUnit.dump;
 
   // Deprecated
   // Extend assert methods to QUnit for Backwards compatibility
-  (function () {
+  (() => {
     var i,
       assertions = Assert.prototype;
 
     function applyCurrent(current) {
-      return function () {
-        var assert = new Assert(QUnit.config.current);
+      return () => {
+        var assert = new Assert(qUnit.config.current);
         current.apply(assert, arguments);
       };
     }
 
     for (i in assertions) {
-      QUnit[i] = applyCurrent(assertions[i]);
+      qUnit[i] = applyCurrent(assertions[i]);
     }
   })();
 
   // For browser, export only select globals
   if (defined.document) {
-    (function () {
+    (() => {
       var i,
         l,
         keys = [
@@ -2226,31 +2264,29 @@ This method will throw an error in 2.0, and will be removed in 2.1
         ];
 
       for (i = 0, l = keys.length; i < l; i++) {
-        window[keys[i]] = QUnit[keys[i]];
+        window[keys[i]] = qUnit[keys[i]];
       }
     })();
 
-    window.QUnit = QUnit;
+    window.QUnit = qUnit;
   }
 
   // For nodejs
   if (typeof module !== "undefined" && module && module.exports) {
-    module.exports = QUnit;
+    module.exports = qUnit;
 
     // For consistency with CommonJS environments' exports
-    module.exports.QUnit = QUnit;
+    module.exports.QUnit = qUnit;
   }
 
   // For CommonJS with exports, but without module.exports, like Rhino
   if (typeof exports !== "undefined" && exports) {
-    exports.QUnit = QUnit;
+    exports.QUnit = qUnit;
   }
 
   if (typeof define === "function" && define.amd) {
-    define(function () {
-      return QUnit;
-    });
-    QUnit.config.autostart = false;
+    define(() => qUnit);
+    qUnit.config.autostart = false;
   }
 
   // Get a reference to the global object, like window in browsers
@@ -2260,7 +2296,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
   })()
 );
 
-(function () {
+(() => {
   // Only interact with URLs via window.location
   var location = typeof window !== "undefined" && window.location;
   if (!location) {
@@ -2312,7 +2348,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
     }
   );
 
-  QUnit.begin(function () {
+  QUnit.begin(() => {
     var i,
       option,
       urlConfig = QUnit.config.urlConfig;
@@ -2361,7 +2397,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
   // Deprecated QUnit.init - Ref #530
   // Re-initialize the configuration options
-  QUnit.init = function () {
+  QUnit.init = () => {
     var config = QUnit.config;
 
     config.stats = { all: 0, bad: 0 };
@@ -2381,9 +2417,14 @@ This method will throw an error in 2.0, and will be removed in 2.1
     document = window.document,
     collapseNext = false,
     hasOwn = Object.prototype.hasOwnProperty,
-    unfilteredUrl = setUrl({ filter: undefined, module: undefined, moduleId: undefined, testId: undefined }),
+    unfilteredUrl = setUrl({
+      filter: undefined,
+      module: undefined,
+      moduleId: undefined,
+      testId: undefined,
+    }),
     defined = {
-      sessionStorage: (function () {
+      sessionStorage: (() => {
         var x = "qunit-test-string";
         try {
           sessionStorage.setItem(x, x);
@@ -2406,7 +2447,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
     s = s + "";
 
     // Both single quotes and double quotes (for attributes)
-    return s.replace(/['"<>&]/g, function (s) {
+    return s.replace(/['"<>&]/g, (s) => {
       switch (s) {
         case "'":
           return "&#039;";
@@ -2433,7 +2474,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
       elem.addEventListener(type, fn, false);
     } else if (elem.attachEvent) {
       // Support: IE <9
-      elem.attachEvent("on" + type, function () {
+      elem.attachEvent("on" + type, () => {
         var event = window.event;
         if (!event.target) {
           event.target = event.srcElement || document;
@@ -2554,7 +2595,9 @@ This method will throw an error in 2.0, and will be removed in 2.1
               "<option value='" +
               escaped +
               "'" +
-              (config[val.id] === val.value[j] ? (selection = true) && " selected='selected'" : "") +
+              (config[val.id] === val.value[j]
+                ? (selection = true) && " selected='selected'"
+                : "") +
               ">" +
               escaped +
               "</option>";
@@ -2576,7 +2619,11 @@ This method will throw an error in 2.0, and will be removed in 2.1
         if (config[val.id] && !selection) {
           escaped = escapeText(config[val.id]);
           urlConfigHtml +=
-            "<option value='" + escaped + "' selected='selected' disabled='disabled'>" + escaped + "</option>";
+            "<option value='" +
+            escaped +
+            "' selected='selected' disabled='disabled'>" +
+            escaped +
+            "</option>";
         }
         urlConfigHtml += "</select>";
       }
@@ -2591,23 +2638,22 @@ This method will throw an error in 2.0, and will be removed in 2.1
     var updatedUrl,
       value,
       tests,
-      field = this,
       params = {};
 
     // Detect if field is a select menu or a checkbox
-    if ("selectedIndex" in field) {
-      value = field.options[field.selectedIndex].value || undefined;
+    if ("selectedIndex" in this) {
+      value = this.options[this.selectedIndex].value || undefined;
     } else {
-      value = field.checked ? field.defaultValue || true : undefined;
+      value = this.checked ? this.defaultValue || true : undefined;
     }
 
-    params[field.name] = value;
+    params[this.name] = value;
     updatedUrl = setUrl(params);
 
     // Check if we can apply the change without a page refresh
-    if ("hidepassed" === field.name && "replaceState" in window.history) {
-      QUnit.urlParams[field.name] = value;
-      config[field.name] = value || false;
+    if ("hidepassed" === this.name && "replaceState" in window.history) {
+      QUnit.urlParams[this.name] = value;
+      config[this.name] = value || false;
       tests = id("qunit-tests");
       if (tests) {
         toggleClass(tests, "hidepass", value || false);
@@ -2649,7 +2695,9 @@ This method will throw an error in 2.0, and will be removed in 2.1
       modulesList = id("qunit-modulefilter"),
       filter = id("qunit-filter-input").value;
 
-    selectedModule = modulesList ? decodeURIComponent(modulesList.options[modulesList.selectedIndex].value) : undefined;
+    selectedModule = modulesList
+      ? decodeURIComponent(modulesList.options[modulesList.selectedIndex].value)
+      : undefined;
 
     window.location = setUrl({
       module: selectedModule === "" ? undefined : selectedModule,
@@ -2697,7 +2745,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
     filter.appendChild(label);
     filter.appendChild(button);
-    addEvent(filter, "submit", function (ev) {
+    addEvent(filter, "submit", (ev) => {
       applyUrlParams();
 
       if (ev && ev.preventDefault) {
@@ -2770,7 +2818,8 @@ This method will throw an error in 2.0, and will be removed in 2.1
     var header = id("qunit-header");
 
     if (header) {
-      header.innerHTML = "<a href='" + escapeText(unfilteredUrl) + "'>" + header.innerHTML + "</a> ";
+      header.innerHTML =
+        "<a href='" + escapeText(unfilteredUrl) + "'>" + header.innerHTML + "</a> ";
     }
   }
 
@@ -2826,7 +2875,9 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
     if (userAgent) {
       userAgent.innerHTML = "";
-      userAgent.appendChild(document.createTextNode("QUnit " + QUnit.version + "; " + navigator.userAgent));
+      userAgent.appendChild(
+        document.createTextNode("QUnit " + QUnit.version + "; " + navigator.userAgent)
+      );
     }
   }
 
@@ -2898,7 +2949,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
   }
 
   // HTML Reporter initialization and load
-  QUnit.begin(function (details) {
+  QUnit.begin((details) => {
     var i, moduleObj, tests;
 
     // Sort modules by name for the picker
@@ -2908,9 +2959,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
         modulesList.push(moduleObj.name);
       }
     }
-    modulesList.sort(function (a, b) {
-      return a.localeCompare(b);
-    });
+    modulesList.sort((a, b) => a.localeCompare(b));
 
     // Capture fixture HTML from the page
     storeFixture();
@@ -2924,7 +2973,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
     }
   });
 
-  QUnit.done(function (details) {
+  QUnit.done((details) => {
     var i,
       key,
       banner = id("qunit-banner"),
@@ -2953,9 +3002,10 @@ This method will throw an error in 2.0, and will be removed in 2.1
     if (config.altertitle && document.title) {
       // Show ✖ for good, ✔ for bad suite result in title
       // use escape sequences in case file gets loaded with non-utf-8-charset
-      document.title = [details.failed ? "\u2716" : "\u2714", document.title.replace(/^[\u2714\u2716] /i, "")].join(
-        " "
-      );
+      document.title = [
+        details.failed ? "\u2716" : "\u2714",
+        document.title.replace(/^[\u2714\u2716] /i, ""),
+      ].join(" ");
     }
 
     // Clear own sessionStorage items if all tests passed
@@ -2986,7 +3036,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
     return nameHtml;
   }
 
-  QUnit.testStart(function (details) {
+  QUnit.testStart((details) => {
     var running, testBlock, bad;
 
     testBlock = id("qunit-test-output-" + details.testId);
@@ -3018,7 +3068,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
       .replace(/\s+/g, "");
   }
 
-  QUnit.log(function (details) {
+  QUnit.log((details) => {
     var assertList,
       assertLi,
       message,
@@ -3048,22 +3098,31 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
       actual = QUnit.dump.parse(details.actual);
       message +=
-        "<table><tr class='test-expected'><th>Expected: </th><td><pre>" + escapeText(expected) + "</pre></td></tr>";
+        "<table><tr class='test-expected'><th>Expected: </th><td><pre>" +
+        escapeText(expected) +
+        "</pre></td></tr>";
 
       if (actual !== expected) {
-        message += "<tr class='test-actual'><th>Result: </th><td><pre>" + escapeText(actual) + "</pre></td></tr>";
+        message +=
+          "<tr class='test-actual'><th>Result: </th><td><pre>" +
+          escapeText(actual) +
+          "</pre></td></tr>";
 
         // Don't show diff if actual or expected are booleans
         if (!/^(true|false)$/.test(actual) && !/^(true|false)$/.test(expected)) {
           diff = QUnit.diff(expected, actual);
-          showDiff = stripHtml(diff).length !== stripHtml(expected).length + stripHtml(actual).length;
+          showDiff =
+            stripHtml(diff).length !== stripHtml(expected).length + stripHtml(actual).length;
         }
 
         // Don't show diff if expected and actual are totally different
         if (showDiff) {
           message += "<tr class='test-diff'><th>Diff: </th><td><pre>" + diff + "</pre></td></tr>";
         }
-      } else if (expected.indexOf("[object Array]") !== -1 || expected.indexOf("[object Object]") !== -1) {
+      } else if (
+        expected.indexOf("[object Array]") !== -1 ||
+        expected.indexOf("[object Object]") !== -1
+      ) {
         message +=
           "<tr class='test-message'><th>Message: </th><td>" +
           "Diff suppressed as the depth of object is more than current max depth (" +
@@ -3082,7 +3141,9 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
       if (details.source) {
         message +=
-          "<tr class='test-source'><th>Source: </th><td><pre>" + escapeText(details.source) + "</pre></td></tr>";
+          "<tr class='test-source'><th>Source: </th><td><pre>" +
+          escapeText(details.source) +
+          "</pre></td></tr>";
       }
 
       message += "</table>";
@@ -3105,7 +3166,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
     assertList.appendChild(assertLi);
   });
 
-  QUnit.testDone(function (details) {
+  QUnit.testDone((details) => {
     var testTitle,
       time,
       testItem,
@@ -3151,9 +3212,12 @@ This method will throw an error in 2.0, and will be removed in 2.1
     // The testItem.firstChild is the test name
     testTitle = testItem.firstChild;
 
-    testCounts = bad ? "<b class='failed'>" + bad + "</b>, " + "<b class='passed'>" + good + "</b>, " : "";
+    testCounts = bad
+      ? "<b class='failed'>" + bad + "</b>, " + "<b class='passed'>" + good + "</b>, "
+      : "";
 
-    testTitle.innerHTML += " <b class='counts'>(" + testCounts + details.assertions.length + ")</b>";
+    testTitle.innerHTML +=
+      " <b class='counts'>(" + testCounts + details.assertions.length + ")</b>";
 
     if (details.skipped) {
       testItem.className = "skipped";
@@ -3162,7 +3226,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
       skipped.innerHTML = "skipped";
       testItem.insertBefore(skipped, testTitle);
     } else {
-      addEvent(testTitle, "click", function () {
+      addEvent(testTitle, "click", () => {
         toggleClass(assertList, "qunit-collapsed");
       });
 
@@ -3182,7 +3246,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
       if (bad === 0) {
         addClass(sourceName, "qunit-collapsed");
       }
-      addEvent(testTitle, "click", function () {
+      addEvent(testTitle, "click", () => {
         toggleClass(sourceName, "qunit-collapsed");
       });
       testItem.appendChild(sourceName);
@@ -3191,9 +3255,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
   // Avoid readyState issue with phantomjs
   // Ref: #818
-  var notPhantom = (function (p) {
-    return !(p && p.version && p.version.major > 0);
-  })(window.phantom);
+  var notPhantom = ((p) => !(p && p.version && p.version.major > 0))(window.phantom);
 
   if (notPhantom && document.readyState === "complete") {
     QUnit.load();
@@ -3229,7 +3291,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
    * Usage: QUnit.diff(expected, actual)
    *
    */
-  QUnit.diff = (function () {
+  QUnit.diff = (() => {
     function DiffMatchPatch() {}
 
     //  DIFF FUNCTIONS
@@ -3239,9 +3301,9 @@ This method will throw an error in 2.0, and will be removed in 2.1
      * [[DIFF_DELETE, 'Hello'], [DIFF_INSERT, 'Goodbye'], [DIFF_EQUAL, ' world.']]
      * which means: delete 'Hello', add 'Goodbye' and keep ' world.'
      */
-    var DIFF_DELETE = -1,
-      DIFF_INSERT = 1,
-      DIFF_EQUAL = 0;
+    var diffDelete = -1,
+      diffInsert = 1,
+      diffEqual = 0;
 
     /**
      * Find the differences between two texts.  Simplifies the problem by stripping
@@ -3267,7 +3329,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
       // Check for equality (speedup).
       if (text1 === text2) {
         if (text1) {
-          return [[DIFF_EQUAL, text1]];
+          return [[diffEqual, text1]];
         }
         return [];
       }
@@ -3295,10 +3357,10 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
       // Restore the prefix and suffix.
       if (commonprefix) {
-        diffs.unshift([DIFF_EQUAL, commonprefix]);
+        diffs.unshift([diffEqual, commonprefix]);
       }
       if (commonsuffix) {
-        diffs.push([DIFF_EQUAL, commonsuffix]);
+        diffs.push([diffEqual, commonsuffix]);
       }
       this.diffCleanupMerge(diffs);
       return diffs;
@@ -3309,7 +3371,15 @@ This method will throw an error in 2.0, and will be removed in 2.1
      * @param {!Array.<!DiffMatchPatch.Diff>} diffs Array of diff tuples.
      */
     DiffMatchPatch.prototype.diffCleanupEfficiency = function (diffs) {
-      var changes, equalities, equalitiesLength, lastequality, pointer, preIns, preDel, postIns, postDel;
+      var changes,
+        equalities,
+        equalitiesLength,
+        lastequality,
+        pointer,
+        preIns,
+        preDel,
+        postIns,
+        postDel;
       changes = false;
       equalities = []; // Stack of indices where equalities are found.
       equalitiesLength = 0; // Keeping our own length var is faster in JS.
@@ -3332,7 +3402,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
       postDel = false;
       while (pointer < diffs.length) {
         // Equality found.
-        if (diffs[pointer][0] === DIFF_EQUAL) {
+        if (diffs[pointer][0] === diffEqual) {
           if (diffs[pointer][1].length < 4 && (postIns || postDel)) {
             // Candidate found.
             equalities[equalitiesLength++] = pointer;
@@ -3348,7 +3418,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
           // An insertion or deletion.
         } else {
-          if (diffs[pointer][0] === DIFF_DELETE) {
+          if (diffs[pointer][0] === diffDelete) {
             postDel = true;
           } else {
             postIns = true;
@@ -3368,10 +3438,10 @@ This method will throw an error in 2.0, and will be removed in 2.1
               (lastequality.length < 2 && preIns + preDel + postIns + postDel === 3))
           ) {
             // Duplicate record.
-            diffs.splice(equalities[equalitiesLength - 1], 0, [DIFF_DELETE, lastequality]);
+            diffs.splice(equalities[equalitiesLength - 1], 0, [diffDelete, lastequality]);
 
             // Change second copy to insert.
-            diffs[equalities[equalitiesLength - 1] + 1][0] = DIFF_INSERT;
+            diffs[equalities[equalitiesLength - 1] + 1][0] = diffInsert;
             equalitiesLength--; // Throw away the equality we just deleted;
             lastequality = null;
             if (preIns && preDel) {
@@ -3400,7 +3470,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
      * @param {integer} string to be beautified.
      * @return {string} HTML representation.
      */
-    DiffMatchPatch.prototype.diffPrettyHtml = function (diffs) {
+    DiffMatchPatch.prototype.diffPrettyHtml = (diffs) => {
       var op,
         data,
         x,
@@ -3409,13 +3479,13 @@ This method will throw an error in 2.0, and will be removed in 2.1
         op = diffs[x][0]; // Operation (insert, delete, equal)
         data = diffs[x][1]; // Text of change.
         switch (op) {
-          case DIFF_INSERT:
+          case diffInsert:
             html[x] = "<ins>" + escapeText(data) + "</ins>";
             break;
-          case DIFF_DELETE:
+          case diffDelete:
             html[x] = "<del>" + escapeText(data) + "</del>";
             break;
-          case DIFF_EQUAL:
+          case diffEqual:
             html[x] = "<span>" + escapeText(data) + "</span>";
             break;
         }
@@ -3430,7 +3500,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
      * @return {number} The number of characters common to the start of each
      *     string.
      */
-    DiffMatchPatch.prototype.diffCommonPrefix = function (text1, text2) {
+    DiffMatchPatch.prototype.diffCommonPrefix = (text1, text2) => {
       var pointermid, pointermax, pointermin, pointerstart;
 
       // Quick check for common null cases.
@@ -3445,7 +3515,9 @@ This method will throw an error in 2.0, and will be removed in 2.1
       pointermid = pointermax;
       pointerstart = 0;
       while (pointermin < pointermid) {
-        if (text1.substring(pointerstart, pointermid) === text2.substring(pointerstart, pointermid)) {
+        if (
+          text1.substring(pointerstart, pointermid) === text2.substring(pointerstart, pointermid)
+        ) {
           pointermin = pointermid;
           pointerstart = pointermin;
         } else {
@@ -3462,7 +3534,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
      * @param {string} text2 Second string.
      * @return {number} The number of characters common to the end of each string.
      */
-    DiffMatchPatch.prototype.diffCommonSuffix = function (text1, text2) {
+    DiffMatchPatch.prototype.diffCommonSuffix = (text1, text2) => {
       var pointermid, pointermax, pointermin, pointerend;
 
       // Quick check for common null cases.
@@ -3504,16 +3576,27 @@ This method will throw an error in 2.0, and will be removed in 2.1
      * @private
      */
     DiffMatchPatch.prototype.diffCompute = function (text1, text2, checklines, deadline) {
-      var diffs, longtext, shorttext, i, hm, text1A, text2A, text1B, text2B, midCommon, diffsA, diffsB;
+      var diffs,
+        longtext,
+        shorttext,
+        i,
+        hm,
+        text1A,
+        text2A,
+        text1B,
+        text2B,
+        midCommon,
+        diffsA,
+        diffsB;
 
       if (!text1) {
         // Just add some text (speedup).
-        return [[DIFF_INSERT, text2]];
+        return [[diffInsert, text2]];
       }
 
       if (!text2) {
         // Just delete some text (speedup).
-        return [[DIFF_DELETE, text1]];
+        return [[diffDelete, text1]];
       }
 
       longtext = text1.length > text2.length ? text1 : text2;
@@ -3522,14 +3605,14 @@ This method will throw an error in 2.0, and will be removed in 2.1
       if (i !== -1) {
         // Shorter text is inside the longer text (speedup).
         diffs = [
-          [DIFF_INSERT, longtext.substring(0, i)],
-          [DIFF_EQUAL, shorttext],
-          [DIFF_INSERT, longtext.substring(i + shorttext.length)],
+          [diffInsert, longtext.substring(0, i)],
+          [diffEqual, shorttext],
+          [diffInsert, longtext.substring(i + shorttext.length)],
         ];
 
         // Swap insertions for deletions if diff is reversed.
         if (text1.length > text2.length) {
-          diffs[0][0] = diffs[2][0] = DIFF_DELETE;
+          diffs[0][0] = diffs[2][0] = diffDelete;
         }
         return diffs;
       }
@@ -3538,8 +3621,8 @@ This method will throw an error in 2.0, and will be removed in 2.1
         // Single character string.
         // After the previous speedup, the character can't be an equality.
         return [
-          [DIFF_DELETE, text1],
-          [DIFF_INSERT, text2],
+          [diffDelete, text1],
+          [diffInsert, text2],
         ];
       }
 
@@ -3558,7 +3641,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
         diffsB = this.DiffMain(text1B, text2B, checklines, deadline);
 
         // Merge the results.
-        return diffsA.concat([[DIFF_EQUAL, midCommon]], diffsB);
+        return diffsA.concat([[diffEqual, midCommon]], diffsB);
       }
 
       if (checklines && text1.length > 100 && text2.length > 100) {
@@ -3620,7 +3703,8 @@ This method will throw an error in 2.0, and will be removed in 2.1
           prefixLength = dmp.diffCommonPrefix(longtext.substring(i), shorttext.substring(j));
           suffixLength = dmp.diffCommonSuffix(longtext.substring(0, i), shorttext.substring(0, j));
           if (bestCommon.length < suffixLength + prefixLength) {
-            bestCommon = shorttext.substring(j - suffixLength, j) + shorttext.substring(j, j + prefixLength);
+            bestCommon =
+              shorttext.substring(j - suffixLength, j) + shorttext.substring(j, j + prefixLength);
             bestLongtextA = longtext.substring(0, i - suffixLength);
             bestLongtextB = longtext.substring(i + prefixLength);
             bestShorttextA = shorttext.substring(0, j - suffixLength);
@@ -3643,11 +3727,11 @@ This method will throw an error in 2.0, and will be removed in 2.1
         return null;
       } else if (!hm2) {
         hm = hm1;
-      } else if (!hm1) {
-        hm = hm2;
-      } else {
+      } else if (hm1) {
         // Both matched.  Select the longest.
         hm = hm1[4].length > hm2[4].length ? hm1 : hm2;
+      } else {
+        hm = hm2;
       }
 
       // A half-match was found, sort out the return data.
@@ -3696,7 +3780,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
       // Rediff any replacement blocks, this time character-by-character.
       // Add a dummy entry at the end.
-      diffs.push([DIFF_EQUAL, ""]);
+      diffs.push([diffEqual, ""]);
       pointer = 0;
       countDelete = 0;
       countInsert = 0;
@@ -3704,15 +3788,15 @@ This method will throw an error in 2.0, and will be removed in 2.1
       textInsert = "";
       while (pointer < diffs.length) {
         switch (diffs[pointer][0]) {
-          case DIFF_INSERT:
+          case diffInsert:
             countInsert++;
             textInsert += diffs[pointer][1];
             break;
-          case DIFF_DELETE:
+          case diffDelete:
             countDelete++;
             textDelete += diffs[pointer][1];
             break;
-          case DIFF_EQUAL:
+          case diffEqual:
             // Upon reaching an equality, check for prior redundancies.
             if (countDelete >= 1 && countInsert >= 1) {
               // Delete the offending records and add the merged ones.
@@ -3884,8 +3968,8 @@ This method will throw an error in 2.0, and will be removed in 2.1
       // Diff took too long and hit the deadline or
       // number of diffs equals number of characters, no commonality at all.
       return [
-        [DIFF_DELETE, text1],
-        [DIFF_INSERT, text2],
+        [diffDelete, text1],
+        [diffInsert, text2],
       ];
     };
 
@@ -3949,7 +4033,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
       lengthInsertions2 = 0;
       lengthDeletions2 = 0;
       while (pointer < diffs.length) {
-        if (diffs[pointer][0] === DIFF_EQUAL) {
+        if (diffs[pointer][0] === diffEqual) {
           // Equality found.
           equalities[equalitiesLength++] = pointer;
           lengthInsertions1 = lengthInsertions2;
@@ -3959,7 +4043,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
           lastequality = diffs[pointer][1];
         } else {
           // An insertion or deletion.
-          if (diffs[pointer][0] === DIFF_INSERT) {
+          if (diffs[pointer][0] === diffInsert) {
             lengthInsertions2 += diffs[pointer][1].length;
           } else {
             lengthDeletions2 += diffs[pointer][1].length;
@@ -3973,10 +4057,10 @@ This method will throw an error in 2.0, and will be removed in 2.1
             lastequality.length <= Math.max(lengthInsertions2, lengthDeletions2)
           ) {
             // Duplicate record.
-            diffs.splice(equalities[equalitiesLength - 1], 0, [DIFF_DELETE, lastequality]);
+            diffs.splice(equalities[equalitiesLength - 1], 0, [diffDelete, lastequality]);
 
             // Change second copy to insert.
-            diffs[equalities[equalitiesLength - 1] + 1][0] = DIFF_INSERT;
+            diffs[equalities[equalitiesLength - 1] + 1][0] = diffInsert;
 
             // Throw away the equality we just deleted.
             equalitiesLength--;
@@ -4010,7 +4094,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
       // Only extract an overlap if it is as big as the edit ahead or behind it.
       pointer = 1;
       while (pointer < diffs.length) {
-        if (diffs[pointer - 1][0] === DIFF_DELETE && diffs[pointer][0] === DIFF_INSERT) {
+        if (diffs[pointer - 1][0] === diffDelete && diffs[pointer][0] === diffInsert) {
           deletion = diffs[pointer - 1][1];
           insertion = diffs[pointer][1];
           overlapLength1 = this.diffCommonOverlap(deletion, insertion);
@@ -4018,23 +4102,24 @@ This method will throw an error in 2.0, and will be removed in 2.1
           if (overlapLength1 >= overlapLength2) {
             if (overlapLength1 >= deletion.length / 2 || overlapLength1 >= insertion.length / 2) {
               // Overlap found.  Insert an equality and trim the surrounding edits.
-              diffs.splice(pointer, 0, [DIFF_EQUAL, insertion.substring(0, overlapLength1)]);
+              diffs.splice(pointer, 0, [diffEqual, insertion.substring(0, overlapLength1)]);
               diffs[pointer - 1][1] = deletion.substring(0, deletion.length - overlapLength1);
               diffs[pointer + 1][1] = insertion.substring(overlapLength1);
               pointer++;
             }
-          } else {
-            if (overlapLength2 >= deletion.length / 2 || overlapLength2 >= insertion.length / 2) {
-              // Reverse overlap found.
-              // Insert an equality and swap and trim the surrounding edits.
-              diffs.splice(pointer, 0, [DIFF_EQUAL, deletion.substring(0, overlapLength2)]);
+          } else if (
+            overlapLength2 >= deletion.length / 2 ||
+            overlapLength2 >= insertion.length / 2
+          ) {
+            // Reverse overlap found.
+            // Insert an equality and swap and trim the surrounding edits.
+            diffs.splice(pointer, 0, [diffEqual, deletion.substring(0, overlapLength2)]);
 
-              diffs[pointer - 1][0] = DIFF_INSERT;
-              diffs[pointer - 1][1] = insertion.substring(0, insertion.length - overlapLength2);
-              diffs[pointer + 1][0] = DIFF_DELETE;
-              diffs[pointer + 1][1] = deletion.substring(overlapLength2);
-              pointer++;
-            }
+            diffs[pointer - 1][0] = diffInsert;
+            diffs[pointer - 1][1] = insertion.substring(0, insertion.length - overlapLength2);
+            diffs[pointer + 1][0] = diffDelete;
+            diffs[pointer + 1][1] = deletion.substring(overlapLength2);
+            pointer++;
           }
           pointer++;
         }
@@ -4050,7 +4135,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
      *     string and the start of the second string.
      * @private
      */
-    DiffMatchPatch.prototype.diffCommonOverlap = function (text1, text2) {
+    DiffMatchPatch.prototype.diffCommonOverlap = (text1, text2) => {
       var text1Length, text2Length, textLength, best, length, pattern, found;
 
       // Cache the text lengths to prevent multiple calls.
@@ -4105,7 +4190,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
      *     The zeroth element of the array of unique strings is intentionally blank.
      * @private
      */
-    DiffMatchPatch.prototype.diffLinesToChars = function (text1, text2) {
+    DiffMatchPatch.prototype.diffLinesToChars = (text1, text2) => {
       var lineArray, lineHash, chars1, chars2;
       lineArray = []; // E.g. lineArray[4] === 'Hello\n'
       lineHash = {}; // E.g. lineHash['Hello\n'] === 4
@@ -4142,7 +4227,9 @@ This method will throw an error in 2.0, and will be removed in 2.1
           line = text.substring(lineStart, lineEnd + 1);
           lineStart = lineEnd + 1;
 
-          if (lineHash.hasOwnProperty ? lineHash.hasOwnProperty(line) : lineHash[line] !== undefined) {
+          if (
+            lineHash.hasOwnProperty ? lineHash.hasOwnProperty(line) : lineHash[line] !== undefined
+          ) {
             chars += String.fromCharCode(lineHash[line]);
           } else {
             chars += String.fromCharCode(lineArrayLength);
@@ -4169,7 +4256,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
      * @param {!Array.<string>} lineArray Array of unique strings.
      * @private
      */
-    DiffMatchPatch.prototype.diffCharsToLines = function (diffs, lineArray) {
+    DiffMatchPatch.prototype.diffCharsToLines = (diffs, lineArray) => {
       var x, chars, text, y;
       for (x = 0; x < diffs.length; x++) {
         chars = diffs[x][1];
@@ -4187,8 +4274,16 @@ This method will throw an error in 2.0, and will be removed in 2.1
      * @param {!Array.<!DiffMatchPatch.Diff>} diffs Array of diff tuples.
      */
     DiffMatchPatch.prototype.diffCleanupMerge = function (diffs) {
-      var pointer, countDelete, countInsert, textInsert, textDelete, commonlength, changes, diffPointer, position;
-      diffs.push([DIFF_EQUAL, ""]); // Add a dummy entry at the end.
+      var pointer,
+        countDelete,
+        countInsert,
+        textInsert,
+        textDelete,
+        commonlength,
+        changes,
+        diffPointer,
+        position;
+      diffs.push([diffEqual, ""]); // Add a dummy entry at the end.
       pointer = 0;
       countDelete = 0;
       countInsert = 0;
@@ -4197,17 +4292,17 @@ This method will throw an error in 2.0, and will be removed in 2.1
       commonlength;
       while (pointer < diffs.length) {
         switch (diffs[pointer][0]) {
-          case DIFF_INSERT:
+          case diffInsert:
             countInsert++;
             textInsert += diffs[pointer][1];
             pointer++;
             break;
-          case DIFF_DELETE:
+          case diffDelete:
             countDelete++;
             textDelete += diffs[pointer][1];
             pointer++;
             break;
-          case DIFF_EQUAL:
+          case diffEqual:
             // Upon reaching an equality, check for prior redundancies.
             if (countDelete + countInsert > 1) {
               if (countDelete !== 0 && countInsert !== 0) {
@@ -4216,11 +4311,14 @@ This method will throw an error in 2.0, and will be removed in 2.1
                 if (commonlength !== 0) {
                   if (
                     pointer - countDelete - countInsert > 0 &&
-                    diffs[pointer - countDelete - countInsert - 1][0] === DIFF_EQUAL
+                    diffs[pointer - countDelete - countInsert - 1][0] === diffEqual
                   ) {
-                    diffs[pointer - countDelete - countInsert - 1][1] += textInsert.substring(0, commonlength);
+                    diffs[pointer - countDelete - countInsert - 1][1] += textInsert.substring(
+                      0,
+                      commonlength
+                    );
                   } else {
-                    diffs.splice(0, 0, [DIFF_EQUAL, textInsert.substring(0, commonlength)]);
+                    diffs.splice(0, 0, [diffEqual, textInsert.substring(0, commonlength)]);
                     pointer++;
                   }
                   textInsert = textInsert.substring(commonlength);
@@ -4230,7 +4328,8 @@ This method will throw an error in 2.0, and will be removed in 2.1
                 // Factor out any common suffixies.
                 commonlength = this.diffCommonSuffix(textInsert, textDelete);
                 if (commonlength !== 0) {
-                  diffs[pointer][1] = textInsert.substring(textInsert.length - commonlength) + diffs[pointer][1];
+                  diffs[pointer][1] =
+                    textInsert.substring(textInsert.length - commonlength) + diffs[pointer][1];
                   textInsert = textInsert.substring(0, textInsert.length - commonlength);
                   textDelete = textDelete.substring(0, textDelete.length - commonlength);
                 }
@@ -4238,19 +4337,31 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
               // Delete the offending records and add the merged ones.
               if (countDelete === 0) {
-                diffs.splice(pointer - countInsert, countDelete + countInsert, [DIFF_INSERT, textInsert]);
+                diffs.splice(pointer - countInsert, countDelete + countInsert, [
+                  diffInsert,
+                  textInsert,
+                ]);
               } else if (countInsert === 0) {
-                diffs.splice(pointer - countDelete, countDelete + countInsert, [DIFF_DELETE, textDelete]);
+                diffs.splice(pointer - countDelete, countDelete + countInsert, [
+                  diffDelete,
+                  textDelete,
+                ]);
               } else {
                 diffs.splice(
                   pointer - countDelete - countInsert,
                   countDelete + countInsert,
-                  [DIFF_DELETE, textDelete],
-                  [DIFF_INSERT, textInsert]
+                  [diffDelete, textDelete],
+                  [diffInsert, textInsert]
                 );
               }
-              pointer = pointer - countDelete - countInsert + (countDelete ? 1 : 0) + (countInsert ? 1 : 0) + 1;
-            } else if (pointer !== 0 && diffs[pointer - 1][0] === DIFF_EQUAL) {
+              pointer =
+                pointer -
+                countDelete -
+                countInsert +
+                (countDelete ? 1 : 0) +
+                (countInsert ? 1 : 0) +
+                1;
+            } else if (pointer !== 0 && diffs[pointer - 1][0] === diffEqual) {
               // Merge this equality with the previous one.
               diffs[pointer - 1][1] += diffs[pointer][1];
               diffs.splice(pointer, 1);
@@ -4276,7 +4387,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
 
       // Intentionally ignore the first and last element (don't need checking).
       while (pointer < diffs.length - 1) {
-        if (diffs[pointer - 1][0] === DIFF_EQUAL && diffs[pointer + 1][0] === DIFF_EQUAL) {
+        if (diffs[pointer - 1][0] === diffEqual && diffs[pointer + 1][0] === diffEqual) {
           diffPointer = diffs[pointer][1];
           position = diffPointer.substring(diffPointer.length - diffs[pointer - 1][1].length);
 
@@ -4285,14 +4396,20 @@ This method will throw an error in 2.0, and will be removed in 2.1
             // Shift the edit over the previous equality.
             diffs[pointer][1] =
               diffs[pointer - 1][1] +
-              diffs[pointer][1].substring(0, diffs[pointer][1].length - diffs[pointer - 1][1].length);
+              diffs[pointer][1].substring(
+                0,
+                diffs[pointer][1].length - diffs[pointer - 1][1].length
+              );
             diffs[pointer + 1][1] = diffs[pointer - 1][1] + diffs[pointer + 1][1];
             diffs.splice(pointer - 1, 1);
             changes = true;
-          } else if (diffPointer.substring(0, diffs[pointer + 1][1].length) === diffs[pointer + 1][1]) {
+          } else if (
+            diffPointer.substring(0, diffs[pointer + 1][1].length) === diffs[pointer + 1][1]
+          ) {
             // Shift the edit over the next equality.
             diffs[pointer - 1][1] += diffs[pointer + 1][1];
-            diffs[pointer][1] = diffs[pointer][1].substring(diffs[pointer + 1][1].length) + diffs[pointer + 1][1];
+            diffs[pointer][1] =
+              diffs[pointer][1].substring(diffs[pointer + 1][1].length) + diffs[pointer + 1][1];
             diffs.splice(pointer + 1, 1);
             changes = true;
           }
@@ -4306,7 +4423,7 @@ This method will throw an error in 2.0, and will be removed in 2.1
       }
     };
 
-    return function (o, n) {
+    return (o, n) => {
       var diff, output, text;
       diff = new DiffMatchPatch();
       output = diff.DiffMain(o, n);

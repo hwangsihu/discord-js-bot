@@ -5,9 +5,7 @@
  *      This is a demo file used only for the main dashboard (index.html)
  **/
 
-$(function () {
-  "use strict";
-
+$(() => {
   // Make the dashboard widgets sortable Using jquery UI
   $(".connectedSortable").sortable({
     containment: $("section.content"),
@@ -38,13 +36,18 @@ $(function () {
         "Last 7 Days": [moment().subtract(6, "days"), moment()],
         "Last 30 Days": [moment().subtract(29, "days"), moment()],
         "This Month": [moment().startOf("month"), moment().endOf("month")],
-        "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")],
+        "Last Month": [
+          moment().subtract(1, "month").startOf("month"),
+          moment().subtract(1, "month").endOf("month"),
+        ],
       },
       startDate: moment().subtract(29, "days"),
       endDate: moment(),
     },
-    function (start, end) {
-      window.alert("You chose: " + start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY"));
+    (start, end) => {
+      window.alert(
+        "You chose: " + start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+      );
     }
   );
 
@@ -87,8 +90,9 @@ $(function () {
         },
       ],
     },
-    onRegionLabelShow: function (e, el, code) {
-      if (typeof visitorsData[code] != "undefined") el.html(el.html() + ": " + visitorsData[code] + " new visitors");
+    onRegionLabelShow: (e, el, code) => {
+      if (typeof visitorsData[code] != "undefined")
+        el.html(el.html() + ": " + visitorsData[code] + " new visitors");
     },
   });
 
@@ -193,7 +197,7 @@ $(function () {
   });
 
   // Fix for charts under tabs
-  $(".box ul.nav a").on("shown.bs.tab", function () {
+  $(".box ul.nav a").on("shown.bs.tab", () => {
     area.redraw();
     donut.redraw();
     line.redraw();

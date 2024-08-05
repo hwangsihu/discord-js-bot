@@ -1,23 +1,19 @@
-define(function () {
+define(() => {
   // Danish
   return {
-    errorLoading: function () {
-      return "Resultaterne kunne ikke indlæses.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "Resultaterne kunne ikke indlæses.",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       return "Angiv venligst " + overChars + " tegn mindre";
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       return "Angiv venligst " + remainingChars + " tegn mere";
     },
-    loadingMore: function () {
-      return "Indlæser flere resultater…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Indlæser flere resultater…",
+    maximumSelected: (args) => {
       var message = "Du kan kun vælge " + args.maximum + " emne";
 
       if (args.maximum != 1) {
@@ -26,14 +22,8 @@ define(function () {
 
       return message;
     },
-    noResults: function () {
-      return "Ingen resultater fundet";
-    },
-    searching: function () {
-      return "Søger…";
-    },
-    removeAllItems: function () {
-      return "Fjern alle elementer";
-    },
+    noResults: () => "Ingen resultater fundet",
+    searching: () => "Søger…",
+    removeAllItems: () => "Fjern alle elementer",
   };
 });

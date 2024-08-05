@@ -1,5 +1,1 @@
-define(function () {
-  "use strict";
-
-  return window.location;
-});
+define(() => window.location);

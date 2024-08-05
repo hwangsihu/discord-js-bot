@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(r) {
       if (n[r]) return n[r].exports;
       var o = (n[r] = { i: r, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = n),
-      (t.d = function (e, n, r) {
+      (t.d = (e, n, r) => {
         t.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: r });
       }),
-      (t.n = function (e) {
-        var n =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var n = e && e.__esModule ? () => e.default : () => e;
         return t.d(n, "a", n), n;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 203))
     );
   })({
-    0: function (t, n) {
+    0: (t, n) => {
       t.exports = e;
     },
-    1: function (e, n) {
+    1: (e, n) => {
       e.exports = t;
     },
-    203: function (e, t, n) {
+    203: (e, t, n) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), n(204);
       var r = n(1);
       r.datepickerLocale("th", "th", {
@@ -97,12 +88,15 @@
           noEventsMessage: "ไม่มีกิจกรรมที่จะแสดง",
         });
     },
-    204: function (e, t, n) {
-      !(function (e, t) {
+    204: (e, t, n) => {
+      !((e, t) => {
         t(n(0));
-      })(0, function (e) {
-        return e.defineLocale("th", {
-          months: "มกราคม_กุมภาพันธ์_มีนาคม_เมษายน_พฤษภาคม_มิถุนายน_กรกฎาคม_สิงหาคม_กันยายน_ตุลาคม_พฤศจิกายน_ธันวาคม".split("_"),
+      })(0, (e) =>
+        e.defineLocale("th", {
+          months:
+            "มกราคม_กุมภาพันธ์_มีนาคม_เมษายน_พฤษภาคม_มิถุนายน_กรกฎาคม_สิงหาคม_กันยายน_ตุลาคม_พฤศจิกายน_ธันวาคม".split(
+              "_"
+            ),
           monthsShort: "ม.ค._ก.พ._มี.ค._เม.ย._พ.ค._มิ.ย._ก.ค._ส.ค._ก.ย._ต.ค._พ.ย._ธ.ค.".split("_"),
           monthsParseExact: !0,
           weekdays: "อาทิตย์_จันทร์_อังคาร_พุธ_พฤหัสบดี_ศุกร์_เสาร์".split("_"),
@@ -118,12 +112,8 @@
             LLLL: "วันddddที่ D MMMM YYYY เวลา H:mm",
           },
           meridiemParse: /ก่อนเที่ยง|หลังเที่ยง/,
-          isPM: function (e) {
-            return "หลังเที่ยง" === e;
-          },
-          meridiem: function (e, t, n) {
-            return e < 12 ? "ก่อนเที่ยง" : "หลังเที่ยง";
-          },
+          isPM: (e) => "หลังเที่ยง" === e,
+          meridiem: (e, t, n) => (e < 12 ? "ก่อนเที่ยง" : "หลังเที่ยง"),
           calendar: {
             sameDay: "[วันนี้ เวลา] LT",
             nextDay: "[พรุ่งนี้ เวลา] LT",
@@ -148,8 +138,8 @@
             y: "1 ปี",
             yy: "%d ปี",
           },
-        });
-      });
+        })
+      );
     },
-  });
-});
+  })
+);

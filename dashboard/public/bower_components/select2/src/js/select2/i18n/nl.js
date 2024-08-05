@@ -1,27 +1,23 @@
-define(function () {
+define(() => {
   // Dutch
   return {
-    errorLoading: function () {
-      return "De resultaten konden niet worden geladen.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "De resultaten konden niet worden geladen.",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "Gelieve " + overChars + " karakters te verwijderen";
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "Gelieve " + remainingChars + " of meer karakters in te voeren";
 
       return message;
     },
-    loadingMore: function () {
-      return "Meer resultaten laden…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Meer resultaten laden…",
+    maximumSelected: (args) => {
       var verb = args.maximum == 1 ? "kan" : "kunnen";
       var message = "Er " + verb + " maar " + args.maximum + " item";
 
@@ -32,14 +28,8 @@ define(function () {
 
       return message;
     },
-    noResults: function () {
-      return "Geen resultaten gevonden…";
-    },
-    searching: function () {
-      return "Zoeken…";
-    },
-    removeAllItems: function () {
-      return "Verwijder alle items";
-    },
+    noResults: () => "Geen resultaten gevonden…",
+    searching: () => "Zoeken…",
+    removeAllItems: () => "Verwijder alle items",
   };
 });

@@ -5,7 +5,7 @@ const fetch = require("node-fetch"),
   btoa = require("btoa");
 
 // Gets login page
-router.get("/login", async function (req, res) {
+router.get("/login", async (req, res) => {
   if (!req.user || !req.user.id || !req.user.guilds) {
     // check if client user is ready
     if (!req.client.user?.id) {
@@ -32,12 +32,12 @@ router.get("/callback", async (req, res) => {
   }
   if (req.query.state && req.query.state.startsWith("invite")) {
     if (req.query.code) {
-      const guildID = req.query.state.substr("invite".length, req.query.state.length);
-      req.client.knownGuilds.push({ id: guildID, user: req.user.id });
-      return res.redirect("/manage/" + guildID);
+      const guildId = req.query.state.substr("invite".length, req.query.state.length);
+      req.client.knownGuilds.push({ id: guildId, user: req.user.id });
+      return res.redirect("/manage/" + guildId);
     }
   }
-  const redirectURL = req.client.states[req.query.state] || "/selector";
+  const redirectUrl = req.client.states[req.query.state] || "/selector";
   const params = new URLSearchParams();
   params.set("grant_type", "authorization_code");
   params.set("code", req.query.code);
@@ -90,7 +90,7 @@ router.get("/callback", async (req, res) => {
 
   // Update session
   req.session.user = { ...userData.infos, ...{ guilds } }; // {user-info, guilds: [{}]}
-  res.redirect(redirectURL);
+  res.redirect(redirectUrl);
 });
 
 module.exports = router;

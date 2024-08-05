@@ -3,7 +3,7 @@
  * Christian Pedersen <http://github.com/chripede>
  * Ivan Mylyanyk <https://github.com/imylyanyk>
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["da"] = {
     days: ["Søndag", "Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag"],
     daysShort: ["Søn", "Man", "Tir", "Ons", "Tor", "Fre", "Lør"],
@@ -22,7 +22,20 @@
       "November",
       "December",
     ],
-    monthsShort: ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"],
+    monthsShort: [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Maj",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Dec",
+    ],
     today: "I Dag",
     weekStart: 1,
     clear: "Nulstil",

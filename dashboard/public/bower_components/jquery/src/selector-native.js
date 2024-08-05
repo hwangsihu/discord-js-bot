@@ -1,12 +1,10 @@
-define(["./core", "./var/document", "./var/documentElement", "./var/hasOwn", "./var/indexOf"], function (
+define(["./core", "./var/document", "./var/documentElement", "./var/hasOwn", "./var/indexOf"], (
   jQuery,
   document,
   documentElement,
   hasOwn,
   indexOf
-) {
-  "use strict";
-
+) => {
   /*
    * Optional (non-Sizzle) selector module for custom builds.
    *
@@ -44,7 +42,7 @@ define(["./core", "./var/document", "./var/documentElement", "./var/hasOwn", "./
     // CSS string/identifier serialization
     // https://drafts.csswg.org/cssom/#common-serializing-idioms
     rcssescape = /([\0-\x1f\x7f]|^-?\d)|^-$|[^\x80-\uFFFF\w-]/g,
-    fcssescape = function (ch, asCodePoint) {
+    fcssescape = (ch, asCodePoint) => {
       if (asCodePoint) {
         // U+0000 NULL becomes U+FFFD REPLACEMENT CHARACTER
         if (ch === "\0") {
@@ -132,7 +130,7 @@ define(["./core", "./var/document", "./var/documentElement", "./var/hasOwn", "./
     uniqueSort: uniqueSort,
     unique: uniqueSort,
     escapeSelector: escape,
-    find: function (selector, context, results, seed) {
+    find: (selector, context, results, seed) => {
       var elem,
         nodeType,
         i = 0;
@@ -162,7 +160,7 @@ define(["./core", "./var/document", "./var/documentElement", "./var/hasOwn", "./
 
       return results;
     },
-    text: function (elem) {
+    text: (elem) => {
       var node,
         ret = "",
         i = 0,
@@ -185,12 +183,12 @@ define(["./core", "./var/document", "./var/documentElement", "./var/hasOwn", "./
 
       return ret;
     },
-    contains: function (a, b) {
+    contains: (a, b) => {
       var adown = a.nodeType === 9 ? a.documentElement : a,
         bup = b && b.parentNode;
       return a === bup || !!(bup && bup.nodeType === 1 && adown.contains(bup));
     },
-    isXMLDoc: function (elem) {
+    isXMLDoc: (elem) => {
       // documentElement is verified for cases where it doesn't yet exist
       // (such as loading iframes in IE - #4833)
       var documentElement = elem && (elem.ownerDocument || elem).documentElement;
@@ -210,13 +208,9 @@ define(["./core", "./var/document", "./var/documentElement", "./var/hasOwn", "./
   });
 
   jQuery.extend(jQuery.find, {
-    matches: function (expr, elements) {
-      return jQuery.find(expr, null, null, elements);
-    },
-    matchesSelector: function (elem, expr) {
-      return matches.call(elem, expr);
-    },
-    attr: function (elem, name) {
+    matches: (expr, elements) => jQuery.find(expr, null, null, elements),
+    matchesSelector: (elem, expr) => matches.call(elem, expr),
+    attr: (elem, name) => {
       var fn = jQuery.expr.attrHandle[name.toLowerCase()],
         // Don't get fooled by Object.prototype properties (jQuery #13807)
         value =

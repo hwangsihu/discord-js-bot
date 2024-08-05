@@ -92,14 +92,14 @@ module.exports = {
 
     // user
     if (sub === "user") {
-      let targetUser = interaction.options.getUser("name") || interaction.user;
-      let target = await interaction.guild.members.fetch(targetUser);
+      const targetUser = interaction.options.getUser("name") || interaction.user;
+      const target = await interaction.guild.members.fetch(targetUser);
       response = user(target);
     }
 
     // channel
     else if (sub === "channel") {
-      let targetChannel = interaction.options.getChannel("name") || interaction.channel;
+      const targetChannel = interaction.options.getChannel("name") || interaction.channel;
       response = channelInfo(targetChannel);
     }
 
@@ -115,13 +115,13 @@ module.exports = {
 
     // avatar
     else if (sub === "avatar") {
-      let target = interaction.options.getUser("name") || interaction.user;
+      const target = interaction.options.getUser("name") || interaction.user;
       response = avatar(target);
     }
 
     // emoji
     else if (sub === "emoji") {
-      let emoji = interaction.options.getString("name");
+      const emoji = interaction.options.getString("name");
       response = emojiInfo(emoji);
     }
 

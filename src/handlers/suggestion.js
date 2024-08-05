@@ -77,14 +77,20 @@ async function approveSuggestion(member, channel, messageId, reason) {
     return "Suggestion message not found";
   }
 
-  let buttonsRow = new ActionRowBuilder().addComponents(
+  const buttonsRow = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setCustomId("SUGGEST_APPROVE")
       .setLabel("Approve")
       .setStyle(ButtonStyle.Success)
       .setDisabled(true),
-    new ButtonBuilder().setCustomId("SUGGEST_REJECT").setLabel("Reject").setStyle(ButtonStyle.Danger),
-    new ButtonBuilder().setCustomId("SUGGEST_DELETE").setLabel("Delete").setStyle(ButtonStyle.Secondary)
+    new ButtonBuilder()
+      .setCustomId("SUGGEST_REJECT")
+      .setLabel("Reject")
+      .setStyle(ButtonStyle.Danger),
+    new ButtonBuilder()
+      .setCustomId("SUGGEST_DELETE")
+      .setLabel("Delete")
+      .setStyle(ButtonStyle.Secondary)
   );
 
   const approvedEmbed = new EmbedBuilder()
@@ -98,13 +104,13 @@ async function approveSuggestion(member, channel, messageId, reason) {
 
   // add stats if it doesn't exist
   const statsField = message.embeds[0].fields.find((field) => field.name === "Stats");
-  if (!statsField) {
+  if (statsField) {
+    fields.push(statsField);
+  } else {
     const [upVotes, downVotes] = getStats(message);
     doc.stats.upvotes = upVotes;
     doc.stats.downvotes = downVotes;
     fields.push({ name: "Stats", value: getVotesMessage(upVotes, downVotes) });
-  } else {
-    fields.push(statsField);
   }
 
   // update reason
@@ -114,7 +120,12 @@ async function approveSuggestion(member, channel, messageId, reason) {
 
   try {
     doc.status = "APPROVED";
-    doc.status_updates.push({ user_id: member.id, status: "APPROVED", reason, timestamp: new Date() });
+    doc.status_updates.push({
+      user_id: member.id,
+      status: "APPROVED",
+      reason,
+      timestamp: new Date(),
+    });
 
     let approveChannel;
     if (settings.suggestions.approved_channel) {
@@ -122,17 +133,14 @@ async function approveSuggestion(member, channel, messageId, reason) {
     }
 
     // suggestions-approve channel is not configured
-    if (!approveChannel) {
-      await message.edit({ embeds: [approvedEmbed], components: [buttonsRow] });
-      await message.reactions.removeAll();
-    }
-
-    // suggestions-approve channel is configured
-    else {
+    if (approveChannel) {
       const sent = await approveChannel.send({ embeds: [approvedEmbed], components: [buttonsRow] });
       doc.channel_id = approveChannel.id;
       doc.message_id = sent.id;
       await message.delete();
+    } else {
+      await message.edit({ embeds: [approvedEmbed], components: [buttonsRow] });
+      await message.reactions.removeAll();
     }
 
     await doc.save();
@@ -168,10 +176,20 @@ async function rejectSuggestion(member, channel, messageId, reason) {
     return "Suggestion message not found";
   }
 
-  let buttonsRow = new ActionRowBuilder().addComponents(
-    new ButtonBuilder().setCustomId("SUGGEST_APPROVE").setLabel("Approve").setStyle(ButtonStyle.Success),
-    new ButtonBuilder().setCustomId("SUGGEST_REJECT").setLabel("Reject").setStyle(ButtonStyle.Danger).setDisabled(true),
-    new ButtonBuilder().setCustomId("SUGGEST_DELETE").setLabel("Delete").setStyle(ButtonStyle.Secondary)
+  const buttonsRow = new ActionRowBuilder().addComponents(
+    new ButtonBuilder()
+      .setCustomId("SUGGEST_APPROVE")
+      .setLabel("Approve")
+      .setStyle(ButtonStyle.Success),
+    new ButtonBuilder()
+      .setCustomId("SUGGEST_REJECT")
+      .setLabel("Reject")
+      .setStyle(ButtonStyle.Danger)
+      .setDisabled(true),
+    new ButtonBuilder()
+      .setCustomId("SUGGEST_DELETE")
+      .setLabel("Delete")
+      .setStyle(ButtonStyle.Secondary)
   );
 
   const rejectedEmbed = new EmbedBuilder()
@@ -185,13 +203,13 @@ async function rejectSuggestion(member, channel, messageId, reason) {
 
   // add stats if it doesn't exist
   const statsField = message.embeds[0].fields.find((field) => field.name === "Stats");
-  if (!statsField) {
+  if (statsField) {
+    fields.push(statsField);
+  } else {
     const [upVotes, downVotes] = getStats(message);
     doc.stats.upvotes = upVotes;
     doc.stats.downvotes = downVotes;
     fields.push({ name: "Stats", value: getVotesMessage(upVotes, downVotes) });
-  } else {
-    fields.push(statsField);
   }
 
   // update reason
@@ -201,7 +219,12 @@ async function rejectSuggestion(member, channel, messageId, reason) {
 
   try {
     doc.status = "REJECTED";
-    doc.status_updates.push({ user_id: member.id, status: "REJECTED", reason, timestamp: new Date() });
+    doc.status_updates.push({
+      user_id: member.id,
+      status: "REJECTED",
+      reason,
+      timestamp: new Date(),
+    });
 
     let rejectChannel;
     if (settings.suggestions.rejected_channel) {
@@ -209,17 +232,14 @@ async function rejectSuggestion(member, channel, messageId, reason) {
     }
 
     // suggestions-reject channel is not configured
-    if (!rejectChannel) {
-      await message.edit({ embeds: [rejectedEmbed], components: [buttonsRow] });
-      await message.reactions.removeAll();
-    }
-
-    // suggestions-reject channel is configured
-    else {
+    if (rejectChannel) {
       const sent = await rejectChannel.send({ embeds: [rejectedEmbed], components: [buttonsRow] });
       doc.channel_id = rejectChannel.id;
       doc.message_id = sent.id;
       await message.delete();
+    } else {
+      await message.edit({ embeds: [rejectedEmbed], components: [buttonsRow] });
+      await message.reactions.removeAll();
     }
 
     await doc.save();

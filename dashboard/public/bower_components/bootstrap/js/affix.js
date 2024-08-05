@@ -6,9 +6,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
-+(function ($) {
-  "use strict";
-
++(($) => {
   // AFFIX CLASS DEFINITION
   // ======================
 
@@ -16,7 +14,9 @@
     this.options = $.extend({}, Affix.DEFAULTS, options);
 
     var target =
-      this.options.target === Affix.DEFAULTS.target ? $(this.options.target) : $(document).find(this.options.target);
+      this.options.target === Affix.DEFAULTS.target
+        ? $(this.options.target)
+        : $(document).find(this.options.target);
 
     this.$target = target
       .on("scroll.bs.affix.data-api", $.proxy(this.checkPosition, this))
@@ -56,7 +56,8 @@
     var colliderHeight = initializing ? targetHeight : height;
 
     if (offsetTop != null && scrollTop <= offsetTop) return "top";
-    if (offsetBottom != null && colliderTop + colliderHeight >= scrollHeight - offsetBottom) return "bottom";
+    if (offsetBottom != null && colliderTop + colliderHeight >= scrollHeight - offsetBottom)
+      return "bottom";
 
     return false;
   };
@@ -144,7 +145,7 @@
   // AFFIX DATA-API
   // ==============
 
-  $(window).on("load", function () {
+  $(window).on("load", () => {
     $('[data-spy="affix"]').each(function () {
       var $spy = $(this);
       var data = $spy.data();

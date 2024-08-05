@@ -14,7 +14,7 @@ module.exports.launch = async (client) => {
 
   /* Routers */
   const mainRouter = require("./routes/index"),
-    discordAPIRouter = require("./routes/discord"),
+    discordApiRouter = require("./routes/discord"),
     logoutRouter = require("./routes/logout"),
     guildManagerRouter = require("./routes/guild-manager");
 
@@ -49,23 +49,23 @@ module.exports.launch = async (client) => {
         }),
       })
     ) // Set the express session password and configuration
-    .use(async function (req, res, next) {
+    .use(async (req, res, next) => {
       req.user = req.session.user;
       req.client = client;
       if (req.user && req.url !== "/") req.userInfos = await utils.fetchUser(req.user, req.client);
       next();
     })
-    .use("/api", discordAPIRouter)
+    .use("/api", discordApiRouter)
     .use("/logout", logoutRouter)
     .use("/manage", guildManagerRouter)
     .use("/", mainRouter)
-    .use(CheckAuth, function (req, res) {
+    .use(CheckAuth, (req, res) => {
       res.status(404).render("404", {
         user: req.userInfos,
         currentURL: `${req.protocol}://${req.get("host")}${req.originalUrl}`,
       });
     })
-    .use(CheckAuth, function (err, req, res) {
+    .use(CheckAuth, (err, req, res) => {
       console.error(err.stack);
       if (!req.user) return res.redirect("/");
       res.status(500).render("500", {

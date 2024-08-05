@@ -8,9 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-(function ($, window, document) {
-  "use strict";
-
+(($, window, document) => {
   // TIMEPICKER PUBLIC CLASS DEFINITION
   var Timepicker = function (element, options) {
     this.widget = "";
@@ -34,7 +32,7 @@
     this.maxHours = options.maxHours;
     this.explicitMode = options.explicitMode; // If true 123 = 1:23, 12345 = 1:23:45, else invalid.
 
-    this.handleDocumentClick = function (e) {
+    this.handleDocumentClick = (e) => {
       var self = e.data.scope;
       // This condition was inspired by bootstrap-datepicker.
       // The element the timepicker is invoked on is the input but it has a sibling for addon/button.
@@ -75,23 +73,21 @@
           "blur.timepicker": $.proxy(this.blurElement, this),
           "mousewheel.timepicker DOMMouseScroll.timepicker": $.proxy(this.mousewheel, this),
         });
+      } else if (this.template) {
+        this.$element.on({
+          "focus.timepicker": $.proxy(this.showWidget, this),
+          "click.timepicker": $.proxy(this.showWidget, this),
+          "blur.timepicker": $.proxy(this.blurElement, this),
+          "mousewheel.timepicker DOMMouseScroll.timepicker": $.proxy(this.mousewheel, this),
+        });
       } else {
-        if (this.template) {
-          this.$element.on({
-            "focus.timepicker": $.proxy(this.showWidget, this),
-            "click.timepicker": $.proxy(this.showWidget, this),
-            "blur.timepicker": $.proxy(this.blurElement, this),
-            "mousewheel.timepicker DOMMouseScroll.timepicker": $.proxy(this.mousewheel, this),
-          });
-        } else {
-          this.$element.on({
-            "focus.timepicker": $.proxy(this.highlightUnit, this),
-            "click.timepicker": $.proxy(this.highlightUnit, this),
-            "keydown.timepicker": $.proxy(this.elementKeydown, this),
-            "blur.timepicker": $.proxy(this.blurElement, this),
-            "mousewheel.timepicker DOMMouseScroll.timepicker": $.proxy(this.mousewheel, this),
-          });
-        }
+        this.$element.on({
+          "focus.timepicker": $.proxy(this.highlightUnit, this),
+          "click.timepicker": $.proxy(this.highlightUnit, this),
+          "keydown.timepicker": $.proxy(this.elementKeydown, this),
+          "blur.timepicker": $.proxy(this.blurElement, this),
+          "mousewheel.timepicker DOMMouseScroll.timepicker": $.proxy(this.mousewheel, this),
+        });
       }
 
       if (this.template !== false) {
@@ -144,12 +140,10 @@
         } else {
           this.hour--;
         }
+      } else if (this.hour <= 0) {
+        this.hour = this.maxHours - 1;
       } else {
-        if (this.hour <= 0) {
-          this.hour = this.maxHours - 1;
-        } else {
-          this.hour--;
-        }
+        this.hour--;
       }
     },
 
@@ -290,7 +284,8 @@
         hourTemplate = '<input type="text" class="bootstrap-timepicker-hour" maxlength="2"/>';
         minuteTemplate = '<input type="text" class="bootstrap-timepicker-minute" maxlength="2"/>';
         secondTemplate = '<input type="text" class="bootstrap-timepicker-second" maxlength="2"/>';
-        meridianTemplate = '<input type="text" class="bootstrap-timepicker-meridian" maxlength="2"/>';
+        meridianTemplate =
+          '<input type="text" class="bootstrap-timepicker-meridian" maxlength="2"/>';
       } else {
         hourTemplate = '<span class="bootstrap-timepicker-hour"></span>';
         minuteTemplate = '<span class="bootstrap-timepicker-minute"></span>';
@@ -329,8 +324,12 @@
         "<td>" +
         minuteTemplate +
         "</td> " +
-        (this.showSeconds ? '<td class="separator">:</td>' + "<td>" + secondTemplate + "</td>" : "") +
-        (this.showMeridian ? '<td class="separator">&nbsp;</td>' + "<td>" + meridianTemplate + "</td>" : "") +
+        (this.showSeconds
+          ? '<td class="separator">:</td>' + "<td>" + secondTemplate + "</td>"
+          : "") +
+        (this.showMeridian
+          ? '<td class="separator">&nbsp;</td>' + "<td>" + meridianTemplate + "</td>"
+          : "") +
         "</tr>" +
         "<tr>" +
         '<td><a href="#" data-action="decrementHour"><span class="' +
@@ -374,7 +373,8 @@
             "</div>";
           break;
         case "dropdown":
-          template = '<div class="bootstrap-timepicker-widget dropdown-menu">' + templateContent + "</div>";
+          template =
+            '<div class="bootstrap-timepicker-widget dropdown-menu">' + templateContent + "</div>";
           break;
       }
 
@@ -390,7 +390,9 @@
         this.hour +
         ":" +
         (this.minute.toString().length === 1 ? "0" + this.minute : this.minute) +
-        (this.showSeconds ? ":" + (this.second.toString().length === 1 ? "0" + this.second : this.second) : "") +
+        (this.showSeconds
+          ? ":" + (this.second.toString().length === 1 ? "0" + this.second : this.second)
+          : "") +
         (this.showMeridian ? " " + this.meridian : "")
       );
     },
@@ -496,14 +498,13 @@
     },
 
     highlightHour: function () {
-      var $element = this.$element.get(0),
-        self = this;
+      var $element = this.$element.get(0);
 
       this.highlightedUnit = "hour";
 
       if ($element.setSelectionRange) {
-        setTimeout(function () {
-          if (self.hour < 10) {
+        setTimeout(() => {
+          if (this.hour < 10) {
             $element.setSelectionRange(0, 1);
           } else {
             $element.setSelectionRange(0, 2);
@@ -513,14 +514,13 @@
     },
 
     highlightMinute: function () {
-      var $element = this.$element.get(0),
-        self = this;
+      var $element = this.$element.get(0);
 
       this.highlightedUnit = "minute";
 
       if ($element.setSelectionRange) {
-        setTimeout(function () {
-          if (self.hour < 10) {
+        setTimeout(() => {
+          if (this.hour < 10) {
             $element.setSelectionRange(2, 4);
           } else {
             $element.setSelectionRange(3, 5);
@@ -530,14 +530,13 @@
     },
 
     highlightSecond: function () {
-      var $element = this.$element.get(0),
-        self = this;
+      var $element = this.$element.get(0);
 
       this.highlightedUnit = "second";
 
       if ($element.setSelectionRange) {
-        setTimeout(function () {
-          if (self.hour < 10) {
+        setTimeout(() => {
+          if (this.hour < 10) {
             $element.setSelectionRange(5, 7);
           } else {
             $element.setSelectionRange(6, 8);
@@ -547,23 +546,22 @@
     },
 
     highlightMeridian: function () {
-      var $element = this.$element.get(0),
-        self = this;
+      var $element = this.$element.get(0);
 
       this.highlightedUnit = "meridian";
 
       if ($element.setSelectionRange) {
         if (this.showSeconds) {
-          setTimeout(function () {
-            if (self.hour < 10) {
+          setTimeout(() => {
+            if (this.hour < 10) {
               $element.setSelectionRange(8, 10);
             } else {
               $element.setSelectionRange(9, 11);
             }
           }, 0);
         } else {
-          setTimeout(function () {
-            if (self.hour < 10) {
+          setTimeout(() => {
+            if (this.hour < 10) {
               $element.setSelectionRange(5, 7);
             } else {
               $element.setSelectionRange(6, 8);
@@ -680,7 +678,7 @@
      * "overflow" to 0 if it's larger than 59 or would otherwise
      * round up to 60.
      */
-    changeToNearestStep: function (segment, step) {
+    changeToNearestStep: (segment, step) => {
       if (segment % step === 0) {
         return segment;
       }
@@ -704,7 +702,7 @@
         scrollTop = $(window).scrollTop();
 
       var zIndex =
-        parseInt(
+        Number.parseInt(
           this.$element
             .parents()
             .filter(function () {
@@ -715,8 +713,12 @@
           10
         ) + 10;
       var offset = this.component ? this.component.parent().offset() : this.$element.offset();
-      var height = this.component ? this.component.outerHeight(true) : this.$element.outerHeight(false);
-      var width = this.component ? this.component.outerWidth(true) : this.$element.outerWidth(false);
+      var height = this.component
+        ? this.component.outerHeight(true)
+        : this.$element.outerHeight(false);
+      var width = this.component
+        ? this.component.outerWidth(true)
+        : this.$element.outerWidth(false);
       var left = offset.left,
         top = offset.top;
 
@@ -756,7 +758,7 @@
       if (yorient === "top") {
         top += height;
       } else {
-        top -= widgetHeight + parseInt(this.$widget.css("padding-top"), 10);
+        top -= widgetHeight + Number.parseInt(this.$widget.css("padding-top"), 10);
       }
 
       this.$widget.css({
@@ -775,59 +777,57 @@
     },
 
     setDefaultTime: function (defaultTime) {
-      if (!this.$element.val()) {
-        if (defaultTime === "current") {
-          var dTime = new Date(),
-            hours = dTime.getHours(),
-            minutes = dTime.getMinutes(),
-            seconds = dTime.getSeconds(),
-            meridian = "AM";
-
-          if (seconds !== 0) {
-            seconds = Math.ceil(dTime.getSeconds() / this.secondStep) * this.secondStep;
-            if (seconds === 60) {
-              minutes += 1;
-              seconds = 0;
-            }
-          }
-
-          if (minutes !== 0) {
-            minutes = Math.ceil(dTime.getMinutes() / this.minuteStep) * this.minuteStep;
-            if (minutes === 60) {
-              hours += 1;
-              minutes = 0;
-            }
-          }
-
-          if (this.showMeridian) {
-            if (hours === 0) {
-              hours = 12;
-            } else if (hours >= 12) {
-              if (hours > 12) {
-                hours = hours - 12;
-              }
-              meridian = "PM";
-            } else {
-              meridian = "AM";
-            }
-          }
-
-          this.hour = hours;
-          this.minute = minutes;
-          this.second = seconds;
-          this.meridian = meridian;
-
-          this.update();
-        } else if (defaultTime === false) {
-          this.hour = 0;
-          this.minute = 0;
-          this.second = 0;
-          this.meridian = "AM";
-        } else {
-          this.setTime(defaultTime);
-        }
-      } else {
+      if (this.$element.val()) {
         this.updateFromElementVal();
+      } else if (defaultTime === "current") {
+        var dTime = new Date(),
+          hours = dTime.getHours(),
+          minutes = dTime.getMinutes(),
+          seconds = dTime.getSeconds(),
+          meridian = "AM";
+
+        if (seconds !== 0) {
+          seconds = Math.ceil(dTime.getSeconds() / this.secondStep) * this.secondStep;
+          if (seconds === 60) {
+            minutes += 1;
+            seconds = 0;
+          }
+        }
+
+        if (minutes !== 0) {
+          minutes = Math.ceil(dTime.getMinutes() / this.minuteStep) * this.minuteStep;
+          if (minutes === 60) {
+            hours += 1;
+            minutes = 0;
+          }
+        }
+
+        if (this.showMeridian) {
+          if (hours === 0) {
+            hours = 12;
+          } else if (hours >= 12) {
+            if (hours > 12) {
+              hours = hours - 12;
+            }
+            meridian = "PM";
+          } else {
+            meridian = "AM";
+          }
+        }
+
+        this.hour = hours;
+        this.minute = minutes;
+        this.second = seconds;
+        this.meridian = meridian;
+
+        this.update();
+      } else if (defaultTime === false) {
+        this.hour = 0;
+        this.minute = 0;
+        this.second = 0;
+        this.meridian = "AM";
+      } else {
+        this.setTime(defaultTime);
       }
     },
 
@@ -892,9 +892,9 @@
           minute = minute.slice(0, -2);
         }
 
-        hour = parseInt(hour, 10);
-        minute = parseInt(minute, 10);
-        second = parseInt(second, 10);
+        hour = Number.parseInt(hour, 10);
+        minute = Number.parseInt(minute, 10);
+        second = Number.parseInt(second, 10);
 
         if (isNaN(hour)) {
           hour = 0;
@@ -936,12 +936,10 @@
           meridian = timeMode === 1 ? "AM" : "PM";
         } else if (hour < 12 && timeMode === 2) {
           hour += 12;
-        } else {
-          if (hour >= this.maxHours) {
-            hour = this.maxHours - 1;
-          } else if (hour < 0 || (hour === 12 && timeMode === 1)) {
-            hour = 0;
-          }
+        } else if (hour >= this.maxHours) {
+          hour = this.maxHours - 1;
+        } else if (hour < 0 || (hour === 12 && timeMode === 1)) {
+          hour = 0;
         }
       }
 
@@ -969,7 +967,11 @@
 
       // show/hide approach taken by datepicker
       this.$widget.appendTo(this.appendWidgetTo);
-      $(document).on("mousedown.timepicker, touchend.timepicker", { scope: this }, this.handleDocumentClick);
+      $(document).on(
+        "mousedown.timepicker, touchend.timepicker",
+        { scope: this },
+        this.handleDocumentClick
+      );
 
       this.$element.trigger({
         type: "show.timepicker",
@@ -998,10 +1000,8 @@
 
       if (this.template === "modal" && this.$widget.modal) {
         this.$widget.modal("show").on("hidden", $.proxy(this.hideWidget, this));
-      } else {
-        if (this.isOpen === false) {
-          this.$widget.addClass("open");
-        }
+      } else if (this.isOpen === false) {
+        this.$widget.addClass("open");
       }
 
       this.isOpen = true;
@@ -1078,7 +1078,9 @@
         this.$widget.find("input.bootstrap-timepicker-hour").val() +
         ":" +
         this.$widget.find("input.bootstrap-timepicker-minute").val() +
-        (this.showSeconds ? ":" + this.$widget.find("input.bootstrap-timepicker-second").val() : "") +
+        (this.showSeconds
+          ? ":" + this.$widget.find("input.bootstrap-timepicker-second").val()
+          : "") +
         (this.showMeridian ? this.$widget.find("input.bootstrap-timepicker-meridian").val() : "");
 
       this.setTime(t, true);
@@ -1190,7 +1192,10 @@
       if (!data) {
         $this.data(
           "timepicker",
-          (data = new Timepicker(this, $.extend({}, $.fn.timepicker.defaults, options, $(this).data())))
+          (data = new Timepicker(
+            this,
+            $.extend({}, $.fn.timepicker.defaults, options, $(this).data())
+          ))
         );
       }
 
@@ -1226,13 +1231,17 @@
 
   $.fn.timepicker.Constructor = Timepicker;
 
-  $(document).on("focus.timepicker.data-api click.timepicker.data-api", '[data-provide="timepicker"]', function (e) {
-    var $this = $(this);
-    if ($this.data("timepicker")) {
-      return;
+  $(document).on(
+    "focus.timepicker.data-api click.timepicker.data-api",
+    '[data-provide="timepicker"]',
+    function (e) {
+      var $this = $(this);
+      if ($this.data("timepicker")) {
+        return;
+      }
+      e.preventDefault();
+      // component click requires us to explicitly show it
+      $this.timepicker();
     }
-    e.preventDefault();
-    // component click requires us to explicitly show it
-    $this.timepicker();
-  });
+  );
 })(jQuery, window, document);

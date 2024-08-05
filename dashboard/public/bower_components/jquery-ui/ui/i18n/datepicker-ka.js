@@ -1,6 +1,6 @@
 /* Georgian (UTF-8) initialisation for the jQuery UI date picker plugin. */
 /* Written by Lado Lomidze (lado.lomidze@gmail.com). */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -8,7 +8,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["ka"] = {
     closeText: "დახურვა",
     prevText: "&#x3c; წინა",
@@ -28,7 +28,20 @@
       "ნოემბერი",
       "დეკემბერი",
     ],
-    monthNamesShort: ["იან", "თებ", "მარ", "აპრ", "მაი", "ივნ", "ივლ", "აგვ", "სექ", "ოქტ", "ნოე", "დეკ"],
+    monthNamesShort: [
+      "იან",
+      "თებ",
+      "მარ",
+      "აპრ",
+      "მაი",
+      "ივნ",
+      "ივლ",
+      "აგვ",
+      "სექ",
+      "ოქტ",
+      "ნოე",
+      "დეკ",
+    ],
     dayNames: ["კვირა", "ორშაბათი", "სამშაბათი", "ოთხშაბათი", "ხუთშაბათი", "პარასკევი", "შაბათი"],
     dayNamesShort: ["კვ", "ორშ", "სამ", "ოთხ", "ხუთ", "პარ", "შაბ"],
     dayNamesMin: ["კვ", "ორშ", "სამ", "ოთხ", "ხუთ", "პარ", "შაბ"],

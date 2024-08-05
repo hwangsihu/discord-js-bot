@@ -1,4 +1,4 @@
-﻿var swfobject = (function () {
+﻿var swfobject = (() => {
   function w() {
     if (!u) {
       try {
@@ -20,7 +20,7 @@
     else if ("undefined" != typeof n.attachEvent) U(n, "onload", a);
     else if ("function" == typeof n.onload) {
       var b = n.onload;
-      n.onload = function () {
+      n.onload = () => {
         b();
         a();
       };
@@ -33,11 +33,16 @@
     var c = a.appendChild(b);
     if (c) {
       var f = 0;
-      (function () {
+      (() => {
         if ("undefined" != typeof c.GetVariable) {
           var g = c.GetVariable("$version");
           g &&
-            ((g = g.split(" ")[1].split(",")), (e.pv = [parseInt(g[0], 10), parseInt(g[1], 10), parseInt(g[2], 10)]));
+            ((g = g.split(" ")[1].split(",")),
+            (e.pv = [
+              Number.parseInt(g[0], 10),
+              Number.parseInt(g[1], 10),
+              Number.parseInt(g[2], 10),
+            ]));
         } else if (10 > f) {
           f++;
           setTimeout(arguments.callee, 10);
@@ -67,21 +72,30 @@
                 g.height = d.getAttribute("height") || "0";
                 d.getAttribute("class") && (g.styleclass = d.getAttribute("class"));
                 d.getAttribute("align") && (g.align = d.getAttribute("align"));
-                for (var h = {}, d = d.getElementsByTagName("param"), k = d.length, l = 0; l < k; l++)
+                for (
+                  var h = {}, d = d.getElementsByTagName("param"), k = d.length, l = 0;
+                  l < k;
+                  l++
+                )
                   "movie" != d[l].getAttribute("name").toLowerCase() &&
                     (h[d[l].getAttribute("name")] = d[l].getAttribute("value"));
                 G(g, h, c, f);
               } else W(d), f && f(g);
             else v(c, !0), f && ((g.success = !0), (g.ref = H(c)), f(g));
         } else
-          v(c, !0), f && ((c = H(c)) && "undefined" != typeof c.SetVariable && ((g.success = !0), (g.ref = c)), f(g));
+          v(c, !0),
+            f &&
+              ((c = H(c)) && "undefined" != typeof c.SetVariable && ((g.success = !0), (g.ref = c)),
+              f(g));
       }
   }
   function H(a) {
     var b = null;
     (a = p(a)) &&
       "OBJECT" == a.nodeName &&
-      ("undefined" != typeof a.SetVariable ? (b = a) : (a = a.getElementsByTagName("object")[0]) && (b = a));
+      ("undefined" != typeof a.SetVariable
+        ? (b = a)
+        : (a = a.getElementsByTagName("object")[0]) && (b = a));
     return b;
   }
   function F() {
@@ -95,8 +109,16 @@
     if (g) {
       "OBJECT" == g.nodeName ? ((y = J(g)), (C = null)) : ((y = g), (C = c));
       a.id = "SWFObjectExprInst";
-      if ("undefined" == typeof a.width || (!/%$/.test(a.width) && 310 > parseInt(a.width, 10))) a.width = "310";
-      if ("undefined" == typeof a.height || (!/%$/.test(a.height) && 137 > parseInt(a.height, 10))) a.height = "137";
+      if (
+        "undefined" == typeof a.width ||
+        (!/%$/.test(a.width) && 310 > Number.parseInt(a.width, 10))
+      )
+        a.width = "310";
+      if (
+        "undefined" == typeof a.height ||
+        (!/%$/.test(a.height) && 137 > Number.parseInt(a.height, 10))
+      )
+        a.height = "137";
       d.title = d.title.slice(0, 47) + " - Flash Player Installation";
       f = e.ie && e.win ? "ActiveX" : "PlugIn";
       f =
@@ -115,7 +137,7 @@
         f.setAttribute("id", c),
         g.parentNode.insertBefore(f, g),
         (g.style.display = "none"),
-        (function () {
+        (() => {
           4 == g.readyState ? g.parentNode.removeChild(g) : setTimeout(arguments.callee, 10);
         })());
       K(a, b, c);
@@ -127,7 +149,7 @@
       a.parentNode.insertBefore(b, a);
       b.parentNode.replaceChild(J(a), b);
       a.style.display = "none";
-      (function () {
+      (() => {
         4 == a.readyState ? a.parentNode.removeChild(a) : setTimeout(arguments.callee, 10);
       })();
     } else a.parentNode.replaceChild(J(a), a);
@@ -138,7 +160,9 @@
     else if ((a = a.getElementsByTagName("object")[0]))
       if ((a = a.childNodes))
         for (var c = a.length, f = 0; f < c; f++)
-          (1 == a[f].nodeType && "PARAM" == a[f].nodeName) || 8 == a[f].nodeType || b.appendChild(a[f].cloneNode(!0));
+          (1 == a[f].nodeType && "PARAM" == a[f].nodeName) ||
+            8 == a[f].nodeType ||
+            b.appendChild(a[f].cloneNode(!0));
     return b;
   }
   function K(a, b, c) {
@@ -158,9 +182,14 @@
                 : "classid" != h.toLowerCase() && (q += " " + h + '\x3d"' + a[h] + '"'));
         h = "";
         for (var k in b)
-          b[k] != Object.prototype[k] && (h += '\x3cparam name\x3d"' + k + '" value\x3d"' + b[k] + '" /\x3e');
+          b[k] != Object.prototype[k] &&
+            (h += '\x3cparam name\x3d"' + k + '" value\x3d"' + b[k] + '" /\x3e');
         g.outerHTML =
-          '\x3cobject classid\x3d"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"' + q + "\x3e" + h + "\x3c/object\x3e";
+          '\x3cobject classid\x3d"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"' +
+          q +
+          "\x3e" +
+          h +
+          "\x3c/object\x3e";
         D[D.length] = a.id;
         f = p(a.id);
       } else {
@@ -192,7 +221,7 @@
       "OBJECT" == b.nodeName &&
       (e.ie && e.win
         ? ((b.style.display = "none"),
-          (function () {
+          (() => {
             if (4 == b.readyState) {
               var c = p(a);
               if (c) {
@@ -217,10 +246,14 @@
   function A(a) {
     var b = e.pv;
     a = a.split(".");
-    a[0] = parseInt(a[0], 10);
-    a[1] = parseInt(a[1], 10) || 0;
-    a[2] = parseInt(a[2], 10) || 0;
-    return b[0] > a[0] || (b[0] == a[0] && b[1] > a[1]) || (b[0] == a[0] && b[1] == a[1] && b[2] >= a[2]) ? !0 : !1;
+    a[0] = Number.parseInt(a[0], 10);
+    a[1] = Number.parseInt(a[1], 10) || 0;
+    a[2] = Number.parseInt(a[2], 10) || 0;
+    return b[0] > a[0] ||
+      (b[0] == a[0] && b[1] > a[1]) ||
+      (b[0] == a[0] && b[1] == a[1] && b[2] >= a[2])
+      ? !0
+      : !1;
   }
   function Q(a, b, c, f) {
     if (!e.ie || !e.mac) {
@@ -241,7 +274,9 @@
           (L = c)),
         e.ie && e.win
           ? m && "object" == typeof m.addRule && m.addRule(a, b)
-          : m && "undefined" != typeof d.createTextNode && m.appendChild(d.createTextNode(a + " {" + b + "}")));
+          : m &&
+            "undefined" != typeof d.createTextNode &&
+            m.appendChild(d.createTextNode(a + " {" + b + "}")));
     }
   }
   function v(a, b) {
@@ -251,14 +286,16 @@
     }
   }
   function S(a) {
-    return null != /[\\\"<>\.;]/.exec(a) && "undefined" != typeof encodeURIComponent ? encodeURIComponent(a) : a;
+    return null != /[\\\"<>\.;]/.exec(a) && "undefined" != typeof encodeURIComponent
+      ? encodeURIComponent(a)
+      : a;
   }
   var n = window,
     d = document,
     t = navigator,
     T = !1,
     z = [
-      function () {
+      () => {
         T ? V() : E();
       },
     ],
@@ -274,7 +311,7 @@
     m,
     L,
     R = !0,
-    e = (function () {
+    e = (() => {
       var a =
           "undefined" != typeof d.getElementById &&
           "undefined" != typeof d.getElementsByTagName &&
@@ -283,7 +320,9 @@
         c = t.platform.toLowerCase(),
         f = c ? /win/.test(c) : /win/.test(b),
         c = c ? /mac/.test(c) : /mac/.test(b),
-        b = /webkit/.test(b) ? parseFloat(b.replace(/^.*webkit\/(\d+(\.\d+)?).*$/, "$1")) : !1,
+        b = /webkit/.test(b)
+          ? Number.parseFloat(b.replace(/^.*webkit\/(\d+(\.\d+)?).*$/, "$1"))
+          : !1,
         g = !+"\v1",
         e = [0, 0, 0],
         h = null;
@@ -295,9 +334,11 @@
           ((T = !0),
           (g = !1),
           (h = h.replace(/^.*\s+(\S+\s+\S+$)/, "$1")),
-          (e[0] = parseInt(h.replace(/^(.*)\..*$/, "$1"), 10)),
-          (e[1] = parseInt(h.replace(/^.*\.(.*)\s.*$/, "$1"), 10)),
-          (e[2] = /[a-zA-Z]/.test(h) ? parseInt(h.replace(/^.*[a-zA-Z]+(.*)$/, "$1"), 10) : 0));
+          (e[0] = Number.parseInt(h.replace(/^(.*)\..*$/, "$1"), 10)),
+          (e[1] = Number.parseInt(h.replace(/^.*\.(.*)\s.*$/, "$1"), 10)),
+          (e[2] = /[a-zA-Z]/.test(h)
+            ? Number.parseInt(h.replace(/^.*[a-zA-Z]+(.*)$/, "$1"), 10)
+            : 0));
       else if ("undefined" != typeof n.ActiveXObject)
         try {
           var k = new ActiveXObject("ShockwaveFlash.ShockwaveFlash");
@@ -305,11 +346,15 @@
             (h = k.GetVariable("$version")) &&
             ((g = !0),
             (h = h.split(" ")[1].split(",")),
-            (e = [parseInt(h[0], 10), parseInt(h[1], 10), parseInt(h[2], 10)]));
+            (e = [
+              Number.parseInt(h[0], 10),
+              Number.parseInt(h[1], 10),
+              Number.parseInt(h[2], 10),
+            ]));
         } catch (l) {}
       return { w3: a, pv: e, wk: b, ie: g, win: f, mac: c };
     })();
-  (function () {
+  (() => {
     e.w3 &&
       ((("undefined" != typeof d.readyState && "complete" == d.readyState) ||
         ("undefined" == typeof d.readyState && (d.getElementsByTagName("body")[0] || d.body))) &&
@@ -318,11 +363,12 @@
         ("undefined" != typeof d.addEventListener && d.addEventListener("DOMContentLoaded", w, !1),
         e.ie &&
           e.win &&
-          (d.attachEvent("onreadystatechange", function () {
-            "complete" == d.readyState && (d.detachEvent("onreadystatechange", arguments.callee), w());
+          (d.attachEvent("onreadystatechange", () => {
+            "complete" == d.readyState &&
+              (d.detachEvent("onreadystatechange", arguments.callee), w());
           }),
           n == top &&
-            (function () {
+            (() => {
               if (!u) {
                 try {
                   d.documentElement.doScroll("left");
@@ -334,15 +380,15 @@
               }
             })()),
         e.wk &&
-          (function () {
+          (() => {
             u || (/loaded|complete/.test(d.readyState) ? w() : setTimeout(arguments.callee, 0));
           })(),
         N(w)));
   })();
-  (function () {
+  (() => {
     e.ie &&
       e.win &&
-      window.attachEvent("onunload", function () {
+      window.attachEvent("onunload", () => {
         for (var a = x.length, b = 0; b < a; b++) x[b][0].detachEvent(x[b][1], x[b][2]);
         a = D.length;
         for (b = 0; b < a; b++) P(D[b]);
@@ -353,7 +399,7 @@
       });
   })();
   return {
-    registerObject: function (a, b, c, f) {
+    registerObject: (a, b, c, f) => {
       if (e.w3 && a && b) {
         var d = {};
         d.id = a;
@@ -364,14 +410,14 @@
         v(a, !1);
       } else f && f({ success: !1, id: a });
     },
-    getObjectById: function (a) {
+    getObjectById: (a) => {
       if (e.w3) return H(a);
     },
-    embedSWF: function (a, b, c, d, g, q, h, k, l, n) {
+    embedSWF: (a, b, c, d, g, q, h, k, l, n) => {
       var p = { success: !1, id: b };
       e.w3 && !(e.wk && 312 > e.wk) && a && b && c && d && g
         ? (v(b, !1),
-          M(function () {
+          M(() => {
             c += "";
             d += "";
             var e = {};
@@ -384,7 +430,9 @@
             if (h && "object" === typeof h)
               for (var t in h)
                 m.flashvars =
-                  "undefined" != typeof m.flashvars ? m.flashvars + ("\x26" + t + "\x3d" + h[t]) : t + "\x3d" + h[t];
+                  "undefined" != typeof m.flashvars
+                    ? m.flashvars + ("\x26" + t + "\x3d" + h[t])
+                    : t + "\x3d" + h[t];
             if (A(g)) (r = K(e, m, b)), e.id == b && v(b, !0), (p.success = !0), (p.ref = r);
             else {
               if (q && F()) {
@@ -398,44 +446,45 @@
           }))
         : n && n(p);
     },
-    switchOffAutoHideShow: function () {
+    switchOffAutoHideShow: () => {
       R = !1;
     },
     ua: e,
-    getFlashPlayerVersion: function () {
-      return { major: e.pv[0], minor: e.pv[1], release: e.pv[2] };
-    },
+    getFlashPlayerVersion: () => ({ major: e.pv[0], minor: e.pv[1], release: e.pv[2] }),
     hasFlashPlayerVersion: A,
-    createSWF: function (a, b, c) {
+    createSWF: (a, b, c) => {
       if (e.w3) return K(a, b, c);
     },
-    showExpressInstall: function (a, b, c, d) {
+    showExpressInstall: (a, b, c, d) => {
       e.w3 && F() && G(a, b, c, d);
     },
-    removeSWF: function (a) {
+    removeSWF: (a) => {
       e.w3 && P(a);
     },
-    createCSS: function (a, b, c, d) {
+    createCSS: (a, b, c, d) => {
       e.w3 && Q(a, b, c, d);
     },
     addDomLoadEvent: M,
     addLoadEvent: N,
-    getQueryParamValue: function (a) {
+    getQueryParamValue: (a) => {
       var b = d.location.search || d.location.hash;
       if (b) {
         /\?/.test(b) && (b = b.split("?")[1]);
         if (null == a) return S(b);
         for (var b = b.split("\x26"), c = 0; c < b.length; c++)
-          if (b[c].substring(0, b[c].indexOf("\x3d")) == a) return S(b[c].substring(b[c].indexOf("\x3d") + 1));
+          if (b[c].substring(0, b[c].indexOf("\x3d")) == a)
+            return S(b[c].substring(b[c].indexOf("\x3d") + 1));
       }
       return "";
     },
-    expressInstallCallback: function () {
+    expressInstallCallback: () => {
       if (B) {
         var a = p("SWFObjectExprInst");
         a &&
           y &&
-          (a.parentNode.replaceChild(y, a), C && (v(C, !0), e.ie && e.win && (y.style.display = "block")), I && I(O));
+          (a.parentNode.replaceChild(y, a),
+          C && (v(C, !0), e.ie && e.win && (y.style.display = "block")),
+          I && I(O));
         B = !1;
       }
     },

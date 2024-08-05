@@ -85,7 +85,12 @@ CKEDITOR.lang["ja"] = {
     },
     cellPad: "セル内間隔",
     cellSpace: "セル内余白",
-    column: { menu: "列", insertBefore: "列を左に挿入", insertAfter: "列を右に挿入", deleteColumn: "列を削除" },
+    column: {
+      menu: "列",
+      insertBefore: "列を左に挿入",
+      insertAfter: "列を右に挿入",
+      deleteColumn: "列を削除",
+    },
     columns: "列数",
     deleteTable: "表を削除",
     headers: "ヘッダ (th)",
@@ -101,7 +106,12 @@ CKEDITOR.lang["ja"] = {
     invalidRows: "行数は0より大きな数値を入力してください。",
     invalidWidth: "幅は数値で入力してください。",
     menu: "表のプロパティ",
-    row: { menu: "行", insertBefore: "行を上に挿入", insertAfter: "行を下に挿入", deleteRow: "行を削除" },
+    row: {
+      menu: "行",
+      insertBefore: "行を上に挿入",
+      insertAfter: "行を下に挿入",
+      deleteRow: "行を削除",
+    },
     rows: "行数",
     summary: "表の概要",
     title: "表のプロパティ",
@@ -117,7 +127,11 @@ CKEDITOR.lang["ja"] = {
     panelTitle2: "インラインスタイル",
     panelTitle3: "オブジェクトスタイル",
   },
-  specialchar: { options: "特殊文字オプション", title: "特殊文字の選択", toolbar: "特殊文字を挿入" },
+  specialchar: {
+    options: "特殊文字オプション",
+    title: "特殊文字の選択",
+    toolbar: "特殊文字を挿入",
+  },
   sourcearea: { toolbar: "ソース" },
   scayt: {
     btn_about: "SCAYTﾊﾞｰｼﾞｮﾝ",
@@ -370,7 +384,8 @@ CKEDITOR.lang["ja"] = {
       '入力された "%1" 項目の値は、HTMLの大きさ(px または %)が正しいものである/ないに関わらず、正の値である必要があります。',
     invalidInlineStyle:
       '入力されたインラインスタイルの値は、"名前 : 値" のフォーマットのセットで、複数の場合はセミコロンで区切られている形式である必要があります。',
-    cssLengthTooltip: "ピクセル数もしくはCSSにセットできる数値を入力してください。(px,%,in,cm,mm,em,ex,pt,or pc)",
+    cssLengthTooltip:
+      "ピクセル数もしくはCSSにセットできる数値を入力してください。(px,%,in,cm,mm,em,ex,pt,or pc)",
     unavailable: '%1<span class="cke_accessibility">, 利用不可能</span>',
     keyboard: {
       8: "Backspace",

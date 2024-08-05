@@ -26,7 +26,9 @@ var Colorpicker = function (element, options) {
     this.input = false;
   }
   // Set HSB color
-  this.color = this.createColor(this.options.color !== false ? this.options.color : this.getValue());
+  this.color = this.createColor(
+    this.options.color !== false ? this.options.color : this.getValue()
+  );
 
   this.format = this.options.format !== false ? this.options.format : this.color.origFormat;
 
@@ -68,7 +70,7 @@ var Colorpicker = function (element, options) {
       selectorsContainer = colorpicker.picker.find(".colorpicker-selectors");
 
     if (selectorsContainer.length > 0) {
-      $.each(this.options.colorSelectors, function (name, color) {
+      $.each(this.options.colorSelectors, (name, color) => {
         var $btn = $("<i />")
           .addClass("colorpicker-selectors-color")
           .css("background-color", color)
@@ -90,7 +92,7 @@ var Colorpicker = function (element, options) {
   // Prevent closing the colorpicker when clicking on itself
   $picker.on(
     "mousedown.colorpicker touchstart.colorpicker",
-    $.proxy(function (e) {
+    $.proxy((e) => {
       if (e.target === e.currentTarget) {
         e.preventDefault();
       }
@@ -212,7 +214,10 @@ Colorpicker.prototype = {
   hide: function (e) {
     if (typeof e !== "undefined" && e.target) {
       // Prevent hide if triggered by an event and an element inside the colorpicker has been clicked/touched
-      if ($(e.currentTarget).parents(".colorpicker").length > 0 || $(e.target).parents(".colorpicker").length > 0) {
+      if (
+        $(e.currentTarget).parents(".colorpicker").length > 0 ||
+        $(e.target).parents(".colorpicker").length > 0
+      ) {
         return false;
       }
     }

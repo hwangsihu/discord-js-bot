@@ -1,13 +1,11 @@
-define(["../var/document"], function (document) {
-  "use strict";
-
+define(["../var/document"], (document) => {
   var preservedScriptAttributes = {
     type: true,
     src: true,
     noModule: true,
   };
 
-  function DOMEval(code, doc, node) {
+  function domEval(code, doc, node) {
     doc = doc || document;
 
     var i,
@@ -24,5 +22,5 @@ define(["../var/document"], function (document) {
     doc.head.appendChild(script).parentNode.removeChild(script);
   }
 
-  return DOMEval;
+  return domEval;
 });

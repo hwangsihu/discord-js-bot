@@ -1,5 +1,12 @@
 ﻿CKEDITOR.plugins.setLang("forms", "ko", {
-  button: { title: "버튼 속성", text: "글자 (값)", type: "종류", typeBtn: "버튼", typeSbm: "제출", typeRst: "재설정" },
+  button: {
+    title: "버튼 속성",
+    text: "글자 (값)",
+    type: "종류",
+    typeBtn: "버튼",
+    typeSbm: "제출",
+    typeRst: "재설정",
+  },
   checkboxAndRadio: {
     checkboxTitle: "체크 박스 속성",
     radioTitle: "라디오 버튼 속성",
@@ -7,7 +14,13 @@
     selected: "선택됨",
     required: "필수 항목",
   },
-  form: { title: "폼 속성", menu: "폼 속성", action: "실행 경로(Action)", method: "방법(Method)", encoding: "인코딩" },
+  form: {
+    title: "폼 속성",
+    menu: "폼 속성",
+    action: "실행 경로(Action)",
+    method: "방법(Method)",
+    encoding: "인코딩",
+  },
   hidden: { title: "숨은 입력 칸 속성", name: "이름", value: "값" },
   select: {
     title: "선택 목록 속성",

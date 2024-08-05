@@ -38,7 +38,8 @@ function nowPlaying({ client, guildId }) {
   if (!player || !player.queue.current) return "🚫 No music is being played!";
 
   const track = player.queue.current;
-  const end = track.length > 6.048e8 ? "🔴 LIVE" : new Date(track.length).toISOString().slice(11, 19);
+  const end =
+    track.length > 6.048e8 ? "🔴 LIVE" : new Date(track.length).toISOString().slice(11, 19);
 
   const embed = new EmbedBuilder()
     .setColor(EMBED_COLORS.BOT_EMBED)
@@ -60,7 +61,11 @@ function nowPlaying({ client, guildId }) {
         value:
           new Date(player.position).toISOString().slice(11, 19) +
           " [" +
-          splitBar(track.length > 6.048e8 ? player.position : track.length, player.position, 15)[0] +
+          splitBar(
+            track.length > 6.048e8 ? player.position : track.length,
+            player.position,
+            15
+          )[0] +
           "] " +
           end,
         inline: false,

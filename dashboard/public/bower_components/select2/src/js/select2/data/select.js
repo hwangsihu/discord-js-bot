@@ -1,4 +1,4 @@
-define(["./base", "../utils", "jquery"], function (BaseAdapter, Utils, $) {
+define(["./base", "../utils", "jquery"], (BaseAdapter, Utils, $) => {
   function SelectAdapter($element, options) {
     this.$element = $element;
     this.options = options;
@@ -24,8 +24,6 @@ define(["./base", "../utils", "jquery"], function (BaseAdapter, Utils, $) {
   };
 
   SelectAdapter.prototype.select = function (data) {
-    var self = this;
-
     data.selected = true;
 
     // If data.element is a DOM node, use it instead
@@ -38,7 +36,7 @@ define(["./base", "../utils", "jquery"], function (BaseAdapter, Utils, $) {
     }
 
     if (this.$element.prop("multiple")) {
-      this.current(function (currentData) {
+      this.current((currentData) => {
         var val = [];
 
         data = [data];
@@ -52,8 +50,8 @@ define(["./base", "../utils", "jquery"], function (BaseAdapter, Utils, $) {
           }
         }
 
-        self.$element.val(val);
-        self.$element.trigger("change");
+        this.$element.val(val);
+        this.$element.trigger("change");
       });
     } else {
       var val = data.id;
@@ -64,8 +62,6 @@ define(["./base", "../utils", "jquery"], function (BaseAdapter, Utils, $) {
   };
 
   SelectAdapter.prototype.unselect = function (data) {
-    var self = this;
-
     if (!this.$element.prop("multiple")) {
       return;
     }
@@ -80,7 +76,7 @@ define(["./base", "../utils", "jquery"], function (BaseAdapter, Utils, $) {
       return;
     }
 
-    this.current(function (currentData) {
+    this.current((currentData) => {
       var val = [];
 
       for (var d = 0; d < currentData.length; d++) {
@@ -91,23 +87,21 @@ define(["./base", "../utils", "jquery"], function (BaseAdapter, Utils, $) {
         }
       }
 
-      self.$element.val(val);
+      this.$element.val(val);
 
-      self.$element.trigger("change");
+      this.$element.trigger("change");
     });
   };
 
   SelectAdapter.prototype.bind = function (container, $container) {
-    var self = this;
-
     this.container = container;
 
-    container.on("select", function (params) {
-      self.select(params.data);
+    container.on("select", (params) => {
+      this.select(params.data);
     });
 
-    container.on("unselect", function (params) {
-      self.unselect(params.data);
+    container.on("unselect", (params) => {
+      this.unselect(params.data);
     });
   };
 

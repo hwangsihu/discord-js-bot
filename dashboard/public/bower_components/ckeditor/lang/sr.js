@@ -150,7 +150,8 @@ CKEDITOR.lang["sr"] = {
     title: "Залепи као чист текст",
   },
   pastefromword: {
-    confirmCleanup: "The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?",
+    confirmCleanup:
+      "The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?",
     error: "It was not possible to clean up the pasted data due to an internal error",
     title: "Залепи из Worda",
     toolbar: "Залепи из Worda",
@@ -346,8 +347,10 @@ CKEDITOR.lang["sr"] = {
     generalTab: "Опште",
     advancedTab: "Напредни тагови",
     validateNumberFailed: "Ова вредност није цигра.",
-    confirmNewPage: "Any unsaved changes to this content will be lost. Are you sure you want to load new page?",
-    confirmCancel: "You have changed some options. Are you sure you want to close the dialog window?",
+    confirmNewPage:
+      "Any unsaved changes to this content will be lost. Are you sure you want to load new page?",
+    confirmCancel:
+      "You have changed some options. Are you sure you want to close the dialog window?",
     options: "Опције",
     target: "Meтa",
     targetNew: "New Window (_blank)",

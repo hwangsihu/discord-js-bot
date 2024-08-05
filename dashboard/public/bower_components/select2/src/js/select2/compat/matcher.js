@@ -1,4 +1,4 @@
-define(["jquery"], function ($) {
+define(["jquery"], ($) => {
   function oldMatcher(matcher) {
     function wrappedMatcher(params, data) {
       var match = $.extend(true, {}, data);

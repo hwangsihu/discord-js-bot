@@ -10,9 +10,7 @@ define([
 
   "./core/init",
   "./selector",
-], function (jQuery, document, documentElement, isFunction, rnothtmlwhite, slice, dataPriv, nodeName) {
-  "use strict";
-
+], (jQuery, document, documentElement, isFunction, rnothtmlwhite, slice, dataPriv, nodeName) => {
   var rkeyEvent = /^key/,
     rmouseEvent = /^(?:mouse|pointer|contextmenu|drag|drop)|click/,
     rtypenamespace = /^([^.]*)(?:\.(.+)|)/;
@@ -95,7 +93,7 @@ define([
   jQuery.event = {
     global: {},
 
-    add: function (elem, types, handler, data, selector) {
+    add: (elem, types, handler, data, selector) => {
       var handleObjIn,
         eventHandle,
         tmp,
@@ -137,7 +135,7 @@ define([
         events = elemData.events = {};
       }
       if (!(eventHandle = elemData.handle)) {
-        eventHandle = elemData.handle = function (e) {
+        eventHandle = elemData.handle = (e) => {
           // Discard the second event of a jQuery.event.trigger() and
           // when an event is called after a page has unloaded
           return typeof jQuery !== "undefined" && jQuery.event.triggered !== e.type
@@ -217,7 +215,7 @@ define([
     },
 
     // Detach an event or set of events from an element
-    remove: function (elem, types, handler, selector, mappedTypes) {
+    remove: (elem, types, handler, selector, mappedTypes) => {
       var j,
         origCount,
         tmp,
@@ -265,7 +263,9 @@ define([
             (mappedTypes || origType === handleObj.origType) &&
             (!handler || handler.guid === handleObj.guid) &&
             (!tmp || tmp.test(handleObj.namespace)) &&
-            (!selector || selector === handleObj.selector || (selector === "**" && handleObj.selector))
+            (!selector ||
+              selector === handleObj.selector ||
+              (selector === "**" && handleObj.selector))
           ) {
             handlers.splice(j, 1);
 
@@ -281,7 +281,10 @@ define([
         // Remove generic event handler if we removed something and no more handlers exist
         // (avoids potential for endless recursion during removal of special event handlers)
         if (origCount && !handlers.length) {
-          if (!special.teardown || special.teardown.call(elem, namespaces, elemData.handle) === false) {
+          if (
+            !special.teardown ||
+            special.teardown.call(elem, namespaces, elemData.handle) === false
+          ) {
             jQuery.removeEvent(elem, type, elemData.handle);
           }
 
@@ -339,10 +342,9 @@ define([
             event.handleObj = handleObj;
             event.data = handleObj.data;
 
-            ret = ((jQuery.event.special[handleObj.origType] || {}).handle || handleObj.handler).apply(
-              matched.elem,
-              args
-            );
+            ret = (
+              (jQuery.event.special[handleObj.origType] || {}).handle || handleObj.handler
+            ).apply(matched.elem, args);
 
             if (ret !== undefined) {
               if ((event.result = ret) === false) {
@@ -422,7 +424,7 @@ define([
       return handlerQueue;
     },
 
-    addProp: function (name, hook) {
+    addProp: (name, hook) => {
       Object.defineProperty(jQuery.Event.prototype, name, {
         enumerable: true,
         configurable: true,
@@ -450,9 +452,8 @@ define([
       });
     },
 
-    fix: function (originalEvent) {
-      return originalEvent[jQuery.expando] ? originalEvent : new jQuery.Event(originalEvent);
-    },
+    fix: (originalEvent) =>
+      originalEvent[jQuery.expando] ? originalEvent : new jQuery.Event(originalEvent),
 
     special: {
       load: {
@@ -488,13 +489,11 @@ define([
         },
 
         // For cross-browser consistency, don't fire native .click() on links
-        _default: function (event) {
-          return nodeName(event.target, "a");
-        },
+        _default: (event) => nodeName(event.target, "a"),
       },
 
       beforeunload: {
-        postDispatch: function (event) {
+        postDispatch: (event) => {
           // Support: Firefox 20+
           // Firefox doesn't alert if the returnValue field is not set.
           if (event.result !== undefined && event.originalEvent) {
@@ -505,7 +504,7 @@ define([
     },
   };
 
-  jQuery.removeEvent = function (elem, type, handle) {
+  jQuery.removeEvent = (elem, type, handle) => {
     // This "if" is needed for plain objects
     if (elem.removeEventListener) {
       elem.removeEventListener(type, handle);
@@ -631,7 +630,7 @@ define([
       toElement: true,
       touches: true,
 
-      which: function (event) {
+      which: (event) => {
         var button = event.button;
 
         // Add which for key events
@@ -677,20 +676,19 @@ define([
       pointerenter: "pointerover",
       pointerleave: "pointerout",
     },
-    function (orig, fix) {
+    (orig, fix) => {
       jQuery.event.special[orig] = {
         delegateType: fix,
         bindType: fix,
 
         handle: function (event) {
           var ret,
-            target = this,
             related = event.relatedTarget,
             handleObj = event.handleObj;
 
           // For mouseenter/leave call the handler if related is outside the target.
           // NB: No relatedTarget if the mouse left/entered the browser window
-          if (!related || (related !== target && !jQuery.contains(target, related))) {
+          if (!related || (related !== this && !jQuery.contains(this, related))) {
             event.type = handleObj.origType;
             ret = handleObj.handler.apply(this, arguments);
             event.type = fix;

@@ -25,14 +25,14 @@ MaximumSelectionStub.prototype.query = function (params, callback) {
 
 var MaximumSelectionData = Utils.Decorate(MaximumSelectionStub, MaximumSelectionLength);
 
-test("0 never displays the notice", function (assert) {
+test("0 never displays the notice", (assert) => {
   var zeroOptions = new Options({
     maximumSelectionLength: 0,
   });
 
   var data = new MaximumSelectionData(null, zeroOptions);
 
-  data.trigger = function () {
+  data.trigger = () => {
     assert.ok(false, "No events should be triggered");
   };
 
@@ -44,7 +44,7 @@ test("0 never displays the notice", function (assert) {
 
   data = new MaximumSelectionData(null, zeroOptions);
 
-  data.trigger = function () {
+  data.trigger = () => {
     assert.ok(false, "No events should be triggered");
   };
 
@@ -58,7 +58,7 @@ test("0 never displays the notice", function (assert) {
 
   data = new MaximumSelectionData(null, zeroOptions);
 
-  data.trigger = function () {
+  data.trigger = () => {
     assert.ok(false, "No events should be triggered");
   };
 
@@ -72,14 +72,14 @@ test("0 never displays the notice", function (assert) {
   assert.ok(data.called);
 });
 
-test("< 0 never displays the notice", function (assert) {
+test("< 0 never displays the notice", (assert) => {
   var negativeOptions = new Options({
     maximumSelectionLength: -1,
   });
 
   var data = new MaximumSelectionData(null, negativeOptions);
 
-  data.trigger = function () {
+  data.trigger = () => {
     assert.ok(false, "No events should be triggered");
   };
 
@@ -91,7 +91,7 @@ test("< 0 never displays the notice", function (assert) {
 
   data = new MaximumSelectionData(null, negativeOptions);
 
-  data.trigger = function () {
+  data.trigger = () => {
     assert.ok(false, "No events should be triggered");
   };
 
@@ -105,7 +105,7 @@ test("< 0 never displays the notice", function (assert) {
 
   data = new MaximumSelectionData(null, negativeOptions);
 
-  data.trigger = function () {
+  data.trigger = () => {
     assert.ok(false, "No events should be triggered");
   };
 
@@ -119,13 +119,13 @@ test("< 0 never displays the notice", function (assert) {
   assert.ok(data.called);
 });
 
-test("triggers when >= 1 selection", function (assert) {
+test("triggers when >= 1 selection", (assert) => {
   var maxOfOneOptions = new Options({
     maximumSelectionLength: 1,
   });
   var data = new MaximumSelectionData(null, maxOfOneOptions);
 
-  data.trigger = function () {
+  data.trigger = () => {
     assert.ok(false, "No events should be triggered");
   };
 
@@ -137,7 +137,7 @@ test("triggers when >= 1 selection", function (assert) {
 
   data = new MaximumSelectionData(null, maxOfOneOptions);
 
-  data.trigger = function () {
+  data.trigger = () => {
     assert.ok(true, "The event should be triggered.");
   };
 
@@ -150,13 +150,13 @@ test("triggers when >= 1 selection", function (assert) {
   assert.ok(!data.called);
 });
 
-test("triggers when >= 2 selections", function (assert) {
+test("triggers when >= 2 selections", (assert) => {
   var maxOfTwoOptions = new Options({
     maximumSelectionLength: 2,
   });
   var data = new MaximumSelectionData(null, maxOfTwoOptions);
 
-  data.trigger = function () {
+  data.trigger = () => {
     assert.ok(false, "No events should be triggered");
   };
 
@@ -168,7 +168,7 @@ test("triggers when >= 2 selections", function (assert) {
 
   data = new MaximumSelectionData(null, maxOfTwoOptions);
 
-  data.trigger = function () {
+  data.trigger = () => {
     assert.ok(false, "No events should be triggered");
   };
 
@@ -182,7 +182,7 @@ test("triggers when >= 2 selections", function (assert) {
 
   data = new MaximumSelectionData(null, maxOfTwoOptions);
 
-  data.trigger = function () {
+  data.trigger = () => {
     assert.ok(true, "The event should be triggered.");
   };
 

@@ -14,7 +14,13 @@
     selected: "Označeno",
     required: "Required",
   },
-  form: { title: "Osobine forme", menu: "Osobine forme", action: "Akcija", method: "Metoda", encoding: "Encoding" },
+  form: {
+    title: "Osobine forme",
+    menu: "Osobine forme",
+    action: "Akcija",
+    method: "Metoda",
+    encoding: "Encoding",
+  },
   hidden: { title: "Osobine skrivenog polja", name: "Naziv", value: "Vrednost" },
   select: {
     title: "Osobine izbornog polja",

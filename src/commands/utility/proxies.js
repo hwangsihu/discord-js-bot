@@ -35,7 +35,10 @@ module.exports = {
 
     if (args[0]) {
       if (PROXY_TYPES.includes(args[0].toLowerCase())) type = args[0].toLowerCase();
-      else return message.safeReply("Incorrect proxy type. Available types: `http`, `socks4`, `socks5`");
+      else
+        return message.safeReply(
+          "Incorrect proxy type. Available types: `http`, `socks4`, `socks5`"
+        );
     }
 
     const msg = await message.channel.send("Fetching proxies... Please wait");
@@ -60,6 +63,8 @@ async function getProxies(type) {
   if (!response.success || !response.buffer) return "Failed to fetch proxies";
   if (response.buffer.length === 0) return "Could not fetch data. Try again later";
 
-  const attachment = new AttachmentBuilder(response.buffer, { name: `${type.toLowerCase()}_proxies.txt` });
+  const attachment = new AttachmentBuilder(response.buffer, {
+    name: `${type.toLowerCase()}_proxies.txt`,
+  });
   return { content: `${type.toUpperCase()} Proxies fetched`, files: [attachment] };
 }

@@ -159,7 +159,10 @@ CKEDITOR.lang["sk"] = {
   notification: { closed: "Notifikácia zatvorená." },
   maximize: { maximize: "Maximalizovať", minimize: "Minimalizovať" },
   magicline: { title: "Odsek vložiť sem" },
-  list: { bulletedlist: "Vložiť/odstrániť zoznam s odrážkami", numberedlist: "Vložiť/odstrániť číslovaný zoznam" },
+  list: {
+    bulletedlist: "Vložiť/odstrániť zoznam s odrážkami",
+    numberedlist: "Vložiť/odstrániť číslovaný zoznam",
+  },
   link: {
     acccessKey: "Prístupový kľúč",
     advanced: "Rozšírené",

@@ -3,7 +3,11 @@
   "version": "2.0.1",
   "name": "Ionicons",
   "license": "MIT",
-  "authors": ["Ben Sperry <ben@drifty.com>", "Adam Bradley <adam@drifty.com>", "Max Lynch <max@drifty.com>"],
+  "authors": [
+    "Ben Sperry <ben@drifty.com>",
+    "Adam Bradley <adam@drifty.com>",
+    "Max Lynch <max@drifty.com>"
+  ],
   "keywords": ["fonts", "icon font", "icons", "ionic", "web font"],
   "main": ["css/ionicons.css", "fonts/*"],
   "homepage": "https://github.com/driftyco/ionicons",

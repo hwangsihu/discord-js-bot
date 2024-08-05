@@ -1,4 +1,3 @@
-import { createLocal } from "../create/local";
 import { addFormatToken } from "../format/format";
 import { addRegexToken, match1to2, match2 } from "../parse/regex";
 import { addWeekParseToken } from "../parse/token";
@@ -29,7 +28,7 @@ addRegexToken("ww", match1to2, match2);
 addRegexToken("W", match1to2);
 addRegexToken("WW", match1to2, match2);
 
-addWeekParseToken(["w", "ww", "W", "WW"], function (input, week, config, token) {
+addWeekParseToken(["w", "ww", "W", "WW"], (input, week, config, token) => {
   week[token.substr(0, 1)] = toInt(input);
 });
 

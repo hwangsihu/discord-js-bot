@@ -8,7 +8,7 @@
  *
  * http://api.jqueryui.com/category/effects-core/
  */
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["jquery"], factory);
@@ -16,7 +16,7 @@
     // Browser globals
     factory(jQuery);
   }
-})(function ($) {
+})(($) => {
   var dataSpace = "ui-effects-",
     // Create a local jQuery because jQuery Color relies on it and the
     // global may not exist with AMD and a custom build (#10199)
@@ -36,7 +36,7 @@
    *
    * Date: Wed Jan 16 08:47:09 2013 -0600
    */
-  (function (jQuery, undefined) {
+  ((jQuery, undefined) => {
     var stepHooks =
         "backgroundColor borderBottomColor borderLeftColor borderRightColor borderTopColor color columnRuleColor outlineColor textDecorationColor textEmphasisColor",
       // plusequals test for += 100 -= 100
@@ -45,46 +45,49 @@
       stringParsers = [
         {
           re: /rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(?:,\s*(\d?(?:\.\d+)?)\s*)?\)/,
-          parse: function (execResult) {
-            return [execResult[1], execResult[2], execResult[3], execResult[4]];
-          },
+          parse: (execResult) => [execResult[1], execResult[2], execResult[3], execResult[4]],
         },
         {
           re: /rgba?\(\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*(?:,\s*(\d?(?:\.\d+)?)\s*)?\)/,
-          parse: function (execResult) {
-            return [execResult[1] * 2.55, execResult[2] * 2.55, execResult[3] * 2.55, execResult[4]];
-          },
+          parse: (execResult) => [
+            execResult[1] * 2.55,
+            execResult[2] * 2.55,
+            execResult[3] * 2.55,
+            execResult[4],
+          ],
         },
         {
           // this regex ignores A-F because it's compared against an already lowercased string
           re: /#([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})/,
-          parse: function (execResult) {
-            return [parseInt(execResult[1], 16), parseInt(execResult[2], 16), parseInt(execResult[3], 16)];
-          },
+          parse: (execResult) => [
+            Number.parseInt(execResult[1], 16),
+            Number.parseInt(execResult[2], 16),
+            Number.parseInt(execResult[3], 16),
+          ],
         },
         {
           // this regex ignores A-F because it's compared against an already lowercased string
           re: /#([a-f0-9])([a-f0-9])([a-f0-9])/,
-          parse: function (execResult) {
-            return [
-              parseInt(execResult[1] + execResult[1], 16),
-              parseInt(execResult[2] + execResult[2], 16),
-              parseInt(execResult[3] + execResult[3], 16),
-            ];
-          },
+          parse: (execResult) => [
+            Number.parseInt(execResult[1] + execResult[1], 16),
+            Number.parseInt(execResult[2] + execResult[2], 16),
+            Number.parseInt(execResult[3] + execResult[3], 16),
+          ],
         },
         {
           re: /hsla?\(\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*(?:,\s*(\d?(?:\.\d+)?)\s*)?\)/,
           space: "hsla",
-          parse: function (execResult) {
-            return [execResult[1], execResult[2] / 100, execResult[3] / 100, execResult[4]];
-          },
+          parse: (execResult) => [
+            execResult[1],
+            execResult[2] / 100,
+            execResult[3] / 100,
+            execResult[4],
+          ],
         },
       ],
       // jQuery.Color( )
-      color = (jQuery.Color = function (color, green, blue, alpha) {
-        return new jQuery.Color.fn.parse(color, green, blue, alpha);
-      }),
+      color = (jQuery.Color = (color, green, blue, alpha) =>
+        new jQuery.Color.fn.parse(color, green, blue, alpha)),
       spaces = {
         rgba: {
           props: {
@@ -147,7 +150,7 @@
 
     // define cache name and alpha properties
     // for rgba and hsla spaces
-    each(spaces, function (spaceName, space) {
+    each(spaces, (spaceName, space) => {
       space.cache = "_" + spaceName;
       space.props.alpha = {
         idx: 3,
@@ -164,7 +167,7 @@
       }
 
       // ~~ is an short way of doing floor for positive numbers
-      value = type.floor ? ~~value : parseFloat(value);
+      value = type.floor ? ~~value : Number.parseFloat(value);
 
       // IE will pass in empty strings as value for alpha,
       // which will hit this case
@@ -188,7 +191,7 @@
 
       string = string.toLowerCase();
 
-      each(stringParsers, function (i, parser) {
+      each(stringParsers, (i, parser) => {
         var parsed,
           match = parser.re.exec(string),
           values = match && parser.parse(match),
@@ -232,8 +235,7 @@
           green = undefined;
         }
 
-        var inst = this,
-          type = jQuery.type(red),
+        var type = jQuery.type(red),
           rgba = (this._rgba = []);
 
         // more than 1 argument specified - assume ( red, green, blue, alpha )
@@ -247,7 +249,7 @@
         }
 
         if (type === "array") {
-          each(spaces.rgba.props, function (key, prop) {
+          each(spaces.rgba.props, (key, prop) => {
             rgba[prop.idx] = clamp(red[prop.idx], prop);
           });
           return this;
@@ -255,36 +257,36 @@
 
         if (type === "object") {
           if (red instanceof color) {
-            each(spaces, function (spaceName, space) {
+            each(spaces, (spaceName, space) => {
               if (red[space.cache]) {
-                inst[space.cache] = red[space.cache].slice();
+                this[space.cache] = red[space.cache].slice();
               }
             });
           } else {
-            each(spaces, function (spaceName, space) {
+            each(spaces, (spaceName, space) => {
               var cache = space.cache;
-              each(space.props, function (key, prop) {
+              each(space.props, (key, prop) => {
                 // if the cache doesn't exist, and we know how to convert
-                if (!inst[cache] && space.to) {
+                if (!this[cache] && space.to) {
                   // if the value was null, we don't need to copy it
                   // if the key was alpha, we don't need to copy it either
                   if (key === "alpha" || red[key] == null) {
                     return;
                   }
-                  inst[cache] = space.to(inst._rgba);
+                  this[cache] = space.to(this._rgba);
                 }
 
                 // this is the only case where we allow nulls for ALL properties.
                 // call clamp with alwaysAllowEmpty
-                inst[cache][prop.idx] = clamp(red[key], prop, true);
+                this[cache][prop.idx] = clamp(red[key], prop, true);
               });
 
               // everything defined but alpha?
-              if (inst[cache] && jQuery.inArray(null, inst[cache].slice(0, 3)) < 0) {
+              if (this[cache] && jQuery.inArray(null, this[cache].slice(0, 3)) < 0) {
                 // use the default of 1
-                inst[cache][3] = 1;
+                this[cache][3] = 1;
                 if (space.from) {
-                  inst._rgba = space.from(inst[cache]);
+                  this._rgba = space.from(this[cache]);
                 }
               }
             });
@@ -294,15 +296,14 @@
       },
       is: function (compare) {
         var is = color(compare),
-          same = true,
-          inst = this;
+          same = true;
 
-        each(spaces, function (_, space) {
+        each(spaces, (_, space) => {
           var localCache,
             isCache = is[space.cache];
           if (isCache) {
-            localCache = inst[space.cache] || (space.to && space.to(inst._rgba)) || [];
-            each(space.props, function (_, prop) {
+            localCache = this[space.cache] || (space.to && space.to(this._rgba)) || [];
+            each(space.props, (_, prop) => {
               if (isCache[prop.idx] != null) {
                 same = isCache[prop.idx] === localCache[prop.idx];
                 return same;
@@ -314,10 +315,9 @@
         return same;
       },
       _space: function () {
-        var used = [],
-          inst = this;
-        each(spaces, function (spaceName, space) {
-          if (inst[space.cache]) {
+        var used = [];
+        each(spaces, (spaceName, space) => {
+          if (this[space.cache]) {
             used.push(spaceName);
           }
         });
@@ -332,7 +332,7 @@
           result = start.slice();
 
         end = end[space.cache];
-        each(space.props, function (key, prop) {
+        each(space.props, (key, prop) => {
           var index = prop.idx,
             startValue = start[index],
             endValue = end[index],
@@ -368,17 +368,11 @@
           a = rgb.pop(),
           blend = color(opaque)._rgba;
 
-        return color(
-          jQuery.map(rgb, function (v, i) {
-            return (1 - a) * blend[i] + a * v;
-          })
-        );
+        return color(jQuery.map(rgb, (v, i) => (1 - a) * blend[i] + a * v));
       },
       toRgbaString: function () {
         var prefix = "rgba(",
-          rgba = jQuery.map(this._rgba, function (v, i) {
-            return v == null ? (i > 2 ? 1 : 0) : v;
-          });
+          rgba = jQuery.map(this._rgba, (v, i) => (v == null ? (i > 2 ? 1 : 0) : v));
 
         if (rgba[3] === 1) {
           rgba.pop();
@@ -389,7 +383,7 @@
       },
       toHslaString: function () {
         var prefix = "hsla(",
-          hsla = jQuery.map(this.hsla(), function (v, i) {
+          hsla = jQuery.map(this.hsla(), (v, i) => {
             if (v == null) {
               v = i > 2 ? 1 : 0;
             }
@@ -418,7 +412,7 @@
         return (
           "#" +
           jQuery
-            .map(rgba, function (v) {
+            .map(rgba, (v) => {
               // default to 0 when nulls exist
               v = (v || 0).toString(16);
               return v.length === 1 ? "0" + v : v;
@@ -449,7 +443,7 @@
       return p;
     }
 
-    spaces.hsla.to = function (rgba) {
+    spaces.hsla.to = (rgba) => {
       if (rgba[0] == null || rgba[1] == null || rgba[2] == null) {
         return [null, null, null, rgba[3]];
       }
@@ -487,7 +481,7 @@
       return [Math.round(h) % 360, s, l, a == null ? 1 : a];
     };
 
-    spaces.hsla.from = function (hsla) {
+    spaces.hsla.from = (hsla) => {
       if (hsla[0] == null || hsla[1] == null || hsla[2] == null) {
         return [null, null, null, hsla[3]];
       }
@@ -506,7 +500,7 @@
       ];
     };
 
-    each(spaces, function (spaceName, space) {
+    each(spaces, (spaceName, space) => {
       var props = space.props,
         cache = space.cache,
         to = space.to,
@@ -527,7 +521,7 @@
           arr = type === "array" || type === "object" ? value : arguments,
           local = this[cache].slice();
 
-        each(props, function (key, prop) {
+        each(props, (key, prop) => {
           var val = arr[type === "object" ? key : prop.idx];
           if (val == null) {
             val = local[prop.idx];
@@ -545,7 +539,7 @@
       };
 
       // makes red() green() blue() alpha() hue() saturation() lightness()
-      each(props, function (key, prop) {
+      each(props, (key, prop) => {
         // alpha is included in more than one space
         if (color.fn[key]) {
           return;
@@ -571,7 +565,7 @@
           if (vtype === "string") {
             match = rplusequals.exec(value);
             if (match) {
-              value = cur + parseFloat(match[2]) * (match[1] === "+" ? 1 : -1);
+              value = cur + Number.parseFloat(match[2]) * (match[1] === "+" ? 1 : -1);
             }
           }
           local[prop.idx] = value;
@@ -582,20 +576,27 @@
 
     // add cssHook and .fx.step function for each named hook.
     // accept a space separated string of properties
-    color.hook = function (hook) {
+    color.hook = (hook) => {
       var hooks = hook.split(" ");
-      each(hooks, function (i, hook) {
+      each(hooks, (i, hook) => {
         jQuery.cssHooks[hook] = {
-          set: function (elem, value) {
+          set: (elem, value) => {
             var parsed,
               curElem,
               backgroundColor = "";
 
-            if (value !== "transparent" && (jQuery.type(value) !== "string" || (parsed = stringParse(value)))) {
+            if (
+              value !== "transparent" &&
+              (jQuery.type(value) !== "string" || (parsed = stringParse(value)))
+            ) {
               value = color(parsed || value);
               if (!support.rgba && value._rgba[3] !== 1) {
                 curElem = hook === "backgroundColor" ? elem.parentNode : elem;
-                while ((backgroundColor === "" || backgroundColor === "transparent") && curElem && curElem.style) {
+                while (
+                  (backgroundColor === "" || backgroundColor === "transparent") &&
+                  curElem &&
+                  curElem.style
+                ) {
                   try {
                     backgroundColor = jQuery.css(curElem, "backgroundColor");
                     curElem = curElem.parentNode;
@@ -603,7 +604,9 @@
                 }
 
                 value = value.blend(
-                  backgroundColor && backgroundColor !== "transparent" ? backgroundColor : "_default"
+                  backgroundColor && backgroundColor !== "transparent"
+                    ? backgroundColor
+                    : "_default"
                 );
               }
 
@@ -616,7 +619,7 @@
             }
           },
         };
-        jQuery.fx.step[hook] = function (fx) {
+        jQuery.fx.step[hook] = (fx) => {
           if (!fx.colorInit) {
             fx.start = color(fx.elem, hook);
             fx.end = color(fx.end);
@@ -630,10 +633,10 @@
     color.hook(stepHooks);
 
     jQuery.cssHooks.borderColor = {
-      expand: function (value) {
+      expand: (value) => {
         var expanded = {};
 
-        each(["Top", "Right", "Bottom", "Left"], function (i, part) {
+        each(["Top", "Right", "Bottom", "Left"], (i, part) => {
           expanded["border" + part + "Color"] = value;
         });
         return expanded;
@@ -672,7 +675,7 @@
   /******************************************************************************/
   /****************************** CLASS ANIMATIONS ******************************/
   /******************************************************************************/
-  (function () {
+  (() => {
     var classAnimationActions = ["add", "remove", "toggle"],
       shorthandStyles = {
         border: 1,
@@ -686,14 +689,17 @@
         padding: 1,
       };
 
-    $.each(["borderLeftStyle", "borderRightStyle", "borderBottomStyle", "borderTopStyle"], function (_, prop) {
-      $.fx.step[prop] = function (fx) {
-        if ((fx.end !== "none" && !fx.setAttr) || (fx.pos === 1 && !fx.setAttr)) {
-          jQuery.style(fx.elem, prop, fx.end);
-          fx.setAttr = true;
-        }
-      };
-    });
+    $.each(
+      ["borderLeftStyle", "borderRightStyle", "borderBottomStyle", "borderTopStyle"],
+      (_, prop) => {
+        $.fx.step[prop] = (fx) => {
+          if ((fx.end !== "none" && !fx.setAttr) || (fx.pos === 1 && !fx.setAttr)) {
+            jQuery.style(fx.elem, prop, fx.end);
+            fx.setAttr = true;
+          }
+        };
+      }
+    );
 
     function getElementStyles(elem) {
       var key,
@@ -732,7 +738,7 @@
         value = newStyle[name];
         if (oldStyle[name] !== value) {
           if (!shorthandStyles[name]) {
-            if ($.fx.step[name] || !isNaN(parseFloat(value))) {
+            if ($.fx.step[name] || !isNaN(Number.parseFloat(value))) {
               diff[name] = value;
             }
           }
@@ -768,8 +774,8 @@
         });
 
         // apply class change
-        applyClassChange = function () {
-          $.each(classAnimationActions, function (i, action) {
+        applyClassChange = () => {
+          $.each(classAnimationActions, (i, action) => {
             if (value[action]) {
               animated[action + "Class"](value[action]);
             }
@@ -789,12 +795,11 @@
 
         // map all animated objects again - this time collecting a promise
         allAnimations = allAnimations.map(function () {
-          var styleInfo = this,
-            dfd = $.Deferred(),
+          var dfd = $.Deferred(),
             opts = $.extend({}, o, {
               queue: false,
-              complete: function () {
-                dfd.resolve(styleInfo);
+              complete: () => {
+                dfd.resolve(this);
               },
             });
 
@@ -803,7 +808,7 @@
         });
 
         // once all animations have completed:
-        $.when.apply($, allAnimations.get()).done(function () {
+        $.when.apply($, allAnimations.get()).done(() => {
           // set the final class
           applyClassChange();
 
@@ -811,7 +816,7 @@
           // clear all css properties that were animated
           $.each(arguments, function () {
             var el = this.el;
-            $.each(this.diff, function (key) {
+            $.each(this.diff, (key) => {
               el.css(key, "");
             });
           });
@@ -824,29 +829,24 @@
     };
 
     $.fn.extend({
-      addClass: (function (orig) {
-        return function (classNames, speed, easing, callback) {
+      addClass: ((orig) =>
+        function (classNames, speed, easing, callback) {
           return speed
             ? $.effects.animateClass.call(this, { add: classNames }, speed, easing, callback)
             : orig.apply(this, arguments);
-        };
-      })($.fn.addClass),
+        })($.fn.addClass),
 
-      removeClass: (function (orig) {
-        return function (classNames, speed, easing, callback) {
+      removeClass: ((orig) =>
+        function (classNames, speed, easing, callback) {
           return arguments.length > 1
             ? $.effects.animateClass.call(this, { remove: classNames }, speed, easing, callback)
             : orig.apply(this, arguments);
-        };
-      })($.fn.removeClass),
+        })($.fn.removeClass),
 
-      toggleClass: (function (orig) {
-        return function (classNames, force, speed, easing, callback) {
+      toggleClass: ((orig) =>
+        function (classNames, force, speed, easing, callback) {
           if (typeof force === "boolean" || force === undefined) {
-            if (!speed) {
-              // without speed parameter
-              return orig.apply(this, arguments);
-            } else {
+            if (speed) {
               return $.effects.animateClass.call(
                 this,
                 force ? { add: classNames } : { remove: classNames },
@@ -854,13 +854,15 @@
                 easing,
                 callback
               );
+            } else {
+              // without speed parameter
+              return orig.apply(this, arguments);
             }
           } else {
             // without force parameter
             return $.effects.animateClass.call(this, { toggle: classNames }, force, speed, easing);
           }
-        };
-      })($.fn.toggleClass),
+        })($.fn.toggleClass),
 
       switchClass: function (remove, add, speed, easing, callback) {
         return $.effects.animateClass.call(
@@ -881,12 +883,12 @@
   /*********************************** EFFECTS **********************************/
   /******************************************************************************/
 
-  (function () {
+  (() => {
     $.extend($.effects, {
       version: "1.11.4",
 
       // Saves a set of properties in a data storage
-      save: function (element, set) {
+      save: (element, set) => {
         for (var i = 0; i < set.length; i++) {
           if (set[i] !== null) {
             element.data(dataSpace + set[i], element[0].style[set[i]]);
@@ -895,7 +897,7 @@
       },
 
       // Restores a set of previously saved properties from a data storage
-      restore: function (element, set) {
+      restore: (element, set) => {
         var val, i;
         for (i = 0; i < set.length; i++) {
           if (set[i] !== null) {
@@ -913,7 +915,7 @@
         }
       },
 
-      setMode: function (el, mode) {
+      setMode: (el, mode) => {
         if (mode === "toggle") {
           mode = el.is(":hidden") ? "show" : "hide";
         }
@@ -922,7 +924,7 @@
 
       // Translates a [top,left] array into a baseline value
       // this should be a little more flexible in the future to handle a string & hash
-      getBaseline: function (origin, original) {
+      getBaseline: (origin, original) => {
         var y, x;
         switch (origin[0]) {
           case "top":
@@ -957,7 +959,7 @@
       },
 
       // Wraps the element around a wrapper that copies position properties
-      createWrapper: function (element) {
+      createWrapper: (element) => {
         // if the element is already wrapped, return it
         if (element.parent().is(".ui-effects-wrapper")) {
           return element.parent();
@@ -1010,9 +1012,9 @@
             position: element.css("position"),
             zIndex: element.css("z-index"),
           });
-          $.each(["top", "left", "bottom", "right"], function (i, pos) {
+          $.each(["top", "left", "bottom", "right"], (i, pos) => {
             props[pos] = element.css(pos);
-            if (isNaN(parseInt(props[pos], 10))) {
+            if (isNaN(Number.parseInt(props[pos], 10))) {
               props[pos] = "auto";
             }
           });
@@ -1029,7 +1031,7 @@
         return wrapper.css(props).show();
       },
 
-      removeWrapper: function (element) {
+      removeWrapper: (element) => {
         var active = document.activeElement;
 
         if (element.parent().is(".ui-effects-wrapper")) {
@@ -1044,9 +1046,9 @@
         return element;
       },
 
-      setTransition: function (element, list, factor, value) {
+      setTransition: (element, list, factor, value) => {
         value = value || {};
-        $.each(list, function (i, x) {
+        $.each(list, (i, x) => {
           var unit = element.cssUnit(x);
           if (unit[0] > 0) {
             value[x] = unit[0] * factor + unit[1];
@@ -1183,8 +1185,8 @@
         return queue === false ? this.each(run) : this.queue(queue || "fx", run);
       },
 
-      show: (function (orig) {
-        return function (option) {
+      show: ((orig) =>
+        function (option) {
           if (standardAnimationOption(option)) {
             return orig.apply(this, arguments);
           } else {
@@ -1192,11 +1194,10 @@
             args.mode = "show";
             return this.effect.call(this, args);
           }
-        };
-      })($.fn.show),
+        })($.fn.show),
 
-      hide: (function (orig) {
-        return function (option) {
+      hide: ((orig) =>
+        function (option) {
           if (standardAnimationOption(option)) {
             return orig.apply(this, arguments);
           } else {
@@ -1204,11 +1205,10 @@
             args.mode = "hide";
             return this.effect.call(this, args);
           }
-        };
-      })($.fn.hide),
+        })($.fn.hide),
 
-      toggle: (function (orig) {
-        return function (option) {
+      toggle: ((orig) =>
+        function (option) {
           if (standardAnimationOption(option) || typeof option === "boolean") {
             return orig.apply(this, arguments);
           } else {
@@ -1216,17 +1216,16 @@
             args.mode = "toggle";
             return this.effect.call(this, args);
           }
-        };
-      })($.fn.toggle),
+        })($.fn.toggle),
 
       // helper functions
       cssUnit: function (key) {
         var style = this.css(key),
           val = [];
 
-        $.each(["em", "px", "%", "pt"], function (i, unit) {
+        $.each(["em", "px", "%", "pt"], (i, unit) => {
           if (style.indexOf(unit) > 0) {
-            val = [parseFloat(style), unit];
+            val = [Number.parseFloat(style), unit];
           }
         });
         return val;
@@ -1238,31 +1237,24 @@
   /*********************************** EASING ***********************************/
   /******************************************************************************/
 
-  (function () {
+  (() => {
     // based on easing equations from Robert Penner (http://www.robertpenner.com/easing)
 
     var baseEasings = {};
 
-    $.each(["Quad", "Cubic", "Quart", "Quint", "Expo"], function (i, name) {
-      baseEasings[name] = function (p) {
-        return Math.pow(p, i + 2);
-      };
+    $.each(["Quad", "Cubic", "Quart", "Quint", "Expo"], (i, name) => {
+      baseEasings[name] = (p) => Math.pow(p, i + 2);
     });
 
     $.extend(baseEasings, {
-      Sine: function (p) {
-        return 1 - Math.cos((p * Math.PI) / 2);
-      },
-      Circ: function (p) {
-        return 1 - Math.sqrt(1 - p * p);
-      },
-      Elastic: function (p) {
-        return p === 0 || p === 1 ? p : -Math.pow(2, 8 * (p - 1)) * Math.sin((((p - 1) * 80 - 7.5) * Math.PI) / 15);
-      },
-      Back: function (p) {
-        return p * p * (3 * p - 2);
-      },
-      Bounce: function (p) {
+      Sine: (p) => 1 - Math.cos((p * Math.PI) / 2),
+      Circ: (p) => 1 - Math.sqrt(1 - p * p),
+      Elastic: (p) =>
+        p === 0 || p === 1
+          ? p
+          : -Math.pow(2, 8 * (p - 1)) * Math.sin((((p - 1) * 80 - 7.5) * Math.PI) / 15),
+      Back: (p) => p * p * (3 * p - 2),
+      Bounce: (p) => {
         var pow2,
           bounce = 4;
 
@@ -1271,14 +1263,11 @@
       },
     });
 
-    $.each(baseEasings, function (name, easeIn) {
+    $.each(baseEasings, (name, easeIn) => {
       $.easing["easeIn" + name] = easeIn;
-      $.easing["easeOut" + name] = function (p) {
-        return 1 - easeIn(1 - p);
-      };
-      $.easing["easeInOut" + name] = function (p) {
-        return p < 0.5 ? easeIn(p * 2) / 2 : 1 - easeIn(p * -2 + 2) / 2;
-      };
+      $.easing["easeOut" + name] = (p) => 1 - easeIn(1 - p);
+      $.easing["easeInOut" + name] = (p) =>
+        p < 0.5 ? easeIn(p * 2) / 2 : 1 - easeIn(p * -2 + 2) / 2;
     });
   })();
 

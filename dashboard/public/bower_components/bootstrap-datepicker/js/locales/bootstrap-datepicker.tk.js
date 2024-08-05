@@ -2,7 +2,7 @@
  * Turkmen translation for bootstrap-datepicker
  * N'Bayramberdiyev <nbayramberdiyev@outlook.com>
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["tk"] = {
     days: ["Ýekşenbe", "Duşenbe", "Sişenbe", "Çarşenbe", "Penşenbe", "Anna", "Şenbe"],
     daysShort: ["Ýek", "Duş", "Siş", "Çar", "Pen", "Ann", "Şen"],
@@ -21,7 +21,20 @@
       "Noýabr",
       "Dekabr",
     ],
-    monthsShort: ["Ýan", "Few", "Mar", "Apr", "Maý", "Iýn", "Iýl", "Awg", "Sen", "Okt", "Noý", "Dek"],
+    monthsShort: [
+      "Ýan",
+      "Few",
+      "Mar",
+      "Apr",
+      "Maý",
+      "Iýn",
+      "Iýl",
+      "Awg",
+      "Sen",
+      "Okt",
+      "Noý",
+      "Dek",
+    ],
     today: "Bu gün",
     monthsTitle: "Aýlar",
     clear: "Aýyr",

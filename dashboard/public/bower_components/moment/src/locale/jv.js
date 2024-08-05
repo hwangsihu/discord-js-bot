@@ -6,7 +6,10 @@
 import moment from "../moment";
 
 export default moment.defineLocale("jv", {
-  months: "Januari_Februari_Maret_April_Mei_Juni_Juli_Agustus_September_Oktober_Nopember_Desember".split("_"),
+  months:
+    "Januari_Februari_Maret_April_Mei_Juni_Juli_Agustus_September_Oktober_Nopember_Desember".split(
+      "_"
+    ),
   monthsShort: "Jan_Feb_Mar_Apr_Mei_Jun_Jul_Ags_Sep_Okt_Nop_Des".split("_"),
   weekdays: "Minggu_Senen_Seloso_Rebu_Kemis_Jemuwah_Septu".split("_"),
   weekdaysShort: "Min_Sen_Sel_Reb_Kem_Jem_Sep".split("_"),
@@ -20,7 +23,7 @@ export default moment.defineLocale("jv", {
     LLLL: "dddd, D MMMM YYYY [pukul] HH.mm",
   },
   meridiemParse: /enjing|siyang|sonten|ndalu/,
-  meridiemHour: function (hour, meridiem) {
+  meridiemHour: (hour, meridiem) => {
     if (hour === 12) {
       hour = 0;
     }
@@ -32,7 +35,7 @@ export default moment.defineLocale("jv", {
       return hour + 12;
     }
   },
-  meridiem: function (hours, minutes, isLower) {
+  meridiem: (hours, minutes, isLower) => {
     if (hours < 11) {
       return "enjing";
     } else if (hours < 15) {

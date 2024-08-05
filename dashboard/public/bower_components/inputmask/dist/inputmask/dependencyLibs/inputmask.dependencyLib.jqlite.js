@@ -6,13 +6,17 @@
  * Version: 3.3.11
  */
 
-!(function (factory) {
+!((factory) => {
   "function" == typeof define && define.amd
     ? define(["jqlite", "../global/window", "../global/document]"], factory)
     : "object" == typeof exports
-      ? (module.exports = factory(require("jqlite"), require("../global/window"), require("../global/document")))
+      ? (module.exports = factory(
+          require("jqlite"),
+          require("../global/window"),
+          require("../global/document")
+        ))
       : (window.dependencyLib = factory(jqlite, window, document));
-})(function ($, window, document) {
+})(($, window, document) => {
   function indexOf(list, elem) {
     for (var i = 0, len = list.length; i < len; i++) if (list[i] === elem) return i;
     return -1;
@@ -48,21 +52,17 @@
   )
     class2type["[object " + classTypes[nameNdx] + "]"] = classTypes[nameNdx].toLowerCase();
   return (
-    ($.inArray = function (elem, arr, i) {
-      return null == arr ? -1 : indexOf(arr, elem);
-    }),
-    ($.isFunction = function (obj) {
-      return "function" === type(obj);
-    }),
+    ($.inArray = (elem, arr, i) => (null == arr ? -1 : indexOf(arr, elem))),
+    ($.isFunction = (obj) => "function" === type(obj)),
     ($.isArray = Array.isArray),
-    ($.isPlainObject = function (obj) {
-      return (
-        "object" === type(obj) &&
-        !obj.nodeType &&
-        !isWindow(obj) &&
-        !(obj.constructor && !class2type.hasOwnProperty.call(obj.constructor.prototype, "isPrototypeOf"))
-      );
-    }),
+    ($.isPlainObject = (obj) =>
+      "object" === type(obj) &&
+      !obj.nodeType &&
+      !isWindow(obj) &&
+      !(
+        obj.constructor &&
+        !class2type.hasOwnProperty.call(obj.constructor.prototype, "isPrototypeOf")
+      )),
     ($.extend = function () {
       var options,
         name,
@@ -93,27 +93,27 @@
                   : void 0 !== copy && (target[name] = copy));
       return target;
     }),
-    ($.each = function (obj, callback) {
+    ($.each = (obj, callback) => {
       var i = 0;
-      if (isArraylike(obj)) for (var length = obj.length; i < length && !1 !== callback.call(obj[i], i, obj[i]); i++);
+      if (isArraylike(obj))
+        for (var length = obj.length; i < length && !1 !== callback.call(obj[i], i, obj[i]); i++);
       else for (i in obj) if (!1 === callback.call(obj[i], i, obj[i])) break;
       return obj;
     }),
-    ($.map = function (elems, callback) {
+    ($.map = (elems, callback) => {
       var value,
         i = 0,
         length = elems.length,
         ret = [];
-      if (isArraylike(elems)) for (; i < length; i++) null != (value = callback(elems[i], i)) && ret.push(value);
+      if (isArraylike(elems))
+        for (; i < length; i++) null != (value = callback(elems[i], i)) && ret.push(value);
       else for (i in elems) null != (value = callback(elems[i], i)) && ret.push(value);
       return [].concat(ret);
     }),
-    ($.data = function (elem, name, data) {
-      return $(elem).data(name, data);
-    }),
+    ($.data = (elem, name, data) => $(elem).data(name, data)),
     ($.Event =
       $.Event ||
-      function (event, params) {
+      ((event, params) => {
         params = params || {
           bubbles: !1,
           cancelable: !1,
@@ -121,7 +121,7 @@
         };
         var evt = document.createEvent("CustomEvent");
         return evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail), evt;
-      }),
+      })),
     ($.Event.prototype = window.Event.prototype),
     $
   );

@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(a) {
       if (r[a]) return r[a].exports;
       var n = (r[a] = { i: a, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = r),
-      (t.d = function (e, r, a) {
+      (t.d = (e, r, a) => {
         t.o(e, r) || Object.defineProperty(e, r, { configurable: !1, enumerable: !0, get: a });
       }),
-      (t.n = function (e) {
-        var r =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var r = e && e.__esModule ? () => e.default : () => e;
         return t.d(r, "a", r), r;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 111))
     );
   })({
-    0: function (t, r) {
+    0: (t, r) => {
       t.exports = e;
     },
-    1: function (e, r) {
+    1: (e, r) => {
       e.exports = t;
     },
-    111: function (e, t, r) {
+    111: (e, t, r) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), r(112);
       var a = r(1);
       a.datepickerLocale("en-gb", "en-GB", {
@@ -66,7 +57,20 @@
           "November",
           "December",
         ],
-        monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        monthNamesShort: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ],
         dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
         dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         dayNamesMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
@@ -79,12 +83,15 @@
       }),
         a.locale("en-gb");
     },
-    112: function (e, t, r) {
-      !(function (e, t) {
+    112: (e, t, r) => {
+      !((e, t) => {
         t(r(0));
-      })(0, function (e) {
-        return e.defineLocale("en-gb", {
-          months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_"),
+      })(0, (e) =>
+        e.defineLocale("en-gb", {
+          months:
+            "January_February_March_April_May_June_July_August_September_October_November_December".split(
+              "_"
+            ),
           monthsShort: "Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec".split("_"),
           weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"),
           weekdaysShort: "Sun_Mon_Tue_Wed_Thu_Fri_Sat".split("_"),
@@ -122,13 +129,24 @@
             yy: "%d years",
           },
           dayOfMonthOrdinalParse: /\d{1,2}(st|nd|rd|th)/,
-          ordinal: function (e) {
+          ordinal: (e) => {
             var t = e % 10;
-            return e + (1 == ~~((e % 100) / 10) ? "th" : 1 === t ? "st" : 2 === t ? "nd" : 3 === t ? "rd" : "th");
+            return (
+              e +
+              (1 == ~~((e % 100) / 10)
+                ? "th"
+                : 1 === t
+                  ? "st"
+                  : 2 === t
+                    ? "nd"
+                    : 3 === t
+                      ? "rd"
+                      : "th")
+            );
           },
           week: { dow: 1, doy: 4 },
-        });
-      });
+        })
+      );
     },
-  });
-});
+  })
+);

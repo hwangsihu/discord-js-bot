@@ -1,6 +1,4 @@
-define(["../core", "../core/nodeName"], function (jQuery, nodeName) {
-  "use strict";
-
+define(["../core", "../core/nodeName"], (jQuery, nodeName) => {
   function getAll(context, tag) {
     // Support: IE <=9 - 11 only
     // Use typeof to avoid zero-argument method invocation on host objects (#15151)

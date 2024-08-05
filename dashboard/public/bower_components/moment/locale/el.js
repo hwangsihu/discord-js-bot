@@ -1,16 +1,16 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   function isFunction(input) {
-    return input instanceof Function || Object.prototype.toString.call(input) === "[object Function]";
+    return (
+      input instanceof Function || Object.prototype.toString.call(input) === "[object Function]"
+    );
   }
 
   var el = moment.defineLocale("el", {
@@ -25,7 +25,10 @@
     months: function (momentToFormat, format) {
       if (!momentToFormat) {
         return this._monthsNominativeEl;
-      } else if (typeof format === "string" && /D/.test(format.substring(0, format.indexOf("MMMM")))) {
+      } else if (
+        typeof format === "string" &&
+        /D/.test(format.substring(0, format.indexOf("MMMM")))
+      ) {
         // if there is a day number before 'MMMM'
         return this._monthsGenitiveEl[momentToFormat.month()];
       } else {
@@ -36,16 +39,14 @@
     weekdays: "Κυριακή_Δευτέρα_Τρίτη_Τετάρτη_Πέμπτη_Παρασκευή_Σάββατο".split("_"),
     weekdaysShort: "Κυρ_Δευ_Τρι_Τετ_Πεμ_Παρ_Σαβ".split("_"),
     weekdaysMin: "Κυ_Δε_Τρ_Τε_Πε_Πα_Σα".split("_"),
-    meridiem: function (hours, minutes, isLower) {
+    meridiem: (hours, minutes, isLower) => {
       if (hours > 11) {
         return isLower ? "μμ" : "ΜΜ";
       } else {
         return isLower ? "πμ" : "ΠΜ";
       }
     },
-    isPM: function (input) {
-      return (input + "").toLowerCase()[0] === "μ";
-    },
+    isPM: (input) => (input + "").toLowerCase()[0] === "μ",
     meridiemParse: /[ΠΜ]\.?Μ?\.?/i,
     longDateFormat: {
       LT: "h:mm A",

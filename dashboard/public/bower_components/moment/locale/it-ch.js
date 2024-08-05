@@ -1,16 +1,17 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var itCh = moment.defineLocale("it-ch", {
-    months: "gennaio_febbraio_marzo_aprile_maggio_giugno_luglio_agosto_settembre_ottobre_novembre_dicembre".split("_"),
+    months:
+      "gennaio_febbraio_marzo_aprile_maggio_giugno_luglio_agosto_settembre_ottobre_novembre_dicembre".split(
+        "_"
+      ),
     monthsShort: "gen_feb_mar_apr_mag_giu_lug_ago_set_ott_nov_dic".split("_"),
     weekdays: "domenica_lunedì_martedì_mercoledì_giovedì_venerdì_sabato".split("_"),
     weekdaysShort: "dom_lun_mar_mer_gio_ven_sab".split("_"),
@@ -39,9 +40,7 @@
       sameElse: "L",
     },
     relativeTime: {
-      future: function (s) {
-        return (/^[0-9].+$/.test(s) ? "tra" : "in") + " " + s;
-      },
+      future: (s) => (/^[0-9].+$/.test(s) ? "tra" : "in") + " " + s,
       past: "%s fa",
       s: "alcuni secondi",
       ss: "%d secondi",

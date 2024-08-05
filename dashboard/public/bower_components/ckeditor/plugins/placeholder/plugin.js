@@ -2,13 +2,13 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   CKEDITOR.plugins.add("placeholder", {
     requires: "widget,dialog",
     lang: "af,ar,az,bg,ca,cs,cy,da,de,de-ch,el,en,en-au,en-gb,eo,es,es-mx,et,eu,fa,fi,fr,fr-ca,gl,he,hr,hu,id,it,ja,km,ko,ku,lv,nb,nl,no,oc,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sv,th,tr,tt,ug,uk,vi,zh,zh-cn",
     icons: "placeholder",
     hidpi: !0,
-    onLoad: function () {
+    onLoad: () => {
       CKEDITOR.addCss(".cke_placeholder{background-color:#ff0}");
     },
     init: function (a) {
@@ -39,13 +39,13 @@
           icon: "placeholder",
         });
     },
-    afterInit: function (a) {
+    afterInit: (a) => {
       var b = /\[\[([^\[\]])+\]\]/g;
       a.dataProcessor.dataFilter.addRules({
-        text: function (f, d) {
+        text: (f, d) => {
           var e = d.parent && CKEDITOR.dtd[d.parent.name];
           if (!e || e.span)
-            return f.replace(b, function (b) {
+            return f.replace(b, (b) => {
               var c = null,
                 c = new CKEDITOR.htmlParser.element("span", { class: "cke_placeholder" });
               c.add(new CKEDITOR.htmlParser.text(b));

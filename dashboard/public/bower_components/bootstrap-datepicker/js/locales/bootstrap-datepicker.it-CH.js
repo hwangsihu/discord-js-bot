@@ -5,7 +5,7 @@
  * Italian translation for bootstrap-datepicker
  * Enrico Rubboli <rubboli@gmail.com>
  */
-(function ($) {
+(($) => {
   $.fn.datepicker.dates["it"] = {
     days: ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"],
     daysShort: ["Dom", "Lun", "Mar", "Mer", "Gio", "Ven", "Sab"],
@@ -24,7 +24,20 @@
       "Novembre",
       "Dicembre",
     ],
-    monthsShort: ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"],
+    monthsShort: [
+      "Gen",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Mag",
+      "Giu",
+      "Lug",
+      "Ago",
+      "Set",
+      "Ott",
+      "Nov",
+      "Dic",
+    ],
     today: "Oggi",
     clear: "Cancella",
     weekStart: 1,

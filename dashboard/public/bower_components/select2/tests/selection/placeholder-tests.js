@@ -16,7 +16,7 @@ var placeholderOptions = new Options({
   },
 });
 
-test("normalizing placeholder ignores objects", function (assert) {
+test("normalizing placeholder ignores objects", (assert) => {
   var selection = new SinglePlaceholder($("#qunit-fixture .single"), placeholderOptions);
 
   var original = {
@@ -29,7 +29,7 @@ test("normalizing placeholder ignores objects", function (assert) {
   assert.equal(original, normalized);
 });
 
-test("normalizing placeholder gives object for string", function (assert) {
+test("normalizing placeholder gives object for string", (assert) => {
   var selection = new SinglePlaceholder($("#qunit-fixture .single"), placeholderOptions);
 
   var normalized = selection.normalizePlaceholder("placeholder");
@@ -38,7 +38,7 @@ test("normalizing placeholder gives object for string", function (assert) {
   assert.equal(normalized.text, "placeholder");
 });
 
-test("text is shown for placeholder option on single", function (assert) {
+test("text is shown for placeholder option on single", (assert) => {
   var selection = new SinglePlaceholder($("#qunit-fixture .single"), placeholderOptions);
 
   var $selection = selection.render();
@@ -52,7 +52,7 @@ test("text is shown for placeholder option on single", function (assert) {
   assert.equal($selection.text(), "This is the placeholder");
 });
 
-test("placeholder is shown when no options are selected", function (assert) {
+test("placeholder is shown when no options are selected", (assert) => {
   var selection = new SinglePlaceholder($("#qunit-fixture .multiple"), placeholderOptions);
 
   var $selection = selection.render();

@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function m(a) {
     CKEDITOR.tools.extend(this, a);
     this.queue = [];
@@ -29,13 +29,12 @@
       mask: !0,
       parts: { pre: "pre", code: "code" },
       highlight: function () {
-        var d = this,
-          c = this.data,
-          b = function (a) {
-            d.parts.code.setHtml(n ? a : a.replace(e, "\x3cbr\x3e"));
+        var c = this.data,
+          b = (a) => {
+            this.parts.code.setHtml(n ? a : a.replace(e, "\x3cbr\x3e"));
           };
         b(CKEDITOR.tools.htmlEncode(c.code));
-        a._.codesnippet.highlighter.highlight(c.code, c.lang, function (d) {
+        a._.codesnippet.highlighter.highlight(c.code, c.lang, (d) => {
           a.fire("lockSnapshot");
           b(d);
           a.fire("unlockSnapshot");
@@ -49,7 +48,7 @@
         a.lang && (this.parts.code.addClass("language-" + a.lang), this.highlight());
         this.oldData = CKEDITOR.tools.copy(a);
       },
-      upcast: function (d, c) {
+      upcast: (d, c) => {
         if ("pre" == d.name) {
           for (var g = [], e = d.children, k, l = e.length - 1; 0 <= l; l--)
             (k = e[l]), (k.type == CKEDITOR.NODE_TEXT && k.value.match(q)) || g.push(k);
@@ -86,7 +85,7 @@
     hidpi: !0,
     beforeInit: function (a) {
       a._.codesnippet = {};
-      this.setHighlighter = function (b) {
+      this.setHighlighter = (b) => {
         a._.codesnippet.highlighter = b;
         b = a._.codesnippet.langs = a.config.codeSnippet_languages || b.languages;
         a._.codesnippet.langsRegex = new RegExp(
@@ -97,7 +96,7 @@
     onLoad: function () {
       CKEDITOR.dialog.add("codeSnippet", this.path + "dialogs/codesnippet.js");
     },
-    init: function (a) {
+    init: (a) => {
       a.ui.addButton &&
         a.ui.addButton("CodeSnippet", {
           label: a.lang.codesnippet.button,
@@ -138,13 +137,13 @@
             xml: "XML",
           },
           init: function (h) {
-            var e = this;
             n &&
-              CKEDITOR.scriptLoader.load(b + "lib/highlight/highlight.pack.js", function () {
-                e.hljs = window.hljs;
+              CKEDITOR.scriptLoader.load(b + "lib/highlight/highlight.pack.js", () => {
+                this.hljs = window.hljs;
                 h();
               });
-            a.addContentsCss && a.addContentsCss(b + "lib/highlight/styles/" + a.config.codeSnippet_theme + ".css");
+            a.addContentsCss &&
+              a.addContentsCss(b + "lib/highlight/styles/" + a.config.codeSnippet_theme + ".css");
           },
           highlighter: function (a, b, d) {
             (a = this.hljs.highlightAuto(a, this.hljs.getLanguage(b) ? [b] : void 0)) && d(a.value);

@@ -85,7 +85,12 @@ CKEDITOR.lang["ko"] = {
     },
     cellPad: "셀 여백",
     cellSpace: "셀 간격",
-    column: { menu: "열", insertBefore: "왼쪽에 열 삽입", insertAfter: "오른쪽에 열 삽입", deleteColumn: "열 삭제" },
+    column: {
+      menu: "열",
+      insertBefore: "왼쪽에 열 삽입",
+      insertAfter: "오른쪽에 열 삽입",
+      deleteColumn: "열 삭제",
+    },
     columns: "열",
     deleteTable: "표 삭제",
     headers: "머릿칸",
@@ -101,7 +106,12 @@ CKEDITOR.lang["ko"] = {
     invalidRows: "행 번호는 0보다 커야 합니다.",
     invalidWidth: "표의 너비는 숫자여야 합니다.",
     menu: "표 속성",
-    row: { menu: "행", insertBefore: "위에 행 삽입", insertAfter: "아래에 행 삽입", deleteRow: "행 삭제" },
+    row: {
+      menu: "행",
+      insertBefore: "위에 행 삽입",
+      insertAfter: "아래에 행 삽입",
+      deleteRow: "행 삭제",
+    },
     rows: "행",
     summary: "요약",
     title: "표 속성",
@@ -136,7 +146,8 @@ CKEDITOR.lang["ko"] = {
     title: "텍스트로 붙여넣기",
   },
   pastefromword: {
-    confirmCleanup: "붙여 넣을 내용은 MS Word에서 복사 한 것입니다. 붙여 넣기 전에 정리 하시겠습니까?",
+    confirmCleanup:
+      "붙여 넣을 내용은 MS Word에서 복사 한 것입니다. 붙여 넣기 전에 정리 하시겠습니까?",
     error: "내부 오류로 붙여 넣은 데이터를 정리 할 수 없습니다.",
     title: "MS Word 에서 붙여넣기",
     toolbar: "MS Word 에서 붙여넣기",
@@ -268,7 +279,8 @@ CKEDITOR.lang["ko"] = {
   contextmenu: { options: "컨텍스트 메뉴 옵션" },
   clipboard: {
     copy: "복사",
-    copyError: "브라우저의 보안설정 때문에 복사할 수 없습니다. 키보드(Ctrl/Cmd+C)를 이용해서 복사하십시오.",
+    copyError:
+      "브라우저의 보안설정 때문에 복사할 수 없습니다. 키보드(Ctrl/Cmd+C)를 이용해서 복사하십시오.",
     cut: "잘라내기",
     cutError:
       "브라우저의 보안설정 때문에 잘라내기 기능을 실행할 수 없습니다. 키보드(Ctrl/Cmd+X)를 이용해서 잘라내기 하십시오",
@@ -331,7 +343,8 @@ CKEDITOR.lang["ko"] = {
     generalTab: "일반",
     advancedTab: "자세히",
     validateNumberFailed: "이 값은 숫자가 아닙니다.",
-    confirmNewPage: "저장하지 않은 모든 변경사항은 유실됩니다. 정말로 새로운 페이지를 부르겠습니까?",
+    confirmNewPage:
+      "저장하지 않은 모든 변경사항은 유실됩니다. 정말로 새로운 페이지를 부르겠습니까?",
     confirmCancel: "일부 옵션이 변경 되었습니다. 정말로 창을 닫겠습니까?",
     options: "옵션",
     target: "타겟",
@@ -363,7 +376,8 @@ CKEDITOR.lang["ko"] = {
     invalidLength: '"%1" 값은 유효한 측정단위(%2)를 포함하거나 포함하지 않은 양수여야 합니다.',
     invalidCssLength:
       '"%1" 값은 유효한 CSS 측정 단위(px, %, in, cm, mm, em, ex, pt, or pc)를 포함하거나 포함하지 않은 양수 여야 합니다.',
-    invalidHtmlLength: '"%1" 값은 유효한 HTML 측정 단위(px or %)를 포함하거나 포함하지 않은 양수여야 합니다.',
+    invalidHtmlLength:
+      '"%1" 값은 유효한 HTML 측정 단위(px or %)를 포함하거나 포함하지 않은 양수여야 합니다.',
     invalidInlineStyle:
       '인라인 스타일에 설정된 값은 "name : value" 형식을 가진 하나 이상의 투플(tuples)이 세미콜론(;)으로 구분되어 구성되어야 합니다.',
     cssLengthTooltip:

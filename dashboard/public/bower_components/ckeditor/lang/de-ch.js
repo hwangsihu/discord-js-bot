@@ -152,7 +152,8 @@ CKEDITOR.lang["de-ch"] = {
   pastefromword: {
     confirmCleanup:
       "Der Text, den Sie einfügen möchten, scheint aus MS-Word kopiert zu sein. Möchten Sie ihn zuvor bereinigen lassen?",
-    error: "Aufgrund eines internen Fehlers war es nicht möglich die eingefügten Daten zu bereinigen",
+    error:
+      "Aufgrund eines internen Fehlers war es nicht möglich die eingefügten Daten zu bereinigen",
     title: "Aus Word einfügen",
     toolbar: "Aus Word einfügen",
   },
@@ -266,9 +267,12 @@ CKEDITOR.lang["de-ch"] = {
   filetools: {
     loadError: "Während dem Lesen der Datei ist ein Fehler aufgetreten.",
     networkError: "Während dem Hochladen der Datei ist ein Netzwerkfehler aufgetreten.",
-    httpError404: "Während dem Hochladen der Datei ist ein HTTP-Fehler aufgetreten (404: Datei nicht gefunden).",
-    httpError403: "Während dem Hochladen der Datei ist ein HTTP-Fehler aufgetreten (403: Verboten).",
-    httpError: "Während dem Hochladen der Datei ist ein HTTP-Fehler aufgetreten (Fehlerstatus: %1).",
+    httpError404:
+      "Während dem Hochladen der Datei ist ein HTTP-Fehler aufgetreten (404: Datei nicht gefunden).",
+    httpError403:
+      "Während dem Hochladen der Datei ist ein HTTP-Fehler aufgetreten (403: Verboten).",
+    httpError:
+      "Während dem Hochladen der Datei ist ein HTTP-Fehler aufgetreten (Fehlerstatus: %1).",
     noUrlError: "Hochlade-URL ist nicht definiert.",
     responseError: "Falsche Antwort des Servers.",
   },
@@ -306,7 +310,8 @@ CKEDITOR.lang["de-ch"] = {
   about: {
     copy: "Copyright &copy; $1. Alle Rechte vorbehalten.",
     dlgTitle: "Über CKEditor 4",
-    moreInfo: "Für Informationen über unsere Lizenzbestimmungen besuchen sie bitte unsere Webseite:",
+    moreInfo:
+      "Für Informationen über unsere Lizenzbestimmungen besuchen sie bitte unsere Webseite:",
   },
   editor: "WYSIWYG-Editor",
   editorPanel: "WYSIWYG-Editor-Leiste",
@@ -347,7 +352,8 @@ CKEDITOR.lang["de-ch"] = {
     generalTab: "Allgemein",
     advancedTab: "Erweitert",
     validateNumberFailed: "Dieser Wert ist keine Nummer.",
-    confirmNewPage: "Alle nicht gespeicherten Änderungen gehen verlohren. Sind Sie sicher die neue Seite zu laden?",
+    confirmNewPage:
+      "Alle nicht gespeicherten Änderungen gehen verlohren. Sind Sie sicher die neue Seite zu laden?",
     confirmCancel: "Einige Optionen wurden geändert. Wollen Sie den Dialog dennoch schliessen?",
     options: "Optionen",
     target: "Zielseite",

@@ -7,10 +7,13 @@ import moment from "../moment";
 export default moment.defineLocale("ka", {
   months: {
     standalone:
-      "იანვარი_თებერვალი_მარტი_აპრილი_მაისი_ივნისი_ივლისი_აგვისტო_სექტემბერი_ოქტომბერი_ნოემბერი_დეკემბერი".split("_"),
-    format: "იანვარს_თებერვალს_მარტს_აპრილის_მაისს_ივნისს_ივლისს_აგვისტს_სექტემბერს_ოქტომბერს_ნოემბერს_დეკემბერს".split(
-      "_"
-    ),
+      "იანვარი_თებერვალი_მარტი_აპრილი_მაისი_ივნისი_ივლისი_აგვისტო_სექტემბერი_ოქტომბერი_ნოემბერი_დეკემბერი".split(
+        "_"
+      ),
+    format:
+      "იანვარს_თებერვალს_მარტს_აპრილის_მაისს_ივნისს_ივლისს_აგვისტს_სექტემბერს_ოქტომბერს_ნოემბერს_დეკემბერს".split(
+        "_"
+      ),
   },
   monthsShort: "იან_თებ_მარ_აპრ_მაი_ივნ_ივლ_აგვ_სექ_ოქტ_ნოე_დეკ".split("_"),
   weekdays: {
@@ -37,10 +40,8 @@ export default moment.defineLocale("ka", {
     sameElse: "L",
   },
   relativeTime: {
-    future: function (s) {
-      return /(წამი|წუთი|საათი|წელი)/.test(s) ? s.replace(/ი$/, "ში") : s + "ში";
-    },
-    past: function (s) {
+    future: (s) => (/(წამი|წუთი|საათი|წელი)/.test(s) ? s.replace(/ი$/, "ში") : s + "ში"),
+    past: (s) => {
       if (/(წამი|წუთი|საათი|დღე|თვე)/.test(s)) {
         return s.replace(/(ი|ე)$/, "ის წინ");
       }
@@ -62,7 +63,7 @@ export default moment.defineLocale("ka", {
     yy: "%d წელი",
   },
   dayOfMonthOrdinalParse: /0|1-ლი|მე-\d{1,2}|\d{1,2}-ე/,
-  ordinal: function (number) {
+  ordinal: (number) => {
     if (number === 0) {
       return number;
     }

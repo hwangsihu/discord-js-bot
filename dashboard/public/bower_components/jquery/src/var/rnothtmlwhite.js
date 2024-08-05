@@ -1,6 +1,4 @@
-define(function () {
-  "use strict";
-
+define(() => {
   // Only count HTML whitespace
   // Other whitespace should count in values
   // https://infra.spec.whatwg.org/#ascii-whitespace

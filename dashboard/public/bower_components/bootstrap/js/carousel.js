@@ -6,9 +6,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
-+(function ($) {
-  "use strict";
-
++(($) => {
   // CAROUSEL CLASS DEFINITION
   // =========================
 
@@ -78,7 +76,8 @@
   Carousel.prototype.getItemForDirection = function (direction, active) {
     var activeIndex = this.getItemIndex(active);
     var willWrap =
-      (direction == "prev" && activeIndex === 0) || (direction == "next" && activeIndex == this.$items.length - 1);
+      (direction == "prev" && activeIndex === 0) ||
+      (direction == "next" && activeIndex == this.$items.length - 1);
     if (willWrap && !this.options.wrap) return active;
     var delta = direction == "prev" ? -1 : 1;
     var itemIndex = (activeIndex + delta) % this.$items.length;
@@ -86,14 +85,13 @@
   };
 
   Carousel.prototype.to = function (pos) {
-    var that = this;
     var activeIndex = this.getItemIndex((this.$active = this.$element.find(".item.active")));
 
     if (pos > this.$items.length - 1 || pos < 0) return;
 
     if (this.sliding)
-      return this.$element.one("slid.bs.carousel", function () {
-        that.to(pos);
+      return this.$element.one("slid.bs.carousel", () => {
+        this.to(pos);
       }); // yes, "slid"
     if (activeIndex == pos) return this.pause().cycle();
 
@@ -128,7 +126,6 @@
     var $next = next || this.getItemForDirection(type, $active);
     var isCycling = this.interval;
     var direction = type == "next" ? "left" : "right";
-    var that = this;
 
     if ($next.hasClass("active")) return (this.sliding = false);
 
@@ -150,7 +147,10 @@
       $nextIndicator && $nextIndicator.addClass("active");
     }
 
-    var slidEvent = $.Event("slid.bs.carousel", { relatedTarget: relatedTarget, direction: direction }); // yes, "slid"
+    var slidEvent = $.Event("slid.bs.carousel", {
+      relatedTarget: relatedTarget,
+      direction: direction,
+    }); // yes, "slid"
     if ($.support.transition && this.$element.hasClass("slide")) {
       $next.addClass(type);
       if (typeof $next === "object" && $next.length) {
@@ -159,12 +159,12 @@
       $active.addClass(direction);
       $next.addClass(direction);
       $active
-        .one("bsTransitionEnd", function () {
+        .one("bsTransitionEnd", () => {
           $next.removeClass([type, direction].join(" ")).addClass("active");
           $active.removeClass(["active", direction].join(" "));
-          that.sliding = false;
-          setTimeout(function () {
-            that.$element.trigger(slidEvent);
+          this.sliding = false;
+          setTimeout(() => {
+            this.$element.trigger(slidEvent);
           }, 0);
         })
         .emulateTransitionEnd(Carousel.TRANSITION_DURATION);
@@ -187,7 +187,12 @@
     return this.each(function () {
       var $this = $(this);
       var data = $this.data("bs.carousel");
-      var options = $.extend({}, Carousel.DEFAULTS, $this.data(), typeof option == "object" && option);
+      var options = $.extend(
+        {},
+        Carousel.DEFAULTS,
+        $this.data(),
+        typeof option == "object" && option
+      );
       var action = typeof option == "string" ? option : options.slide;
 
       if (!data) $this.data("bs.carousel", (data = new Carousel(this, options)));
@@ -242,7 +247,7 @@
     .on("click.bs.carousel.data-api", "[data-slide]", clickHandler)
     .on("click.bs.carousel.data-api", "[data-slide-to]", clickHandler);
 
-  $(window).on("load", function () {
+  $(window).on("load", () => {
     $('[data-ride="carousel"]').each(function () {
       var $carousel = $(this);
       Plugin.call($carousel, $carousel.data());

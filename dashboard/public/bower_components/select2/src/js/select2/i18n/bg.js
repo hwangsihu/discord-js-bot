@@ -1,7 +1,7 @@
-define(function () {
+define(() => {
   // Bulgarian
   return {
-    inputTooLong: function (args) {
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "Моля въведете с " + overChars + " по-малко символ";
@@ -12,7 +12,7 @@ define(function () {
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "Моля въведете още " + remainingChars + " символ";
@@ -23,10 +23,8 @@ define(function () {
 
       return message;
     },
-    loadingMore: function () {
-      return "Зареждат се още…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Зареждат се още…",
+    maximumSelected: (args) => {
       var message = "Можете да направите до " + args.maximum + " ";
 
       if (args.maximum > 1) {
@@ -37,14 +35,8 @@ define(function () {
 
       return message;
     },
-    noResults: function () {
-      return "Няма намерени съвпадения";
-    },
-    searching: function () {
-      return "Търсене…";
-    },
-    removeAllItems: function () {
-      return "Премахнете всички елементи";
-    },
+    noResults: () => "Няма намерени съвпадения",
+    searching: () => "Търсене…",
+    removeAllItems: () => "Премахнете всички елементи",
   };
 });

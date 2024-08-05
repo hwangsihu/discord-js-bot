@@ -1,6 +1,6 @@
 var examples = require("./examples");
 
-examples.def("line", function () {
+examples.def("line", () => {
   Morris.Line({
     element: "chart",
     data: [
@@ -19,7 +19,7 @@ examples.def("line", function () {
   window.snapshot();
 });
 
-examples.def("area", function () {
+examples.def("area", () => {
   Morris.Area({
     element: "chart",
     data: [
@@ -38,7 +38,7 @@ examples.def("area", function () {
   window.snapshot();
 });
 
-examples.def("bar", function () {
+examples.def("bar", () => {
   Morris.Bar({
     element: "chart",
     data: [
@@ -56,7 +56,7 @@ examples.def("bar", function () {
   window.snapshot();
 });
 
-examples.def("stacked_bar", function () {
+examples.def("stacked_bar", () => {
   Morris.Bar({
     element: "chart",
     data: [

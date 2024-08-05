@@ -1,14 +1,12 @@
 //! moment.js locale configuration
 
-(function (global, factory) {
+((global, factory) => {
   typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
     ? factory(require("../moment"))
     : typeof define === "function" && define.amd
       ? define(["../moment"], factory)
       : factory(global.moment);
-})(this, function (moment) {
-  "use strict";
-
+})(this, (moment) => {
   var months = [
     "جنوري",
     "فيبروري",
@@ -40,10 +38,8 @@
       LLLL: "dddd، D MMMM YYYY HH:mm",
     },
     meridiemParse: /صبح|شام/,
-    isPM: function (input) {
-      return "شام" === input;
-    },
-    meridiem: function (hour, minute, isLower) {
+    isPM: (input) => "شام" === input,
+    meridiem: (hour, minute, isLower) => {
       if (hour < 12) {
         return "صبح";
       }
@@ -73,12 +69,8 @@
       y: "هڪ سال",
       yy: "%d سال",
     },
-    preparse: function (string) {
-      return string.replace(/،/g, ",");
-    },
-    postformat: function (string) {
-      return string.replace(/,/g, "،");
-    },
+    preparse: (string) => string.replace(/،/g, ","),
+    postformat: (string) => string.replace(/,/g, "،"),
     week: {
       dow: 1, // Monday is the first day of the week.
       doy: 4, // The week that contains Jan 4th is the first week of the year.

@@ -2,7 +2,7 @@
  * Utilities
  */
 
-createClass = function (/* [baseclass, [mixin, ...]], definition */) {
+createClass = (/* [baseclass, [mixin, ...]], definition */) => {
   var Class, args;
   Class = function () {
     this.init.apply(this, arguments);
@@ -42,18 +42,17 @@ $.SPFormatClass = SPFormat = createClass({
   },
 
   render: function (fieldset, lookups, options) {
-    var self = this,
-      fields = fieldset,
+    var fields = fieldset,
       match,
       token,
       lookupkey,
       fieldvalue,
       prec;
-    return this.format.replace(this.fre, function () {
+    return this.format.replace(this.fre, () => {
       var lookup;
       token = arguments[1];
       lookupkey = arguments[3];
-      match = self.precre.exec(token);
+      match = this.precre.exec(token);
       if (match) {
         prec = match[2];
         token = match[1];
@@ -92,11 +91,9 @@ $.SPFormatClass = SPFormat = createClass({
 });
 
 // convience method to avoid needing the new operator
-$.spformat = function (format, fclass) {
-  return new SPFormat(format, fclass);
-};
+$.spformat = (format, fclass) => new SPFormat(format, fclass);
 
-clipval = function (val, min, max) {
+clipval = (val, min, max) => {
   if (val < min) {
     return min;
   }
@@ -106,25 +103,23 @@ clipval = function (val, min, max) {
   return val;
 };
 
-quartile = function (values, q) {
+quartile = (values, q) => {
   var vl;
   if (q === 2) {
     vl = Math.floor(values.length / 2);
     return values.length % 2 ? values[vl] : (values[vl - 1] + values[vl]) / 2;
+  } else if (values.length % 2) {
+    // odd
+    vl = (values.length * q + q) / 4;
+    return vl % 1 ? (values[Math.floor(vl)] + values[Math.floor(vl) - 1]) / 2 : values[vl - 1];
   } else {
-    if (values.length % 2) {
-      // odd
-      vl = (values.length * q + q) / 4;
-      return vl % 1 ? (values[Math.floor(vl)] + values[Math.floor(vl) - 1]) / 2 : values[vl - 1];
-    } else {
-      //even
-      vl = (values.length * q + 2) / 4;
-      return vl % 1 ? (values[Math.floor(vl)] + values[Math.floor(vl) - 1]) / 2 : values[vl - 1];
-    }
+    //even
+    vl = (values.length * q + 2) / 4;
+    return vl % 1 ? (values[Math.floor(vl)] + values[Math.floor(vl) - 1]) / 2 : values[vl - 1];
   }
 };
 
-normalizeValue = function (val) {
+normalizeValue = (val) => {
   var nf;
   switch (val) {
     case "undefined":
@@ -140,7 +135,7 @@ normalizeValue = function (val) {
       val = false;
       break;
     default:
-      nf = parseFloat(val);
+      nf = Number.parseFloat(val);
       if (val == nf) {
         val = nf;
       }
@@ -148,7 +143,7 @@ normalizeValue = function (val) {
   return val;
 };
 
-normalizeValues = function (vals) {
+normalizeValues = (vals) => {
   var i,
     result = [];
   for (i = vals.length; i--; ) {
@@ -157,7 +152,7 @@ normalizeValues = function (vals) {
   return result;
 };
 
-remove = function (vals, filter) {
+remove = (vals, filter) => {
   var i,
     vl,
     result = [];
@@ -169,13 +164,11 @@ remove = function (vals, filter) {
   return result;
 };
 
-isNumber = function (num) {
-  return !isNaN(parseFloat(num)) && isFinite(num);
-};
+isNumber = (num) => !isNaN(Number.parseFloat(num)) && isFinite(num);
 
-formatNumber = function (num, prec, groupsize, groupsep, decsep) {
+formatNumber = (num, prec, groupsize, groupsep, decsep) => {
   var p, i;
-  num = (prec === false ? parseFloat(num).toString() : num.toFixed(prec)).split("");
+  num = (prec === false ? Number.parseFloat(num).toString() : num.toFixed(prec)).split("");
   p = (p = $.inArray(".", num)) < 0 ? num.length : p;
   if (p < num.length) {
     num[p] = decsep;
@@ -188,7 +181,7 @@ formatNumber = function (num, prec, groupsize, groupsep, decsep) {
 
 // determine if all values of an array match a value
 // returns true if the array is empty
-all = function (val, arr, ignoreNull) {
+all = (val, arr, ignoreNull) => {
   var i;
   for (i = arr.length; i--; ) {
     if (ignoreNull && arr[i] === null) continue;
@@ -200,7 +193,7 @@ all = function (val, arr, ignoreNull) {
 };
 
 // sums the numeric values in an array, ignoring other values
-sum = function (vals) {
+sum = (vals) => {
   var total = 0,
     i;
   for (i = vals.length; i--; ) {
@@ -209,12 +202,10 @@ sum = function (vals) {
   return total;
 };
 
-ensureArray = function (val) {
-  return $.isArray(val) ? val : [val];
-};
+ensureArray = (val) => ($.isArray(val) ? val : [val]);
 
 // http://paulirish.com/2008/bookmarklet-inject-new-css-rules/
-addCSS = function (css) {
+addCSS = (css) => {
   var tag, iefail;
   if (document.createStyleSheet) {
     try {
@@ -231,6 +222,10 @@ addCSS = function (css) {
   if (iefail) {
     document.styleSheets[document.styleSheets.length - 1].cssText = css;
   } else {
-    tag[typeof document.body.style.WebkitAppearance == "string" /* webkit only */ ? "innerText" : "innerHTML"] = css;
+    tag[
+      typeof document.body.style.WebkitAppearance == "string" /* webkit only */
+        ? "innerText"
+        : "innerHTML"
+    ] = css;
   }
 };

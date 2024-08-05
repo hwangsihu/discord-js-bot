@@ -2,13 +2,14 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
-  CKEDITOR.dialog.add("templates", function (c) {
+(() => {
+  CKEDITOR.dialog.add("templates", (c) => {
     function r(a, b) {
       var m = CKEDITOR.dom.element.createFromHtml(
           '\x3ca href\x3d"javascript:void(0)" tabIndex\x3d"-1" role\x3d"option" \x3e\x3cdiv class\x3d"cke_tpl_item"\x3e\x3c/div\x3e\x3c/a\x3e'
         ),
-        d = '\x3ctable style\x3d"width:350px;" class\x3d"cke_tpl_preview" role\x3d"presentation"\x3e\x3ctr\x3e';
+        d =
+          '\x3ctable style\x3d"width:350px;" class\x3d"cke_tpl_preview" role\x3d"presentation"\x3e\x3ctr\x3e';
       a.image &&
         b &&
         (d +=
@@ -24,7 +25,7 @@
       a.description && (d += "\x3cspan\x3e" + a.description + "\x3c/span\x3e");
       d += "\x3c/td\x3e\x3c/tr\x3e\x3c/table\x3e";
       m.getFirst().setHtml(d);
-      m.on("click", function () {
+      m.on("click", () => {
         t(a.html);
       });
       return m;
@@ -33,12 +34,12 @@
       var b = CKEDITOR.dialog.getCurrent();
       b.getValueOf("selectTpl", "chkInsertOpt")
         ? (c.fire("saveSnapshot"),
-          c.setData(a, function () {
+          c.setData(a, () => {
             b.hide();
             var a = c.createRange();
             a.moveToElementEditStart(c.editable());
             a.select();
-            setTimeout(function () {
+            setTimeout(() => {
               c.fire("saveSnapshot");
             }, 0);
           }))
@@ -88,7 +89,11 @@
               type: "vbox",
               padding: 5,
               children: [
-                { id: "selectTplText", type: "html", html: "\x3cspan\x3e" + f.selectPromptMsg + "\x3c/span\x3e" },
+                {
+                  id: "selectTplText",
+                  type: "html",
+                  html: "\x3cspan\x3e" + f.selectPromptMsg + "\x3c/span\x3e",
+                },
                 {
                   id: "templatesList",
                   type: "html",
@@ -102,7 +107,12 @@
                     f.options +
                     "\x3c/span\x3e",
                 },
-                { id: "chkInsertOpt", type: "checkbox", label: f.insertOption, default: n.templates_replaceContent },
+                {
+                  id: "chkInsertOpt",
+                  type: "checkbox",
+                  label: f.insertOption,
+                  default: n.templates_replaceContent,
+                },
               ],
             },
           ],
@@ -112,14 +122,18 @@
       onShow: function () {
         var a = this.getContentElement("selectTpl", "templatesList");
         g = a.getElement();
-        CKEDITOR.loadTemplates(n.templates_files, function () {
+        CKEDITOR.loadTemplates(n.templates_files, () => {
           var b = (n.templates || "default").split(",");
           if (b.length) {
             var c = g;
             c.setHtml("");
             for (var d = 0, h = b.length; d < h; d++)
               for (
-                var e = CKEDITOR.getTemplates(b[d]), k = e.imagesPath, e = e.templates, q = e.length, l = 0;
+                var e = CKEDITOR.getTemplates(b[d]),
+                  k = e.imagesPath,
+                  e = e.templates,
+                  q = e.length,
+                  l = 0;
                 l < q;
                 l++
               ) {
@@ -131,7 +145,9 @@
             a.focus();
           } else
             g.setHtml(
-              '\x3cdiv class\x3d"cke_tpl_empty"\x3e\x3cspan\x3e' + f.emptyListMsg + "\x3c/span\x3e\x3c/div\x3e"
+              '\x3cdiv class\x3d"cke_tpl_empty"\x3e\x3cspan\x3e' +
+                f.emptyListMsg +
+                "\x3c/span\x3e\x3c/div\x3e"
             );
         });
         this._.element.on("keydown", k);

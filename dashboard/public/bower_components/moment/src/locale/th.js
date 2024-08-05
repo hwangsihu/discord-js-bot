@@ -5,7 +5,10 @@
 import moment from "../moment";
 
 export default moment.defineLocale("th", {
-  months: "มกราคม_กุมภาพันธ์_มีนาคม_เมษายน_พฤษภาคม_มิถุนายน_กรกฎาคม_สิงหาคม_กันยายน_ตุลาคม_พฤศจิกายน_ธันวาคม".split("_"),
+  months:
+    "มกราคม_กุมภาพันธ์_มีนาคม_เมษายน_พฤษภาคม_มิถุนายน_กรกฎาคม_สิงหาคม_กันยายน_ตุลาคม_พฤศจิกายน_ธันวาคม".split(
+      "_"
+    ),
   monthsShort: "ม.ค._ก.พ._มี.ค._เม.ย._พ.ค._มิ.ย._ก.ค._ส.ค._ก.ย._ต.ค._พ.ย._ธ.ค.".split("_"),
   monthsParseExact: true,
   weekdays: "อาทิตย์_จันทร์_อังคาร_พุธ_พฤหัสบดี_ศุกร์_เสาร์".split("_"),
@@ -21,10 +24,8 @@ export default moment.defineLocale("th", {
     LLLL: "วันddddที่ D MMMM YYYY เวลา H:mm",
   },
   meridiemParse: /ก่อนเที่ยง|หลังเที่ยง/,
-  isPM: function (input) {
-    return input === "หลังเที่ยง";
-  },
-  meridiem: function (hour, minute, isLower) {
+  isPM: (input) => input === "หลังเที่ยง",
+  meridiem: (hour, minute, isLower) => {
     if (hour < 12) {
       return "ก่อนเที่ยง";
     } else {

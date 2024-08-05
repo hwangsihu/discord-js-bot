@@ -1,4 +1,4 @@
-!(function (e, t) {
+!((e, t) => {
   "object" == typeof exports && "object" == typeof module
     ? (module.exports = t(require("moment"), require("fullcalendar")))
     : "function" == typeof define && define.amd
@@ -6,8 +6,8 @@
       : "object" == typeof exports
         ? t(require("moment"), require("fullcalendar"))
         : t(e.moment, e.FullCalendar);
-})("undefined" != typeof self ? self : this, function (e, t) {
-  return (function (e) {
+})("undefined" != typeof self ? self : this, (e, t) =>
+  ((e) => {
     function t(r) {
       if (n[r]) return n[r].exports;
       var o = (n[r] = { i: r, l: !1, exports: {} });
@@ -17,34 +17,25 @@
     return (
       (t.m = e),
       (t.c = n),
-      (t.d = function (e, n, r) {
+      (t.d = (e, n, r) => {
         t.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: r });
       }),
-      (t.n = function (e) {
-        var n =
-          e && e.__esModule
-            ? function () {
-                return e.default;
-              }
-            : function () {
-                return e;
-              };
+      (t.n = (e) => {
+        var n = e && e.__esModule ? () => e.default : () => e;
         return t.d(n, "a", n), n;
       }),
-      (t.o = function (e, t) {
-        return Object.prototype.hasOwnProperty.call(e, t);
-      }),
+      (t.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
       (t.p = ""),
       t((t.s = 159))
     );
   })({
-    0: function (t, n) {
+    0: (t, n) => {
       t.exports = e;
     },
-    1: function (e, n) {
+    1: (e, n) => {
       e.exports = t;
     },
-    159: function (e, t, n) {
+    159: (e, t, n) => {
       Object.defineProperty(t, "__esModule", { value: !0 }), n(160);
       var r = n(1);
       r.datepickerLocale("ko", "ko", {
@@ -52,8 +43,34 @@
         prevText: "이전달",
         nextText: "다음달",
         currentText: "오늘",
-        monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
-        monthNamesShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+        monthNames: [
+          "1월",
+          "2월",
+          "3월",
+          "4월",
+          "5월",
+          "6월",
+          "7월",
+          "8월",
+          "9월",
+          "10월",
+          "11월",
+          "12월",
+        ],
+        monthNamesShort: [
+          "1월",
+          "2월",
+          "3월",
+          "4월",
+          "5월",
+          "6월",
+          "7월",
+          "8월",
+          "9월",
+          "10월",
+          "11월",
+          "12월",
+        ],
         dayNames: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"],
         dayNamesShort: ["일", "월", "화", "수", "목", "금", "토"],
         dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"],
@@ -71,11 +88,11 @@
           noEventsMessage: "일정이 없습니다",
         });
     },
-    160: function (e, t, n) {
-      !(function (e, t) {
+    160: (e, t, n) => {
+      !((e, t) => {
         t(n(0));
-      })(0, function (e) {
-        return e.defineLocale("ko", {
+      })(0, (e) =>
+        e.defineLocale("ko", {
           months: "1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월".split("_"),
           monthsShort: "1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월".split("_"),
           weekdays: "일요일_월요일_화요일_수요일_목요일_금요일_토요일".split("_"),
@@ -118,7 +135,7 @@
             yy: "%d년",
           },
           dayOfMonthOrdinalParse: /\d{1,2}(일|월|주)/,
-          ordinal: function (e, t) {
+          ordinal: (e, t) => {
             switch (t) {
               case "d":
               case "D":
@@ -134,14 +151,10 @@
             }
           },
           meridiemParse: /오전|오후/,
-          isPM: function (e) {
-            return "오후" === e;
-          },
-          meridiem: function (e, t, n) {
-            return e < 12 ? "오전" : "오후";
-          },
-        });
-      });
+          isPM: (e) => "오후" === e,
+          meridiem: (e, t, n) => (e < 12 ? "오전" : "오후"),
+        })
+      );
     },
-  });
-});
+  })
+);

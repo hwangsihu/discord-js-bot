@@ -1,10 +1,8 @@
-define(function () {
+define(() => {
   // Albanian
   return {
-    errorLoading: function () {
-      return "Rezultatet nuk mund të ngarkoheshin.";
-    },
-    inputTooLong: function (args) {
+    errorLoading: () => "Rezultatet nuk mund të ngarkoheshin.",
+    inputTooLong: (args) => {
       var overChars = args.input.length - args.maximum;
 
       var message = "Të lutem fshi " + overChars + " karakter";
@@ -15,17 +13,15 @@ define(function () {
 
       return message;
     },
-    inputTooShort: function (args) {
+    inputTooShort: (args) => {
       var remainingChars = args.minimum - args.input.length;
 
       var message = "Të lutem shkruaj " + remainingChars + " ose më shumë karaktere";
 
       return message;
     },
-    loadingMore: function () {
-      return "Duke ngarkuar më shumë rezultate…";
-    },
-    maximumSelected: function (args) {
+    loadingMore: () => "Duke ngarkuar më shumë rezultate…",
+    maximumSelected: (args) => {
       var message = "Mund të zgjedhësh vetëm " + args.maximum + " element";
 
       if (args.maximum != 1) {
@@ -34,14 +30,8 @@ define(function () {
 
       return message;
     },
-    noResults: function () {
-      return "Nuk u gjet asnjë rezultat";
-    },
-    searching: function () {
-      return "Duke kërkuar…";
-    },
-    removeAllItems: function () {
-      return "Hiq të gjitha sendet";
-    },
+    noResults: () => "Nuk u gjet asnjë rezultat",
+    searching: () => "Duke kërkuar…",
+    removeAllItems: () => "Hiq të gjitha sendet",
   };
 });

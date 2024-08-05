@@ -1,4 +1,4 @@
-define(["jquery", "./base", "../utils", "../keys"], function ($, BaseSelection, Utils, KEYS) {
+define(["jquery", "./base", "../utils", "../keys"], ($, BaseSelection, Utils, keys) => {
   function SingleSelection() {
     SingleSelection.__super__.constructor.apply(this, arguments);
   }
@@ -21,8 +21,6 @@ define(["jquery", "./base", "../utils", "../keys"], function ($, BaseSelection, 
   };
 
   SingleSelection.prototype.bind = function (container, $container) {
-    var self = this;
-
     SingleSelection.__super__.bind.apply(this, arguments);
 
     var id = container.id + "-container";
@@ -34,28 +32,28 @@ define(["jquery", "./base", "../utils", "../keys"], function ($, BaseSelection, 
       .attr("aria-readonly", "true");
     this.$selection.attr("aria-labelledby", id);
 
-    this.$selection.on("mousedown", function (evt) {
+    this.$selection.on("mousedown", (evt) => {
       // Only respond to left clicks
       if (evt.which !== 1) {
         return;
       }
 
-      self.trigger("toggle", {
+      this.trigger("toggle", {
         originalEvent: evt,
       });
     });
 
-    this.$selection.on("focus", function (evt) {
+    this.$selection.on("focus", (evt) => {
       // User focuses on the container
     });
 
-    this.$selection.on("blur", function (evt) {
+    this.$selection.on("blur", (evt) => {
       // User exits the container
     });
 
-    container.on("focus", function (evt) {
+    container.on("focus", (evt) => {
       if (!container.isOpen()) {
-        self.$selection.focus();
+        this.$selection.focus();
       }
     });
   };
@@ -73,9 +71,7 @@ define(["jquery", "./base", "../utils", "../keys"], function ($, BaseSelection, 
     return escapeMarkup(template(data, container));
   };
 
-  SingleSelection.prototype.selectionContainer = function () {
-    return $("<span></span>");
-  };
+  SingleSelection.prototype.selectionContainer = () => $("<span></span>");
 
   SingleSelection.prototype.update = function (data) {
     if (data.length === 0) {

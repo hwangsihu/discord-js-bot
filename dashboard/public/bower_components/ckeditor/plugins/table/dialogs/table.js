@@ -2,7 +2,7 @@
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
-(function () {
+(() => {
   function v(a) {
     for (var f = 0, n = 0, l = 0, p, e = a.$.rows.length; l < e; l++) {
       p = a.$.rows[l];
@@ -20,9 +20,7 @@
     };
   }
   function q(a, f) {
-    var n = function (e) {
-        return new CKEDITOR.dom.element(e, a.document);
-      },
+    var n = (e) => new CKEDITOR.dom.element(e, a.document),
       q = a.editable(),
       p = a.plugins.dialogadvtab;
     return {
@@ -56,7 +54,9 @@
               (CKEDITOR.env.webkit && d[0].shrink(CKEDITOR.NODE_ELEMENT),
               (b = a.elementPath(d[0].getCommonAncestor(!0)).contains("table", 1))),
           (this._.selectedElement = b));
-        b ? (this.setupContent(b), c && c.disable(), g && g.disable()) : (c && c.enable(), g && g.enable());
+        b
+          ? (this.setupContent(b), c && c.disable(), g && g.disable())
+          : (c && c.enable(), g && g.enable());
         t && t.onChange();
         m && m.onChange();
       },
@@ -70,7 +70,10 @@
           c = c.info;
           if (!this._.selectedElement)
             for (
-              var g = b.append(n("tbody")), f = parseInt(c.txtRows, 10) || 0, m = parseInt(c.txtCols, 10) || 0, k = 0;
+              var g = b.append(n("tbody")),
+                f = Number.parseInt(c.txtRows, 10) || 0,
+                m = Number.parseInt(c.txtCols, 10) || 0,
+                k = 0;
               k < f;
               k++
             )
@@ -95,19 +98,24 @@
               m = h.getFirst();
               for (k = 0; k < m.getChildCount(); k++)
                 (g = m.getChild(k)),
-                  g.type == CKEDITOR.NODE_ELEMENT && (g.renameNode("td"), g.removeAttribute("scope"));
+                  g.type == CKEDITOR.NODE_ELEMENT &&
+                    (g.renameNode("td"), g.removeAttribute("scope"));
               m.insertBefore(l);
             }
             h.remove();
           }
           if (!this.hasColumnHeaders && ("col" == f || "both" == f))
             for (h = 0; h < b.$.rows.length; h++)
-              (g = new CKEDITOR.dom.element(b.$.rows[h].cells[0])), g.renameNode("th"), g.setAttribute("scope", "row");
+              (g = new CKEDITOR.dom.element(b.$.rows[h].cells[0])),
+                g.renameNode("th"),
+                g.setAttribute("scope", "row");
           if (this.hasColumnHeaders && "col" != f && "both" != f)
             for (k = 0; k < b.$.rows.length; k++)
               (h = new CKEDITOR.dom.element(b.$.rows[k])),
                 "tbody" == h.getParent().getName() &&
-                  ((g = new CKEDITOR.dom.element(h.$.cells[0])), g.renameNode("td"), g.removeAttribute("scope"));
+                  ((g = new CKEDITOR.dom.element(h.$.cells[0])),
+                  g.renameNode("td"),
+                  g.removeAttribute("scope"));
           c.txtHeight ? b.setStyle("height", c.txtHeight) : b.removeStyle("height");
           c.txtWidth ? b.setStyle("width", c.txtWidth) : b.removeStyle("width");
           b.getAttribute("style") || b.removeAttribute("style");
@@ -118,7 +126,7 @@
           } catch (p) {}
         else
           a.insertElement(b),
-            setTimeout(function () {
+            setTimeout(() => {
               var e = new CKEDITOR.dom.element(b.$.rows[0].cells[0]),
                 c = a.createRange();
               c.moveToPosition(e, CKEDITOR.POSITION_AFTER_START);
@@ -206,7 +214,9 @@
                         this.setValue(a.getAttribute("border") || "");
                       },
                       commit: function (a, d) {
-                        this.getValue() ? d.setAttribute("border", this.getValue()) : d.removeAttribute("border");
+                        this.getValue()
+                          ? d.setAttribute("border", this.getValue())
+                          : d.removeAttribute("border");
                       },
                     },
                     {
@@ -225,7 +235,9 @@
                         this.setValue(a.getAttribute("align") || "");
                       },
                       commit: function (a, d) {
-                        this.getValue() ? d.setAttribute("align", this.getValue()) : d.removeAttribute("align");
+                        this.getValue()
+                          ? d.setAttribute("align", this.getValue())
+                          : d.removeAttribute("align");
                       },
                     },
                   ],
@@ -245,7 +257,11 @@
                           controlStyle: "width:5em",
                           label: a.lang.common.width,
                           title: a.lang.common.cssLengthTooltip,
-                          default: a.filter.check("table{width}") ? (500 > q.getSize("width") ? "100%" : 500) : 0,
+                          default: a.filter.check("table{width}")
+                            ? 500 > q.getSize("width")
+                              ? "100%"
+                              : 500
+                            : 0,
                           getValue: u,
                           validate: CKEDITOR.dialog.validate.cssLength(
                             a.lang.common.invalidCssLength.replace("%1", a.lang.common.width)
@@ -356,9 +372,11 @@
                       if (b)
                         0 < c.count()
                           ? ((c = c.getItem(0)), c.setHtml(""))
-                          : ((c = new CKEDITOR.dom.element("caption", a.document)), d.append(c, !0)),
+                          : ((c = new CKEDITOR.dom.element("caption", a.document)),
+                            d.append(c, !0)),
                           c.append(new CKEDITOR.dom.text(b, a.document));
-                      else if (0 < c.count()) for (b = c.count() - 1; 0 <= b; b--) c.getItem(b).remove();
+                      else if (0 < c.count())
+                        for (b = c.count() - 1; 0 <= b; b--) c.getItem(b).remove();
                     }
                   },
                 },
@@ -372,7 +390,9 @@
                     this.setValue(a.getAttribute("summary") || "");
                   },
                   commit: function (a, d) {
-                    this.getValue() ? d.setAttribute("summary", this.getValue()) : d.removeAttribute("summary");
+                    this.getValue()
+                      ? d.setAttribute("summary", this.getValue())
+                      : d.removeAttribute("summary");
                   },
                 },
               ],
@@ -389,10 +409,6 @@
       a.info || (a.info = {});
       a.info[f] = this.getValue();
     };
-  CKEDITOR.dialog.add("table", function (a) {
-    return q(a, "table");
-  });
-  CKEDITOR.dialog.add("tableProperties", function (a) {
-    return q(a, "tableProperties");
-  });
+  CKEDITOR.dialog.add("table", (a) => q(a, "table"));
+  CKEDITOR.dialog.add("tableProperties", (a) => q(a, "tableProperties"));
 })();

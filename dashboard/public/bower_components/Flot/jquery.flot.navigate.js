@@ -87,7 +87,7 @@ can set the default in the options.
 jquery.event.drag.js ~ v1.5 ~ Copyright (c) 2008, Three Dub Media (http://threedubmedia.com)
 Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-LICENSE.txt
 */
-(function (a) {
+((a) => {
   function e(h) {
     var k,
       j = this,
@@ -116,7 +116,12 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
           k !== !1 && ((d.dragging = j), (d.proxy = h.dragProxy = a(k || j)[0]));
       case "mousemove":
         if (d.dragging) {
-          if (((k = f(h, "drag", j)), c.drop && ((c.drop.allowed = k !== !1), c.drop.handler(h)), k !== !1)) break;
+          if (
+            ((k = f(h, "drag", j)),
+            c.drop && ((c.drop.allowed = k !== !1), c.drop.handler(h)),
+            k !== !1)
+          )
+            break;
           h.type = "mouseup";
         }
       case "mouseup":
@@ -141,9 +146,7 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
   function i(a, b) {
     a &&
       ((a.unselectable = b ? "off" : "on"),
-      (a.onselectstart = function () {
-        return b;
-      }),
+      (a.onselectstart = () => b),
       a.style && (a.style.MozUserSelect = b ? "" : "none"));
   }
   a.fn.drag = function (a, b, c) {
@@ -173,7 +176,7 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
           this.detachEvent && this.detachEvent("ondragstart", h);
       },
     });
-  c.dragstart = c.dragend = { setup: function () {}, teardown: function () {} };
+  c.dragstart = c.dragend = { setup: () => {}, teardown: () => {} };
 })(jQuery);
 
 /* jquery.mousewheel.min.js
@@ -187,7 +190,7 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
  *
  * Requires: 1.2.2+
  */
-(function (d) {
+((d) => {
   function e(a) {
     var b = a || window.event,
       c = [].slice.call(arguments, 1),
@@ -213,7 +216,8 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
       else this.onmousewheel = e;
     },
     teardown: function () {
-      if (this.removeEventListener) for (var a = c.length; a; ) this.removeEventListener(c[--a], e, !1);
+      if (this.removeEventListener)
+        for (var a = c.length; a; ) this.removeEventListener(c[--a], e, !1);
       else this.onmousewheel = null;
     },
   };
@@ -227,7 +231,7 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
   });
 })(jQuery);
 
-(function ($) {
+(($) => {
   var options = {
     xaxis: {
       zoomRange: null, // or [number, number] (min range, max range)
@@ -281,7 +285,7 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
       if (panTimeout || !frameRate) return;
 
       panTimeout = setTimeout(
-        function () {
+        () => {
           plot.pan({ left: prevPageX - e.pageX, top: prevPageY - e.pageY });
           prevPageX = e.pageX;
           prevPageY = e.pageY;
@@ -316,7 +320,7 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
       }
     }
 
-    plot.zoomOut = function (args) {
+    plot.zoomOut = (args) => {
       if (!args) args = {};
 
       if (!args.amount) args.amount = plot.getOptions().zoom.amount;
@@ -325,7 +329,7 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
       plot.zoom(args);
     };
 
-    plot.zoom = function (args) {
+    plot.zoom = (args) => {
       if (!args) args = {};
 
       var c = args.center,
@@ -348,7 +352,7 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
           },
         };
 
-      $.each(plot.getAxes(), function (_, axis) {
+      $.each(plot.getAxes(), (_, axis) => {
         var opts = axis.options,
           min = minmax[axis.direction].min,
           max = minmax[axis.direction].max,
@@ -379,7 +383,11 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
         }
 
         var range = max - min;
-        if (zr && ((zr[0] != null && range < zr[0] && amount > 1) || (zr[1] != null && range > zr[1] && amount < 1)))
+        if (
+          zr &&
+          ((zr[0] != null && range < zr[0] && amount > 1) ||
+            (zr[1] != null && range > zr[1] && amount < 1))
+        )
           return;
 
         opts.min = min;
@@ -392,7 +400,7 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
       if (!args.preventEvent) plot.getPlaceholder().trigger("plotzoom", [plot, args]);
     };
 
-    plot.pan = function (args) {
+    plot.pan = (args) => {
       var delta = {
         x: +args.left,
         y: +args.top,
@@ -401,7 +409,7 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
       if (isNaN(delta.x)) delta.x = 0;
       if (isNaN(delta.y)) delta.y = 0;
 
-      $.each(plot.getAxes(), function (_, axis) {
+      $.each(plot.getAxes(), (_, axis) => {
         var opts = axis.options,
           min,
           max,

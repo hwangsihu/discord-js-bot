@@ -14,7 +14,13 @@
     selected: "Selected",
     required: "Required",
   },
-  form: { title: "Form Properties", menu: "Form Properties", action: "Action", method: "Method", encoding: "Encoding" },
+  form: {
+    title: "Form Properties",
+    menu: "Form Properties",
+    action: "Action",
+    method: "Method",
+    encoding: "Encoding",
+  },
   hidden: { title: "Hidden Field Properties", name: "Name", value: "Value" },
   select: {
     title: "Selection Field Properties",

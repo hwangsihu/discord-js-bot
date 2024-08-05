@@ -1,7 +1,7 @@
 /* Norwegian initialisation for the jQuery UI date picker plugin. */
 /* Written by Naimdjon Takhirov (naimdjon@gmail.com). */
 
-(function (factory) {
+((factory) => {
   if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
     define(["../datepicker"], factory);
@@ -9,7 +9,7 @@
     // Browser globals
     factory(jQuery.datepicker);
   }
-})(function (datepicker) {
+})((datepicker) => {
   datepicker.regional["no"] = {
     closeText: "Lukk",
     prevText: "&#xAB;Forrige",
@@ -29,7 +29,20 @@
       "november",
       "desember",
     ],
-    monthNamesShort: ["jan", "feb", "mar", "apr", "mai", "jun", "jul", "aug", "sep", "okt", "nov", "des"],
+    monthNamesShort: [
+      "jan",
+      "feb",
+      "mar",
+      "apr",
+      "mai",
+      "jun",
+      "jul",
+      "aug",
+      "sep",
+      "okt",
+      "nov",
+      "des",
+    ],
     dayNamesShort: ["søn", "man", "tir", "ons", "tor", "fre", "lør"],
     dayNames: ["søndag", "mandag", "tirsdag", "onsdag", "torsdag", "fredag", "lørdag"],
     dayNamesMin: ["sø", "ma", "ti", "on", "to", "fr", "lø"],
